@@ -21,9 +21,9 @@ export class DatabaseService implements OnInit {
  
 
     // <------------------ Test Link ------------------------------>
-    dbUrl = "https://devcrm.abacusdesk.com/pearlnew/api/index.php/";
-    uploadUrl = "https://devcrm.abacusdesk.com/pearlnew/api/uploads/";
-    downloadUrl = "https://devcrm.abacusdesk.com/pearlnew/api/uploads/Download_excel/"; 
+    dbUrl = "http://bonus.basiq360.com/api/index.php/";
+    uploadUrl = "http://bonus.basiq360.com/api/uploads/";
+    downloadUrl = "http://bonus.basiq360.com/api/uploads/Download_excel/"; 
 
     // <------------------ Live Link ------------------------------>
     // dbUrl = "https://pearl.abacusdesk.com/api/index.php/"; 
