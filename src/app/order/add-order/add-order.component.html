@@ -1,0 +1,378 @@
+<div class="main-container">
+  <div class="tools-container">
+    <a mat-icon-button matTooltip="Back" (click)="back()">
+      <i class="material-icons">arrow_back</i>
+    </a>
+    <h2>{{pageType=='edit' ? 'Edit' : 'Add New'}} Order</h2>
+
+  </div>
+
+  <div class="container pt10 pl10 pr10 pb50">
+    <form #f="ngForm" (ngSubmit)="f.submitted && f.valid && save_orderalert('save')">
+      <div class="row">
+        <div class="col s12">
+          <div class="card pb0">
+            <div class="card-head">
+              <h2>Basic Information</h2>
+            </div>
+            <!-- <div class="card-body cs-form">
+              <div class="row">
+                <div class="col s12 m6 l6">
+                  <mat-radio-group class="example-section" id="user_type" name="user_type" [(ngModel)]="data.user_type">
+                    <mat-radio-button class="wp50" color="primary" (change)="get_sales_user_type('', $event)"
+                      value="Sales User">
+                      Sales User
+                    </mat-radio-button>
+                    <mat-radio-button class="wp50" color="primary" (change)="get_sales_user_type('', $event);"
+                      value="System User">
+                      System User
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+            </div> -->
+            <div class="card-body cs-form">
+              <div class="row">
+                <div class="col s12 m6 l6">
+                  <mat-radio-group class="example-section" name="networkType" #networkType="ngModel" [disabled]="add_list.length>0"
+                    [(ngModel)]="data.networkType" (ngModelChange)="distributors(data.networkType);">
+                    <mat-radio-button class="wp50" color="primary" value="1">
+                      Distributor
+                    </mat-radio-button>
+                    <mat-radio-button class="wp50" color="primary" value="7">
+                      Direct Dealer
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s12 m6 l6" *ngIf="data.networkType">
+                  <mat-form-field appearance="outline">
+                    <mat-label *ngIf="data.networkType=='1'">Distributor</mat-label>
+                    <mat-label *ngIf="data.networkType=='7'">Direct Dealer</mat-label>
+                    <mat-select name="type_name" #type_name="ngModel" [(ngModel)]="data.type_name" [disabled]="add_list.length>0" required
+                      (selectionChange)="get_state_list(data.type_name); get_item_list('','');">
+                      <mat-option disabled="">Select</mat-option>
+                      <!-- <mat-option *ngFor="let row of drList" value="{{row.id}}">{{row.display_name}}</mat-option> -->
+                      <mat-option>
+                        <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                          (keyup)="distributors(data.networkType,$event)"></ngx-mat-select-search>
+                      </mat-option>
+                      <mat-option *ngFor="let row of drList" value="{{row.id}}" (click)="gettypeName(row)">
+                        {{row.display_name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <div class="alert alert-danger" *ngIf="type_name.touched || f.submitted">
+                    <p *ngIf="type_name.errors?.required">This field is required</p>
+                  </div>
+
+                </div>
+
+                <!-- <div class="col s12 m6 l6" *ngIf="brandList.length > 0">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Brands</mat-label>
+                    <mat-select name="brand" [(ngModel)]="data.brand" #brand="ngModel" required>
+                      <mat-option *ngFor="let row of brandList"
+                      value="{{row.brand_code}}">{{row.display_name}}</mat-option>
+                      <mat-option value="testBrand  1">Brand 1</mat-option>
+                      <mat-option value="testBrand 2">Brand 2</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="f.submitted && brand?.invalid ">
+                    This field is required
+                  </div>
+                </div> -->
+                <!-- <div class="col s12 m6 l6" *ngIf="colorList.length > 0">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Colors</mat-label>
+                    <mat-select name="color" [(ngModel)]="data.color" #color="ngModel" required>
+                      <mat-option *ngFor="let row of brandList"
+                      value="{{row.brand_code}}">{{row.display_name}}</mat-option>
+                      <mat-option value="testColor 1">Color 1</mat-option>
+                      <mat-option value="testColor 2">Color 2</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="f.submitted && brand?.invalid ">
+                    This field is required
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="data.type_name">
+        <div class="col s12">
+          <div class="card pb0">
+            <div class="card-head">
+              <h2>Requirement</h2>
+            </div>
+            <div class="card-body cs-form">
+              <div class="row">
+                <div class="col s12 m6 l6">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Select Item</mat-label>
+                    <mat-select name="product_id" #product_id="ngModel" [(ngModel)]="data.product_id" 
+                      (selectionChange)="get_product_details(); addTolistDisabled=true;data.qty=0; data.gst_amount=0;data.amount=0;"
+                      (ngModelChange)="onCloseItemList()">
+                      <mat-option disabled="">Select Items</mat-option>
+                      <mat-option>
+                        <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                          (keyup)="get_item_list($event)"></ngx-mat-select-search>
+                      </mat-option>
+                      <mat-option *ngFor="let row of item_list" value="{{row.id}}">
+                        {{row.product_name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <div class="alert alert-danger" *ngIf="product_id.touched || f.submitted">
+                    <p *ngIf="product_id.errors?.required">This field is required</p>
+                  </div>
+                </div>
+
+                <div class="col s12 m6 l6" *ngIf="data.product_id">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Type</mat-label>
+                    <mat-select name="item_type" #item_type="ngModel" [(ngModel)]="data.item_type">
+                      <!-- <mat-option>
+                        <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                          (keyup)="get_item_list($event.target.value)"></ngx-mat-select-search></mat-option> -->
+                      <mat-option value="DRUM">DRUM</mat-option>
+                      <mat-option value="DRUM LENGTH">DRUM LENGTH</mat-option>
+                      <mat-option value="CUT LENGTH">COIL</mat-option>
+                      <mat-option value="MTR">MTR</mat-option>
+                      <mat-option value="Pcs">Pcs</mat-option>
+                      <mat-option value="BUNDLES">BUNDLES</mat-option>
+                      <mat-option value="Drum">DRUM</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div>
+                  <ng-container *ngFor="let pop of product_list;let i = index;">
+                    <div class="col s12 m1 l2">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Qty</mat-label>
+                        <input matInput placeholder="Type Here ..." name="qty" #qty="ngModel" [(ngModel)]="pop.qty"
+                          #size="ngModel"
+                          (ngModelChange)="(pop.qty == '' || pop.qty == null || pop.qty<1 )?(addTolistDisabled = true):(addTolistDisabled = false);"
+                          onkeypress="return event.charCode>=48 && event.charCode<=57" (input)="calculate(data.qty,data.price)"
+                          [ngClass]="{'has-error' : qty.invalid }">
+                      </mat-form-field>
+                    </div>
+                    <div class="col s12 m2 l2" *ngIf="data.networkType != '3' ">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Price</mat-label>
+                        <input matInput placeholder="Type Here ..." name="price" #price="ngModel"
+                          [(ngModel)]="data.price" (keypress)="MobileNumber($event)"
+                          (input)="calculate(data.qty,data.price)" readonly [ngClass]="{'has-error' : price.invalid } ">
+                      </mat-form-field>
+                    </div>
+                    <div class="col s12 m2 l2" *ngIf="data.networkType != '3' ">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Discount Amount</mat-label>
+                        <input matInput placeholder="Type Here ..." name="total_discount" #total_discount="ngModel"
+                          readonly [(ngModel)]="data.total_discount" (keypress)="MobileNumber($event)">
+                      </mat-form-field>
+                    </div>
+                  </ng-container>
+                </div>
+
+              </div>
+
+              <!-- add to list -->
+              <div class="row">
+                <div class="col s12">
+                  <div class="text-right">
+                    <a mat-raised-button type="button" *ngIf="!addTolistDisabled" (click)="addToList(); "
+                      color="accent">Add
+                      To list</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row" *ngIf="add_list.length">
+        <div class="col s12">
+          <div class="card pb0">
+            <div class="card-head">
+              <h2>Product Item Information</h2>
+            </div>
+            <div class="card-body cs-form">
+
+              <div class="cs-table">
+                <div class="table-head">
+                  <table>
+                    <tr>
+                      <th class="w150">Product Detail</th>
+                      <th class="w80">Segment Name</th>
+                      <th class="w60 text-right">Price</th>
+                      <th class="w60 text-right">Discount</th>
+                      <th class="w60 text-right">Net Price</th>
+                      <th class="w50 text-right">Qty</th>
+                      <th class="w60 text-right">Subtotal</th>
+                      <th class="w60 text-right">GST%</th>
+                      <th class="w60 text-right">Net Amount</th>
+                      <th class="w30 text-left">Action</th>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="table-container">
+                  <div class="table-content">
+                    <table>
+                      <tr *ngFor="let row of add_list;let i = index;">
+                        <td class="w150">{{row.product_name}}</td>
+                        <td class="w80">{{row.segment_name}}</td>
+                        <td class="w60 text-right">₹ {{row.product_price ? (row.product_price | number:'1.2-2') :
+                          row.price}}</td>
+                        <td class="w60 text-right">
+                          <p *ngIf="row.total_discount != 0">{{row.total_discount != 0 ?
+                            (row.total_discount | number:'1.2-2') : '0'}}</p>
+                          <p *ngIf="row.total_discount == 0">{{row.total_discount != 0 ?
+                            (row.total_discount | number:'1.2-2') : '0'}}</p>
+                        </td>
+                        <td class="w60 text-right">₹ {{row.net_price | number:'1.2-2'}}</td>
+                        <td class="w50 text-right">{{row.qty}}</td>
+                        <td class="w60 text-right">₹ {{row.amount | number:'1.2-2'}}</td>
+                        <td class="w60 text-right">₹ {{row.gst_amount | number:'1.2-2'}}
+                          ({{row.gst_percent?row.gst_percent+'
+                          %':'0 %'}})</td>
+                        <td class="w60 text-right">₹ {{row.total_amount | number:'1.2-2'}}</td>
+                        <td class="w30 text-left">
+                          <div class="action-btns">
+                            <button mat-button class="delete" (click)="listdelete(i)">
+                              <i class="material-icons red-clr">delete_sweep</i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="add_list.length">
+        <div class="col s12 m8 l7">
+          <div class="card pb0 ">
+            <div class="card-body cs-form">
+              <mat-form-field appearance="outline" [ngClass]="{'has-error' : remark.invalid } ">
+                <mat-label>Remark</mat-label>
+                <textarea matInput placeholder="Type Here ..." name="remark" #remark="ngModel" class="h100"
+                  [(ngModel)]="data.remark"></textarea>
+                <div class="alert alert-danger" *ngIf="!remark.valid && remark.touched">
+                  Remark is required...
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m8 l5">
+          <div class="card pb0 ">
+            <div class="card-body cs-form">
+              <div class="invoice-table">
+                <table>
+                  <tr>
+                    <td class="text-left">Total Item</td>
+                    <td class="text-left">:</td>
+                    <td class="text-left ">{{add_list.length}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Total Qty</td>
+                    <td class="text-left">:</td>
+                    <td class="text-left ">{{total_qty}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Total Order Price</td>
+                    <td class="text-left">:</td>
+                    <td class="text-left">{{total_Order_amount ? '₹' + ' ' + (total_Order_amount | number:'1.2-2') + ' '
+                      + '/-': 'N/A'}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Total Discount Amount</td>
+                    <td class="text-left">:</td>
+                    <td class="text-left ">{{total_discount ? '₹' + ' ' + (total_discount | number:'1.2-2') + ' ' +
+                      '/-': 'N/A'}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Subtotal</td>
+                    <td class="text-left">:</td>
+                    <td class="text-left ">{{sub_total_before_cd ? '₹' + ' ' + (sub_total_before_cd | number:'1.2-2') +
+                      ' ' + '/-': 'N/A'}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Cash Discount</td>
+                    <td class="text-left">:</td>
+                    <td class="text-left ">{{cd_value | number:'1.2-2'}} ({{cash_discount_percent}}%)</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Sub Total After Cash Discount</td>
+                    <td class="text-left">:</td>
+                    <td class="text-left ">{{sub_total_after_cd ? '₹' + ' ' + (sub_total_after_cd | number:'1.2-2') + '
+                      ' + '/-': 'N/A'}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Total GST Amount</td>
+                    <td class="text-left">:</td>
+                    <td class="text-left ">₹ {{total_gst_amount | number:'1.2-2'}} /-</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">TCD</td>
+                    <td class="text-left">:</td>
+                    <td class="text-left ">{{tcs_value | number:'1.2-2'}} ({{this.drList.tcs_percentage}}%)</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Grand Total</td>
+                    <td class="text-left">:</td>
+                    <td class="text-left ">₹ {{order_grand_total | number:'1.2-2'}} /-</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <!-- <div class="flex-btn" *ngIf="add_list.length > 0 && data.type_name">
+        <button *ngIf="!order_data && !order_item" ion-button [disabled]="btndisable" class="Buttons"
+            (click)="user_data.order_status='Draft';save_orderalert('draft');">
+            <ion-spinner *ngIf="btnDisableDraft"></ion-spinner>
+            Draft
+        </button>
+        <button ion-button [disabled]="btndisable" class="Buttons"
+            (click)="user_data.order_status='Pending';save_orderalert('save');">
+            <ion-spinner *ngIf="btnDisableSave"></ion-spinner>
+            Save
+        </button>
+    </div> -->
+
+      <div class="row" *ngIf="add_list.length">
+        <div class="col s12">
+          <div class="text-right">
+            <button [ngClass]="{'loading': savingFlag == true}" *ngIf="drList.length>0" mat-raised-button color="accent"
+              type="submit" [disabled]="savingFlag == true">
+              {{savingFlag == true ? 'Saving' : 'Save'}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+</div>

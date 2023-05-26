@@ -1,0 +1,19 @@
+.full-width
+{
+    width: 160%;
+    padding: -3px;    
+}
+
+.master-search{
+    position:relative;
+
+    .fix-search-btn {
+        position: absolute;
+        top: -4px;
+        right: 4px;
+        color:#6b6b6b
+    }
+}
+
+
+// .mat-form-field-outline ng-tns-c4-4 ng-star-inserted

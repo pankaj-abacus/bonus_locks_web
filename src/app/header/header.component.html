@@ -1,0 +1,40 @@
+<header>
+    <div class="logo">
+        <img src="assets/img/{{colorMode == false ? 'logo1' : 'darklogo'}}.png" class="lightmode">
+        <img src="assets/img/darklogo.png" class="darkMode">
+    </div>
+    <button class="ml12" mat-icon-button (click)="toggleNav()"
+    matTooltip="{{toggle == false ? 'Close Menu' : 'Open Menu'}}">
+    <i class="material-icons">{{toggle == false ? 'menu' : 'menu_open'}}</i>
+</button>
+<button class="ds-none" mat-icon-button (click)="nightMode()"
+matTooltip="{{colorMode == false ? 'Dark Mode' : 'Light Mode'}}">
+<i class="material-icons">{{colorMode == false ? 'dark_mode' : 'light_mode'}}</i>
+</button>
+<div class="master-search" *ngIf="login_data.user_type!='DMS'">
+    <form class="form"> 
+        <mat-form-field appearance="outline" class=" mt12 full-width mat-from">
+            <input class="input-btn" matInput placeholder="Enter Search...." [matAutocomplete]="globalsearch"
+            (input)="filter_dr(searchData.globalsearch)" name="globalsearch" #globalsearch="ngModel"
+            [(ngModel)]="searchData.globalsearch">
+            <button mat-icon-button class="fix-search-btn"><mat-icon>search</mat-icon></button>
+            <mat-autocomplete #globalsearch="matAutocomplete">
+                <mat-option *ngFor="let row of dataList" (click)="gotodetail(row);" value="{{row}}">
+                    <small>{{row.name}} {{row.mobile}}</small>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+</div>
+
+
+<div class="left-auto">
+    <div class="logout-block">
+        <p><strong>Welcome:- </strong> &nbsp; {{login_data.user_type!='DMS'? (login_data.name | titlecase):(login_data.company_name | titlecase)}}</p>
+        <button mat-icon-button (click)="logout()" matTooltip="Logout">
+            <i class="material-icons">power_settings_new</i>
+        </button>
+    </div>
+    
+</div>
+</header>

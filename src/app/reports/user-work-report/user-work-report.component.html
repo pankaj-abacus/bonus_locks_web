@@ -1,0 +1,141 @@
+<div class="main-container">
+  <div class="tools-container">
+    <h2>User Work Report</h2>
+    <div class="left-auto left-auto df ac flex-gap-10">
+      <button mat-icon-button matTooltip="Refresh" (click)="refresh() ">
+        <i class="material-icons">refresh</i>
+      </button>
+      <button mat-icon-button matTooltip="Filter" *ngIf="activeTab== 'Month'" (click)="openBottomSheet()">
+        <i class="material-icons">filter_alt</i>
+      </button>
+      <div class="mat-tabbar">
+        <button mat-button [ngClass]="{'active' :activeTab== 'daily'}"
+          (click)="activeTab= 'daily'; getPrimartTargetReport('daily'); activeTab= 'daily';"><i
+            class="material-icons">today</i>Today</button>
+        <button mat-button [ngClass]="{'active' :activeTab== 'Month'}"
+          (click)=" getCurrentMonth('Month') ; activeTab= 'Month';"><i
+            class="material-icons">calendar_month</i>Month</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container container-scroll">
+    <div class="cs-table horizontal-scroll">
+      <div class="sticky-head">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w50 text-center">S No.</th>
+              <th class="w150 text-center">Sales Executive</th>
+              <th class="w150 text-center">Reporting Manager</th>
+              <th class="w150 text-center" *ngIf="activeTab == 'daily'">Attendance</th>
+              <th class="w360 text-center">Check In</th>
+              <th class="w150 text-center">Primary Order Count</th>
+              <th class="w150 text-center">Secondary Order Count</th>
+              <th class="w150 text-center">New Lead</th>
+            </tr>
+          </table>
+        </div>
+
+        <div class="table-head border-top">
+          <table>
+            <tr>
+              <th class="w50">&nbsp;</th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="sales_executive"
+                      [(ngModel)]="filter.sales_executive" (keyup.enter)="getPrimartTargetReport(activeTab)">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w150">
+                <!-- <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="reporting_manager"
+                    [(ngModel)]="filter.reporting_manager" (keyup.enter)="getPrimartTargetReport(activeTab)">
+                  </mat-form-field>
+                </div> -->
+                &nbsp;
+              </th>
+
+              <th class="w75 text-center" *ngIf="activeTab == 'daily'">Start Time</th>
+              <th class="w75 text-center" *ngIf="activeTab == 'daily'">Stop Time</th>
+
+              <th class="w120 text-center">Dealer</th>
+              <th class="w120 text-center">Direct Dealer</th>
+              <th class="w120 text-center">Channel Partner</th>
+
+              <th class="w150 text-center">&nbsp;</th>
+              <th class="w150 text-center">&nbsp;</th>
+              <th class="w150 text-center">&nbsp;</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <ng-container *ngIf="!loader">
+              <tr *ngFor="let row of userWorkReport; let i = index">
+                <td class="w50">{{i+1}}</td>
+                <td class="w150">{{row.sales_executive}}</td>
+                <td class="w150">{{row.reporting_manager}}</td>
+                <td class="w75 text-center" *ngIf="activeTab == 'daily'">
+                  {{row.attendance_start!='00:00:00'?(row.attendance_start | date: 'h:mm a'):'---'}}</td>
+                <td class="w75 text-center" *ngIf="activeTab == 'daily'">
+                  {{row.attendance_stop!='00:00:00'?(row.attendance_stop | date: 'h:mm a'):'---'}}</td>
+                <td class="w120 text-center">{{row.dealear_check_in}}</td>
+                <td class="w120 text-center">{{row.direact_dealear_check_in}}</td>
+                <td class="w120 text-center">{{row.channel_partner_check_in}}</td>
+                <td class="w150 text-center">{{row.primary_order}}</td>
+                <td class="w150 text-center">{{row.secondary_order}}</td>
+                <td class="w150 text-center">{{row.new_lead}}</td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="loader">
+              <tr class="sk-loading" *ngFor="let row of [].constructor(10);">
+                <td class="w50">
+                  <div class="skeleton-loader">&nbsp;</div>
+                </td>
+                <td class="w150 text-center">
+                  <div class="skeleton-loader">&nbsp;</div>
+                </td>
+                <td class="w150 text-center">
+                  <div class="skeleton-loader">&nbsp;</div>
+                </td>
+                <td class="w150 text-center" *ngIf="activeTab == 'daily'">
+                  <div class="skeleton-loader">&nbsp;</div>
+                </td>
+                <td class="w360 text-center">
+                  <div class="skeleton-loader">&nbsp;</div>
+                </td>
+                <td class="w150 text-center">
+                  <div class="skeleton-loader">&nbsp;</div>
+                </td>
+                <td class="w150 text-center">
+                  <div class="skeleton-loader">&nbsp;</div>
+                </td>
+                <td class="w150 text-center">
+                  <div class="skeleton-loader">&nbsp;</div>
+                </td>
+
+              </tr>
+            </ng-container>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="datanotfound == true">
+        <app-not-result-found></app-not-result-found>
+      </div>
+    </div>
+  </div>
+
+  <div class="fab-btns" *ngIf="userWorkReport.length>0 && logined_user_data.download_view_user_work_report_report==1">
+    <button mat-fab class="excel pulse" (click)="downloadExcel();">
+      <img src="assets/img/excel.svg">
+      Download Excel
+    </button>
+  </div>
+</div>

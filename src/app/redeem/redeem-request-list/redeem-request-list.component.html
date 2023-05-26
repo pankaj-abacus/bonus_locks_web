@@ -1,0 +1,456 @@
+<div class="main-container">
+
+  <div class="tools-container">
+    <h2>{{redeemType}} Redeem Request</h2>
+
+    <div class="left-auto left-auto df ac flex-gap-10">
+      <button mat-icon-button matTooltip="Refresh" (click)="refresh()">
+        <i class="material-icons">refresh</i>
+      </button>
+      <div class="pagination" *ngIf="redeemRequestList_data.length > 0">
+        <div class="pagination-content">
+          Pages
+          <span>{{pagenumber}}</span>
+          of
+          <span>{{total_page}}</span>
+        </div>
+        <div class="page-nav">
+          <button mat-icon-button matTooltip="Older" (click)="pervious()" [disabled]="start == 0">
+            <i class="material-icons">navigate_before</i>
+          </button>
+          <button mat-icon-button matTooltip="Newer" (click)="nextPage()" [disabled]="pagenumber == total_page ">
+            <i class="material-icons">navigate_next</i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mat-tabbar">
+        <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
+        (click)="active_tab = 'Pending';redeemRequestList()"><i class="material-icons">pending_actions</i>Pending
+        ({{redeem_count.Pending}})</button>
+        <button mat-button [ngClass]="active_tab == 'Approved' ? 'active' : ''"
+        (click)="active_tab = 'Approved'; redeemRequestList()"><i class="material-icons">swap_horiz</i>Transaction
+        ({{redeem_count.Approved}})</button>
+
+        <button mat-button [ngClass]="active_tab == 'Reject' ? 'active' : ''"
+        (click)="active_tab = 'Reject';redeemRequestList()"><i class="material-icons">cancel</i>Reject
+        ({{redeem_count.Reject}})</button>
+
+        <button mat-button [ngClass]="active_tab == 'Failed' ? 'active' : ''"
+        (click)="active_tab = 'Failed';redeemRequestList()"><i class="material-icons">thumb_down_alt</i>TXN Failed
+        ({{redeem_count.Failed}})</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container container-scroll">
+    <div class="cs-table horizontal-scroll">
+      <div class="sticky-head">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w110">Request Created</th>
+              <th class="w110">Req. ID</th>
+              <th class="w160">Name</th>
+              <th class="w110">Mobile</th>
+              <th class="w110">A/C Status</th>
+              <ng-container *ngIf="redeemType=='Bank'">
+                <th class="w110">Bank Name</th>
+                <th class="w130">Account No.</th>
+                <th class="w110">IFSC Code</th>
+              </ng-container>
+              <ng-container *ngIf="redeemType!='Bank'">
+                <th class="w150">{{redeemType == 'Paytm' ? 'Paytm Number': 'Khalti Number'}}</th>
+              </ng-container>
+              <th class="w130">{{redeemType == 'Khalti' ? 'Province': 'State'}}</th>
+              <th class="w130">{{redeemType == 'Khalti' ? 'City': 'District'}}</th>
+              <th class="w100 text-right">Redeem Point</th>
+              <th class="w100 text-right">Point Value</th>
+              <th class="w100 text-right">Redeem Amount</th>
+              <th class="w150" *ngIf="active_tab != 'Pending'">TXN ID</th>
+              <th class="w100  text-center" *ngIf="active_tab != 'Pending'">Status</th>
+              <th class="w200" *ngIf="active_tab != 'Pending'">TXN Remark</th>
+              <th class="w160  text-center" *ngIf="active_tab == 'Pending'">Action</th>
+              <th class="w160 " *ngIf="active_tab != 'Pending'">Action By</th>
+              <th class="w150  text-center" *ngIf="active_tab != 'Pending'">Action Date</th>
+              <th class="w200" *ngIf="active_tab == 'Reject'">Reason</th>
+
+            </tr>
+          </table>
+        </div>
+
+        <div class="table-head border-top">
+          <table>
+            <tr>
+              <th class="w110">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
+                    [(ngModel)]="filter.date_created" [max]="today_date" (dateChange)="onDate($event)" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w110 text-right">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input type="text"  matInput placeholder="Search..."  name="req_id" [(ngModel)]="filter.req_id"
+                    (keyup.enter)="redeemRequestList()">
+                  </mat-form-field>
+                </div>
+
+              </th>
+              <th class="w160">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="user_name" [(ngModel)]="filter.user_name"
+                    (keyup.enter)="redeemRequestList()">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w110">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input type="number"  maxlength="10" matInput placeholder="Search..." type="text" name="mobile_no" [(ngModel)]="filter.mobile_no"
+                    (keyup.enter)="redeemRequestList()">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w110"></th>
+              <ng-container *ngIf="redeemType=='Bank'">
+                <th class="w110">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Search..." type="text" name="bank_name"
+                      [(ngModel)]="filter.bank_name" (keyup.enter)="redeemRequestList()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w130">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Search..." type="text" name="account_no"
+                      [(ngModel)]="filter.account_no" (keyup.enter)="redeemRequestList()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w110">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Search..." type="text" name="ifsc_code"
+                      [(ngModel)]="filter.ifsc_code" (keyup.enter)="redeemRequestList()">
+                    </mat-form-field>
+                  </div>
+                </th>
+              </ng-container>
+              <ng-container *ngIf="redeemType!='Bank'">
+                <th class="w150">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input type="number"  maxlength="10" matInput placeholder="Search..." type="text" name="wallet_number" [(ngModel)]="filter.wallet_number"
+                      (keyup.enter)="redeemRequestList()">
+                    </mat-form-field>
+                  </div>
+                </th>
+              </ng-container>
+              <th class="w130">
+
+
+                <!-- <div class="th-search-acmt">
+                  <mat-form-field class="cs-input select-input">
+                    <mat-select name="reporting_manager_id" #reporting_manager_id="ngModel"
+                    [(ngModel)]="search.reporting_manager_id" (selectionChange)="getTravelList();">
+                    <mat-option>
+                      <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                      (keyup)="getReportManager($event.target.value)"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let list of report_manager;let index=index" value="{{list.id}}">
+                      {{list.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div> -->
+
+              <div class="th-search-acmt">
+                <mat-form-field class="cs-input select-input">
+                  <mat-label>State</mat-label>
+                  <mat-select name="state" #state="ngModel" [(ngModel)]="filter.state"
+                  (selectionChange)="redeemRequestList()">
+                  <mat-option disabled="">Select State</mat-option>
+                  <mat-option *ngFor="let row of states" value="{{row.state_name}}">
+                    {{row.state_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+          </th>
+          <th class="w130">
+            <div class="th-search-acmt">
+              <mat-form-field class="example-full-width cs-input select-input">
+                <input matInput placeholder="Search..." type="text" name="district" [(ngModel)]="filter.district"
+                (keyup.enter)="redeemRequestList()">
+              </mat-form-field>
+            </div>
+          </th>
+          <th class="w100 text-right">&nbsp;</th>
+          <th class="w100 text-right">&nbsp;</th>
+          <th class="w100 text-right">&nbsp;</th>
+          <th class="w150" *ngIf="active_tab != 'Pending'">
+            <div class="th-search-acmt" *ngIf="redeemType=='Paytm' || redeemType=='Khalti'">
+              <mat-form-field class="example-full-width cs-input select-input">
+                <input matInput placeholder="Search..." type="text" name="transaction_id"
+                [(ngModel)]="filter.transaction_id" (keyup.enter)="redeemRequestList();">
+              </mat-form-field>
+            </div>
+            <div class="th-search-acmt" *ngIf="redeemType=='Bank'">
+              <mat-form-field class="example-full-width cs-input select-input">
+                <input matInput placeholder="Search..." type="text" name="razorpay_payout_id"
+                [(ngModel)]="filter.razorpay_payout_id" (keyup.enter)="redeemRequestList();">
+              </mat-form-field>
+            </div>
+          </th>
+          <th class="w100  text-center" *ngIf="active_tab != 'Pending'">
+            <div class="th-search-acmt">
+              <mat-form-field class="cs-input select-input">
+                <mat-select (selectionChange)="redeemRequestList()" name="transfer_status"
+                #transfer_status="ngModel" [(ngModel)]="filter.transfer_status">
+                <mat-option value="">All</mat-option>
+                <mat-option value="Pending" ng-reflect-value="Pending">Pending</mat-option>
+                <mat-option value="Inprocess" ng-reflect-value="Inprocess">Inprocess</mat-option>
+                <mat-option value="Success" ng-reflect-value="Success">Success</mat-option>
+                <mat-option value="Failure" ng-reflect-value="Failure">Failure</mat-option>
+                <mat-option value="processed" ng-reflect-value="processed" *ngIf="redeemType=='Bank'">Processed</mat-option>
+                <mat-option value="reversed" ng-reflect-value="reversed" *ngIf="redeemType=='Bank'">Reversed</mat-option>
+                <mat-option value="Reject" ng-reflect-value="Reject">Reject</mat-option>
+
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </th>
+        <th class="w200" *ngIf="active_tab != 'Pending'">&nbsp;</th>
+        <th class="w160  text-center" *ngIf="active_tab == 'Pending'">&nbsp;</th>
+
+        <th class="w160 " *ngIf="active_tab != 'Pending'">
+          <div class="th-search-acmt">
+            <mat-form-field class="example-full-width cs-input select-input">
+              <input matInput placeholder="Search..." type="text" name="last_status_updated_by_name" [(ngModel)]="filter.last_status_updated_by_name"
+              (keyup.enter)="redeemRequestList()">
+            </mat-form-field>
+          </div>
+        </th>
+        <th class="w150   text-center" *ngIf="active_tab != 'Pending'">
+          <div class="th-search-acmt">
+            <mat-form-field class="cs-input date-column infix-bodr">
+              <input matInput [matDatepicker]="picker1" placeholder="Date" name="last_status_updated_on"
+              [(ngModel)]="filter.last_status_updated_on" [max]="today_date"  (dateChange)="onDate($event)" disabled>
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </th>
+        <th class="w200" *ngIf="active_tab == 'Reject'">&nbsp;</th>
+
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="table-container">
+  <div class="table-content">
+    <table>
+      <ng-container *ngIf="!loader">
+        <tr *ngFor="let row of redeemRequestList_data; let i = index;"
+        [ngClass]="{'Current': service.currentUserID == row.id}">
+        <td class="w110">{{row.date_created | date :'dd MMM yyyy'}}</td>
+        <td class="w110">{{row.req_id ? row.req_id : '---'}}</td>
+        <td class="w160">{{row.user_name ? (row.user_name | titlecase) : '---'}} ({{row.influencer_type}})</td>
+        <td class="w110">{{row.mobile_no ? row.mobile_no : '---'}}</td>
+        <td class="w110 {{row.influencer_status}}"><strong>{{row.influencer_status ? row.influencer_status :
+          '---'}}</strong></td>
+          <ng-container *ngIf="redeemType=='Bank'">
+            <td class="w110">{{row.bank_name ? (row.bank_name | titlecase) : '---'}}</td>
+            <td class="w130">{{row.account_no ? row.account_no : '---'}}</td>
+            <td class="w110">{{row.ifsc_code ? row.ifsc_code : '---'}}</td>
+          </ng-container>
+          <ng-container *ngIf="redeemType!='Bank'">
+            <td class="w150">
+              {{row.wallet_number}}
+              <ng-container *ngIf="redeemType=='Paytm' && active_tab == 'Pending'">
+                <div class="action-button text-right">
+                  <a mat-icon-button matTooltip="Edit" (click)="updateNumber(row.id,'wallet', row.wallet_number)">
+                    <i class="material-icons edit">create</i>
+                  </a>
+                </div>
+              </ng-container>
+
+            </td>
+          </ng-container>
+          <td class="w130">{{row.state ? row.state : '---'}}</td>
+          <td class="w130">{{row.district ? row.district : '---'}}</td>
+          <td class="w100 text-right">{{row.point ? ('₹ '+row.point) : '---'}}</td>
+          <td class="w100 text-right">{{row.point_range_value ? ('₹ '+row.point_range_value) : '---'}}</td>
+          <td class="w100 text-right">{{row.cash_point ? ('₹ '+row.cash_point) : '---'}}</td>
+
+          <td class="w150" *ngIf="active_tab != 'Pending'">
+            <ng-container *ngIf="redeemType=='Bank'">
+              {{row.razorpay_payout_id}}
+            </ng-container>
+            <ng-container *ngIf="redeemType=='Paytm' || redeemType=='Khalti'">
+              {{row.transaction_id}}
+            </ng-container>
+          </td>
+          <td class="w100  text-center"  *ngIf="active_tab != 'Pending'">
+            <!-- <ng-container *ngIf="active_tab == 'Pending' && (redeemType=='Bank' || redeemType=='Paytm')">
+              {{row.status}}
+            </ng-container> -->
+            <strong class="{{row.transfer_status}}">{{row.transfer_status | titlecase}}</strong>
+
+          </td>
+
+          <td class="w200"  *ngIf="active_tab != 'Pending'">{{row.transfer_remark.replaceAll('_',' ') | titlecase}}
+          </td>
+          <td class="w160  text-right" *ngIf="active_tab == 'Pending'">
+            <div class="flex-button">
+              <button mat-raised-button color="accent" [ngClass]="{'loading': savingFlag == true}"
+              (click)="openDialog(row.id,'redeem_status', row.redeem_type, 'Approved', row.cash_point)" [disabled]="savingFlag == true">{{savingFlag == true ? '' : 'Redeem'}}</button>
+              <button mat-raised-button color="warn"
+              (click)="openDialog(row.id,'redeem_status', row.redeem_type, 'Reject', row.cash_point)">Reject</button>
+            </div>
+          </td>
+          <td class="w160 " *ngIf="active_tab != 'Pending'">{{row.last_status_updated_by_name ?
+            (row.last_status_updated_by_name | titlecase) : '---'}}</td>
+            <td class="w150   text-center" *ngIf="active_tab != 'Pending'">{{row.last_status_updated_on ?
+              (row.last_status_updated_on | date :'dd MMM yyyy, h:mm a') : '---'}}</td>
+              <td class="w200" *ngIf="active_tab == 'Reject'">{{row.reject_reason}}</td>
+
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="loader">
+            <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+
+              <td class="w110">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w110">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w160">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w110">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w110">
+                <div>&nbsp;</div>
+              </td>
+              <ng-container *ngIf="redeemType=='Bank'">
+                <td class="w110">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w130">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w110">
+                  <div>&nbsp;</div>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="redeemType!='Bank'">
+                <td class="w150">
+                  <div>&nbsp;</div>
+                </td>
+              </ng-container>
+              <td class="w130">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w130">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w100 text-right">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w100 text-right">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w100 text-right">
+                <div>&nbsp;</div>
+              </td>
+
+              <td class="w150" *ngIf="active_tab != 'Pending'">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w100  text-center"  *ngIf="active_tab != 'Pending'">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w200" *ngIf="active_tab != 'Pending'">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w160  text-center" *ngIf="active_tab == 'Pending'">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w160 " *ngIf="active_tab != 'Pending'">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w150  text-center" *ngIf="active_tab != 'Pending'">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w200" *ngIf="active_tab == 'Reject'">
+                <div>&nbsp;</div>
+              </td>
+            </tr>
+          </ng-container>
+        </table>
+      </div>
+
+
+    </div>
+
+    <ng-container *ngIf="redeemRequestList_data.length == 0 && datanotfound == true">
+      <app-not-result-found></app-not-result-found>
+    </ng-container>
+  </div>
+
+
+</div>
+
+
+
+<div class="fab-btns" *ngIf="redeemRequestList_data.length >0">
+  <button mat-fab class="excel pulse" (click)="exportAsXLSX(active_tab);">
+    <img src="assets/img/excel.svg">
+    Download Excel
+  </button>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
