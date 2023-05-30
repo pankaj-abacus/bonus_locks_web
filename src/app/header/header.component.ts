@@ -75,7 +75,7 @@ export class HeaderComponent implements OnInit {
     if (this.type == 'Channel Partner' || this.type == 'Dealer' || this.type == 'Direct Dealers') {
       this.router.navigate(['/distribution-list/' + data.type + '/' + data.module_name + '/distribution-detail/' + this.id, { queryParams: { 'state': data.state, 'id': data.id, 'type': data.type } }])
     }
-    else if(this.type == 'Customer' || this.type == 'Plumber') {
+    else if(this.type == 'Customer' || this.type == 'Carpenter') {
       this.router.navigate(['/influencer/' + data.type + '/' + data.module_name + '/influencer-detail/' + this.id + '/' + data.type])
     } 
     else if(this.type == '') {
