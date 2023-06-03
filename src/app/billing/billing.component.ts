@@ -201,8 +201,8 @@ export class BillingComponent implements OnInit {
       width: '500px',
       panelClass: 'cs-modal',
       data: {
-        // 'from': 'invoice',
-        'from': type,
+        'from': 'invoice',
+        // 'from': type,
       }
     });
     dialogRef.afterClosed().subscribe(result => {

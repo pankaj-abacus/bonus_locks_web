@@ -38,7 +38,7 @@
                 </mat-form-field>
                 
               </div>
-              <div class="col s12 m3 l4" >
+              <!-- <div class="col s12 m3 l4" >
                 <mat-form-field class="cs-input" appearance="outline" *ngIf="data.product_id">
                   <mat-label>Brand</mat-label>
                   <mat-select name="brand" placeholder="Type Here ..." #brand="ngModel" [(ngModel)]="data.brand"
@@ -46,7 +46,6 @@
                   <mat-option *ngFor="let row of brandList" value="{{row}}">{{row}}</mat-option>
                 </mat-select>
               </mat-form-field>
-              
             </div>
             <div class="col s12 m3 l4" *ngIf="data.product_id &&data.brand">
               <mat-form-field class="cs-input" appearance="outline">
@@ -56,10 +55,9 @@
                 <mat-option *ngFor="let row of colorList" value="{{row}}">{{row}}</mat-option>
               </mat-select>
             </mat-form-field>
-            
-          </div>
+          </div> -->
         </div>
-        <div class="card mt10 mb10" *ngIf="data.color && data.brand && data.product_id">
+        <div class="card mt10 mb10" *ngIf="data.product_id">
           <div class="card-head">
             <h2>Product Information</h2>
           </div>
@@ -70,7 +68,7 @@
                 <input matInput placeholder="Type Here ..."  name="product_name" #product_name="ngModel"  [(ngModel)]="product_detail.product_name" readonly>
               </mat-form-field>
             </div>
-            <div class="col s12 m2 l2">
+            <!-- <div class="col s12 m2 l2">
               <mat-form-field  appearance="outline">
                 <mat-label>Brand</mat-label>
                 <input matInput placeholder="pleaseselect ..."  name="brand" #brand="ngModel"  [(ngModel)]="data.brand" readonly>
@@ -81,7 +79,7 @@
                 <mat-label>color</mat-label>
                 <input matInput placeholder="please select ..."  name="color" #color="ngModel"  [(ngModel)]="data.color" readonly>
               </mat-form-field>
-            </div>
+            </div> -->
             
             <div class="col s12 m2 l2">
               <mat-form-field  appearance="outline">
@@ -98,7 +96,7 @@
             </div> 
           </div>
           
-          <div class="row" *ngIf="product_data.length && data.brand  || data.color" >
+          <div class="row" *ngIf="product_data.length" >
             <div class="col s12 m2 l2">
               <mat-radio-group id="gst_type" name="gst_type" #gst_type="ngModel"[(ngModel)]="data.gst_type" [disabled]="add_list.length > 0" (ngModelChange)="get_product_Size(data.dealer_name,data.product_id, 'listInput', '')">
                 <mat-radio-button class="wp50" color="primary" [ngClass]="{'active': data.gst_type == 'Gst Paid' }" value="Gst Paid">
@@ -187,7 +185,7 @@
                 <table>
                   <tr *ngFor="let row of add_list;let i=index">
                     <td class="w30">{{i+1}}</td>
-                    <td class="w250">{{row.product_name}} ({{row.product_code}}) {{row.brand && (row.brand) }} {{row.color && (row.color)}}</td>
+                    <td class="w250">{{row.product_name}} ({{row.product_code}})</td>
                     <td class="w80 text-right">{{row.product_price}}</td>
                     <td class="w80 text-right" *ngIf="row.discounted_price != 0" >{{row.discounted_price != 0 ?
                       (row.discounted_price | number:'1.2-2') : '--'}}({{row.dr_disc ? row.dr_disc +' '+'%':null}})</td>
