@@ -142,12 +142,12 @@ this.serve.post_rqst({'item_list': this.listarray, 'user_data': local_data, 'cre
   
   if(result['statusCode'] == 200){
     this.savingFlag = false;
-    this.toast.successToastr(result['msg']);
+    this.toast.successToastr(result['statusMsg']);
     this.dialog.closeAll();
   }
   else{
     this.savingFlag = false;
-    this.toast.errorToastr(result['msg']);
+    this.toast.errorToastr(result['statusMsg']);
   }
   
   
