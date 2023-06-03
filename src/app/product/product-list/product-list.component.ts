@@ -23,7 +23,7 @@ export class ProductListComponent implements OnInit {
   data: any = [];
   page_limit: any;
   start: any = 0;
-  brand_list: any = [];
+  // brand_list: any = [];
   product_brand: any = [];
   count: any;
   category_list: any = [];
@@ -219,7 +219,7 @@ export class ProductListComponent implements OnInit {
   }
 
   clear() {
-    this.data.brand = "";
+    // this.data.brand = "";
     this.data.category = "";
     this.data.sub_category = "";
     this.refresh();

@@ -108,7 +108,7 @@
 
               <div class="row">
              
-                <div class="col s12 m3 l3">
+                <!-- <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>Brands</mat-label>
                     <mat-select  name="brand" [(ngModel)]="data.brand" #brand="ngModel" multiple required>
@@ -118,15 +118,15 @@
                   <div class="alert alert-danger" *ngIf="brand.touched || f.submitted">
                     <p *ngIf="brand.errors?.required">This field is required</p>
                   </div>
-                </div>
-                <div class="col s12 m3 l3"> 
+                </div> -->
+                <!-- <div class="col s12 m3 l3"> 
                   <mat-form-field  appearance="outline">
                     <mat-label>Colors</mat-label>
                     <mat-select  name="color" [(ngModel)]="data.color" #color="ngModel" multiple>
                       <mat-option *ngFor="let row of colorList" value="{{row.color_code}}">{{row.display_name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
-                </div>
+                </div> -->
                 <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label> Box Items with QR</mat-label>

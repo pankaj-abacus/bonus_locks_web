@@ -20,8 +20,8 @@ export class SecondaryOrderAddComponent implements OnInit {
   items:any=[]
   dealerList:any=[]
   dr_id:any;
-  colorList:any=[]
-  brandList:any=[]
+  // colorList:any=[]
+  // brandList:any=[]
   product_data=[]
   product_detail:any={}
   dr_detail:any={}
@@ -117,7 +117,7 @@ export class SecondaryOrderAddComponent implements OnInit {
     
     
     
-    this.serve.post_rqst({ 'order_type': 'secondary','brand': brand,'filter':{'search':search} }, "Order/segmentItems")
+    this.serve.post_rqst({ 'order_type': 'secondary','filter':{'search':search} }, "Order/segmentItems")
     .subscribe(resp => {
       
       if (resp['statusCode'] == 200) {
@@ -134,23 +134,23 @@ export class SecondaryOrderAddComponent implements OnInit {
   }
   
   get_product_details(id) {
-    this.data.brand = '';
-    this.data.color = '';
+    // this.data.brand = '';
+    // this.data.color = '';
     this.loader=true
-    this.serve.post_rqst({ 'product_id': id, 'order_type': 'secondary', 'brand': this.dr_detail.brand }, "Order/segmentItemsDetails")
+    this.serve.post_rqst({ 'product_id': id, 'order_type': 'secondary'}, "Order/segmentItemsDetails")
     .subscribe(resp => {
       
       if (resp['statusCode'] == 200) {
         this.loader=false
         this.product_detail = resp['result'];
-        this.brandList = this.product_detail['brand'];
-        this.colorList = this.product_detail['color'];
-        if (this.brandList.length == 1) {
-          this.data.brand = this.brandList[0];
-        }
-        if (this.colorList.length == 1) {
-          this.data.color = this.colorList[0];
-        }
+        // this.brandList = this.product_detail['brand'];
+        // this.colorList = this.product_detail['color'];
+        // if (this.brandList.length == 1) {
+        //   this.data.brand = this.brandList[0];
+        // }
+        // if (this.colorList.length == 1) {
+        //   this.data.color = this.colorList[0];
+        // }
         
       } else {
         this.toast.errorToastr(resp['statusMsg'])
@@ -213,8 +213,8 @@ export class SecondaryOrderAddComponent implements OnInit {
         
         if (this.product_data.length < 1) {
           this.data.product_id = '';
-          this.data.brand = '';
-          this.data.color = '';
+          // this.data.brand = '';
+          // this.data.color = '';
           this.toast.errorToastr(resp['statusMsg']);
         }
         this.addToListButton = true;
@@ -290,7 +290,7 @@ export class SecondaryOrderAddComponent implements OnInit {
       console.log(this.product_data[i]['product_price'] > this.product_data[i]['sec_net_price']);
       
       if (this.product_data[i]['qty'] && this.product_data[i]['product_price']) {
-        let existIndex = this.add_list.findIndex(row => (row.product_id == this.product_data[i]['product_id'] && row.brand == this.data.brand && row.color == this.data.color));
+        let existIndex = this.add_list.findIndex(row => (row.product_id == this.product_data[i]['product_id']));
         if (existIndex != -1) {
           this.add_list.splice(existIndex, 1)
         }
@@ -299,8 +299,8 @@ export class SecondaryOrderAddComponent implements OnInit {
         this.product_data[i]['segment_id'] = this.product_detail.category_id;
         this.product_data[i]['segment_name'] = this.product_detail.category;
         this.product_data[i]['amount'] = parseFloat(this.product_data[i]['qty']) * parseFloat(this.product_data[i]['net_price']);
-        this.product_data[i]['color'] = this.data.color;
-        this.product_data[i]['brand'] = this.data.brand;
+        // this.product_data[i]['color'] = this.data.color;
+        // this.product_data[i]['brand'] = this.data.brand;
         this.product_data[i]['discount_amount'] = parseFloat(this.product_data[i]['discounted_price']) * parseFloat(this.product_data[i]['qty']);
         this.product_data[i]['discounted_price'] = parseFloat(this.product_data[i]['discounted_price']);
         // this.add_list.push(this.product_data[i]);
@@ -353,8 +353,8 @@ export class SecondaryOrderAddComponent implements OnInit {
       this.new_grand_total = parseFloat(this.netamount)
       
     }
-    this.data.brand = '';
-    this.data.color = '';
+    // this.data.brand = '';
+    // this.data.color = '';
     this.product_data = [];
     this.data.product_id = {};
     this.addToListButton = true;
@@ -400,8 +400,8 @@ export class SecondaryOrderAddComponent implements OnInit {
     this.data.product_id = '';
     this.product_data = [];
     this.add_list = [];
-    this.brandList = [];
-    this.colorList = [];
+    // this.brandList = [];
+    // this.colorList = [];
   }
   
   

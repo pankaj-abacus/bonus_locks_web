@@ -1440,7 +1440,7 @@
                                         <table>
                                             <tr>
                                                 <th class="w50">S.No.</th>
-                                                <th>Brand</th>
+                                                <th class="w120">Brand</th>
                                                 <th class="w120 text-right">Target (in Lakhs)</th>
                                                 <th class="w100 text-right">Achieved</th>
                                                 <th class="w85 text-center">Achieved %</th>
@@ -1457,7 +1457,7 @@
                                             <ng-container *ngIf="!targetLoader">
                                                 <tr *ngFor="let row of target_list; let i =index">
                                                     <td class="w50">{{i+1}}</td>
-                                                    <td>{{row.brand_name+'-'+row.brand_code}}</td>
+                                                    <td class="w120">{{row.brand_name+'-'+row.brand_code}}</td>
                                                     <td class="w120 text-right"><strong>&#x20B9; {{row.value}}</strong>
                                                     </td>
                                                     <td class="w100 text-right Approve"><strong>&#x20B9; {{row.achieved | number:'1.0-1'}}</strong>
@@ -1474,7 +1474,10 @@
                                                     <td class="w50">
                                                         <div>&nbsp;</div>
                                                     </td>
-                                                    <td class="w100 text-center">
+                                                    <td class="w120 text-center">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td class="w120">
                                                         <div>&nbsp;</div>
                                                     </td>
                                                     <td class="w100">
