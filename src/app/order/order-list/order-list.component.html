@@ -77,9 +77,9 @@
           <table>
             <tr>
               <th class="w50">S NO</th>
-              <th class="w110">Date</th>
-              <th class="w110">Created By</th>
-              <th class="w80">Order Id</th>
+              <th class="w140">Date</th>
+              <th class="w150">Created By</th>
+              <th class="w100">Order Id</th>
               <!-- <th class="w110" *ngIf="active_tab == 'Approved' || active_tab == 'Dispatch'">Order Number</th> -->
               <th class="w200">Company Details</th>
               <th class="w100">Account Code</th>
@@ -99,8 +99,8 @@
         <div class="table-head border-top">
           <table>
             <tr>
-              <th class="w50">&nbsp;</th>
-              <th class="w110">
+              <th class="w50 text-center">&nbsp;</th>
+              <th class="w140">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input">
                     <input matInput [matDatepicker]="picker2" placeholder="Date" name="date_created"
@@ -110,7 +110,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w110">
+              <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input">
                     <input matInput placeholder="Search" name="created_by_name" [(ngModel)]="search_val.created_by_name"
@@ -118,7 +118,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w80">
+              <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input">
                     <input matInput placeholder="Search" name="order_id" [(ngModel)]="search_val.order_id"
@@ -175,10 +175,10 @@
             <ng-container *ngIf="!loader">
               <tr *ngFor="let row of tmp_orderlist; let i =index;"
                 [ngClass]="{'Current': serve.currentUserID == row.id}">
-                <td class="w50">{{ i + 1 + sr_no }}</td>
-                <td class="w110">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
-                <td class="w110">{{row.created_by_name}}</td>
-                <td class="w80"><a class="link-btn" (click)="serve.setData(search_val)"
+                <td class="w50 text-center">{{ i + 1 + sr_no }}</td>
+                <td class="w140">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
+                <td class="w150">{{row.created_by_name}}</td>
+                <td class="w100"><a class="link-btn" (click)="serve.setData(search_val)"
                     [routerLink]="[ 'order-detail/', row.id ]" [queryParams]="{'id':row.id, 'status':active_tab}"
                     routerLinkActive="active">{{row.order_no}}</a></td>
                 <!-- <td class="w110" *ngIf="active_tab == 'Approved' || active_tab == 'Dispatch'">{{row.account_order_no}}
@@ -210,13 +210,13 @@
                 <td class="w50">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w110 text-center">
+                <td class="w140 text-center">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w110">
+                <td class="w150">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w80">
+                <td class="w100">
                   <div>&nbsp;</div>
                 </td>
                 <!-- <td *ngIf="active_tab == 'Approved' || active_tab == 'Dispatch'" class="w110">
