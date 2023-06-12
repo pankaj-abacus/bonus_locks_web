@@ -8,7 +8,7 @@
             <button mat-icon-button  matTooltip="Refresh" (click)="refresh('refresh',active_tab)">
                 <i class="material-icons">refresh</i>
             </button>
-            <div class="pagination" *ngIf="((active_tab== 'Dispatched' || active_tab== 'Pending Dispatch') && (distributor_list.length > 0)) || (gate_pass_list &&gate_pass_list.length > 0) ||  returnData && returnData.length > 0">
+            <div class="pagination" *ngIf="((active_tab== 'Dispatched' || active_tab== 'Complete Dispatch' || active_tab== 'Pending Dispatch') && (distributor_list.length > 0)) || (gate_pass_list &&gate_pass_list.length > 0) ||  returnData && returnData.length > 0">
                 <div class="pagination-content">
                     Pages
                     <span>{{pagenumber}}</span>
@@ -32,32 +32,43 @@
                         <i class="material-icons">pending_actions</i>Pending {{pendingDispatchCount > 0 ? '(' + pendingDispatchCount + ')' : ''}}
                     </button>
                 </ng-container>
+
+                <ng-container *ngIf="assign_login_data2.id != '1' && assign_login_data2.view_dispatch_packing== '1' && assign_login_data2.add_dispatch_packing== '1'">
+                    <button mat-button [ngClass]="{'active' :active_tab== 'Complete Dispatch'}" (click)="active_tab= 'Complete Dispatch'; billData('');">
+                        <i class="material-icons">fact_check</i>Complete Dispatch
+                    </button>
+                </ng-container>
+
+
                 <ng-container *ngIf="assign_login_data2.id== '1' || (assign_login_data2.view_dispatch_billing== '1' && assign_login_data2.add_dispatch_billing== '1')">
                     <button mat-button [ngClass]="{'active' :active_tab== 'Dispatched'}" (click)="active_tab= 'Dispatched'; billData('');">
                         <i class="material-icons">newspaper</i>Pending Gatepass {{dispatchCount > 0 ? '(' + dispatchCount + ')' : ''}}
                     </button>
                 </ng-container>
+
+                
                 
                 <ng-container *ngIf="assign_login_data2.id== '1' || (assign_login_data2.view_dispatch_guard== '1' && assign_login_data2.add_dispatch_guard== '1')">
                     <button mat-button [ngClass]="{'active' :active_tab== 'Pending Gatepass'}" (click)="active_tab= 'Pending Gatepass'; getGeatePass(''); ">
                         <i class="material-icons">done_all</i> Gatepass Generated {{pendingGatepassCount > 0 ? '(' + pendingGatepassCount + ')' : ''}}
                     </button>
                 </ng-container>
-                <ng-container *ngIf="assign_login_data2.id== '1' || (assign_login_data2.view_dispatch_packing== '1' && assign_login_data2.add_dispatch_packing== '1')">
+                <ng-container *ngIf="assign_login_data2.id== '1' || (assign_login_data2.view_dispatch_guard== '1' && assign_login_data2.add_dispatch_guard== '1')">
                     <button mat-button [ngClass]="{'active' :active_tab== 'Dispatch Gatepass'}" (click)="active_tab= 'Dispatch Gatepass'; getGeatePass(''); ">
                         <i class="material-icons">local_shipping</i>Dispatched {{dispatchGatepassCount > 0 ? '(' + dispatchGatepassCount + ')' : ''}}
                     </button>
                 </ng-container>
-                
-                <!-- <button mat-button [ngClass]="{'active' :active_tab== 'Sales Retun'}" (click)="active_tab= 'Sales Retun'; refresh('refresh',active_tab); getSalesReturn(''); "><i class="material-icons">update</i>Sales Return</button> -->
             </div>
         </div>
         
     </div>
+
+
     
     <div class="container pb100">
-        
-        <ng-container *ngIf="active_tab == 'Pending Dispatch' ||  active_tab == 'Dispatched'">
+
+        <ng-container *ngIf="active_tab == 'Pending Dispatch' ||  active_tab == 'Dispatched' || active_tab == 'Complete Dispatch'">
+
             <div class="cs-table">
                 <div class="sticky-head">
                     <div class="table-head">
@@ -91,6 +102,7 @@
                                     </div>
                                 </th>
                                 <th class="w150">
+                                    <ng-container *ngIf="assign_login_data2.id == '1'">
                                     <div class="th-search-acmt" [ngClass]="{'error-block' :organizationFlag== true}">
                                         <mat-form-field class="cs-input select-input">
                                             <mat-select (selectionChange)="billData('')" placeholder="Organization Name" name="organisation_name"  #organisation_name="ngModel" [(ngModel)]="filter.organisation_name">
@@ -99,6 +111,7 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
+                                    </ng-container>
                                 </th>
                                 <th class="w60">
                                     <div class="th-search-acmt">
@@ -143,7 +156,7 @@
                                     <td class="w60">{{row.date_created | date:'dd MMM yyyy , h:mm a'}}</td>
                                     <td class="w150">{{row.organisation_name ? row.organisation_name : '--'}}</td>
                                     <td class="w60"><a class="link-btn" (click)="serve.setData(this.filter)" [routerLink]="[ 'dispacth-detail/', row.id ]" [queryParams]="{'id':row.id}">{{row.order_no}}</a></td>
-                                    <td class="w200">{{row.customer_name | titlecase}} - {{row.contact_person_name | titlecase}} <strong>({{row.mobile}})</strong> </td>
+                                    <td class="w200">{{row.customer_name | titlecase}}<ng-container *ngIf="assign_login_data2.id== '1'"> - {{row.contact_person_name | titlecase}} <strong>({{row.mobile}})</strong> </ng-container></td>
                                     <td class="w80">{{row.dr_code}}</td>
                                     <td class="w60 text-center">{{row.order_item}}</td>
                                     <td class="w60 text-center">{{row.total_order_qty}}</td>
@@ -188,7 +201,7 @@
                                 <th class="w100">Mobile No.</th>
                                 <th class="w120">Vehicle Number</th>
                                 <th class="w200">Transportation Mode</th>
-                                <th class="w130">Builty Number</th>
+                                <th class="w130">Bilty Number</th>
                                 <th class="w100 text-center">Action</th>
                             </tr>
                         </table>
@@ -296,7 +309,7 @@
                                     <td class="w100 text-center">
                                         <div class="action-button">
                                             <button (click)="serve.setData(this.filter)" *ngIf="active_tab == 'Pending Gatepass'" mat-icon-button  matTooltip="View"  [routerLink]="[ 'gatepass-scanning/', row.id ]" [queryParams]="{'id':row.id}">
-                                                <i class="material-icons edit">print</i>
+                                                <i class="material-icons edit">visibility</i>
                                             </button>
                                             <button *ngIf="active_tab == 'Dispatch Gatepass'" mat-icon-button  matTooltip="View" (click)="getDetails(row.id, 'detail')" >
                                                 <i class="material-icons edit">visibility</i>

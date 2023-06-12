@@ -97,7 +97,6 @@ export class HeaderComponent implements OnInit {
       if (result) {
         this.session.LogOutSession();
         this.router.navigate(['']);
-        window.location.reload();
       }
     });
 
