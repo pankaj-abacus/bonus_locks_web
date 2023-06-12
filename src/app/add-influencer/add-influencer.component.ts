@@ -82,6 +82,7 @@ export class AddInfluencerComponent implements OnInit {
         public toast:ToastrManager,
         public session: sessionStorage,
         private http: HttpClient) {
+            this.data.country = 'india';
             this.getStateList();
             this.route.queryParams.subscribe(params => {
                 this.uploadurl = this.service.uploadUrl + 'influencer_doc/'
