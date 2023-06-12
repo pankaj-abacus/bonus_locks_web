@@ -109,7 +109,7 @@ export class RedeemStatusModalComponent implements OnInit {
     if(status == 'Approved'){
       this.alert.confirm('Are you sure ?').then((result) => {
         if (result) {
-          this.serve.post_rqst({ 'status': status, 'influencer_id': Number(this.data.id),'welcome_bonus_flag': Number(this.data.welcome_bonus_flag), 'created_by':Number(this.userId) ,'distributor_id':this.data.distributor_id,'referred_by':this.data.referred_by_id,'name':this.data.name,'influencer_type':this.data.influencer_type}, "Influencer/influencerStatusChange").subscribe((result => {
+          this.serve.post_rqst({ 'status': status, 'influencer_id': Number(this.data.id),'welcome_bonus_flag': Number(this.data.welcome_bonus_flag), 'created_by':Number(this.userId) ,'distributor_id':this.data.distributor_id,'referred_by':this.data.referred_by_id,'name':this.data.name,'influencer_type':this.data.influencer_type, 'service':this.data.service}, "Influencer/influencerStatusChange").subscribe((result => {
             if (result['statusCode'] == 200) {
               this.dialogRef.close(true);
               this.savingFlag = false;
