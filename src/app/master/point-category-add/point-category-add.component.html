@@ -69,6 +69,17 @@
 
                   <div class="col s12 m3 l3">
                     <mat-form-field appearance="outline">
+                      <mat-label>Sales Boy Point</mat-label>
+                      <input matInput placeholder="Type Here ..." name="saleboy_point" #saleboy_point="ngModel"
+                        [(ngModel)]="data.saleboy_point"
+                        onkeypress="return event.charCode>=48 && event.charCode<=57">
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="saleboy_point.touched || f.submitted">
+                      <p *ngIf="saleboy_point.errors?.required">This field is required</p>
+                    </div>
+                  </div>
+                  <!-- <div class="col s12 m3 l3">
+                    <mat-form-field appearance="outline">
                       <mat-label>Dealer Point</mat-label>
                       <input matInput placeholder="Type Here ..." name="influencer_transfer_point"
                         #influencer_transfer_point="ngModel" [(ngModel)]="data.influencer_transfer_point"
@@ -77,7 +88,7 @@
                     <div class="alert alert-danger" *ngIf="influencer_transfer_point.touched || f.submitted">
                       <p *ngIf="influencer_transfer_point.errors?.required">This field is required</p>
                     </div>
-                  </div>
+                  </div> -->
                 </ng-container>
               </div>
             </div>

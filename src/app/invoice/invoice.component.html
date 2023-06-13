@@ -188,10 +188,10 @@
     </button>
     <mat-menu #menu="matMenu">
 
-      <!-- <button mat-menu-item (click)="upload_excel('insert');" *ngIf="assign_login_data2.import_accounts=='1'  || assign_login_data2.import_payment=='1' ">
+      <button mat-menu-item (click)="upload_excel('insert');" *ngIf="assign_login_data2.import_accounts=='1'  || assign_login_data2.import_payment=='1' ">
         <mat-icon>cloud_upload</mat-icon>
         <span>Upload New Data</span>
-      </button> -->
+      </button>
       <button mat-menu-item  (click)="exportAsXLSX(OrderMonth, OrderYear)" *ngIf="payment_list.length > 0 && (assign_login_data2.export_accounts=='1' || assign_login_data2.export_payment=='1')">
         <mat-icon>download</mat-icon>
         <span>Download in excel</span>

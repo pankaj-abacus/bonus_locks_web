@@ -48,7 +48,7 @@
                   Carpenter Point
                 </ng-container>
               </th>
-              <th class="w120 text-center" *ngIf="active_tab == 'Item Box'">Dealer Point</th>
+              <th class="w120 text-center" *ngIf="active_tab == 'Item Box'">Sales Boy Point</th>
               <th class="w60   text-center"
                 *ngIf="logined_user_data.edit_point_master=='1' || logined_user_data.delete_point_master=='1'">Action
               </th>
@@ -103,7 +103,7 @@
                   </ng-container>
                 </td>
                 <td class="w120 text-center" *ngIf="active_tab == 'Item Box'">
-                  <strong>{{row.influencer_transfer_point}}</strong>
+                  <strong>{{row.saleboy_point}}</strong>
                 </td>
                 <td class="w60 text-center"
                   *ngIf="logined_user_data.edit_point_master=='1' || logined_user_data.delete_point_master=='1'">

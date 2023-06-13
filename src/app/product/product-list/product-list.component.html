@@ -41,8 +41,8 @@
               <th class="w150">Sub Category</th>
               <th class="w250">Product Name</th>
               <th class="w100">Product Code</th>
-              <th class="w100">Brand</th>
-              <th class="w100">Color</th>
+              <!-- <th class="w100">Brand</th> -->
+              <!-- <th class="w100">Color</th> -->
               <th class="w120">Point Category</th>
               <th class="w120">Mrp</th>
               <th class="w100 text-center" *ngIf="logined_user_data.edit_products_master=='1'">Status</th>
@@ -107,7 +107,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
+              <!-- <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="brand" (keyup.enter)="getProductList('')"
@@ -122,7 +122,7 @@
                       #color="ngModel" [(ngModel)]="filter_data.color">
                   </mat-form-field>
                 </div>
-              </th>
+              </th> -->
               <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field>
@@ -166,8 +166,8 @@
                 <td class="w250"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                     routerLink="product-detail/{{(row.id)}}" routerLinkActive="active"> {{row.product_name}}</a></td>
                 <td class="w100">{{row.product_code && row.product_code!=''? row.product_code:'--'}}</td>
-                <td class="w100 one-line" matTooltip={{row.brand}}>{{row.brand && row.brand!=''? row.brand:'--'}}</td>
-                <td class="w100 one-line" matTooltip={{row.color}}>{{row.color && row.color!=''? row.color:'--'}}</td>
+                <!-- <td class="w100 one-line" matTooltip={{row.brand}}>{{row.brand && row.brand!=''? row.brand:'--'}}</td> -->
+                <!-- <td class="w100 one-line" matTooltip={{row.color}}>{{row.color && row.color!=''? row.color:'--'}}</td> -->
                 <td class="w120 one-line" matTooltip={{row.point_category_name}}>{{row.point_category_name &&
                   row.point_category_name!=''? row.point_category_name:'--'}}</td>
                 <td class="w120 one-line" matTooltip={{row.mrp}}>{{row.mrp && row.mrp!=''? row.mrp:'--'}}</td>
@@ -210,12 +210,12 @@
                 <td class="w100">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100">
+                <!-- <td class="w100">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w100">
                   <div>&nbsp;</div>
-                </td>
+                </td> -->
                 <td class="w120">
                   <div>&nbsp;</div>
                 </td>

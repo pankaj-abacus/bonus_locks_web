@@ -46,6 +46,7 @@ export class SecondaryOrderListComponent implements OnInit {
   monthNames: string[];
   totalData: any = {};
   OrderMonth: any;
+  downloadLoader:any=false;
   OrderYear: any;
   downurl: any = '';
   constructor(public serve: DatabaseService, public location: Location, public navparams: ActivatedRoute, private bottomSheet: MatBottomSheet,
@@ -290,17 +291,19 @@ export class SecondaryOrderListComponent implements OnInit {
 
 
   exportAsXLSX(month, year) {
-    this.loader = true;
+    this.downloadLoader = true;
     this.serve.post_rqst({ 'start': this.start, 'pagelimit': this.page_limit, 'search': this.search_val, 'login_user': this.login_dr_id, 'month': month, 'year': year }, "Excel/secondary_order_list")
-      .subscribe((result => {
+      .subscribe(result => {
         if (result['msg'] == true) {
-          this.loader = false;
+          this.downloadLoader = false;
           window.open(this.downurl + result['filename'])
           this.orderList('', this.OrderMonth, this.OrderYear);
         } else {
-          this.loader = false;
+          this.downloadLoader = false;
         }
-      }));
+      }, ()=>{
+        this.downloadLoader = false;
+      });
   }
 
   openBottomSheet(): void {

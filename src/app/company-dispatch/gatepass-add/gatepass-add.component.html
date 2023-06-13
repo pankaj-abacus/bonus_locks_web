@@ -125,7 +125,7 @@
                 <tr *ngFor="let row of gatePassAssign; let i=index;">
                   <td class="w60 text-center">{{i+1}}</td>
                   <td class="w100">{{row.date_created | date:'dd MMM yyyy'}}</td>
-                  <td>{{row.customer_name}}</td>
+                  <td>{{row.company_name}}</td>
                   <!-- <td class="w120">{{row.bill_dispatch_type}}</td> -->
                   <td class="w120">{{row.order_no}}</td>
                 </tr>
@@ -252,15 +252,14 @@
   </div>
   
   <div  id="print_card" hidden>
-    <h2 style="font-size: 20px;  text-align: center; margin: 16px 0px;">PEARL PRECISION PRODUCTS PVT. LTD.</h2>
-    <p style="font-size: 12px; text-align: center; margin: 10px 0px;" *ngIf="logined_user_data.address">{{logined_user_data.address}}</p>
+    <h2 style="font-size: 20px;  text-align: center; margin: 16px 0px;">{{company_name}}</h2>
+    <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Invoice No.</strong> : {{gatePassDetail.invoice_number}}</p>
     <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Generate Date</strong> : {{gatePassDetail.date_created | date}}</p>
     <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Gatepass Number</strong> : {{gatePassDetail.gate_pass_no}}</p>
     <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Delivery Person</strong> : {{gatePassDetail.delivery_boy_name}}</p>
     <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Mobile No.</strong> : {{gatePassDetail.mobile_number}}</p>
     <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Vehicle Number</strong> : {{gatePassDetail.vehicle_number}}</p>
     <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Transportation Mode</strong> : {{gatePassDetail.transportation_mode}}</p>
-    <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Invoice No.</strong> : {{gatePassDetail.invoice_number}}</p>
     
     <table style=" width: 100%; table-layout: fixed; border-collapse: collapse;">
       <tr>
@@ -271,8 +270,8 @@
       </tr>
       <tr *ngFor="let row of gatePassDetail.invoice;">
         <td style="font-size: 13px; padding: 10px 16px;">{{row.date_created | date:'d MMM y'}}</td>
-        <td style="font-size: 13px; padding: 10px 16px;">{{row.customer_name}}</td>
-        <td style="font-size: 13px; padding: 10px 16px;">{{row.order_no}}</td>
+        <td style="font-size: 13px; padding: 10px 16px;">{{row.customer_name  ? (row.customer_name | titlecase) : ''}}</td>
+        <td style="font-size: 13px; padding: 10px 16px;">{{row.invoice_number}}</td>
         <td style="font-size: 13px; padding: 10px 16px; text-align:center">{{row.total_order_qty}}</td>
       </tr>
     </table>

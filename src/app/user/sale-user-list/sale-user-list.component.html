@@ -1,4 +1,4 @@
-<div class="main-container">
+ <div class="main-container">
     <div class="tools-container">
         <div class="mat-tabbar">
             <button mat-button [ngClass]="userType == 'Sales User' ? 'active' : ''"
@@ -162,7 +162,7 @@
                                 <div class="th-search-acmt">
                                     <mat-form-field>
                                         <input type="text" matInput placeholder="Search ..."
-                                            (keyup.enter)="getUserList(userType)" [(ngModel)]="filter.assign_user_code">
+                                            (keyup.enter)="getUserList(userType)" [(ngModel)]="filter.last_updated_by_name">
                                     </mat-form-field>
                                 </div>
                             </th>
@@ -170,7 +170,7 @@
                                 <div class="th-search-acmt">
                                     <mat-form-field>
                                         <input type="text" matInput placeholder="Search ..."
-                                            (keyup.enter)="getUserList(userType)" [(ngModel)]="filter.assign_user_code">
+                                            (keyup.enter)="getUserList(userType)" [(ngModel)]="filter.last_updated_on">
                                     </mat-form-field>
                                 </div>
                             </th>

@@ -143,15 +143,15 @@ get_product_Size(dr_id, product_id) {
       this.serve.post_rqst({ 'state_name': this.dr_detail.state, 'dr_id': dr_id, 'category_id': this.product_detail.category_id, 'gst_percent': this.gst, 'product_id':product_id }, "Order/segmentItemPriceWithoutFeatures")
           .subscribe(resp => {
               if (resp['statusCode'] == 200) {
-                this.loader=false
-                  this.product_resp = true
-                  this.product_list = resp['result'];
-
-                  if (this.product_list.length > 0) {
-                      for (let i = 0; i < this.product_list.length; i++) {
-                          this.product_list[i].edit_true = false;
-                      }
+                this.product_resp = true
+                this.product_list = resp['result'];
+                
+                if (this.product_list.length > 0) {
+                  for (let i = 0; i < this.product_list.length; i++) {
+                    this.product_list[i].edit_true = false;
                   }
+                }
+                this.loader=false
               } else {
                 this.toast.errorToastr(resp['statusMsg'])
                   this.product_resp = false

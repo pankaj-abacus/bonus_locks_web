@@ -212,6 +212,8 @@ export class AddProductComponent implements OnInit {
 
 
   submit() {
+
+    this.data.brand = 'Bonus';
     if (this.data.small_packing_size=='1') {
       this.toast.errorToastr('Small Packing Size should not be 1');
       return;

@@ -160,6 +160,9 @@ export class TravelPlanDetailComponent implements OnInit {
     });
   }
 
+  back(): void {
+    this._location.back()
+}
 
   deleteCustomerNetwork(data) {
     this.alert.delete('Customer Network Detail !').then((result) => {
@@ -168,6 +171,9 @@ export class TravelPlanDetailComponent implements OnInit {
           if (result['statusCode'] == 200) {
             this.toast.successToastr(result['statusMsg']);
             this.travelDetail()
+            if(!this.cus_network.length){
+              this.back();
+            }
           }
           else {
             this.toast.errorToastr(result['statusMsg']);

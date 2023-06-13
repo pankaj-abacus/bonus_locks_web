@@ -114,6 +114,13 @@
             </li> -->
                 </ul>
             </li>
+
+            <li>
+                <a mat-button routerLink="/stock-list" routerLinkActive="active">
+                    <i class="material-icons ">shopping_cart</i>
+                    Stock
+                </a>
+            </li>
             <li
                 *ngIf="login_data.view_dispatch== '1' || login_data.view_dispatch_packing== '1' || login_data.view_dispatch_billing == '1' || login_data.view_dispatch_guard== '1' ">
                 <a mat-button routerLink="/company-dispatch" (click)="toggleDropdown(0);clearFilter()"
@@ -291,12 +298,12 @@
                             Paytm Request
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a mat-button routerLink="/redeem-request/Khalti" routerLinkActive="active"
                             (click)="clearFilter()">
                             Khalti Request
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
 

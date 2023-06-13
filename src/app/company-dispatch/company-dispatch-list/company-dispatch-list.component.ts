@@ -151,7 +151,16 @@ export class CompanyDispatchListComponent implements OnInit {
     getCompanyData() {
       this.serve.post_rqst({}, "Order/organizationName").subscribe((response => {
         if (response['statusCode'] == 200) {
-          this.organisationData = response['result'];
+          if(this.assign_login_data2.assign_company == '1'){
+            this.filter.organisation_name = response['result']['0']['company_name'];
+          }
+          else if(this.assign_login_data2.assign_company == '2'){
+            this.filter.organisation_name = response['result']['1']['company_name'];
+          }
+          else{
+            this.organisationData = response['result'];
+          }
+
         } else {
           this.toast.errorToastr(response['statusMsg']);
         }
@@ -200,9 +209,10 @@ export class CompanyDispatchListComponent implements OnInit {
           if(this.active_tab == 'Pending Dispatch'){
             this.pageCount = result['pendingDispatch'];
           }
-          if(this.active_tab == 'Dispatched'){
+          if(this.active_tab == 'Dispatched' || this.active_tab == 'Complete Dispatch'){
             this.pageCount = result['dispatch'];
           }
+        
     
           if (this.pagenumber > this.total_page) {
             this.pagenumber = this.total_page;
@@ -253,8 +263,11 @@ export class CompanyDispatchListComponent implements OnInit {
           this.dispatchGatepassCount = result['dispatchGatepass']
           
           this.loader = false;
-          if(this.active_tab == 'Pending Gatepass' || this.active_tab == 'Dispatch Gatepass'){
-            this.pageCount = result['count'];
+          if(this.active_tab == 'Pending Gatepass'){
+            this.pageCount = result['pendingGatepass'];
+          }
+          if(this.active_tab == 'Dispatch Gatepass'){
+            this.pageCount = result['dispatchGatepass'];
           }
           // if(this.active_tab == 'Dispatch Gatepass'){
           //   this.pageCount = result['dispatchGatepass'];

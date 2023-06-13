@@ -125,21 +125,21 @@ export class GatepassAddComponent implements OnInit {
   
   
   gatePassDetail :any ={};
+  company_name:any
   getDetails() {
     this.skLoading = true;
     this.service.post_rqst({ 'id': this.modalData.gatepass_id}, "Dispatch/getGatePassDetail").subscribe((result => {
       if(result['statusCode']==200){
         this.gatePassDetail = result['result'];
-        
         if(this.modalData.model_type == 'update'){
           this.data = this.gatePassDetail;
           this.data.delivery_boy_id = this.data.delivery_boy_id.toString();
           this.gatePassAssign = this.data.invoice;
-          // if(this.logined_user_data.id == '1'){
-          //   this.branchInfo();
-          // }
-          // this.driverInfo();
-          
+        }
+        if(this.modalData.model_type == 'detail'){
+          this.data = this.gatePassDetail;
+          this.gatePassAssign = this.data.invoice;
+          this.company_name = this.gatePassAssign[0]['company_name'];
         }
         this.skLoading = false;
       }else{
