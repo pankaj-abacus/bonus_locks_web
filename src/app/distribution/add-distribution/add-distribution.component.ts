@@ -61,8 +61,20 @@ export class AddDistributionComponent implements OnInit {
     myDate: Date;
     userData: any;
     pageType: any;
-    
-    
+    front_img_id:any;
+    back_img_id:any;
+    pan_img_id:any;
+    bank_img_id:any;
+    uploadurl:any;
+    panBase64:boolean = false;
+    bankImgBase64:boolean = false;
+    docFrontBase64:boolean = false;
+    docBackBase64:boolean = false;
+    document_image :any;
+    document_image_back :any;
+    pan_img :any;
+    image_id:any;
+    image = new FormData();
     
     constructor(
         public service: DatabaseService,
@@ -235,6 +247,99 @@ export class AddDistributionComponent implements OnInit {
             }
         }
         
+        AdhaarNumber(event: any) {
+            const pattern = /^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
+            let inputChar = String.fromCharCode(event.charCode);
+            if (event.keyCode != 8 && !pattern.test(inputChar)) { event.preventDefault(); }
+            
+        }
+        Adhr_frnt_Upload(data: any)
+        {
+            for(let i=0;i<data.target.files.length;i++)
+            {
+                let files = data.target.files[i];
+                if (files) 
+                {
+                    let reader = new FileReader();
+                    this.docFrontBase64 = true;
+                    reader.onload = (e: any) => {
+                        this.front_img_id = '';
+                        this.data.document_image = e.target.result
+                    }
+                    reader.readAsDataURL(files);
+                }
+                else{
+                    this.docFrontBase64 = false;
+                }
+                this.image.append(""+i,data.target.files[i],data.target.files[i].name);
+            }
+        }
+        Adhr_bck_Upload(data: any)
+        {
+            for(let i=0;i<data.target.files.length;i++)
+            {
+                let files = data.target.files[i];
+                if (files) 
+                {
+                    this.back_img_id = '';
+                    this.docBackBase64 = true;
+                    let reader = new FileReader();
+                    reader.onload = (e: any) => {
+                        this.data.document_image_back = e.target.result
+                    }
+                    reader.readAsDataURL(files);
+                }
+                else{
+                    this.docBackBase64 = false;
+                }
+                this.image.append(""+i,data.target.files[i],data.target.files[i].name);
+            }
+        }
+        Pan_Upload(data: any)
+        {
+            for(let i=0;i<data.target.files.length;i++)
+            {
+                
+                let files = data.target.files[i];
+                if (files) 
+                {
+                    this.pan_img_id = '';
+                    this.panBase64 = true;
+                    let reader = new FileReader();
+                    reader.onload = (e: any) => {
+                        this.data.pan_img = e.target.result
+                    }
+                    reader.readAsDataURL(files);
+                }
+                else{
+                    this.panBase64 = false;
+                }
+                this.image.append(""+i,data.target.files[i],data.target.files[i].name);
+            }
+        }
+        bankImg_Upload(data: any)
+        {
+            for(let i=0;i<data.target.files.length;i++)
+            {
+                
+                let files = data.target.files[i];
+                if (files) 
+                {
+                    this.bank_img_id = '';
+                    this.bankImgBase64 = true;
+                    let reader = new FileReader();
+                    reader.onload = (e: any) => {
+                        this.data.bank_img = e.target.result
+                    }
+                    reader.readAsDataURL(files);
+                }
+                else{
+                    this.bankImgBase64 = false;
+                }
+                this.image.append(""+i,data.target.files[i],data.target.files[i].name);
+            }
+        }
+        
         getItemsList(search) {
             this.asmList = [];
             for (var i = 0; i < this.tmp_userList.length; i++) {
@@ -284,17 +389,17 @@ export class AddDistributionComponent implements OnInit {
             
             this.ass_user = this.rsm
         }
-               
-    getBrand() {
+        
+        getBrand() {
             this.service.post_rqst({}, "CustomerNetwork/brandList").subscribe((result => {
                 if(result['statusCode'] ==  200){
-                  this.brandList = result['result'];
+                    this.brandList = result['result'];
                 }
                 else{
-                  this.toast.errorToastr(result['statusMsg'])
+                    this.toast.errorToastr(result['statusMsg'])
                 }
-              }))
-      }
+            }))
+        }
         product_Brand(value, index, event) {
             if (event.checked) {
                 this.brand.push(value);
@@ -356,7 +461,7 @@ export class AddDistributionComponent implements OnInit {
                 if (result['statusCode'] == 200) {
                     console.log(this.dr_type);
                     console.log(this.params_type);
-    
+                    
                     let state = this.data.state;
                     let id = this.data.id;
                     let type = this.params_type;

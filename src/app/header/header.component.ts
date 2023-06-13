@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
     console.log(this.type);
     this.dr_type = data.type
     console.log(this.dr_type);
-    if (this.type == 'Channel Partner' || this.type == 'Dealer' || this.type == 'Direct Dealers') {
+    if (this.type == 'Channel Partner' || this.type == 'Distributor' || this.type == 'Dealer' || this.type == 'Retailer' || this.type == 'Direct Dealers') {
       this.router.navigate(['/distribution-list/' + data.type + '/' + data.module_name + '/distribution-detail/' + this.id, { queryParams: { 'state': data.state, 'id': data.id, 'type': data.type } }])
     }
     else if(this.type == 'Customer' || this.type == 'Carpenter') {

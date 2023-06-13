@@ -98,12 +98,12 @@
                         class="material-icons ">receipt_long</i> Accounts </a>
                 <ul>
                     <li *ngIf=" login_data.view_invoice=='1'">
-                        <a mat-button routerLink="/billing" routerLinkActive="active" (click)="clearFilter()">
+                        <a mat-button routerLink="/invoice" routerLinkActive="active" (click)="clearFilter()">
                             Ledger
                         </a>
                     </li>
                     <li *ngIf="login_data.view_payment=='1'">
-                        <a mat-button routerLink="/invoice" routerLinkActive="active" (click)="clearFilter()">
+                        <a mat-button routerLink="/billing" routerLinkActive="active" (click)="clearFilter()">
                             Invoice
                         </a>
                     </li>
