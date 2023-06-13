@@ -190,14 +190,14 @@
                                 </div>
 
 
-                                <div class="block-feilds" *ngIf="user_type != 1">
+                                <!-- <div class="block-feilds" *ngIf="user_type != 1">
                                     <span>Distributor Detail</span>
                                     <p>{{dr_detail.assign_distributors_company_name | titlecase}} -
                                         {{dr_detail.assign_distributors_mobile_no}}</p>
                                     <p
                                         *ngIf="!dr_detail.assign_distributors_company_name && !dr_detail.assign_distributors_mobile_no">
                                         ---</p>
-                                </div>
+                                </div> -->
 
                                 <div class="block-feilds">
                                     <span>Last Updated By</span>
@@ -237,6 +237,89 @@
                                 </div>
                             </div> -->
                         </div>
+
+                        <ng-container *ngIf="dr_detail.type == 3">
+                            <div class="card-head mt15">
+                              <h2>Document Details</h2>
+                            </div>
+                            <div class="card-body">
+                              <div class="grid-box">
+                                <div class="block-feilds">
+                                  <div class="doc-img">
+                                    <img src="assets/img/no_image.png" *ngIf="dr_detail.pan_img == ''">
+                                    <img *ngIf="dr_detail.pan_img" src="{{url+dr_detail.pan_img}}"
+                                      (click)="goToImage(url+dr_detail.pan_img)" style="cursor: zoom-in;">
+                                  </div>
+                                </div>
+                                <div class="block-feilds">
+                                  <span>Pan Number</span>
+                                  <p>{{dr_detail.pan_no ?dr_detail.pan_no :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                  <div class="doc-img">
+                                    <img src="assets/img/no_image.png" *ngIf="dr_detail.document_image == ''">
+                                    <img *ngIf="dr_detail.document_image" src="{{url+dr_detail.document_image}}"
+                                      (click)="goToImage(url+dr_detail.document_image)" style="cursor: zoom-in;">
+                                    <img src="assets/img/no_image.png" *ngIf="dr_detail.document_image_back == ''">
+                                    <img *ngIf="dr_detail.document_image_back"
+                                      src="{{url+dr_detail.document_image_back}}"
+                                      (click)="goToImage(url+dr_detail.document_image_back)" style="cursor: zoom-in;">
+                                  </div>
+                                </div>
+                                <div class="block-feilds">
+                                  <span>Document Number</span>
+                                  <p>{{dr_detail.adhar_no ? dr_detail.adhar_no : '---'}}</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card-head mt15">
+                              <h2>Bank Details</h2>
+                              <div class=""
+                              *ngIf="dr_detail.payout_kyc_status == 'Reject' && dr_detail.influencer_type == 'Carpenter'">
+                              <button matTooltip="Reset KYC Status" (click)="reset_status(dr_detail.id)" mat-raised-button
+                              color="primary">Reset KYC Status</button>
+                            </div>
+                
+                            </div>
+                
+                            <div class="card-body">
+                              <div class="grid-box">
+                                <div class="block-feilds">
+                                  <span>Bank Name</span>
+                                  <p>{{dr_detail.bank_name ? dr_detail.bank_name :'---'}}</p>
+                                </div>
+                
+                                <div class="block-feilds">
+                                  <span>Account Number</span>
+                                  <p>{{dr_detail.account_no ? dr_detail.account_no:'---'}}</p>
+                                </div>
+                
+                                <div class="block-feilds">
+                                  <span>IFSC Code</span>
+                                  <p>{{dr_detail.ifsc_code ? dr_detail.ifsc_code :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                  <div class="doc-img">
+                                    <img src="assets/img/no_image.png" *ngIf="dr_detail.bank_img == ''">
+                                    <img *ngIf="dr_detail.bank_img" src="{{url+dr_detail.bank_img}}"
+                                      (click)="goToImage(url+dr_detail.bank_img)" style="cursor: zoom-in;">
+                                  </div>
+                                </div>
+                                <div class="block-feilds">
+                                  <span>Account Holder Name</span>
+                                  <p>{{dr_detail.account_holder_name ? dr_detail.account_holder_name :'---'}}</p>
+                                </div>
+                
+                                <div class="block-feilds">
+                                  <span>KYC Status</span>
+                                  <p>{{dr_detail.payout_kyc_status ? dr_detail.payout_kyc_status :'---'}}</p>
+                                </div>
+                
+                
+                
+                              </div>
+                            </div>
+                          </ng-container>
                     </div>
 
 
