@@ -53,6 +53,7 @@ import { Crypto } from 'src/_Pipes/Crypto.pipe';
 import { NumericWords } from 'src/_Pipes/NumericWords.pipe';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ZingchartAngularModule } from 'zingchart-angular';
+import { ServiceModuleModule } from './service/service-module/service-module.module';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { ZingchartAngularModule } from 'zingchart-angular';
         DatePikerFormat,
         StrReplace,
         Crypto,
-        NumericWords
+        NumericWords,
+        
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -109,7 +111,8 @@ import { ZingchartAngularModule } from 'zingchart-angular';
         NgxBarcodeModule,
         NgxMatSelectSearchModule,
         NgMultiSelectDropDownModule.forRoot(),
-        AppUtilityModule
+        AppUtilityModule,
+        ServiceModuleModule
         // FusionChartsModule
     ],
     providers: [

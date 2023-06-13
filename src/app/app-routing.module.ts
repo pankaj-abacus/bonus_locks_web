@@ -42,6 +42,7 @@ const routes: Routes = [
   { path: "attendance", loadChildren:'./attendence/attendence-module/attendence.module#AttendenceModule'},
   {path:'billing',loadChildren:'./billing/billing-module/billing.module#BillingModule'},
   {path:'invoice',loadChildren:'./invoice/invoice-module/invoice.module#InvoiceModule'},
+  {path: 'stock-list', loadChildren: './stock/stockmodule/stockmodule.module#StockmoduleModule'},
   {path:'credit-notes',loadChildren:'./credit-notes/credit-notes-module/credit-notes.module#CreditNotesModule'},
   {path:'order-list',loadChildren:'./order/primary-order-module/primary-order.module#PrimaryOrderModule'},
   { path: "secondary-order-list",loadChildren:'./order/secondary-order-module/secondary-order.module#SecondaryOrderModule'},
@@ -60,6 +61,8 @@ const routes: Routes = [
   { path: "point-list", loadChildren:'./master/point-category-module/point-category.module#PointCategoryModule'},
   { path: "leave-master-list", loadChildren:'./master/leave-master/leave-master-module/leave-master/leave-master.module#LeaveMasterModule'},
   { path: "report-list", loadChildren:'./reports/reports-module/reports/reports.module#ReportsModule'},
+  { path: "complaint-list", loadChildren: './service/service-module/service-module.module#ServiceModuleModule'},
+
   { path: "point-master", loadChildren:'./point-master/point-master/point-master.module#PointMasterModule'},
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
 ];

@@ -51,7 +51,10 @@ export class InfluencerListComponent implements OnInit {
 
     this.ActivatedRoute.params.subscribe(params => {
       this.type = params.type;
+      console.log(this.type);     
       this.network = params.network;
+      console.log(this.network);
+      
       this.getRights();
 
 

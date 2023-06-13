@@ -4,11 +4,12 @@
       <i class="material-icons">arrow_back</i>
     </a>
     <h2>Gatepass Scannning</h2>
+    
     <div class="left-auto" *ngIf="enable">
       <button class="mr16" matTooltip="Print" 
       (click)="scanningSave(gatepassdetaildata.id)" mat-raised-button color="primary" [ngClass]="{'loading': savingFlag == true}" [disabled]="savingFlag == true">
       <i class="material-icons">print</i>
-      Print</button>
+      Print Gate Pass</button>
     </div>
   </div>
   
@@ -35,10 +36,7 @@
                 <p>{{gatepassdetaildata.invoice_number }}</p>
               </div>
               
-              <div class="block-feilds">
-                <span>E-Way bill No.</span>
-                <p>{{gatepassdetaildata.e-way_bill_no}}</p>
-              </div>
+             
               <div class="block-feilds">
                 <span>Driver Name</span>
                 <p>{{gatepassdetaildata.delivery_boy_name | titlecase }}</p>
@@ -55,10 +53,7 @@
                 <span>Transportation Mode</span>
                 <p>{{gatepassdetaildata.transportation_mode}}</p>
               </div>
-              <div class="block-feilds">
-                <span>Builty Number</span>
-                <p>{{gatepassdetaildata.reference_number}}</p>
-              </div>
+             
             </div>
             
           
@@ -155,7 +150,8 @@
 </div>
 
 <div  id="print_card" hidden>
-  <h2 style="font-size: 20px;  text-align: center; margin: 16px 0px;">PEARL PRECISION PRODUCTS PVT. LTD.</h2>
+  <h2 style="font-size: 20px;  text-align: center; margin: 16px 0px;">{{company_name}}</h2>
+  <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Invoice No.</strong> : {{gatepassdetaildata.invoice_number ? gatepassdetaildata.invoice_number :'---'}}</p>
   <p style="font-size: 12px; text-align: center; margin: 10px 0px;" *ngIf="logined_user_data.address">{{logined_user_data.address}}</p>
   <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Generate Date</strong> : {{gatepassdetaildata.date_created | date: 'd MMM y'}}</p>
   <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Gatepass Number</strong> : {{gatepassdetaildata.gate_pass_no}}</p>
@@ -163,10 +159,6 @@
   <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Mobile No.</strong> : {{gatepassdetaildata.mobile_number}}</p>
   <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Vehicle Number</strong> : {{gatepassdetaildata.vehicle_number}}</p>
   <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Transportation Mode</strong> : {{gatepassdetaildata.transportation_mode}}</p>
-  <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">POD Received</strong> : {{gatepassdetaildata.pod_received ? gatepassdetaildata.pod_received :'---'}}</p>
-  <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Invoice No.</strong> : {{gatepassdetaildata.invoice_number ? gatepassdetaildata.invoice_number :'---'}}</p>
-  <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">E-Way Bill No.</strong> : {{gatepassdetaildata.ev_bill_no ? gatepassdetaildata.ev_bill_no :'---'}}</p>
-  <p style="font-size: 13px; margin: 7px 0px; padding-left:16px;"><strong style="font-size: 13px;">Bilty Number</strong> : {{gatepassdetaildata.reference_number ? gatepassdetaildata.reference_number :'---'}}</p>
   <table style=" width: 100%; table-layout: fixed; border-collapse: collapse;">
     <tr>
       <td style="font-size: 13px; padding: 10px 16px; font-weight: 600; border-bottom: 1px solid #000; width: 120px;">Date Created</td>
@@ -178,7 +170,6 @@
       <td style="font-size: 13px; padding: 10px 16px;">{{row.date_created | date:'d MMM y'}}</td>
       <td style="font-size: 13px; padding: 10px 16px;">{{row.company_name}}</td>
       <td style="font-size: 13px; padding: 10px 16px;">{{row.bill_number}}</td>
-      <td style="font-size: 13px; padding: 10px 16px;">{{row.e-way_bill_no}}</td>
       <td style="font-size: 13px; padding: 10px 16px; text-align:center">{{row.order_item}}</td>
     </tr>
   </table>

@@ -99,7 +99,7 @@ export class AddDistributionComponent implements OnInit {
                     this.params_type = params['type'];
                     
                     
-                    
+                    console.log(params['pageType'])
                     if(params['pageType'] == 'edit'){
                         this.distributorDetail();
                         
@@ -140,6 +140,7 @@ export class AddDistributionComponent implements OnInit {
             this.service.post_rqst(id, "CustomerNetwork/distributorDetail").subscribe((result) => {
                 if (result['statusCode'] == 200) {
                     this.data = result['distributor_detail'];
+                    console.log(this.data.category)
                     if(this.data.type == 3){
                         this.data.distributor_id = this.data.distributors_id.toString();
                     }

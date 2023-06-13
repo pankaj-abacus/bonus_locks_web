@@ -77,7 +77,7 @@ export class StatusModalComponent implements OnInit {
   reason_reject: any
   primary_order_status_change(reason, status) {
     this.savingFlag = true;
-    this.serve.post_rqst({ 'reason': reason, 'status': status, 'id': this.data.order_id, 'organisation_name': this.data.organisation_name, 'action_by': this.login.data.id, 'uid': this.userId, 'uname': this.userName }, "Order/primaryOrderStatusChange").subscribe((result => {
+    this.serve.post_rqst({ 'reason': reason, 'status': status, 'id': this.data.order_id, 'organisation_id': this.data.organisation_id, 'action_by': this.login.data.id, 'uid': this.userId, 'uname': this.userName }, "Order/primaryOrderStatusChange").subscribe((result => {
       if (result['statusCode'] == 200) {
         this.dialog.closeAll();
         this.savingFlag = false;

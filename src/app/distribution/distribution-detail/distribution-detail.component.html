@@ -200,6 +200,26 @@
                                 </div> -->
 
                                 <div class="block-feilds">
+                                    <span>Category</span>
+                                    <p>{{dr_detail.category ? dr_detail.category :'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Transport</span>
+                                    <p>{{dr_detail.transport ? dr_detail.transport :'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Bank Name</span>
+                                    <p>{{dr_detail.bank_name ? dr_detail.bank_name :'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Security Check</span>
+                                    <p>{{dr_detail.security_Cheque ? dr_detail.security_Cheque :'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
                                     <span>Last Updated By</span>
                                     <p>{{dr_detail.last_updated_by_name ? dr_detail.last_updated_by_name : '--'}}</p>
                                 </div>
@@ -219,6 +239,7 @@
                                 </div>
                             </div>
 
+
                             <div class="grid-box single mt16">
                                 <div class="block-feilds">
                                     <span>Address</span>
@@ -229,6 +250,17 @@
                                         {{dr_detail.pincode?dr_detail.pincode+',':''}} </p>
                                 </div>
                             </div>
+
+                            <div class="grid-box single mt16">
+                                <div class="block-feilds">
+                                    <span>Address2</span>
+                                    <p>{{dr_detail.address_1?dr_detail.address_1+',':''}}</p>
+                                </div>
+                            </div>
+
+
+
+                            
 
                             <!-- <div class="grid-box single mt16">
                                 <div class="block-feilds">

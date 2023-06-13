@@ -139,6 +139,34 @@
                     <p *ngIf="boxWOItem.errors?.required">This field is required</p>
                   </div>
                 </div>
+                <div class="col s12 m3 l3">
+                  <mat-form-field  appearance="outline">
+                    <mat-label>Warranty In Months</mat-label>
+                    <mat-select  name="warranty_period" [(ngModel)]="data.warranty_period" #warranty_period="ngModel" required>
+                      <mat-option  value="6">6 Months</mat-option>
+                      <mat-option  value="12">12 Months</mat-option>
+                      <mat-option  value="18">18 Months</mat-option>
+                      <mat-option  value="24">24 Months</mat-option>
+                      <mat-option  value="30">30 Months</mat-option>
+                      <mat-option  value="36">36 Months</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="warranty_period.touched || f.submitted">
+                    <p *ngIf="warranty_period.errors?.required">This field is required</p>
+                  </div>
+                </div>
+                <div class="col s12 m3 l3">
+                  <mat-form-field  appearance="outline">
+                    <mat-label>Installation Responsibility</mat-label>
+                    <mat-select  name="installation_responsibility" [(ngModel)]="data.installation_responsibility" #installation_responsibility="ngModel" required>
+                      <mat-option  value="Customer">Customer</mat-option>
+                      <mat-option  value="Company">Company</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="installation_responsibility.touched || f.submitted">
+                    <p *ngIf="installation_responsibility.errors?.required">This field is required</p>
+                  </div>
+                </div>
               </div>
          
               <div class="row mb0">

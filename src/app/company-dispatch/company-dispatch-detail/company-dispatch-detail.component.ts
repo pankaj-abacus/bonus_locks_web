@@ -40,6 +40,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
   organisation_name:any;
   cartennumber:any;
   gatePassAssign:any =[];
+  assign_login_data2:any ={};
 
   constructor(public route:ActivatedRoute,public service:DatabaseService, public rout: Router,
     public dialog: MatDialog,public session:sessionStorage ,public dialogs:DialogComponent,public toast:ToastrManager) { 
@@ -49,6 +50,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
       this.data.created_by_name=this.userData['data']['name'];
       this.assign_login_data = this.session.getSession();
       this.logined_user_data = this.assign_login_data.value.data;
+      this.assign_login_data2 = this.assign_login_data.data;
       this.route.params.subscribe( params => {
         this.id = params.id;
       });
@@ -272,7 +274,6 @@ export class CompanyDispatchDetailComponent implements OnInit {
       {
         if (result['statusCode'] == 200){
           this.couponList= result['result'];
-          
         }
         else{
           this.toast.errorToastr(result['statusMsg']);
@@ -317,7 +318,6 @@ export class CompanyDispatchDetailComponent implements OnInit {
         
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
         if(result==true){
           this.billDatadetail();
         }
@@ -329,11 +329,12 @@ export class CompanyDispatchDetailComponent implements OnInit {
 
     printData(data,invoice): void
     {
+      
       this.service.post_rqst({ 'data':{'id': data.id,'bill_number':invoice} }, 'Dispatch/fetchMasterGrandCouponForPrint').subscribe((resp) => {
         if (resp['statusCode'] == 200) {
           this.printdata = resp['master_grand_coupon'];
-          
           if(this.printdata.length > 0){
+            this.masterQTY = 0;
             for (let i = 0; i < this.printdata.length; i++) {
               this.masterQTY += this.printdata[i]['totalItems']
             }

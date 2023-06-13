@@ -19,6 +19,7 @@ export class CouponCodeListComponent implements OnInit {
   filter: any = {};
   couponData: any = [];
   scanData: any = [];
+  scanDataSales: any = [];
   pageCount: any;
   total_page: any;
   page_limit: any = 500;
@@ -178,6 +179,59 @@ export class CouponCodeListComponent implements OnInit {
   }
 
 
+  scanCouponSalesList() {
+    this.loader = true;
+    if (this.pagenumber > this.total_page) {
+      this.pagenumber = this.total_page;
+      this.start = this.pageCount - this.page_limit;
+    }
+    if (this.start < 0) {
+      this.start = 0;
+    }
+
+    if (this.filter.date_created) {
+      this.filter.date_created = moment(this.filter.date_created).format('YYYY-MM-DD');
+    }
+    if (this.filter.dispatch_date) {
+      this.filter.dispatch_date = moment(this.filter.dispatch_date).format('YYYY-MM-DD');
+    }
+    if (this.filter.scanned_on) {
+      this.filter.scanned_on = moment(this.filter.scanned_on).format('YYYY-MM-DD');
+    }
+
+    this.filter.active_tab = this.active_tab;
+    this.service.post_rqst({ 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit }, '/CouponCode/scannedCouponCodeList').subscribe((resp) => {
+      if (resp['statusCode'] == 200) {
+        this.scanDataSales = resp['scanned_coupon_code_list']
+        this.pageCount = resp['count'];
+
+        this.loader = false;
+
+        if (this.pagenumber > this.total_page) {
+          this.pagenumber = this.total_page;
+          this.start = this.pageCount - this.page_limit;
+        }
+
+        else {
+          this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
+        }
+        this.total_page = Math.ceil(this.pageCount / this.page_limit);
+        this.sr_no = this.pagenumber - 1;
+        this.sr_no = this.sr_no * this.page_limit;
+
+        setTimeout(() => {
+          if (this.scanDataSales.length == 0) {
+            this.noResult = true;
+          }
+        }, 500);
+      }
+      else {
+        this.toast.errorToastr(resp['statusMsg']);
+      }
+
+    })
+  }
+
 
   lastBtnValue(value) {
     this.fabBtnValue = value;
@@ -192,6 +246,9 @@ export class CouponCodeListComponent implements OnInit {
 
     if (type == 'scan_item') {
       this.scanCouponList();
+    }
+    else if (type == 'scan_item_by_sales') {
+      this.scanCouponSalesList();
     }
     else {
       this.couponCodeList();

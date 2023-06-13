@@ -36,6 +36,7 @@ export class UserAddComponent implements OnInit {
   logined_user_data:any={};
   maxDate:any;
   brandList:any =[];
+  organisationData:any =[];
   
   constructor(public serve: DatabaseService, 
     public dialog1: MatDialog,
@@ -105,6 +106,17 @@ export class UserAddComponent implements OnInit {
           }
         }))
       }
+    }
+    
+    getCompanyData() {
+      this.serve.post_rqst({}, "Order/organizationName").subscribe((response => {
+        if (response['statusCode'] == 200) {
+          this.organisationData = response['result'];
+        } else {
+          this.toast.errorToastr(response['statusMsg']);
+        }
+  
+      }));
     }
     
     

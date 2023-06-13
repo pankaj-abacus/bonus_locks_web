@@ -113,15 +113,21 @@
                                     <span>Order Amount</span>
                                     <p>&#x20B9; {{order_detail.order_grand_total
                                     }}</p>
+                            </div>
+                            <div class="block-feilds">
+                                <span>Order Type</span>
+                                <p>{{order_detail.order_type}}</p>
+                            </div>
+                            <div class="block-feilds" *ngIf="order_detail.organisation_id">
+                                <span>Organisation Name</span>
+                                <p>{{order_detail.organisation_id}}</p>
+                            </div>
+                            <div class="block-feilds {{order_detail.order_status}}">
+                                <span>Order Status</span>
+                                <p>{{order_detail.order_status == 'Partial_Dispatch' ? 'Partial Dispatch' :
+                                    order_detail.order_status}}</p>
                                 </div>
-                                <div class="block-feilds">
-                                    <span>Order Type</span>
-                                    <p>{{order_detail.order_type}}</p>
-                                </div>
-                                <div class="block-feilds" *ngIf="order_detail.organisation_name">
-                                    <span>Organisation Name</span>
-                                    <p>{{order_detail.organisation_name}}</p>
-                                </div>
+                    
                                 <div class="block-feilds {{order_detail.order_status}}">
                                     <span>Order Status</span>
                                     <p>{{order_detail.order_status == 'Partial_Dispatch' ? 'Partial Dispatch' :

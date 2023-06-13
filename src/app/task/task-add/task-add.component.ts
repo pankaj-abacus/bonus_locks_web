@@ -29,6 +29,7 @@ export class TaskAddComponent implements OnInit {
     this.userId = this.userData['data']['id'];
     this.userName = this.userData['data']['name'];
     this.data.created_by_type = this.userData['data']['user_type'];
+    console.log(this.userData)
 
     this.getUsers('')
   }

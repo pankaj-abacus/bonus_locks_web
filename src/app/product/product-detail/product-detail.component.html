@@ -98,6 +98,14 @@
                                     {{getData.last_updated_on && getData.last_updated_on != '0000-00-00 00:00:00'? (getData.last_updated_on | date:'short') : '--'}}
                                 </p>
                             </div>
+                            <div class="block-feilds">
+                                <span>Warranty In Months</span>
+                                <p>{{getData.warranty_period ? getData.warranty_period :'---'}}</p>
+                            </div>
+                            <div class="block-feilds">
+                                <span>Installation Responsibility</span>
+                                <p>{{getData.installation_responsibility ? getData.installation_responsibility :'---'}} </p>
+                            </div>
                         </div>
                         
                         <div class="grid-box single mt16">
