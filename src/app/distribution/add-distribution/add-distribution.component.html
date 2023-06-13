@@ -112,6 +112,44 @@
                                 <mat-datepicker #pickers disabled="false"></mat-datepicker>
                             </mat-form-field>
                         </div>
+
+                        <div class="col s12 m3 l3" *ngIf="pageType=='edit'">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Category {{data.Category}}</mat-label>
+                                <input type="text" name="category" #category="ngModel" category="category" matInput placeholder="Type Here ..."
+                                [(ngModel)]="data.category">
+                            </mat-form-field>
+                        </div>
+
+                        <!-- <div class="col s12 m3 l3">
+                            <mat-form-field appearance="outline">
+                            <mat-label>Category</mat-label>
+                            <input type="text" name="category" matInput placeholder=""
+                            #category="ngModel" [(ngModel)]="data.category">
+                        </mat-form-field>
+                    </div> -->
+
+                        <div class="col s12 m3 l3" *ngIf="pageType=='edit'">
+                            <mat-form-field appearance="outline" [ngClass]="{'has-error' : transport.invalid } ">
+                                <mat-label>Transport Name</mat-label>
+                                <input type="text" name="transport" name="transport" matInput placeholder="Type Here ..."
+                                #transport="ngModel" [(ngModel)]="data.transport">
+                            </mat-form-field>
+                        </div>
+                        <div class="col s12 m3 l3" *ngIf="pageType=='edit'">
+                            <mat-form-field appearance="outline" [ngClass]="{'has-error' : bank_name.invalid } ">
+                                <mat-label>Bank Name</mat-label>
+                                <input type="text" name="bank_name" bank_name="bank_name" matInput placeholder="Type Here ..."
+                                #bank_name="ngModel" [(ngModel)]="data.bank_name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col s12 m3 l3" *ngIf="pageType=='edit'">
+                            <mat-form-field appearance="outline" [ngClass]="{'has-error' : security_Cheque.invalid } ">
+                                <mat-label>Security Check</mat-label>
+                                <input type="text"  name="security_Cheque"  security_Cheque="security_Cheque" matInput placeholder="Type Here ..."
+                                #security_Cheque="ngModel" [(ngModel)]="data.security_Cheque">
+                            </mat-form-field>
+                        </div>
                         
                     </div>
                     
@@ -228,13 +266,19 @@
                 </div>
             </div>
         </div>
-        <div class="col s12 m6 l6">
+        <div class="col s12 m6 l3">
             <mat-form-field appearance="outline">
                 <mat-label>Address</mat-label>
                 <textarea matInput placeholder="Type Here ..." name="address" #address="ngModel"
                 [(ngModel)]="data.address" class="h80"></textarea>
             </mat-form-field>
-            
+        </div>
+        <div class="col s12 m6 l3">
+            <mat-form-field appearance="outline">
+                <mat-label>Address2</mat-label>
+                <textarea matInput placeholder="Type Here ..." name="address_1" #address_1="ngModel"
+                [(ngModel)]="data.address_1" class="h80"></textarea>
+            </mat-form-field>
         </div>
     </div>
     <div class="row">
