@@ -42,6 +42,7 @@ const routes: Routes = [
   { path: "attendance", loadChildren:'./attendence/attendence-module/attendence.module#AttendenceModule'},
   {path:'billing',loadChildren:'./billing/billing-module/billing.module#BillingModule'},
   {path:'invoice',loadChildren:'./invoice/invoice-module/invoice.module#InvoiceModule'},
+  {path: 'stock-list', loadChildren: './stock/stockmodule/stockmodule.module#StockmoduleModule'},
   {path:'credit-notes',loadChildren:'./credit-notes/credit-notes-module/credit-notes.module#CreditNotesModule'},
   {path:'order-list',loadChildren:'./order/primary-order-module/primary-order.module#PrimaryOrderModule'},
   { path: "secondary-order-list",loadChildren:'./order/secondary-order-module/secondary-order.module#SecondaryOrderModule'},

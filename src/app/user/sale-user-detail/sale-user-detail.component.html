@@ -40,6 +40,10 @@
                 <p>{{detail.employee_id}}</p>
               </div>
               <div class="block-feilds">
+                <span>Company Name</span>
+                <p>{{detail.company_name}}</p>
+              </div>
+              <div class="block-feilds">
                 <span>Mobile Number</span>
                 <p>{{detail.contact_01}}</p>
               </div>
@@ -118,7 +122,6 @@
                   detail.district_name + ',' : ''}} {{detail.state_name ? detail.state_name + ',' : ''}}
                   {{detail.pincode}}</p>
               </div>
-
               <div class="block-feilds" *ngIf="detail.user_type != 'System User'">
                 <span>Working State</span>
                 <p><span *ngFor="let row of detail.working_state_name">{{row}} &nbsp;&nbsp;</span> </p>

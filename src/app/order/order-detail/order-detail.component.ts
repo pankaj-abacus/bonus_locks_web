@@ -149,7 +149,7 @@ export class OrderDetailComponent implements OnInit {
             data: {
                 order_status: this.order_detail.order_status,
                 order_id: this.order_id,
-                organisation_name:this.order_detail.organisation_name,
+                organisation_id:this.order_detail.organisation_id,
                 from: 'primary_order',
                 reason: ''
             }
