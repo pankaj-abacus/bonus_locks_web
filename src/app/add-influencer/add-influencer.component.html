@@ -40,7 +40,7 @@
                     Mobile no. already Exists.
                   </div>
                 </div>
-                <div class="col s12 m3 l3" *ngIf="params_network!='Customer'">
+                <div class="col s12 m3 l3" *ngIf="params_network!='Customer' && params_network!='Sales Boy'">
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : mobile_no.invalid } ">
                     <mat-label>Paytm Mobile Number</mat-label>
 
@@ -50,22 +50,22 @@
                   </mat-form-field>
 
                 </div>
-                <div class="col s12 m3 l3">
+                <div class="col s12 m3 l3" *ngIf="params_network!='Sales Boy'">
                   <mat-form-field appearance="outline">
-                    <mat-label>Country</mat-label>
-                    <mat-select name="country" #country="ngModel" [(ngModel)]="data.country" required>
-                      <mat-option disabled="">Select Country</mat-option>
-                      <mat-option value="india">
-                        India
+                    <mat-label>Service</mat-label>
+                    <mat-select name="service" #service="ngModel" [(ngModel)]="data.service" required>
+                      <mat-option disabled="">Select Service</mat-option>
+                      <mat-option value="Yes">
+                        Yes
                       </mat-option>
-                      <mat-option value="nepal">
-                        Nepal
+                      <mat-option value="No">
+                        No
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
 
-                  <div class="alert alert-danger" *ngIf="country.touched || f.submitted">
-                    <p *ngIf="country.errors?.required">This field is required</p>
+                  <div class="alert alert-danger" *ngIf="service.touched || f.submitted">
+                    <p *ngIf="service.errors?.required">This field is required</p>
                   </div>
 
                 </div>
@@ -90,7 +90,7 @@
                     </mat-form-field>
                   </div>
                   <div class="col s12 m3 l3"
-                    *ngIf="checkRight.scanning_rights == 'Yes' || checkRight.point_transfer_right == 'Yes' ">
+                    *ngIf="(checkRight.scanning_rights == 'Yes' || checkRight.point_transfer_right == 'Yes') && params_network!='Sales Boy' ">
                     <mat-form-field class="cs-input" appearance="outline">
                       <mat-label>D.O.A</mat-label>
                       <input name="D.O.A" matInput [matDatepicker]="pickers" placeholder="" #doa="ngModel"
@@ -102,7 +102,7 @@
                 </ng-container>
               </div>
 
-              <div class="row" *ngIf="params_network!='Customer'">
+              <div class="row" *ngIf="params_network!='Customer' && params_network!='Sales Boy'">
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : dealer_name.invalid } ">
                     <mat-label>Dealer Name</mat-label>
@@ -218,7 +218,7 @@
                         </div>
                       </div>
                     </ng-container>
-                    <ng-container *ngIf="data.country=='nepal'">
+                    <!-- <ng-container *ngIf="data.country=='nepal'">
                       <div class="col s12 m6 l6">
                         <mat-form-field appearance="outline" [ngClass]="{'has-error' : state.invalid } ">
                           <mat-label>State</mat-label>
@@ -229,7 +229,7 @@
                           <p *ngIf="state.errors?.required">This field is required</p>
                         </div>
                       </div>
-                    </ng-container>
+                    </ng-container> -->
                   </div>
 
 
@@ -276,9 +276,9 @@
       </div>
 
 
-      <div class="row" *ngIf="checkRight.scanning_rights == 'Yes' || checkRight.point_transfer_right == 'Yes' ">
+      <div class="row" *ngIf="checkRight.scanning_rights == 'Yes' || checkRight.point_transfer_right == 'Yes'">
         <ng-container>
-          <div class="col s12 m6 l6">
+          <div class="col s12 m6 l6" *ngIf="params_network!='Sales Boy'">
             <div class="card pb0">
               <div class="card-head">
                 <h2>Document Detail</h2>

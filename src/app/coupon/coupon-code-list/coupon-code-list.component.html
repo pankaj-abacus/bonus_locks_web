@@ -29,12 +29,14 @@
         <button mat-button [ngClass]="active_tab == 'master_box' ? 'active' : ''" (click)="active_tab = 'master_box'; couponCodeList()"><i class="material-icons">all_inbox</i>Box Coupon</button>
         <button mat-button [ngClass]="active_tab == 'item_box' ? 'active' : ''" (click)="active_tab = 'item_box'; couponCodeList()"><i class="material-icons">category</i>Product Coupon</button>
         <button mat-button [ngClass]="active_tab == 'scan_item' ? 'active' : ''" (click)="active_tab = 'scan_item'; scanCouponList()"><i class="material-icons">qr_code_scanner</i>Scanned Coupon</button>
+        <!-- <button mat-button [ngClass]="active_tab == 'scan_item_by_sales' ? 'active' : ''" (click)="active_tab = 'scan_item_by_sales'; scanCouponList()"><i class="material-icons">qr_code_scanner</i>Sales Boy Scanned Coupon </button> -->
+
       </div>
     </div>
   </div>
   
   <div class="container container-scroll">  
-    <div class="cs-table horizontal-scroll" *ngIf="active_tab != 'scan_item'">
+    <div class="cs-table horizontal-scroll" *ngIf="active_tab == 'item_box' || active_tab == 'master_box' ">
       <div class="sticky-head">
         <div class="table-head">
           <table>
@@ -216,6 +218,7 @@
               <th class="w150">Scan By</th>
               <th class="w110">Mobile No.</th>
               <th class="w100">Scan Date</th>
+              <th class="w100">Scan Location</th>
               <th class="w180">Bonus Name</th>
               <th class="w110 text-right">Bonus Point</th>
               <th class="w70">Action</th>
@@ -282,6 +285,8 @@
                   </mat-form-field>
                 </div>
               </th>
+              <th class="w100">&nbsp;</th>
+
               <th class="w180">&nbsp;</th>
               <th class="w110">&nbsp;</th>
               <th class="w70">&nbsp;</th>
@@ -310,6 +315,11 @@
                 <td class="w150">{{row.scanned_by_name?row.scanned_by_name:'---'}}</td>
                 <td class="w110">{{row.scanned_by_mobile?row.scanned_by_mobile:'---'}}</td>
                 <td class="w100">{{row.scanned_date | date:'d MMM y, h:mm a'}}</td>
+                <td class="w100" *ngIf="row.lat !=0  && row.lat!=null  && row.lat!='' ">
+                  <a style="color:blue;text-decoration: underline;"
+                      href="http://maps.google.com/maps?q={{row.lat}},{{row.lng}}"
+                      target="blank">View Locations Map</a>
+              </td>
                 <td class="w180">{{row.bonus_scheme_name}}</td>
                 <td class="w110 text-right"><strong>{{row.bonus_point?row.bonus_point + ' PT':'---'}}</strong></td>
                 <td class="w70"><a class="link-btn" (click)="reopenCoupon(row.coupon_code)">Reopen</a></td>
@@ -346,6 +356,159 @@
       </div>
     </div>
     
+    <div class="cs-table horizontal-scroll" *ngIf="active_tab == 'scan_item_by_sales'">
+      <div class="sticky-head">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w60">Sr.No</th>
+              <th class="w140">Coupon Code</th>
+              <th class="w250">Product Detail</th>
+              <th class="w100">Dispatch Date</th>
+              <th class="w100">Dispatch Type</th>
+              <th class="w250">Dealer Detail</th>
+              <th class="w130">Invoice No.</th>
+              <th class="w110 text-right">Coupon value</th>
+              <th class="w150">Scan By</th>
+              <th class="w110">Mobile No.</th>
+              <th class="w100">Scan Date</th>
+              <th class="w100">Scan Location</th>
+              <th class="w180">Bonus Name</th>
+              <th class="w110 text-right">Bonus Point</th>
+              <th class="w70">Action</th>
+            </tr>
+          </table>
+        </div>
+        
+        <div class="table-head border-top">
+          <table>
+            <tr>
+              <th class="w60">&nbsp;</th>
+              <th class="w140">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="coupon_code" [(ngModel)]="filter.coupon_code" (keyup.enter)="scanCouponList()">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w250">&nbsp;</th>
+              
+              <th class="w100">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="dispatch_date" placeholder="Date" name="dispatch_date" [(ngModel)]="filter.dispatch_date" (dateChange)="scanCouponList()" [max]="today_date" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="dispatch_date"></mat-datepicker-toggle>
+                    <mat-datepicker #dispatch_date disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w100">&nbsp;</th>
+              <th class="w250">&nbsp;</th>
+              
+              <th class="w130">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="invoice_number" [(ngModel)]="filter.invoice_number" (keyup.enter)="scanCouponList()">
+                  </mat-form-field>
+                </div>
+              </th>
+              
+              <th class="w110">&nbsp;</th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="scanned_by_name" [(ngModel)]="filter.scanned_by_name" (keyup.enter)="scanCouponList()">
+                  </mat-form-field>
+                </div>
+              </th>
+
+              <th class="w110">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="scanned_by_mobile" [(ngModel)]="filter.scanned_by_mobile" (keyup.enter)="scanCouponList()">
+                  </mat-form-field>
+                </div>
+              </th>
+              
+              <th class="w100">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="picker1" placeholder="Date" name="scanned_on" [(ngModel)]="filter.scanned_on" (dateChange)="scanCouponList()" [max]="today_date" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w100">&nbsp;</th>
+
+              <th class="w180">&nbsp;</th>
+              <th class="w110">&nbsp;</th>
+              <th class="w70">&nbsp;</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+      
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <ng-container *ngIf="!loader">
+              <tr *ngFor="let row of scanData let i = index;">
+                <td class="w60">{{i+1+sr_no}}</td>
+                <td class="w140">{{row.coupon_code?row.coupon_code:'---'}}</td>
+                <td class="w250">{{row.product_detail?row.product_detail:'---'}}</td>
+                <td class="w100">
+                  {{row.dispatch_date != "0000-00-00 00:00:00" ? (row.dispatch_date | date:'d MMM y') : '---'}}
+                </td>
+                <td class="w100">{{row.dispatch_type}}</td>
+                <td class="w250">{{row.dr_detail}}</td>
+                <td class="w130">{{row.invoice_number}}</td>
+                <td class="w110 text-right">
+                  <strong>{{row.total_point?row.total_point + ' PT':'---'}}</strong>
+                </td>
+                <td class="w150">{{row.scanned_by_name?row.scanned_by_name:'---'}}</td>
+                <td class="w110">{{row.scanned_by_mobile?row.scanned_by_mobile:'---'}}</td>
+                <td class="w100">{{row.scanned_date | date:'d MMM y, h:mm a'}}</td>
+                <td class="w100" *ngIf="row.lat !=0  && row.lat!=null  && row.lat!='' ">
+                  <a style="color:blue;text-decoration: underline;"
+                      href="http://maps.google.com/maps?q={{row.lat}},{{row.lng}}"
+                      target="blank">View Locations Map</a>
+              </td>
+                <td class="w180">{{row.bonus_scheme_name}}</td>
+                <td class="w110 text-right"><strong>{{row.bonus_point?row.bonus_point + ' PT':'---'}}</strong></td>
+                <td class="w70"><a class="link-btn" (click)="reopenCoupon(row.coupon_code)">Reopen</a></td>
+              </tr>
+            </ng-container>
+            
+            
+            <ng-container *ngIf="loader">
+              <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                <td class="w60"><div>&nbsp;</div></td>
+                <td class="w140"><div>&nbsp;</div></td>
+                <td class="w250"><div>&nbsp;</div></td>
+                <td class="w100"><div>&nbsp;</div></td>
+                <td class="w100"><div>&nbsp;</div></td>
+                <td class="w250"><div>&nbsp;</div></td>
+                <td class="w130"><div>&nbsp;</div></td>
+                <td class="w110"><div>&nbsp;</div></td>
+                <td class="w150"><div>&nbsp;</div></td>
+                <td class="w110"><div>&nbsp;</div></td>
+                <td class="w180"><div>&nbsp;</div></td>
+                <td class="w110"><div>&nbsp;</div></td>
+                <td class="w100"><div>&nbsp;</div></td>
+                <td class="w70"><div>&nbsp;</div></td>
+              </tr>
+            </ng-container>
+            
+          </table>
+        </div>
+        
+        
+        <ng-container *ngIf="scanData.length == 0 && noResult">
+          <app-not-result-found></app-not-result-found>
+        </ng-container>
+      </div>
+    </div>
     
   </div>
   
@@ -387,7 +550,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 6px;" >{{scanLimit.limit}}</strong>
+          border-radius: 6px;" ></strong>
         </span>
       </a>
       

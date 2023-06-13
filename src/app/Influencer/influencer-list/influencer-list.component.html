@@ -63,7 +63,7 @@
               </th>
               <th>Name</th>
               <th class="w100">Mobile No.</th>
-              <th class="w100">Country</th>
+              <th class="w100" *ngIf="type !=15">Service</th>
               <th class="w130">State</th>
               <th class="w130">District</th>
               <ng-container *ngIf="checkRight.scanning_rights == 'Yes' || checkRight.point_transfer_right == 'Yes' ">
@@ -114,12 +114,13 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
+              <th class="w100" *ngIf="type !=15">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input select-input">
-                    <mat-select name="country" [(ngModel)]="filter.country" (selectionChange)="InfluencerList()">
-                      <mat-option value="india">India</mat-option>
-                      <mat-option value="nepal">Nepal</mat-option>
+                    <mat-select name="service" [(ngModel)]="filter.service" (selectionChange)="InfluencerList()">
+                      <mat-option value="">All</mat-option>
+                      <mat-option value="Yes">Yes</mat-option>
+                      <mat-option value="No">No</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -173,7 +174,7 @@
                 <td><a class="link-btn" (click)="service.setData(filter)"
                     routerLink="influencer-detail/{{row.id}}/{{type}}">{{row.name | titlecase}}</a></td>
                 <td class="w100">{{row.mobile_no}}</td>
-                <td class="w100">{{row.country}}</td>
+                <td class="w100" *ngIf="type !=15">{{row.service}}</td>
                 <td class="w130">{{row.state}}</td>
                 <td class="w130">{{row.district}}</td>
                 <ng-container *ngIf="checkRight.scanning_rights == 'Yes' || checkRight.point_transfer_right == 'Yes' ">
