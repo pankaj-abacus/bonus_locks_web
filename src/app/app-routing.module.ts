@@ -61,6 +61,8 @@ const routes: Routes = [
   { path: "point-list", loadChildren:'./master/point-category-module/point-category.module#PointCategoryModule'},
   { path: "leave-master-list", loadChildren:'./master/leave-master/leave-master-module/leave-master/leave-master.module#LeaveMasterModule'},
   { path: "report-list", loadChildren:'./reports/reports-module/reports/reports.module#ReportsModule'},
+  { path: "complaint-list", loadChildren: './service/service-module/service-module.module#ServiceModuleModule'},
+
   { path: "point-master", loadChildren:'./point-master/point-master/point-master.module#PointMasterModule'},
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
 ];
