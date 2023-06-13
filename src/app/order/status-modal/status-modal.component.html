@@ -34,7 +34,7 @@
 
         </div>
         <div class="row" *ngIf="data.order_status=='Approved'">
-          <div class="col s12">
+          <!-- <div class="col s12">
             <mat-form-field class="cs-input" appearance="outline">
               <mat-label>Select Organisation Name</mat-label>
               <mat-select name="organisation_id" placeholder="Select Organisation Name" #organisation_id="ngModel"
@@ -43,10 +43,9 @@
                   value="{{r.id}}">{{r.company_name}}</mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
-          <div class="alert alert-danger" *ngIf="organisation_id.touched || update_basic.submitted">
-            <p *ngIf="organisation_id.errors?.required">This field is required</p>
-          </div>
+
+          </div> -->
+
         </div>
 
         <div class="row">
