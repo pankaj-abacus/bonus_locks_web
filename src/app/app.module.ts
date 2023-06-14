@@ -54,6 +54,7 @@ import { NumericWords } from 'src/_Pipes/NumericWords.pipe';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ZingchartAngularModule } from 'zingchart-angular';
 import { ServiceModuleModule } from './service/service-module/service-module.module';
+import { CustomerModuleModule } from './customer/customer-module/customer-module.module';
 
 
 @NgModule({
@@ -112,7 +113,8 @@ import { ServiceModuleModule } from './service/service-module/service-module.mod
         NgxMatSelectSearchModule,
         NgMultiSelectDropDownModule.forRoot(),
         AppUtilityModule,
-        ServiceModuleModule
+        ServiceModuleModule,
+        CustomerModuleModule
         // FusionChartsModule
     ],
     providers: [

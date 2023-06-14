@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
 import { DialogComponent } from 'src/app/dialog.component';
 import { sessionStorage } from 'src/app/localstorage.service';
 
 @Component({
-  selector: 'app-complaint-list',
-  templateUrl: './complaint-list.component.html',
-  styleUrls: ['./complaint-list.component.scss']
+  selector: 'app-customer-list',
+  templateUrl: './customer-list.component.html',
+  styleUrls: ['./customer-list.component.scss']
 })
-export class ComplaintListComponent implements OnInit {
+export class CustomerListComponent implements OnInit {
   fabBtnValue: any = 'add';
-  segmentList: any = [];
-  SubcategoryList: any = [];
-  complaintList: any = [];
+  customerList: any = [];
   filter: any = false;
   data: any = [];
   page_limit: any;
@@ -35,14 +34,48 @@ export class ComplaintListComponent implements OnInit {
   downurl: any = ''
 
 
-  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { }
+  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { 
+    this.getCumtomerList('');
+    this.page_limit = service.pageLimit;
 
+  }
   ngOnInit() {
+    this.filter_data = this.service.getData()
   }
-  refresh(){
 
+  pervious() {
+    this.start = this.start - this.page_limit;
+    this.getCumtomerList('');
   }
-  getProductList(data) {
+
+  nextPage() {
+    this.start = this.start + this.page_limit;
+    this.getCumtomerList('');
+  }
+
+  refresh() {
+    this.start = 0;
+    this.filter_data = {};
+    this.getCumtomerList('');
+  }
+
+  clear() {
+    this.refresh();
+  }
+
+  goToDetailHandler(id) {
+    window.open(`/customer-detail/` + id);
+  }
+
+
+
+  date_format(): void {
+
+    this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
+    this.getCumtomerList('');
+  }
+
+  getCumtomerList(data) {
     if (this.pagenumber > this.total_page) {
       this.pagenumber = this.total_page;
       this.start = this.pageCount - this.page_limit;
@@ -50,17 +83,22 @@ export class ComplaintListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
-    let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "Master/productList")
+    let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceCustomer/serviceCustomerList")
 
     this.loader = true;
     header.subscribe((result) => {
       if (result['statusCode'] == 200) {
 
-        this.complaintList = result['product_list'];
+        console.log('result',result);
+        
+
+        this.customerList = result['result'];
+        console.log(this.customerList);
+        
         this.pageCount = result['count'];
         this.scheme_active_count = result['scheme_active_count'];
         this.loader = false;
-        if (this.complaintList.length == 0) {
+        if (this.customerList.length == 0) {
           this.datanotofound = false;
         } else {
           this.datanotofound = true;
@@ -79,12 +117,12 @@ export class ComplaintListComponent implements OnInit {
         this.sr_no = this.sr_no * this.page_limit
 
 
-        for (let i = 0; i < this.complaintList.length; i++) {
-          if (this.complaintList[i].status == '1') {
-            this.complaintList[i].newStatus = true
+        for (let i = 0; i < this.customerList.length; i++) {
+          if (this.customerList[i].status == '1') {
+            this.customerList[i].newStatus = true
           }
-          else if (this.complaintList[i].status == '0') {
-            this.complaintList[i].newStatus = false;
+          else if (this.customerList[i].status == '0') {
+            this.customerList[i].newStatus = false;
           }
         }
       }
@@ -95,15 +133,6 @@ export class ComplaintListComponent implements OnInit {
       }
 
     })
-  }
-
-
-  goToDetailHandler(id) {
-    window.open(`/complaint-detail/` + id);
-  }
-
-  downloadExcel(){
-
   }
   lastBtnValue(value) {
     this.fabBtnValue = value;

@@ -326,7 +326,7 @@
                         class="material-icons ">construction</i>Service</a>
                 <ul>
                     <li *ngIf=" login_data.view_primary_orders=='1'">
-                        <a mat-button (click)="clearFilter();" routerLink="/" routerLinkActive="active">
+                        <a mat-button (click)="clearFilter();" routerLink="/customer-list" routerLinkActive="active">
                             Customer
                             <span class="nav-counter " *ngIf="serve.counterArray.primary_order > 0">{{serve.counterArray.secondary_order}}</span>
                         </a>
@@ -343,12 +343,12 @@
                             <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.secondary_order}}</span>
                         </a>
                     </li>
-                    <!-- <li *ngIf="login_data.view_secondary_orders=='1'">
-                        <a mat-button (click)="clearFilter()" routerLink="/complaint-list" routerLinkActive="active">
+                    <li *ngIf="login_data.view_secondary_orders=='1'">
+                        <a mat-button (click)="clearFilter()" routerLink="/" routerLinkActive="active">
                             Installation List
                             <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.secondary_order}}</span>
                         </a>
-                    </li> -->
+                    </li>
                     <li *ngIf="login_data.view_secondary_orders=='1'">
                         <a mat-button (click)="clearFilter()" routerLink="/" routerLinkActive="active">
                             Claim Dispatch
