@@ -128,12 +128,7 @@
                                     order_detail.order_status}}</p>
                                 </div>
                     
-                                <div class="block-feilds {{order_detail.order_status}}">
-                                    <span>Order Status</span>
-                                    <p>{{order_detail.order_status == 'Partial_Dispatch' ? 'Partial Dispatch' :
-                                        order_detail.order_status}}</p>
-                                    </div>
-                                </div>
+                              
                                 
                                 <div class="grid-box single mt16" *ngIf="order_detail.order_create_remark">
                                     <div class="block-feilds">

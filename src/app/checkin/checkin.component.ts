@@ -272,6 +272,7 @@ export class CheckinComponent implements OnInit {
           this.CheckinList(this.show_today ? 'todayCheckinList' : 'checkinAll', this.show_today ? '1' : '2');
         } else {
           this.loader = false;
+          this.toast.errorToastr(result['statusMsg']);
         }
       }), err => {
         this.loader = false;
