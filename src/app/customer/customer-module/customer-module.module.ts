@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComplaintListComponent } from '../complaint-list/complaint-list.component';
+import { CustomerListComponent } from '../customer-list/customer-list.component';
+import { CustomerAddComponent } from '../customer-add/customer-add.component';
+import { CustomerDetailComponent } from '../customer-detail/customer-detail.component';
 import { AuthComponentGuard } from 'src/app/auth-component.guard';
-import { ComplaintAddComponent } from '../complaint-add/complaint-add.component';
-import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MaterialModule } from 'src/app/material';
@@ -11,25 +11,25 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { MatDialogModule, MatIconModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
-import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
+import { RouterModule } from '@angular/router';
 
 
-const serviceRoutes = [
+const customerRoutes = [
   { path: "", children:[
-    { path: "", component: ComplaintListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: 'add-complaint', component: ComplaintAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: "complaint-detail/:id", children:[
-      {path:"", component:ComplaintDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: "", component: CustomerListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: 'add-customer', component: CustomerAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: "customer-detail/:id", children:[
+      {path:"", component:CustomerDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     ] }
   ]},
   
 ]
 
 @NgModule({
-  declarations: [ComplaintListComponent,ComplaintAddComponent,ComplaintDetailComponent],
+  declarations: [CustomerListComponent,CustomerAddComponent,CustomerDetailComponent],
   imports: [
+    RouterModule.forChild(customerRoutes),
     CommonModule,
-    RouterModule.forChild(serviceRoutes),
     FormsModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule,
@@ -41,4 +41,4 @@ const serviceRoutes = [
     AppUtilityModule
   ]
 })
-export class ServiceModuleModule { }
+export class CustomerModuleModule { }

@@ -8,17 +8,17 @@ import * as moment from 'moment';
 import { sessionStorage } from 'src/app/localstorage.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Location } from '@angular/common'
-import { RedeemStatusModalComponent } from 'src/app/redeem-status-modal/redeem-status-modal.component';
 import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
 
 @Component({
-  selector: 'app-complaint-detail',
-  templateUrl: './complaint-detail.component.html',
-  styleUrls: ['./complaint-detail.component.scss']
+  selector: 'app-customer-detail',
+  templateUrl: './customer-detail.component.html',
+  styleUrls: ['./customer-detail.component.scss']
 })
-export class ComplaintDetailComponent implements OnInit {
+export class CustomerDetailComponent implements OnInit {
+
   id;
   getData:any ={};
   skLoading:boolean = false;
@@ -30,13 +30,25 @@ export class ComplaintDetailComponent implements OnInit {
   featureFlag :boolean = false;
   allMrpFlag :boolean = false;
   productImg:any =[];
-
-  constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) { }
-
+  
+  constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
+    this.route.params.subscribe(params => {
+      this.id = params.id;
+      this.service.currentUserID = params.id
+      this.url = this.service.uploadUrl + 'product_image/';
+      
+      
+      
+      if(this.id){
+        this.getCustomerDetail();
+      }
+    });
+   }
+  
   ngOnInit() {
   }
-
-  getComplaintDetail()
+  
+  getCustomerDetail()
   {
     this.skLoading = true;
     this.service.post_rqst({'customer_id':this.id},"ServiceCustomer/serviceCustomerDetail").subscribe((result=>
@@ -54,5 +66,6 @@ export class ComplaintDetailComponent implements OnInit {
     back(): void {
       this.location.back()
     }
-
-}
+    
+  }
+  

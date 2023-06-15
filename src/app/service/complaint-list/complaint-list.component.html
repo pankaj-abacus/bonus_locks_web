@@ -176,33 +176,6 @@
         </div>
       </th>
       <th class="w120 text-center"></th>
-      <!-- <th class="w100">
-        <div class="th-search-acmt">
-          <mat-form-field class="cs-input date-column infix-bodr">
-            <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-            #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
-            [max]="today_date" readonly>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
-      </th> -->
-      <!-- <th class="w100">
-        <div class="th-search-acmt">
-          <mat-form-field>
-            <input type="text" matInput placeholder="Search ..." name="brand" (keyup.enter)="getProductList('')"
-            #brand="ngModel" [(ngModel)]="filter_data.brand">
-          </mat-form-field>
-        </div>
-      </th>
-      <th class="w100">
-        <div class="th-search-acmt">
-          <mat-form-field>
-            <input type="text" matInput placeholder="Search ..." name="color" (keyup.enter)="getProductList('')"
-            #color="ngModel" [(ngModel)]="filter_data.color">
-          </mat-form-field>
-        </div>
-      </th> -->
     </tr>
   </table>
 </div>
@@ -242,23 +215,22 @@
             </td>
             
           </tr> -->
-          <tr>
-            <td class="w60">1</td>
-            <td class="w100">10/12/2023</td>
-            <td class="w100">test</td>
-            <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
-              routerLink="complaint-detail" routerLinkActive="active">test1234345</a></td>
-            <td class="w100">123456789</td>
-            <td class="w130">test product</td>
-            <td class="w130">test Product Code</td>
-            <td class="w100">test cust</td>
-            <td class="w130">cust Mobile</td>
-            <td class="w100">687687676</td>
-            <td class="w130">in</td>
-            <td class="w130">done</td>
-            <td class="w130">done</td>
-            <td class="w130">done</td>
-            <td class="w120 text-center">action</td>
+          <tr *ngFor="let row of complaintList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
+            <td class="w60"></td>
+            <td class="w100"></td>
+            <td class="w100"></td>
+            <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active"></a></td>
+            <td class="w100"></td>
+            <td class="w130"></td>
+            <td class="w130"></td>
+            <td class="w100"></td>
+            <td class="w130"></td>
+            <td class="w100"></td>
+            <td class="w130"></td>
+            <td class="w130"></td>
+            <td class="w130"></td>
+            <td class="w130"></td>
+            <td class="w120 text-center"></td>
           </tr>
         </ng-container>
         <ng-container *ngIf="loader">
