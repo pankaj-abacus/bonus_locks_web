@@ -11,11 +11,12 @@ import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
 
 @Component({
-  selector: 'app-complaint-detail',
-  templateUrl: './complaint-detail.component.html',
-  styleUrls: ['./complaint-detail.component.scss']
+  selector: 'app-warranty-detail',
+  templateUrl: './warranty-detail.component.html',
+  styleUrls: ['./warranty-detail.component.scss']
 })
-export class ComplaintDetailComponent implements OnInit {
+export class WarrantyDetailComponent implements OnInit {
+  
   id;
   getData:any ={};
   skLoading:boolean = false;
@@ -26,18 +27,9 @@ export class ComplaintDetailComponent implements OnInit {
   product_size:any =[];
   featureFlag :boolean = false;
   allMrpFlag :boolean = false;
-  complaintImg:any =[];
+  productImg:any =[];
   
-  
-  constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
-    this.route.params.subscribe(params => {
-      this.id = params.id;
-      this.service.currentUserID = params.id
-      if(this.id){
-        this.getComplaintDetail();
-      }
-    });
-  }
+  constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) { }
   
   ngOnInit() {
   }
@@ -45,32 +37,18 @@ export class ComplaintDetailComponent implements OnInit {
   getComplaintDetail()
   {
     this.skLoading = true;
-    this.service.post_rqst({'complaint_id':this.id},"ServiceTask/serviceComplaintDetail").subscribe((result=>
+    this.service.post_rqst({'customer_id':this.id},"ServiceCustomer/serviceCustomerDetail").subscribe((result=>
       {
         this.getData = result['result'];
         console.log('getData',this.getData);
         
-        this.complaintImg = this.getData['img'];
+        this.productImg = this.getData['img'];
         
         this.skLoading = false;
       }
       ));
       
     }
-    
-    imageModel(image){
-      const dialogRef = this.dialog.open( ImageModuleComponent, {
-        panelClass:'Image-modal',
-        data:{
-          image,
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-      });
-    }
-
-
     back(): void {
       this.location.back()
     }

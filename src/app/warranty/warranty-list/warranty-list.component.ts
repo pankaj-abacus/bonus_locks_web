@@ -8,15 +8,14 @@ import { DialogComponent } from 'src/app/dialog.component';
 import { sessionStorage } from 'src/app/localstorage.service';
 
 @Component({
-  selector: 'app-complaint-list',
-  templateUrl: './complaint-list.component.html',
-  styleUrls: ['./complaint-list.component.scss']
+  selector: 'app-warranty-list',
+  templateUrl: './warranty-list.component.html',
+  styleUrls: ['./warranty-list.component.scss']
 })
-export class ComplaintListComponent implements OnInit {
+export class WarrantyListComponent implements OnInit {
+
   fabBtnValue: any = 'add';
-  segmentList: any = [];
-  SubcategoryList: any = [];
-  complaintList: any = [];
+  warrantyList: any = [];
   filter: any = false;
   data: any = [];
   page_limit: any;
@@ -35,33 +34,26 @@ export class ComplaintListComponent implements OnInit {
   datanotofound: boolean = false;
   downurl: any = ''
 
-
-  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { 
-    this.page_limit = service.pageLimit;
-    this.getComplantList('');
-
-
-  }
+  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { }
 
   ngOnInit() {
     this.filter_data = this.service.getData()
-    this.getComplantList('');
   }
   
   pervious() {
     this.start = this.start - this.page_limit;
-    this.getComplantList('');
+    this.getWarrantyList('');
   }
   
   nextPage() {
     this.start = this.start + this.page_limit;
-    this.getComplantList('');
+    this.getWarrantyList('');
   }
   
   refresh() {
     this.start = 0;
     this.filter_data = {};
-    this.getComplantList('');
+    this.getWarrantyList('');
   }
   
   clear() {
@@ -69,14 +61,14 @@ export class ComplaintListComponent implements OnInit {
   }
   
   goToDetailHandler(id) {
-    window.open(`/complaint-detail/` + id);
+    window.open(`/customer-detail/` + id);
   }
   date_format(): void {
     this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
-    this.getComplantList('');
+    this.getWarrantyList('');
   }
   
-  getComplantList(data) {
+  getWarrantyList(data) {
     if (this.pagenumber > this.total_page) {
       this.pagenumber = this.total_page;
       this.start = this.pageCount - this.page_limit;
@@ -84,7 +76,7 @@ export class ComplaintListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
-    let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceComplaintList")
+    let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceCustomer/serviceWarrantyList")
     
     this.loader = true;
     header.subscribe((result) => {
@@ -93,13 +85,13 @@ export class ComplaintListComponent implements OnInit {
         console.log('result',result);
         
         
-        this.complaintList = result['result'];
-        console.log(this.complaintList);
+        this.warrantyList = result['result'];
+        console.log(this.warrantyList);
         
         this.pageCount = result['count'];
         this.scheme_active_count = result['scheme_active_count'];
         this.loader = false;
-        if (this.complaintList.length == 0) {
+        if (this.warrantyList.length == 0) {
           this.datanotofound = false;
         } else {
           this.datanotofound = true;
@@ -118,12 +110,12 @@ export class ComplaintListComponent implements OnInit {
         this.sr_no = this.sr_no * this.page_limit
         
         
-        for (let i = 0; i < this.complaintList.length; i++) {
-          if (this.complaintList[i].status == '1') {
-            this.complaintList[i].newStatus = true
+        for (let i = 0; i < this.warrantyList.length; i++) {
+          if (this.warrantyList[i].status == '1') {
+            this.warrantyList[i].newStatus = true
           }
-          else if (this.complaintList[i].status == '0') {
-            this.complaintList[i].newStatus = false;
+          else if (this.warrantyList[i].status == '0') {
+            this.warrantyList[i].newStatus = false;
           }
         }
       }

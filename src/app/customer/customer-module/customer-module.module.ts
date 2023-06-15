@@ -20,6 +20,7 @@ const customerRoutes = [
     { path: 'add-customer', component: CustomerAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     { path: "customer-detail/:id", children:[
       {path:"", component:CustomerDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+      {path:'add-customer/:id', component: CustomerAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
     ] }
   ]},
   

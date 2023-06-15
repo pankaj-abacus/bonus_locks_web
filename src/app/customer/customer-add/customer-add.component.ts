@@ -20,6 +20,8 @@ export class CustomerAddComponent implements OnInit {
   district_list: any = [];
   savingFlag:boolean = false;
   params_id: any;
+  getData:any ={};  
+  id: any;
   
   params_network:any;
   params_type:any;
@@ -35,14 +37,13 @@ export class CustomerAddComponent implements OnInit {
     ) {
       this.data.country = 'india';
       this.getStateList();
-      this.route.queryParams.subscribe(params => {
-        this.dr_type = params.type;
-        if(params.type){
-          
-          this.params_network =  params.network;
-          this.params_type =  params.type;
-          this.params_id =  params.id;
+      this.route.params.subscribe(params => {
+        this.id =  params.id;
+        console.log(this.id);
+        if (this.id) {
+          this.getCustomerDetail(this.id);
         }
+        
         
       });
     }
@@ -88,17 +89,19 @@ export class CustomerAddComponent implements OnInit {
       
       this.savingFlag = true;
       let header
-      if(this.params_id){
-        header =this.service.post_rqst({"data":this.data,'type': 'Edit','influencer_type':this.params_network},"Influencer/updateInfluencer") 
+      if(this.id){
+        header =this.service.post_rqst({"data":this.data,'type': 'Edit','id':this.id},"ServiceCustomer/serviceCustomerAdd") 
       }
       else
       {
-        header =this.service.post_rqst({"data":this.data,'type': 'Add','influencer_type':this.params_network},"ServiceCustomer/serviceCustomerAdd") 
+        header =this.service.post_rqst({"data":this.data,'type': 'Add',},"ServiceCustomer/serviceCustomerAdd") 
       }
       header.subscribe((result=>
         {
           if (result['statusCode'] == 200) {
-            this.rout.navigate(['/influencer/'+this.params_type+'/'+this.params_network+'/']);
+
+          this.rout.navigate(['/customer-list']);
+
             this.toast.successToastr(result['statusMsg']);
             this.savingFlag = false;
           }
@@ -113,6 +116,19 @@ export class CustomerAddComponent implements OnInit {
         this.location.back()
       }
       
+      getCustomerDetail(id)
+      {
+        this.service.post_rqst({'customer_id':id},"ServiceCustomer/serviceCustomerDetail").subscribe((result=>
+          {
+            this.getData = result['result'];
+            console.log('getData',this.getData);
+            this.data = this.getData;
+            this.getDistrict(1)
+          }
+          ));
+          
+        }
+        
+        
+      }
       
-    }
-    

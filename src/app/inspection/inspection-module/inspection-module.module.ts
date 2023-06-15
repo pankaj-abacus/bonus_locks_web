@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComplaintListComponent } from '../complaint-list/complaint-list.component';
+import { InspectionListComponent } from '../inspection-list/inspection-list.component';
+import { InspectionAddComponent } from '../inspection-add/inspection-add.component';
+import { InspectionDetailComponent } from '../inspection-detail/inspection-detail.component';
 import { AuthComponentGuard } from 'src/app/auth-component.guard';
-import { ComplaintAddComponent } from '../complaint-add/complaint-add.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -11,27 +12,22 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { MatDialogModule, MatIconModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
-import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
 
-
-const serviceRoutes = [
+const inspectionRoutes = [
   { path: "", children:[
-    { path: "", component: ComplaintListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: 'add-complaint', component: ComplaintAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: "", component: InspectionListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: 'add-complaint', component: InspectionAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     { path: "complaint-detail/:id", children:[
-      {path:"", component:ComplaintDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-      {path:'add-complaint/:id', component: ComplaintAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
-
+      {path:"", component:InspectionDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     ] }
   ]},
-  
 ]
 
 @NgModule({
-  declarations: [ComplaintListComponent,ComplaintAddComponent,ComplaintDetailComponent],
+  declarations: [InspectionDetailComponent,InspectionAddComponent,InspectionListComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(serviceRoutes),
+    RouterModule.forChild(inspectionRoutes),
     FormsModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule,
@@ -43,4 +39,4 @@ const serviceRoutes = [
     AppUtilityModule
   ]
 })
-export class ServiceModuleModule { }
+export class InspectionModuleModule { }

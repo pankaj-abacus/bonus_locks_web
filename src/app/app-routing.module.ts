@@ -62,8 +62,10 @@ const routes: Routes = [
   { path: "leave-master-list", loadChildren:'./master/leave-master/leave-master-module/leave-master/leave-master.module#LeaveMasterModule'},
   { path: "report-list", loadChildren:'./reports/reports-module/reports/reports.module#ReportsModule'},
   { path: "complaint-list", loadChildren: './service/service-module/service-module.module#ServiceModuleModule'},
-
   { path: "customer-list", loadChildren: './customer/customer-module/customer-module.module#CustomerModuleModule'},
+  { path: "warranty-list", loadChildren: './warranty/warranty-module/warranty-module.module#WarrantyModuleModule'},
+  { path: "inspection-list", loadChildren: './inspection/inspection-module/inspection-module.module#InspectionModuleModule'},
+  { path: "claimDispatch-list", loadChildren: './claim-dispatch/dispatch-module/dispatch-module.module#DispatchModuleModule'},
 
   { path: "point-master", loadChildren:'./point-master/point-master/point-master.module#PointMasterModule'},
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
