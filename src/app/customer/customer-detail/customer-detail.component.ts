@@ -35,10 +35,6 @@ export class CustomerDetailComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.service.currentUserID = params.id
-      this.url = this.service.uploadUrl + 'product_image/';
-      
-      
-      
       if(this.id){
         this.getCustomerDetail();
       }
@@ -63,9 +59,11 @@ export class CustomerDetailComponent implements OnInit {
       ));
       
     }
-    back(): void {
-      this.location.back()
-    }
-    
+  back(): void {
+    this.location.back()
   }
+  editCustomer(){
+    this.router.navigate(['add-customer/' +this.id]);
+  }
+}
   
