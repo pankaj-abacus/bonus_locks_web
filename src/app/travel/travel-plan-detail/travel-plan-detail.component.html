@@ -4,12 +4,15 @@
       <i class="material-icons">arrow_back</i>
     </a>
     <h2>Travel Plan Detail</h2>
-    <div class="left-auto" *ngIf="logined_user_data.add_travel_list=='1' && travelType!='Area' && cus_network.length==1">
-      <button matTooltip="Add Area"  (click)="addArea()" mat-raised-button color="primary"><i class="material-icons">add</i>Add Area Travel Plan</button>
+    <!--  && cus_network.length==1 && travelType!='Area'-->
+    <div class="left-auto" *ngIf="logined_user_data.add_travel_list=='1' ">
+      <button matTooltip="Add Area" class="mr10"  (click)="addArea()" mat-raised-button color="primary"><i class="material-icons">add</i>Add Area Travel Plan</button>
+      <button matTooltip="Add Party Wise Travel Plan"  (click)="addCustomerNetwork()" mat-raised-button color="primary"><i class="material-icons">add</i>Add Party Wise Travel Plan</button>
+
     </div>
-    <div class="left-auto" *ngIf="logined_user_data.add_travel_list=='1' && travelType=='Area' && cus_network.length==1">
-      <button matTooltip="Add Area"  (click)="addCustomerNetwork()" mat-raised-button color="primary"><i class="material-icons">add</i>Add Party Wise Travel Plan</button>
-    </div>
+    <!-- && cus_network.length==1 && travelType=='Area' -->
+    <!-- <div class="left-auto" *ngIf="logined_user_data.add_travel_list=='1'  ">
+    </div> -->
   </div>
   <div class="container pt10 pl10 pr10 pb50">
     <div class="row">
@@ -203,7 +206,7 @@
                         <div class="visit-time">
                           <div class="visit-hours">
                             <span class="green-clr">Check-in</span>
-                            <p *ngIf="row.visit_start != '0000-00-00 00:00:00' ">{{row.visit_start }}</p>
+                            <p *ngIf="row.visit_start != '0000-00-00 00:00:00' ">{{row.visit_start | date:'dd MMM yyyy hh:mm'}}</p>
                             <p *ngIf="row.visit_start == '0000-00-00 00:00:00' ">---</p>
                           </div>
                           <div class="visit-hours">
@@ -229,9 +232,19 @@
                           <span>&nbsp;</span>
                           Followup
                         </div>
-                        <div class="types" [ngClass]="{'active': row.followup_flag > 0}">
+                        <!-- <div class="types" [ngClass]="{'active': row.followup_flag > 0}">
                           <span>&nbsp;</span>
                           Photo upload
+                        </div> -->
+                        <div class="types" [ngClass]="{'active': row.doc_flag!=0 }">
+                          <span>&nbsp;</span>
+                          <a style="cursor: pointer;text-decoration: underline;" *ngIf="row.doc_flag!=0"
+                            (click)="opendoc(row.Doc)">
+                            Photo upload
+                          </a>
+                          <a *ngIf="row.doc_flag==0">
+                            Photo upload
+                          </a>
                         </div>
                       </div>
                     </div>
