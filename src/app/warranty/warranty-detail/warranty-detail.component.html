@@ -3,10 +3,10 @@
     <a mat-icon-button  matTooltip="Back" (click)="back()">
       <i class="material-icons">arrow_back</i>
     </a>
-    <h2>Complaint Details</h2>
+    <h2>Warranty Details</h2>
     
-    <div class="left-auto" *ngIf="logined_user_data.edit_products_master=='1'">
-      <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail" [routerLink]="[ 'add-complaint/', this.id ]">
+    <div class="left-auto" >
+      <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail" [routerLink]="[ 'add-warranty/', this.id ]">
         <i class="material-icons">edit</i>
       </a>
     </div>
@@ -24,88 +24,75 @@
             <div class="grid-box">
               <div class="block-feilds">
                 <span>Date Created</span>
-                <p>{{getData.date_created | date}}</p>
+                <p>{{getData.date_created ? getData.date_created :'---'}}</p>
               </div>
               
               <div class="block-feilds">
-                <span>Category</span>
-                <p>{{getData.category}}</p>
+                <span>Created By</span>
+                <p>{{getData.created_by_type ? getData.created_by_type :'---'}}</p>
               </div>
               
               <div class="block-feilds">
-                <span>Sub Category</span>
-                <p>{{getData.sub_category_name}}</p>
+                <span>Complaint No.</span>
+                <p>{{getData.complain_no ? getData.complain_no :'---'}}</p>
               </div>
               
               <div class="block-feilds">
-                <span>Name</span>
-                <p>{{getData.product_name}}</p>
+                <span>Serial No.</span>
+                <p>{{getData.serial_no ? getData.serial_no :'---'}}</p>
               </div>
+              
+              <div class="block-feilds">
+                <span>Product Name</span>
+                <p>{{getData.product_name ? getData.product_name :'---'}}</p>
+              </div>
+              
+              
               
               <div class="block-feilds">
                 <span>Product Code</span>
-                <p>{{getData.product_code}}</p>
+                <p>{{getData.product_code ? getData.product_code :'---'}}</p>
+              </div>
+              
+              <div class="block-feilds">
+                <span>Customer Name</span>
+                <p>{{getData.customer_name ? getData.customer_name :'---'}}</p>
               </div>
               
               
               
               <div class="block-feilds">
-                <span>Master Packing Size</span>
-                <p>{{getData.master_packing_size ? getData.master_packing_size :'---'}}</p>
+                <span>Customer Mobile No.</span>
+                <p>{{getData.customer_mobile ? getData.customer_mobile :'---'}}</p>
+              </div>
+              <div class="block-feilds">
+                <span>New Serial No.</span>
+                <p>{{getData.new_serial_no ? getData.new_serial_no :'---'}}</p>
+              </div>
+              <div class="block-feilds">
+                <span>Warranty Status</span>
+                <p>{{getData.warranty_status ? getData.warranty_status : '--'}}</p>
               </div>
               
               <div class="block-feilds">
-                <span>Small Packing Size</span>
-                <p>{{getData.small_packing_size ? getData.small_packing_size :'---'}}</p>
-              </div>
-              
-              
-              
-              <div class="block-feilds">
-                <span>Product Scanning</span>
-                <p>{{getData.product_scan ? getData.product_scan :'---'}}</p>
-              </div>
-              <div class="block-feilds">
-                <span>Point Category</span>
-                <p>{{getData.point_category_name ? getData.point_category_name :'---'}}</p>
-              </div>
-              <div class="block-feilds">
-                <span>Box item with QR</span>
-                <p>{{getData.boxWOItem=='1' ? 'No' :'Yes'}}</p>
+                <span>Inspection Status</span>
+                <p>{{getData.inspection_status ? getData.inspection_status : '--'}}</p>
               </div>
               
               <div class="block-feilds">
-                <span>Status</span>
-                <p>{{getData.status == '1' ?  'Active' : "Inactive"}}</p>
+                <span>Complaint Status</span>
+                <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
               </div>
               
-              <div class="block-feilds">
-                <span>Last Updated By</span>
-                <p>{{getData.last_updated_by_name ? getData.last_updated_by_name : '--'}}</p>
-              </div>
+              <!-- <div class="block-feilds">
+                <span>Return Status</span>
+                <p>{{getData.return_status ? getData.return_status:'N/A'}}</p>
+              </div> -->
               
-              <div class="block-feilds">
-                <span>Last Updated On</span>
-                <p>
-                  {{getData.last_updated_on && getData.last_updated_on != '0000-00-00 00:00:00'? (getData.last_updated_on | date:'short') : '--'}}
-                </p>
-              </div>
-              <div class="block-feilds">
-                <span>Warranty In Months</span>
-                <p>{{getData.warranty_period ? getData.warranty_period :'---'}}</p>
-              </div>
-              <div class="block-feilds">
-                <span>Installation Responsibility</span>
-                <p>{{getData.installation_responsibility ? getData.installation_responsibility :'---'}} </p>
-              </div>
-            </div>
-            
-            
-            <div class="grid-box single mt16">
-              <div class="block-feilds">
-                <span>Description</span>
-                <p>{{getData.description ? getData.description:'N/A'}}</p>
-              </div>
+              <!-- <div class="block-feilds">
+                <span>Nature Of Problem</span>
+                <p>{{getData.nature_of_problem ? getData.nature_of_problem:'N/A'}}</p>
+              </div> -->
             </div>
           </div>
         </div>
@@ -118,8 +105,24 @@
           </div>
           <div class="card-body">
             <div class="img-container">
-              <div class="image-block" *ngFor="let row of productImg">
-                <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
+              <div class="image-block">
+                <img [src]="url+getData.warranty_card_copy_img" (click)="imageModel(url+getData.warranty_card_copy_img)" style="cursor: zoom-in;">
+              </div>
+              <div class="image-block">
+                <img [src]="url+getData.bill_copy_img" (click)="imageModel(url+getData.bill_copy_img)" style="cursor: zoom-in;">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" *ngIf="skLoading">
+          <div class="sk-head">
+            <h2>&nbsp;</h2>
+          </div>
+          <div class="card-body">
+            <div class="img-container">
+              <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
+                &nbsp; 
               </div>
             </div>
           </div>

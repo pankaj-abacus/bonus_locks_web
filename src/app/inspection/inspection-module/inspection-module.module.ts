@@ -16,9 +16,11 @@ import { AppUtilityModule } from 'src/app/app-utility.module';
 const inspectionRoutes = [
   { path: "", children:[
     { path: "", component: InspectionListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: 'add-complaint', component: InspectionAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: "complaint-detail/:id", children:[
+    { path: 'add-inspection', component: InspectionAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: "inspection-detail/:id", children:[
       {path:"", component:InspectionDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+      {path:'add-inspection/:id', component: InspectionAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
+
     ] }
   ]},
 ]

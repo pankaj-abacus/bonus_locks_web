@@ -30,6 +30,8 @@ export class ComplaintDetailComponent implements OnInit {
   
   
   constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
+
+    this.url = this.service.uploadUrl + 'service_task/'
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.service.currentUserID = params.id
@@ -50,8 +52,9 @@ export class ComplaintDetailComponent implements OnInit {
         this.getData = result['result'];
         console.log('getData',this.getData);
         
-        this.complaintImg = this.getData['img'];
-        
+        this.complaintImg = this.getData['image'];
+        console.log(this.complaintImg);
+               
         this.skLoading = false;
       }
       ));

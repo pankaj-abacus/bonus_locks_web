@@ -72,7 +72,7 @@ export class ComplaintAddComponent implements OnInit {
     }
     
     ngOnInit() {
-
+      
     }
     getStateList() {
       this.service.post_rqst(0, "Influencer/getAllState").subscribe((result => {
@@ -101,11 +101,18 @@ export class ComplaintAddComponent implements OnInit {
       }));
       
     }
-    MobileNumber(event: any) {
-      const pattern = /[0-9\+\-\ ]/;
-      let inputChar = String.fromCharCode(event.charCode);
-      if (event.keyCode != 8 && !pattern.test(inputChar)) { event.preventDefault(); }
-      
+    checkMobile() {      
+      if (this.data.customer_mobile.length == 10) {
+        this.service.post_rqst({ 'customer_mobile':this.data.customer_mobile },"ServiceTask/customerCheck").subscribe((d) => {
+          console.log(d);
+          if (d.statusMsg == "Exist") {
+            // this.toast.errorToastr("This Mobile No. alresdy exist in Complaint!");
+            this.data=d.data
+            this.getDistrict(1)
+            // console.log(this.data,'this.data');
+          }
+        });
+      }
     }
     submitDetail()
     {
@@ -139,13 +146,13 @@ export class ComplaintAddComponent implements OnInit {
       }
       
       deleteProductImage(arrayIndex, id, name) {
-
+        
         if (id) {
           this.service.post_rqst({ 'image_id': id, 'image': name }, "Master/productImageDeleted").subscribe((result => {
             if (result['statusCode'] == '200') {
               this.toast.successToastr(result['statusMsg']);
               this.selected_image.splice(arrayIndex, 1);
-    
+              
             } else {
               this.toast.errorToastr(result['statusMsg']);
             }
@@ -156,7 +163,7 @@ export class ComplaintAddComponent implements OnInit {
           this.selected_image.splice(arrayIndex, 1);
         }
       }
-    
+      
       onUploadChange(data: any) {
         this.errorMsg = false;
         this.image_id = '';
@@ -172,7 +179,7 @@ export class ComplaintAddComponent implements OnInit {
           this.image.append("" + i, data.target.files[i], data.target.files[i].name);
         }
       }
-
+      
       getComplaintDetail(id)
       {
         this.service.post_rqst({'complaint_id':id},"ServiceTask/serviceComplaintDetail").subscribe((result=>
@@ -181,11 +188,11 @@ export class ComplaintAddComponent implements OnInit {
             console.log('getData',this.getData);
             this.data = this.getData;
             this.getDistrict(1)
-
+            
           }
           ));
           
         }
+        
+      }
       
-    }
-    

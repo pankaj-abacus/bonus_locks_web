@@ -34,10 +34,16 @@ export class WarrantyListComponent implements OnInit {
   datanotofound: boolean = false;
   downurl: any = ''
 
-  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { }
+  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) {
+    this.getWarrantyList('');
+    this.page_limit = service.pageLimit;
+
+
+   }
 
   ngOnInit() {
     this.filter_data = this.service.getData()
+    
   }
   
   pervious() {
@@ -67,6 +73,16 @@ export class WarrantyListComponent implements OnInit {
     this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
     this.getWarrantyList('');
   }
+
+  date_format2(): void {
+    this.filter_data.date_of_purchase = moment(this.filter_data.date_of_purchase).format('YYYY-MM-DD');
+    this.getWarrantyList('');
+  }
+
+  date_format3(): void {
+    this.filter_data.warranty_end_date = moment(this.filter_data.warranty_end_date).format('YYYY-MM-DD');
+    this.getWarrantyList('');
+  }
   
   getWarrantyList(data) {
     if (this.pagenumber > this.total_page) {
@@ -76,7 +92,7 @@ export class WarrantyListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
-    let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceCustomer/serviceWarrantyList")
+    let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceWarrantyList")
     
     this.loader = true;
     header.subscribe((result) => {
