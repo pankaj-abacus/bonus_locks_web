@@ -19,6 +19,7 @@ const warrantyRoutes = [
     { path: 'add-warranty', component: WarrantyAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     { path: "warranty-detail/:id", children:[
       {path:"", component:WarrantyDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+      {path:'add-warranty/:id', component: WarrantyAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
     ] }
   ]},
   

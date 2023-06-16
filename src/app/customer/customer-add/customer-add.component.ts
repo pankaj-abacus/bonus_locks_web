@@ -99,9 +99,9 @@ export class CustomerAddComponent implements OnInit {
       header.subscribe((result=>
         {
           if (result['statusCode'] == 200) {
-
-          this.rout.navigate(['/customer-list']);
-
+            
+            this.rout.navigate(['/customer-list']);
+            
             this.toast.successToastr(result['statusMsg']);
             this.savingFlag = false;
           }
@@ -127,6 +127,17 @@ export class CustomerAddComponent implements OnInit {
           }
           ));
           
+        }
+        
+        checkMobile() {      
+          if (this.data.mobile_no.length == 10) {
+            this.service.post_rqst({ 'customer_mobile':this.data.mobile_no },"ServiceTask/customerCheck").subscribe((d) => {
+              console.log(d);
+              if (d.statusMsg == "Exist") {
+                this.toast.errorToastr("This Mobile No. is already exist!");
+              }
+            });
+          }
         }
         
         

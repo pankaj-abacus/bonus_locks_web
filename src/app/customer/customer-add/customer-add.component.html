@@ -29,9 +29,7 @@
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : mobile_no.invalid } ">
                     <mat-label>Mobile Number</mat-label>
-                    <input type="text" name="mobile_no" minlength="10" maxlength="10" matInput placeholder=""
-                    #mobile_no="ngModel" [(ngModel)]="data.mobile_no"
-                    onkeypress="return event.charCode>=48 && event.charCode<=57" required>
+                    <input type="text" name="mobile_no" minlength="10" maxlength="10" matInput placeholder="" #mobile_no="ngModel" [(ngModel)]="data.mobile_no" (ngModelChange)="checkMobile()" required>
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="mobile_no.touched || f.submitted">
                     <p *ngIf="mobile_no.errors?.required">This field is required</p>

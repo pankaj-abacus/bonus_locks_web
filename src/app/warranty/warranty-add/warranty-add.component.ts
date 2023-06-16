@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { DialogComponent } from 'src/app/dialog.component';
 import { MatDialog } from '@angular/material';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-warranty-add',
@@ -24,6 +26,7 @@ export class WarrantyAddComponent implements OnInit {
   errorMsg: boolean = false;
   segmentList: any = [];
   SubcategoryList: any = [];
+  productList: any = [];
   category_list: any = [];
   brandList: any = [];
   colorList: any = [];
@@ -47,6 +50,14 @@ export class WarrantyAddComponent implements OnInit {
   getData:any ={};  
   params_network:any;
   params_type:any;
+  billBase64:boolean = false;
+  bill_img_id:any;
+  warrantyBase64:boolean = false;
+  warranty_img_id:any;
+  bill_copy_img :any;
+  warranty_card_copy_img :any;
+  
+  
   
   constructor(private renderer: Renderer2,
     public location: Location,
@@ -60,9 +71,9 @@ export class WarrantyAddComponent implements OnInit {
         this.id =  params.id;
         console.log(this.id);
         if (this.id) {
-          this.getComplaintDetail(this.id);
+          this.getWarrantyDetail(this.id);
         }
-
+        
         this.getSegment();
         
         
@@ -71,23 +82,35 @@ export class WarrantyAddComponent implements OnInit {
     
     ngOnInit() {
     }
+
+    
     
     submitDetail()
     {
-      this.data.image = this.selected_image ? this.selected_image : []; 
+      this.data.billBase64 = this.billBase64;
+      this.data.warrantyBase64 = this.warrantyBase64;
+
+      if(this.data.date_of_purchase){
+        this.data.date_of_purchase = moment(this.data.date_of_purchase).format('YYYY-MM-DD');
+        this.data.date_of_purchase=this.data.date_of_purchase;
+      }
+      if(this.data.warranty_end_date){
+        this.data.warranty_end_date = moment(this.data.warranty_end_date).format('YYYY-MM-DD');
+        this.data.warranty_end_date=this.data.warranty_end_date;
+      }
       this.savingFlag = true;
       let header
       if(this.id){
-        header =this.service.post_rqst({"data":this.data,'type': 'Edit','id':this.id},"ServiceCustomer/test") 
+        header =this.service.post_rqst({"data":this.data,'type': 'Edit','id':this.id},"ServiceTask/serviceWarrantyAdd") 
       }
       else
       {
-        header =this.service.post_rqst({"data":this.data,'type': 'Add',},"ServiceCustomer/test") 
+        header =this.service.post_rqst({"data":this.data,'type': 'Add',},"ServiceTask/serviceWarrantyAdd") 
       }
       header.subscribe((result=>
         {
           if (result['statusCode'] == 200) {
-            this.rout.navigate(['/customer-list']);
+            this.rout.navigate(['/warranty-list']);
             
             this.toast.successToastr(result['statusMsg']);
             this.savingFlag = false;
@@ -103,60 +126,66 @@ export class WarrantyAddComponent implements OnInit {
         this.location.back()
       }
       
-      deleteProductImage(arrayIndex, id, name) {
-        
-        if (id) {
-          this.service.post_rqst({ 'image_id': id, 'image': name }, "Master/productImageDeleted").subscribe((result => {
-            if (result['statusCode'] == '200') {
-              this.toast.successToastr(result['statusMsg']);
-              this.selected_image.splice(arrayIndex, 1);
-              
-            } else {
-              this.toast.errorToastr(result['statusMsg']);
-            }
-          }
-          ))
-        }
-        else {
-          this.selected_image.splice(arrayIndex, 1);
-        }
-      }
-      
-      onUploadChange(data: any) {
-        this.errorMsg = false;
-        this.image_id = '';
-        for (let i = 0; i < data.target.files.length; i++) {
+      bill_Upload(data: any)
+      {
+        for(let i=0;i<data.target.files.length;i++)
+        {
+          
           let files = data.target.files[i];
-          if (files) {
+          if (files) 
+          {
+            this.bill_img_id = '';
+            this.billBase64 = true;
             let reader = new FileReader();
             reader.onload = (e: any) => {
-              this.selected_image.push({ "image": e.target.result });
+              this.data.bill_copy_img = e.target.result
             }
             reader.readAsDataURL(files);
           }
-          this.image.append("" + i, data.target.files[i], data.target.files[i].name);
+          else{
+            this.billBase64 = false;
+          }
+          this.image.append(""+i,data.target.files[i],data.target.files[i].name);
         }
       }
       
-      getComplaintDetail(id)
+      warrannty_Upload(data: any)
       {
-        this.service.post_rqst({'customer_id':id},"ServiceCustomer/serviceCustomerDetail").subscribe((result=>
+        for(let i=0;i<data.target.files.length;i++)
+        {
+          
+          let files = data.target.files[i];
+          if (files) 
+          {
+            this.warranty_img_id = '';
+            this.warrantyBase64 = true;
+            let reader = new FileReader();
+            reader.onload = (e: any) => {
+              this.data.warranty_card_copy_img = e.target.result
+            }
+            reader.readAsDataURL(files);
+          }
+          else{
+            this.warrantyBase64 = false;
+          }
+          this.image.append(""+i,data.target.files[i],data.target.files[i].name);
+        }
+      }
+      
+      getWarrantyDetail(id)
+      {
+        this.service.post_rqst({'warranty_id':id},"ServiceTask/serviceWarrantyDetail").subscribe((result=>
           {
             this.getData = result['result'];
             console.log('getData',this.getData);
             this.data = this.getData;
+            this.getSubCatgory(this.data.segment_id);
             
           }
           ));
           
         }
-        MobileNumber(event: any) {
-          const pattern = /[0-9\+\-\ ]/;
-          let inputChar = String.fromCharCode(event.charCode);
-          if (event.keyCode != 8 && !pattern.test(inputChar)) { event.preventDefault(); }
-          
-        }
-
+        
         getSegment() {
           this.service.post_rqst({}, "Master/getProductCategoryList").subscribe((result => {
             if (result['category_list']['statusCode'] == 200) {
@@ -164,7 +193,7 @@ export class WarrantyAddComponent implements OnInit {
             }
           }))
         }
-
+        
         getSubCatgory(id) {
           this.service.post_rqst({ 'id': id }, "Master/subCategoryList").subscribe((result => {
             if (result['statusCode'] == 200) {
@@ -172,6 +201,32 @@ export class WarrantyAddComponent implements OnInit {
             }
           }))
         }
+        
+        getProduct(id) {
+          this.service.post_rqst({ 'id': id }, "Master/productList").subscribe((result => {
+            if (result['statusCode'] == 200) {
+              this.productList = result['product_list'];
+              console.log(this.productList);
+              
+            }
+          }))
+        }
+        
+        getProductInfo(product_id)
+        {
+          console.log(product_id);
+          
+          if(product_id){
+            let index= this.productList.findIndex(d=> d.id==product_id);
+            if(index!=-1){
+              this.data.product_name= this.productList[index].product_name;
+              this.data.product_code= this.productList[index].product_code;
+            }
+            console.log(this.data.product_name);
+            console.log(this.data.product_code);
+          }
+        }
+        
         
       }
       
