@@ -64,7 +64,7 @@ const routes: Routes = [
   { path: "complaint-list", loadChildren: './service/service-module/service-module.module#ServiceModuleModule'},
   { path: "customer-list", loadChildren: './customer/customer-module/customer-module.module#CustomerModuleModule'},
   { path: "warranty-list", loadChildren: './warranty/warranty-module/warranty-module.module#WarrantyModuleModule'},
-  { path: "inspection-list", loadChildren: './inspection/inspection-module/inspection-module.module#InspectionModuleModule'},
+  { path: "installation-list", loadChildren: './installation/installation-module/installation-module.module#InstallationModuleModule'},
   { path: "claimDispatch-list", loadChildren: './claim-dispatch/dispatch-module/dispatch-module.module#DispatchModuleModule'},
 
   { path: "point-master", loadChildren:'./point-master/point-master/point-master.module#PointMasterModule'},

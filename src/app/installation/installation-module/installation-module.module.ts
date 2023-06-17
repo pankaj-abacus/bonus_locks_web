@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InspectionListComponent } from '../inspection-list/inspection-list.component';
-import { InspectionAddComponent } from '../inspection-add/inspection-add.component';
-import { InspectionDetailComponent } from '../inspection-detail/inspection-detail.component';
+import { InstallationListComponent } from '../installation-list/installation-list.component';
+import { InstallationAddComponent } from '../installation-add/installation-add.component';
+import { InstallationDetailComponent } from '../installation-detail/installation-detail.component';
 import { AuthComponentGuard } from 'src/app/auth-component.guard';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,18 +15,18 @@ import { AppUtilityModule } from 'src/app/app-utility.module';
 
 const inspectionRoutes = [
   { path: "", children:[
-    { path: "", component: InspectionListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: 'add-inspection', component: InspectionAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: "inspection-detail/:id", children:[
-      {path:"", component:InspectionDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-      {path:'add-inspection/:id', component: InspectionAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
+    { path: "", component: InstallationListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: 'add-installation', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: "installation-detail/:id", children:[
+      {path:"", component:InstallationDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+      {path:'add-installation/:id', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
 
     ] }
   ]},
 ]
 
 @NgModule({
-  declarations: [InspectionDetailComponent,InspectionAddComponent,InspectionListComponent],
+  declarations: [InstallationListComponent,InstallationAddComponent,InstallationDetailComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(inspectionRoutes),
@@ -41,4 +41,4 @@ const inspectionRoutes = [
     AppUtilityModule
   ]
 })
-export class InspectionModuleModule { }
+export class InstallationModuleModule { }

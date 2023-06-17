@@ -120,7 +120,7 @@
                 <mat-form-field appearance="outline" [ngClass]="{'has-error' : segment_id.invalid } ">
                   <mat-label>Category</mat-label>
                   <mat-select name="segment_id" #segment_id="ngModel" [(ngModel)]="product_data.segment_id" (selectionChange)="getSubCatgory(product_data.segment_id)" >
-                    <mat-option *ngFor="let row of segmentList" [value]="row" color="accent">{{row.category}}</mat-option>
+                    <mat-option *ngFor="let row of segmentList" [value]="row.id" color="accent">{{row.category}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <div class="alert alert-danger" *ngIf="f.submitted && segment_id?.invalid ">
@@ -132,7 +132,7 @@
                 <mat-form-field appearance="outline" [ngClass]="{'has-error' : sub_segment_id.invalid } ">
                   <mat-label>Sub Category {{data.sub_segment_id}}</mat-label>
                   <mat-select name="sub_segment_id" #sub_segment_id="ngModel" [(ngModel)]="product_data.sub_segment_id" (selectionChange)="getProduct(data.sub_segment_id)" >
-                    <mat-option *ngFor="let row of SubcategoryList" [value]="row" color="accent">{{row.sub_category_name}}</mat-option>
+                    <mat-option *ngFor="let row of SubcategoryList" [value]="row.id" color="accent">{{row.sub_category_name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <div class="alert alert-danger" *ngIf="f.submitted && sub_segment_id?.invalid ">
@@ -143,7 +143,7 @@
                 <mat-form-field appearance="outline" [ngClass]="{'has-error' : product_id.invalid } ">
                   <mat-label>Product Name {{data.product_id}}</mat-label>
                   <mat-select name="product_id" #product_id="ngModel" [(ngModel)]="product_data.product_id" (selectionChange)="getProductInfo(product_data.product_id)" >
-                    <mat-option *ngFor="let row of productList" [value]="row" color="accent">{{row.product_name}} - {{row.product_code}}</mat-option>
+                    <mat-option *ngFor="let row of productList" [value]="row.id" color="accent">{{row.product_name}} - {{row.product_code}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <div class="alert alert-danger" *ngIf="f.submitted && sub_segment_id?.invalid ">
@@ -194,8 +194,8 @@
                         <table>
                           <tr *ngFor="let row of add_list;let i=index;">
                             <td class="w50 text-center">{{i+1}}</td>
-                            <td class="w130 text-center">{{row.segment_id}}</td>
-                            <td class="w130 text-center">{{row.sub_segment_id}}</td>
+                            <td class="w130 text-center">{{row.category_name}}</td>
+                            <td class="w130 text-center">{{row.subcat_name}}</td>
                             <td class="w130 text-center">{{row.product_name}}</td>
                             <td class="w80 text-center">{{row.qty}}</td>
                             <td class="w50 text-center" >

@@ -56,8 +56,8 @@ import { ZingchartAngularModule } from 'zingchart-angular';
 import { ServiceModuleModule } from './service/service-module/service-module.module';
 import { CustomerModuleModule } from './customer/customer-module/customer-module.module';
 import { WarrantyModuleModule } from './warranty/warranty-module/warranty-module.module';
-import { InspectionModuleModule } from './inspection/inspection-module/inspection-module.module';
 import { DispatchModuleModule } from './claim-dispatch/dispatch-module/dispatch-module.module';
+import { InstallationModuleModule } from './installation/installation-module/installation-module.module';
 
 
 @NgModule({
@@ -119,7 +119,7 @@ import { DispatchModuleModule } from './claim-dispatch/dispatch-module/dispatch-
         ServiceModuleModule,
         CustomerModuleModule,
         WarrantyModuleModule,
-        InspectionModuleModule,
+        InstallationModuleModule,
         DispatchModuleModule
         // FusionChartsModule
     ],

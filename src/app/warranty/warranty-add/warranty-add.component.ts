@@ -56,6 +56,10 @@ export class WarrantyAddComponent implements OnInit {
   warranty_img_id:any;
   bill_copy_img :any;
   warranty_card_copy_img :any;
+  warrantyImg:any =[];
+  uploadurl:any;
+
+
   
   
   
@@ -67,8 +71,14 @@ export class WarrantyAddComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: DialogComponent,
     public dialog2: MatDialog) {
+
+    this.uploadurl = this.service.uploadUrl + 'service_task/'
+
       this.route.params.subscribe(params => {
         this.id =  params.id;
+        this.warranty_img_id =  params.id;
+        this.bill_img_id =  params.id;
+
         console.log(this.id);
         if (this.id) {
           this.getWarrantyDetail(this.id);
@@ -179,7 +189,26 @@ export class WarrantyAddComponent implements OnInit {
             this.getData = result['result'];
             console.log('getData',this.getData);
             this.data = this.getData;
-            this.getSubCatgory(this.data.segment_id);
+            console.log(this.data);
+            this.data.segment_id=this.getData.segment_id.toString()
+            // console.log(typeof this.data.segment_id);
+            this.getSegment();
+            
+            setTimeout(() => { 
+              
+              this.data.sub_segment_id=this.getData.sub_segment_id.toString()
+              // console.log(typeof this.data.sub_segment_id);
+              this.getSubCatgory(this.data.segment_id);
+            }, 200);
+
+            setTimeout(() => { 
+              
+              this.data.product_id=this.getData.product_id.toString()
+              // console.log(typeof this.data.product_id);
+              this.getProduct(this.data.product_id);
+            }, 200);
+            
+            
             
           }
           ));
