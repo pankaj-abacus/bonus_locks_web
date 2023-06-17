@@ -8,13 +8,15 @@ import { DialogComponent } from 'src/app/dialog.component';
 import { sessionStorage } from 'src/app/localstorage.service';
 
 @Component({
-  selector: 'app-inspection-list',
-  templateUrl: './inspection-list.component.html',
-  styleUrls: ['./inspection-list.component.scss']
+  selector: 'app-installation-list',
+  templateUrl: './installation-list.component.html',
+  styleUrls: ['./installation-list.component.scss']
 })
-export class InspectionListComponent implements OnInit {
+export class InstallationListComponent implements OnInit {
+
+
   fabBtnValue: any = 'add';
-  customerList: any = [];
+  installationList: any = [];
   filter: any = false;
   data: any = [];
   page_limit: any;
@@ -63,7 +65,7 @@ export class InspectionListComponent implements OnInit {
   }
   
   goToDetailHandler(id) {
-    window.open(`/customer-detail/` + id);
+    window.open(`/installation-detail/` + id);
   }
   date_format(): void {
     this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
@@ -78,7 +80,7 @@ export class InspectionListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
-    let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceCustomer/test")
+    let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceInstallationList")
     
     this.loader = true;
     header.subscribe((result) => {
@@ -87,13 +89,13 @@ export class InspectionListComponent implements OnInit {
         console.log('result',result);
         
         
-        this.customerList = result['result'];
-        console.log(this.customerList);
+        this.installationList = result['result'];
+        console.log(this.installationList);
         
         this.pageCount = result['count'];
         this.scheme_active_count = result['scheme_active_count'];
         this.loader = false;
-        if (this.customerList.length == 0) {
+        if (this.installationList.length == 0) {
           this.datanotofound = false;
         } else {
           this.datanotofound = true;
@@ -112,12 +114,12 @@ export class InspectionListComponent implements OnInit {
         this.sr_no = this.sr_no * this.page_limit
         
         
-        for (let i = 0; i < this.customerList.length; i++) {
-          if (this.customerList[i].status == '1') {
-            this.customerList[i].newStatus = true
+        for (let i = 0; i < this.installationList.length; i++) {
+          if (this.installationList[i].status == '1') {
+            this.installationList[i].newStatus = true
           }
-          else if (this.customerList[i].status == '0') {
-            this.customerList[i].newStatus = false;
+          else if (this.installationList[i].status == '0') {
+            this.installationList[i].newStatus = false;
           }
         }
       }
@@ -132,6 +134,5 @@ export class InspectionListComponent implements OnInit {
   lastBtnValue(value) {
     this.fabBtnValue = value;
   }
-
 
 }
