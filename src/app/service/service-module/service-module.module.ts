@@ -12,6 +12,7 @@ import { MatDialogModule, MatIconModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
 import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
+import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-model-component/engineer-assign-model-component.component';
 
 
 const serviceRoutes = [
@@ -28,7 +29,7 @@ const serviceRoutes = [
 ]
 
 @NgModule({
-  declarations: [ComplaintListComponent,ComplaintAddComponent,ComplaintDetailComponent],
+  declarations: [ComplaintListComponent,ComplaintAddComponent,ComplaintDetailComponent,EngineerAssignModelComponentComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(serviceRoutes),

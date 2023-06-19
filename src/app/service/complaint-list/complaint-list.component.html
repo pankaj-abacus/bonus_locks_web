@@ -36,7 +36,7 @@
           <table>
             <tr>
               <th class="w60">Sr.No</th>
-              <th class="w130">Date Created</th>
+              <th class="w180">Date Created</th>
               <th class="w100">Created By</th>
               <th class="w120">Complaint No.</th>
               <th class="w130">Serial No.</th>
@@ -58,7 +58,7 @@
           <table>
             <tr>
               <th class="w60"></th>
-              <th class="w130">
+              <th class="w180">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
@@ -73,8 +73,16 @@
               <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getComplantList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
+                    <input type="text" matInput placeholder="Search ..." name="complain_no"
+                    (keyup.enter)="getComplantList('')" #complain_no="ngModel" [(ngModel)]="filter_data.complain_no">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w130">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="serial_no"
+                    (keyup.enter)="getComplantList('')" #serial_no="ngModel" [(ngModel)]="filter_data.serial_no">
                   </mat-form-field>
                 </div>
               </th>
@@ -89,47 +97,39 @@
               <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getComplantList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
+                    <input type="text" matInput placeholder="Search ..." name="product_code"
+                    (keyup.enter)="getComplantList('')" #product_code="ngModel" [(ngModel)]="filter_data.product_code">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getComplantList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
+                    <input type="text" matInput placeholder="Search ..." name="customer_name"
+                    (keyup.enter)="getComplantList('')" #customer_name="ngModel" [(ngModel)]="filter_data.customer_name">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getComplantList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
+                    <input type="text" matInput placeholder="Search ..." name="customer_mobile"
+                    (keyup.enter)="getComplantList('')" #customer_mobile="ngModel" [(ngModel)]="filter_data.customer_mobile">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getComplantList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w130">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getComplantList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
+                    <input type="text" matInput placeholder="Search ..." name="new_serial_no"
+                    (keyup.enter)="getComplantList('')" #new_serial_no="ngModel" [(ngModel)]="filter_data.new_serial_no">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input select-input">
-                    <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.status"
+                    <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.warranty_status"
                     (selectionChange)="getComplantList('')">
                     <mat-option value="">All</mat-option>
                     <mat-option value="In Warranty">In Warranty</mat-option>
@@ -141,7 +141,7 @@
             <th class="w130">
               <div class="th-search-acmt">
                 <mat-form-field class="cs-input select-input">
-                  <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.status"
+                  <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.inspection_status"
                   (selectionChange)="getComplantList('')">
                   <mat-option value="">All</mat-option>
                   <mat-option value="Pending">Pending</mat-option>
@@ -154,7 +154,7 @@
           <th class="w130">
             <div class="th-search-acmt">
               <mat-form-field class="cs-input select-input">
-                <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.status"
+                <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.complaint_status"
                 (selectionChange)="getComplantList('')">
                 <mat-option value="">All</mat-option>
                 <mat-option value="Pending">Pending</mat-option>
@@ -168,7 +168,7 @@
           <div class="th-search-acmt">
             
             <mat-form-field class="cs-input select-input">
-              <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.status"
+              <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.return_status"
               (selectionChange)="getComplantList('')">
               <mat-option value="">All</mat-option>
               <mat-option value="Pending">Pending</mat-option>
@@ -189,7 +189,7 @@
       <ng-container *ngIf="!loader">
           <tr *ngFor="let row of complaintList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
             <td class="w60">{{i + 1 + sr_no}}</td>
-            <td class="w130">{{row.date_created ? row.date_created : '--'}}</td>
+            <td class="w180">{{row.date_created ? row.date_created : '--'}}</td>
             <td class="w100">{{row.created_by_type ? row.created_by_type : '--'}}</td>
             <td class="w120"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
             <td class="w130">{{row.serial_no ? row.serial_no : '--'}}</td>

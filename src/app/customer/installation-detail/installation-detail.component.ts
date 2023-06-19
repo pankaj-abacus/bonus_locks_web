@@ -9,7 +9,6 @@ import { Location } from '@angular/common'
 import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
-import { EngineerAssignModelComponent } from '../engineer-assign-model/engineer-assign-model.component';
 
 @Component({
   selector: 'app-installation-detail',
@@ -76,22 +75,6 @@ export class InstallationDetailComponent implements OnInit {
 
     back(): void {
       this.location.back()
-    }
-
-    openDialog(): void {
-      const dialogRef = this.dialog.open(EngineerAssignModelComponent, {
-        width: '400px',
-        panelClass: 'cs-model',
-        data: {
-          id: this.id,
-        }
-      });
-      
-      dialogRef.afterClosed().subscribe(result => {
-        if (result != false) {
-          this.getInstallationDetail();
-        }
-      });
     }
     
   }

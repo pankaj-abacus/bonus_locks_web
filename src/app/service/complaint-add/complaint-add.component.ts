@@ -185,6 +185,8 @@ export class ComplaintAddComponent implements OnInit {
         this.service.post_rqst({'complaint_id':id},"ServiceTask/serviceComplaintDetail").subscribe((result=>
           {
             this.getData = result['result'];
+            this.data.image=this.getData['image'];
+            console.log('image',this.image);
             console.log('getData',this.getData);
             this.data = this.getData;
             this.getDistrict(1)

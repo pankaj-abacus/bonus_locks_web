@@ -98,7 +98,7 @@ export class InstallationAddComponent implements OnInit {
       header.subscribe((result=>
         {
           if (result['statusCode'] == 200) {
-            this.rout.navigate(['/customer-list']);
+            this.rout.navigate(['/installation-list']);
             
             this.toast.successToastr(result['statusMsg']);
             this.savingFlag = false;
@@ -300,8 +300,8 @@ export class InstallationAddComponent implements OnInit {
             this.getData = result['result'];
             console.log('getData',this.getData);
             this.data = this.getData;
-            this.add_list = this.getData['items_list'];
-            console.log(this.product_data);
+            this.add_list = this.getData['add_list'];
+            // console.log(this.product_data);
             this.getDistrict(1)
             
           }

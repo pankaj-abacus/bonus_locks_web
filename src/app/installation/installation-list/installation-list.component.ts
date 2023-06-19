@@ -36,6 +36,7 @@ export class InstallationListComponent implements OnInit {
   downurl: any = ''
 
   constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) {
+    this.downurl = service.downloadUrl
     this.getinspectionList('');
     this.page_limit = service.pageLimit;
    }
@@ -135,4 +136,14 @@ export class InstallationListComponent implements OnInit {
     this.fabBtnValue = value;
   }
 
+
+  downloadExcel() {
+    this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_installation_list").subscribe((result => {
+      if (result['msg'] == true) {
+        window.open(this.downurl + result['filename'])
+        this.getinspectionList('');
+      } else {
+      }
+    }));
+  }
 }

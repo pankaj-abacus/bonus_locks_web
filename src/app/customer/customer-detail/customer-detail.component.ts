@@ -11,6 +11,7 @@ import { Location } from '@angular/common'
 import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
+// import { type } from 'os';
 
 @Component({
   selector: 'app-customer-detail',
@@ -18,14 +19,19 @@ import { ExportexcelService } from 'src/app/service/exportexcel.service';
   styleUrls: ['./customer-detail.component.scss']
 })
 export class CustomerDetailComponent implements OnInit {
-
+  
   id;
+  tabType: any = 'Profile';
+  filter: any = {}
   getData:any ={};
   skLoading:boolean = false;
   url:any;
   assign_login_data:any={};
   logined_user_data:any={};
   stateDetail:any =[];
+  warrantyList:any =[];
+  complaintList:any =[];
+  installationList:any =[];
   product_size:any =[];
   featureFlag :boolean = false;
   allMrpFlag :boolean = false;
@@ -39,7 +45,7 @@ export class CustomerDetailComponent implements OnInit {
         this.getCustomerDetail();
       }
     });
-   }
+  }
   
   ngOnInit() {
   }
@@ -47,6 +53,7 @@ export class CustomerDetailComponent implements OnInit {
   getCustomerDetail()
   {
     this.skLoading = true;
+    this.filter.status = this.tabType
     this.service.post_rqst({'customer_id':this.id},"ServiceCustomer/serviceCustomerDetail").subscribe((result=>
       {
         this.getData = result['result'];
@@ -59,11 +66,52 @@ export class CustomerDetailComponent implements OnInit {
       ));
       
     }
-  back(): void {
-    this.location.back()
-  }
-  editCustomer(){
-    this.router.navigate(['add-customer/' +this.id]);
-  }
-}
-  
+    
+    getWarrantyDetail(){
+      console.log(this.tabType);
+      
+      this.skLoading = true;
+      this.filter.status = this.tabType
+      this.service.post_rqst({'customer_id':this.id},"ServiceTask/serviceWarrantyList").subscribe((result=>
+        {
+          this.warrantyList = result['result'];
+          console.log('warrantyList',this.warrantyList);
+          this.skLoading = false;
+        }
+        ));
+      }
+      
+      getInstallationDetail(){
+        console.log(this.tabType);
+        this.skLoading = true;
+        this.filter.status = this.tabType
+        this.service.post_rqst({'customer_id':this.id},"ServiceTask/serviceComplaintList").subscribe((result=>
+          {
+            this.installationList = result['result'];
+            this.skLoading = false;
+          }
+          ));
+        }
+        
+        getComplaintDetail(){
+          console.log(this.tabType);
+          this.skLoading = true;
+          this.filter.status = this.tabType
+          this.service.post_rqst({'customer_id':this.id},"ServiceTask/serviceInstallationList").subscribe((result=>
+            {
+              this.complaintList = result['result'];
+              console.log('complaintList',this.complaintList);
+              this.skLoading = false;
+            }
+            ));
+          }
+          back(): void {
+            this.location.back()
+          }
+          editCustomer(){
+            this.router.navigate(['add-customer/' +this.id]);
+          }
+          
+          
+        }
+        

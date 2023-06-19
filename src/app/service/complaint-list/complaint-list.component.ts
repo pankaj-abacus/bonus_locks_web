@@ -37,6 +37,7 @@ export class ComplaintListComponent implements OnInit {
 
 
   constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { 
+    this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
     this.getComplantList('');
 
@@ -139,4 +140,14 @@ export class ComplaintListComponent implements OnInit {
     this.fabBtnValue = value;
   }
 
+
+  downloadExcel() {
+    this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_complaint_list").subscribe((result => {
+      if (result['msg'] == true) {
+        window.open(this.downurl + result['filename'])
+        this.getComplantList('');
+      } else {
+      }
+    }));
+  }
 }
