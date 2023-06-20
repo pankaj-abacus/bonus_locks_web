@@ -69,7 +69,7 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="customer_name"
-                      (keyup.enter)="getWarrantyList('')" #customer_name="ngModel" [(ngModel)]="filter_data.customer_name">
+                    (keyup.enter)="getWarrantyList('')" #customer_name="ngModel" [(ngModel)]="filter_data.customer_name">
                   </mat-form-field>
                 </div>
               </th>
@@ -77,15 +77,24 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                      (keyup.enter)="getWarrantyList('')" #customer_mobile="ngModel" [(ngModel)]="filter_data.customer_mobile">
+                    (keyup.enter)="getWarrantyList('')" #customer_mobile="ngModel" [(ngModel)]="filter_data.customer_mobile">
+                  </mat-form-field>
+                </div>
+                
+              </th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="serial_no"
+                    (keyup.enter)="getWarrantyList('')" #serial_no="ngModel" [(ngModel)]="filter_data.serial_no">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_code"
-                      (keyup.enter)="getWarrantyList('')" #product_code="ngModel" [(ngModel)]="filter_data.product_code">
+                    <input type="text" matInput placeholder="Search ..." name="product_detail"
+                    (keyup.enter)="getWarrantyList('')" #product_detail="ngModel" [(ngModel)]="filter_data.product_detail">
                   </mat-form-field>
                 </div>
               </th>
@@ -110,14 +119,7 @@
                     <mat-datepicker #picker3></mat-datepicker>
                   </mat-form-field>
                 </div>
-              </th>
-              <th class="w150">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="company_verification_status"
-                      (keyup.enter)="getWarrantyList('')" #company_verification_status="ngModel" [(ngModel)]="filter_data.company_verification_status">
-                  </mat-form-field>
-                </div>
+                
               </th>
               <th class="w250 "></th>
             </tr>

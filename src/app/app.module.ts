@@ -58,6 +58,8 @@ import { CustomerModuleModule } from './customer/customer-module/customer-module
 import { WarrantyModuleModule } from './warranty/warranty-module/warranty-module.module';
 import { DispatchModuleModule } from './claim-dispatch/dispatch-module/dispatch-module.module';
 import { InstallationModuleModule } from './installation/installation-module/installation-module.module';
+import { EngineerAssignModelComponent } from './installation/engineer-assign-model/engineer-assign-model.component';
+import { EngineerAssignModelComponentComponent } from './engineer-assign-model-component/engineer-assign-model-component.component';
 
 
 @NgModule({
@@ -138,6 +140,8 @@ import { InstallationModuleModule } from './installation/installation-module/ins
 
     entryComponents: [
         UploadFileModalComponent,
+        EngineerAssignModelComponent,
+        EngineerAssignModelComponentComponent
     ],
 
     exports: [RouterModule],

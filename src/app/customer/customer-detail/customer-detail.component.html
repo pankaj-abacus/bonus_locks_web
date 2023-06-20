@@ -4,10 +4,36 @@
       <i class="material-icons">arrow_back</i>
     </a>
     <h2>Customer Detail</h2>
+    
+    
+    <div class="left-auto df ac flex-gap-10">
+      <div class="pagination" *ngIf="(tabType!= 'Profile')">
+        <div class="pagination-content">
+          Pages
+          <span>{{pagenumber}}</span>
+          of
+          <span>{{total_page}}</span>
+        </div>
+        <div class="page-nav">
+          <button mat-icon-button matTooltip="Older" (click)="pervious(tabType)" [disabled]="start == 0">
+            <i class="material-icons">navigate_before</i>
+          </button>
+          <button mat-icon-button matTooltip="Newer" (click)="nextPage(tabType)" [disabled]="pagenumber == total_page ">
+            <i class="material-icons">navigate_next</i>
+          </button>
+        </div>
+      </div>
+      <div class="mat-tabbar">
+        <button mat-button [ngClass]="{'active' :tabType== 'Profile'}" (click)="tabType= 'Profile';getCustomerDetail()"><i class="material-icons">person</i>Basic Detail</button>
+        <button mat-button [ngClass]="{'active' :tabType== 'warranty'}" (click)="tabType= 'warranty';getWarrantyDetail()"><i class="material-icons">person</i>Warranty</button>
+        <button mat-button [ngClass]="{'active' :tabType== 'complaint'}" (click)="tabType= 'complaint';getComplaintDetail()"><i class="material-icons">person</i>Compalint</button>
+        <button mat-button [ngClass]="{'active' :tabType== 'installation'}" (click)="tabType= 'installation';getInstallationDetail()"><i class="material-icons">person</i>Installation</button>
+      </div>
+    </div>
   </div>
   
   <div class="container pt10 pl10 pr10 container-scroll">
-    <div class="row">
+    <div class="row" *ngIf="tabType== 'Profile'">
       <div class="col s12 m12 l12">
         <div class="card" >
           <div class="card-head">
@@ -64,5 +90,275 @@
         </div>
       </div>
     </div>
+    <div class="row" *ngIf="tabType== 'warranty'">
+      <div class="cs-table horizontal-scroll">
+        <div class="sticky-head">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w50">Sr.No</th>
+                <th class="w180">Date Created</th>
+                <th class="w150">Created By</th>
+                <th class="w150">Customer Name</th>
+                <th class="w150">Customer Mobile No.</th>
+                <th class="w150">Product Serial No.</th>
+                <th class="w150">Product Detail</th>
+                <th class="w150">Warranty Start Date</th>
+                <th class="w150">Warranty End Date</th>
+                <th class="w250">Warranty Status</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+        
+        <div class="table-container">
+          <div class="table-content">
+            <table>
+              <ng-container *ngIf="!loader">
+                <tr *ngFor="let row of warrantyList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
+                  <td class="w50">{{i + 1 + sr_no}}</td>
+                  <td class="w180">{{row.date_created}}</td>
+                  <td class="w150">{{row.created_by_name}}</td>
+                  <td class="w150"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="warranty-detail/{{(row.id)}}" routerLinkActive="active"> {{row.customer_name}}</a></td>
+                  <td class="w150">{{row.customer_mobile}}</td>
+                  <td class="w150">{{row.serial_no}}</td>
+                  <td class="w150">{{row.product_name}}-{{row.product_code}}</td>
+                  <td class="w150">{{row.date_of_purchase}}</td>
+                  <td class="w150">{{row.warranty_end_date}}</td>
+                  <td class="w250 ">{{row.company_verification_status}}</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="loader">
+                <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                  <td class="w50">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w250 " >
+                    <div>&nbsp;</div>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+    
+    <div class="row" *ngIf="tabType== 'complaint'">
+      <div class="cs-table horizontal-scroll">
+        <div class="sticky-head">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w60">Sr.No</th>
+                <th class="w180">Date Created</th>
+                <th class="w100">Created By</th>
+                <th class="w120">Complaint No.</th>
+                <th class="w130">Serial No.</th>
+                <th class="w130">Product Name</th>
+                <th class="w130">Product Code</th>
+                <th class="w130">Customer Name</th>
+                <th class="w130">Customer Mobile No.</th>
+                <th class="w130">New Serial No.</th>
+                <th class="w130">Warranty Status</th>
+                <th class="w130">Inspection Status</th>
+                <th class="w130">Complaint Status</th>
+                <th class="w130">Return Status</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+        
+        <div class="table-container">
+          <div class="table-content">
+            <table>
+              <ng-container *ngIf="!loader">
+                <tr *ngFor="let row of complaintList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
+                  <td class="w60">{{i + 1 + sr_no}}</td>
+                  <td class="w180">{{row.date_created ? row.date_created : '--'}}</td>
+                  <td class="w100">{{row.created_by_type ? row.created_by_type : '--'}}</td>
+                  <td class="w120"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
+                  <td class="w130">{{row.serial_no ? row.serial_no : '--'}}</td>
+                  <td class="w130">{{row.product_name ? row.product_name : '--'}}</td>
+                  <td class="w130">{{row.product_code ? row.product_code : '--'}}</td>
+                  <td class="w130">{{row.customer_name}}</td>
+                  <td class="w130">{{row.customer_mobile}}</td>
+                  <td class="w130">{{row.new_serial_no ? row.new_serial_no : '--'}}</td>
+                  <td class="w130">{{row.warranty_status ? row.warranty_status : '--'}}</td>
+                  <td class="w130">{{row.inspection_status ? row.inspection_status : '--'}}</td>
+                  <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
+                  <td class="w130">{{row.return_status ? row.return_status : '--'}}</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="loader">
+                <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                  <td class="w60">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120 text-center">
+                    <div>&nbsp;</div>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+    <div class="row" *ngIf="tabType== 'installation'">
+      <div class="cs-table horizontal-scroll">
+        <div class="sticky-head">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w60">Sr.No</th>
+                <th class="w180">Date Created</th>
+                <th class="w100">Created By</th>
+                <th class="w120">Installation No.</th>
+                <th class="w130">Customer Name</th>
+                <th class="w130">Customer Mobile No.</th>
+              </tr>
+            </table>
+            
+          </div>
+        </div>
+        
+        <div class="table-container">
+          <div class="table-content">
+            <table>
+              <ng-container *ngIf="!loader">
+                <tr *ngFor="let row of installationList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
+                  <td class="w60">{{i + 1 + sr_no}}</td>
+                  <td class="w180">{{row.date_created ? row.date_created : '--'}}</td>
+                  <td class="w100">{{row.created_by_type ? row.created_by_type : '--'}}</td>
+                  <td class="w120"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="installation-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
+                  <td class="w130">{{row.customer_name}}</td>
+                  <td class="w130">{{row.customer_mobile}}</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="loader">
+                <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                  <td class="w60">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130 " >
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120 text-center">
+                    <div>&nbsp;</div>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
   </div>
+  
 </div>

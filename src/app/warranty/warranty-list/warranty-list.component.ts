@@ -35,6 +35,7 @@ export class WarrantyListComponent implements OnInit {
   downurl: any = ''
 
   constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) {
+    this.downurl = service.downloadUrl
     this.getWarrantyList('');
     this.page_limit = service.pageLimit;
 
@@ -145,6 +146,17 @@ export class WarrantyListComponent implements OnInit {
   }
   lastBtnValue(value) {
     this.fabBtnValue = value;
+  }
+
+  
+  downloadExcel() {
+    this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_warranty_list").subscribe((result => {
+      if (result['msg'] == true) {
+        window.open(this.downurl + result['filename'])
+        this.getWarrantyList('');
+      } else {
+      }
+    }));
   }
 
 }

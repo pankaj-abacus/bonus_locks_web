@@ -12,6 +12,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { MatDialogModule, MatIconModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
+import { EngineerAssignModelComponent } from '../engineer-assign-model/engineer-assign-model.component';
 
 const inspectionRoutes = [
   { path: "", children:[
@@ -26,7 +27,7 @@ const inspectionRoutes = [
 ]
 
 @NgModule({
-  declarations: [InstallationListComponent,InstallationAddComponent,InstallationDetailComponent],
+  declarations: [InstallationListComponent,InstallationAddComponent,InstallationDetailComponent,EngineerAssignModelComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(inspectionRoutes),
