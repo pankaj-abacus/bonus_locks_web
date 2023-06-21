@@ -22,6 +22,7 @@ export class CustomerAddComponent implements OnInit {
   params_id: any;
   getData:any ={};  
   id: any;
+  exist:boolean=false;
   
   params_network:any;
   params_type:any;
