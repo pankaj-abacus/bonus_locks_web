@@ -31,6 +31,7 @@ export class WarrantyAddComponent implements OnInit {
   brandList: any = [];
   colorList: any = [];
   feature: any = {};
+  exist:boolean=false;
   value: any = [];
   formData = new FormData();
   loader: boolean = false;
@@ -38,6 +39,7 @@ export class WarrantyAddComponent implements OnInit {
   showSize = false;
   userData: any;
   userId: any;
+  myDate:any
   id: any;
   userName: any;
   image = new FormData();

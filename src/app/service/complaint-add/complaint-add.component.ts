@@ -43,6 +43,7 @@ export class ComplaintAddComponent implements OnInit {
   url: any;
   selected_image: any = [];
   state: any = [];
+  exist:boolean=false;
   pointCategories_data: any = []
   getData:any ={};  
   params_network:any;

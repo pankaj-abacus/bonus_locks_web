@@ -36,6 +36,7 @@ export class InstallationAddComponent implements OnInit {
   loader: boolean = false;
   showMRP = false;
   showSize = false;
+  exist:boolean=false;
   userData: any;
   userId: any;
   id: any;
