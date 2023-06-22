@@ -34,7 +34,7 @@ const productroutes = [
       ProductDetailComponent,
       ProductQrCodeModelComponent,
       ChangeSchemeStatusModelComponent,
-      ProductUploadComponent
+      ProductUploadComponent,
     ],
   imports: [
     CommonModule,

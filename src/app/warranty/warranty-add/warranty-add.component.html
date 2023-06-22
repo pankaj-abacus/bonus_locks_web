@@ -28,7 +28,7 @@
                   <div class="alert alert-danger" *ngIf="customer_mobile.touched || f.submitted">
                     <p *ngIf="customer_mobile.errors?.required">This field is required</p>
                   </div>
-                  <div class="alert alert-danger" *ngIf="exist">
+                  <div class="alert alert-danger" >
                     Mobile no. already Exists.
                   </div>
                 </div>
@@ -44,7 +44,7 @@
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline">
                     <mat-label>Date Of Purchase</mat-label>
-                    <input name="date_of_purchase" matInput placeholder="" #date_of_purchase="ngModel" [(ngModel)]="data.date_of_purchase" [max]="myDate" [matDatepicker]="picker" disabled>
+                    <input name="date_of_purchase" matInput placeholder="" #date_of_purchase="ngModel" [(ngModel)]="data.date_of_purchase" [matDatepicker]="picker" disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker disabled="false"></mat-datepicker>
                   </mat-form-field>
@@ -53,7 +53,7 @@
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline">
                     <mat-label>Warranty End Date </mat-label>
-                    <input name="warranty_end_date" matInput placeholder="" #warranty_end_date="ngModel" [(ngModel)]="data.warranty_end_date" [max]="myDate" [matDatepicker]="picker2" disabled>
+                    <input name="warranty_end_date" matInput placeholder="" #warranty_end_date="ngModel" [(ngModel)]="data.warranty_end_date" [matDatepicker]="picker2" disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2 disabled="false"></mat-datepicker>
                   </mat-form-field>

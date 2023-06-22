@@ -27,6 +27,20 @@
       </div>
     </div>
     
+    <div class="mat-tabbar">
+      <ng-container>
+        <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
+        (click)="active_tab = 'All'; getWarrantyList()"><i class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
+        
+        <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
+        (click)="active_tab = 'Pending';getWarrantyList()"><i class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
+      </ng-container>
+      <button mat-button [ngClass]="active_tab == 'Verified' ? 'active' : ''"
+      (click)="active_tab = 'Verified'; getWarrantyList()"><i class="material-icons">thumb_up_alt</i>Verified({{tab_count.verified_count}})</button>
+      <button mat-button [ngClass]="active_tab == 'Rejected' ? 'active' : ''"
+      (click)="active_tab = 'Rejected'; getWarrantyList()"><i class="material-icons">thumb_down_alt</i>Rejected({{tab_count.reject_count}})</button>
+    </div>
+    
   </div>
   
   <div class="container container-scroll">
@@ -44,7 +58,8 @@
               <th class="w150">Product Detail</th>
               <th class="w150">Warranty Start Date</th>
               <th class="w150">Warranty End Date</th>
-              <th class="w250">Warranty Status</th>
+              <th class="w250">Varification Status</th>
+              <th class="w70 text-center">Action</th>
             </tr>
           </table>
         </div>
@@ -122,6 +137,8 @@
                 
               </th>
               <th class="w250 "></th>
+              <th class="w70 text-center"></th>
+
             </tr>
             
           </table>
@@ -143,6 +160,16 @@
                 <td class="w150">{{row.date_of_purchase}}</td>
                 <td class="w150">{{row.warranty_end_date}}</td>
                 <td class="w250 ">{{row.company_verification_status}}</td>
+                <td class="w70 text-center">
+                  <div class="action-button">
+                    <button mat-icon-button matTooltip="Edit" (click)="updateWarrantyStataus(row.id)">
+                      <i class="material-icons edit">edit</i>
+                    </button>
+
+                  </div>
+
+                </td>
+
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">
@@ -177,6 +204,10 @@
                 <td class="w250 " >
                   <div>&nbsp;</div>
                 </td>
+                <td class="w70 text-center">
+                  <div>&nbsp;</div>
+                </td>
+
               </tr>
             </ng-container>
           </table>

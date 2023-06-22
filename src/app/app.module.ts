@@ -56,10 +56,10 @@ import { ZingchartAngularModule } from 'zingchart-angular';
 import { ServiceModuleModule } from './service/service-module/service-module.module';
 import { CustomerModuleModule } from './customer/customer-module/customer-module.module';
 import { WarrantyModuleModule } from './warranty/warranty-module/warranty-module.module';
-import { DispatchModuleModule } from './claim-dispatch/dispatch-module/dispatch-module.module';
 import { InstallationModuleModule } from './installation/installation-module/installation-module.module';
 import { EngineerAssignModelComponent } from './installation/engineer-assign-model/engineer-assign-model.component';
 import { EngineerAssignModelComponentComponent } from './engineer-assign-model-component/engineer-assign-model-component.component';
+import { WarrantyUpdateModelComponent } from './warranty/warranty-update-model/warranty-update-model.component';
 
 
 @NgModule({
@@ -122,7 +122,6 @@ import { EngineerAssignModelComponentComponent } from './engineer-assign-model-c
         CustomerModuleModule,
         WarrantyModuleModule,
         InstallationModuleModule,
-        DispatchModuleModule
         // FusionChartsModule
     ],
     providers: [
@@ -141,7 +140,8 @@ import { EngineerAssignModelComponentComponent } from './engineer-assign-model-c
     entryComponents: [
         UploadFileModalComponent,
         EngineerAssignModelComponent,
-        EngineerAssignModelComponentComponent
+        EngineerAssignModelComponentComponent,
+        WarrantyUpdateModelComponent
     ],
 
     exports: [RouterModule],

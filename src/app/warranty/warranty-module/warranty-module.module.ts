@@ -12,6 +12,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
 import { RouterModule } from '@angular/router';
 import { AuthComponentGuard } from 'src/app/auth-component.guard';
+import { WarrantyUpdateModelComponent } from '../warranty-update-model/warranty-update-model.component';
 
 const warrantyRoutes = [
   { path: "", children:[
@@ -26,7 +27,7 @@ const warrantyRoutes = [
 ]
 
 @NgModule({
-  declarations: [WarrantyListComponent,WarrantyAddComponent,WarrantyDetailComponent],
+  declarations: [WarrantyListComponent,WarrantyAddComponent,WarrantyDetailComponent,WarrantyUpdateModelComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(warrantyRoutes),

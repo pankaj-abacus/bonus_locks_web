@@ -67,6 +67,8 @@ const routes: Routes = [
   { path: "installation-list", loadChildren: './installation/installation-module/installation-module.module#InstallationModuleModule'},
   { path: "claimDispatch-list", loadChildren: './claim-dispatch/dispatch-module/dispatch-module.module#DispatchModuleModule'},
 
+
+
   { path: "point-master", loadChildren:'./point-master/point-master/point-master.module#PointMasterModule'},
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
 ];

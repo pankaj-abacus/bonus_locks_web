@@ -26,6 +26,20 @@
         </div>
       </div>
     </div>
+
+    <div class="mat-tabbar">
+      <ng-container>
+        <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
+        (click)="active_tab = 'All'; getComplantList()"><i class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
+        
+        <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
+        (click)="active_tab = 'Pending';getComplantList()"><i class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
+      </ng-container>
+      <button mat-button [ngClass]="active_tab == 'Close' ? 'active' : ''"
+      (click)="active_tab = 'Close'; getComplantList()"><i class="material-icons">thumb_up_alt</i>Close({{tab_count.closed_count}})</button>
+      <button mat-button [ngClass]="active_tab == 'Cancel' ? 'active' : ''"
+      (click)="active_tab = 'Cancel'; getComplantList()"><i class="material-icons">thumb_down_alt</i>Cancel({{tab_count.reject_count}})</button>
+    </div>
     
   </div>
   
