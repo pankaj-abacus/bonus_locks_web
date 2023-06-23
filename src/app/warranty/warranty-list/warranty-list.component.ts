@@ -6,6 +6,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
 import { DialogComponent } from 'src/app/dialog.component';
 import { sessionStorage } from 'src/app/localstorage.service';
+import { WarrantyUpdateModelComponent } from '../warranty-update-model/warranty-update-model.component';
 
 @Component({
   selector: 'app-warranty-list',
@@ -13,14 +14,16 @@ import { sessionStorage } from 'src/app/localstorage.service';
   styleUrls: ['./warranty-list.component.scss']
 })
 export class WarrantyListComponent implements OnInit {
-
+  
   fabBtnValue: any = 'add';
   warrantyList: any = [];
-  filter: any = false;
+  active_tab: any = 'Pending';
+  filter: any ={};
   data: any = [];
   page_limit: any;
   start: any = 0;
   count: any;
+  tab_count: any;
   total_page: any = 0;
   pagenumber: any = 0;
   loader: boolean = false;
@@ -33,17 +36,24 @@ export class WarrantyListComponent implements OnInit {
   sr_no: number;
   datanotofound: boolean = false;
   downurl: any = ''
-
+  
   constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) {
     this.downurl = service.downloadUrl
-    this.getWarrantyList('');
     this.page_limit = service.pageLimit;
-
-
-   }
-
+    this.getWarrantyList('');
+    console.log(this.service.pageLimit);
+    console.log(this.page_limit);
+    
+    
+    
+  }
+  
   ngOnInit() {
     this.filter_data = this.service.getData()
+
+    if (this.filter_data.status) {
+      this.active_tab = this.filter_data.status
+    }
     
   }
   
@@ -74,12 +84,12 @@ export class WarrantyListComponent implements OnInit {
     this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
     this.getWarrantyList('');
   }
-
+  
   date_format2(): void {
     this.filter_data.date_of_purchase = moment(this.filter_data.date_of_purchase).format('YYYY-MM-DD');
     this.getWarrantyList('');
   }
-
+  
   date_format3(): void {
     this.filter_data.warranty_end_date = moment(this.filter_data.warranty_end_date).format('YYYY-MM-DD');
     this.getWarrantyList('');
@@ -93,6 +103,25 @@ export class WarrantyListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
+    
+    
+
+    if (this.active_tab == 'All') {
+    this.filter_data.status = this.active_tab;
+    }
+    if (this.active_tab == 'Pending') {
+      this.filter_data.status = this.active_tab;
+    }
+
+    if (this.active_tab == 'Verified') {
+      this.filter_data.status = this.active_tab;
+    }
+
+    if (this.active_tab == 'Rejected') {
+      this.filter_data.status = this.active_tab;
+    }
+    console.log(this.page_limit);
+    
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceWarrantyList")
     
     this.loader = true;
@@ -106,7 +135,11 @@ export class WarrantyListComponent implements OnInit {
         console.log(this.warrantyList);
         
         this.pageCount = result['count'];
-        this.scheme_active_count = result['scheme_active_count'];
+        console.log(this.pageCount);
+        
+        this.tab_count = result['tab_count'];
+        console.log(this.tab_count);
+
         this.loader = false;
         if (this.warrantyList.length == 0) {
           this.datanotofound = false;
@@ -148,6 +181,23 @@ export class WarrantyListComponent implements OnInit {
     this.fabBtnValue = value;
   }
 
+  updateWarrantyStataus(row)
+  {
+    const dialogRef = this.dialogs.open(WarrantyUpdateModelComponent, {
+        width: '400px',
+        panelClass: 'cs-model',
+        data: {
+          id: row,
+        }
+      });
+      
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != false) {
+          // this.getComplaintDetail();
+        }
+      });
+    }
+  
   
   downloadExcel() {
     this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_warranty_list").subscribe((result => {
@@ -158,5 +208,5 @@ export class WarrantyListComponent implements OnInit {
       }
     }));
   }
-
+  
 }

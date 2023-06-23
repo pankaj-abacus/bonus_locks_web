@@ -36,8 +36,8 @@ export class CustomerListComponent implements OnInit {
   
   constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { 
     this.downurl = service.downloadUrl
-    this.getCumtomerList('');
     this.page_limit = service.pageLimit;
+    this.getCumtomerList('');
     
   }
   ngOnInit() {

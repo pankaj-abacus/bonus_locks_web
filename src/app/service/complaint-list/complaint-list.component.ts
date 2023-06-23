@@ -26,6 +26,8 @@ export class ComplaintListComponent implements OnInit {
   pagenumber: any = 0;
   loader: boolean = false;
   tab_active = 'all';
+  active_tab: any = 'Pending';
+  tab_count: any;
   scheme_active_count: any;
   filter_data: any = {};
   today_date: Date;
@@ -47,6 +49,10 @@ export class ComplaintListComponent implements OnInit {
   ngOnInit() {
     this.filter_data = this.service.getData()
     this.getComplantList('');
+
+    if (this.filter_data.status) {
+      this.active_tab = this.filter_data.status
+    }
   }
   
   pervious() {
@@ -85,6 +91,23 @@ export class ComplaintListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
+
+
+    if (this.active_tab == 'All') {
+      this.filter_data.status = this.active_tab;
+      }
+      if (this.active_tab == 'Pending') {
+        this.filter_data.status = this.active_tab;
+      }
+  
+      if (this.active_tab == 'Cancel') {
+        this.filter_data.status = this.active_tab;
+      }
+  
+      if (this.active_tab == 'Close') {
+        this.filter_data.status = this.active_tab;
+      }
+
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceComplaintList")
     
     this.loader = true;
@@ -98,6 +121,7 @@ export class ComplaintListComponent implements OnInit {
         console.log(this.complaintList);
         
         this.pageCount = result['count'];
+        this.tab_count = result['tab_count'];
         this.scheme_active_count = result['scheme_active_count'];
         this.loader = false;
         if (this.complaintList.length == 0) {

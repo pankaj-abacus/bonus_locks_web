@@ -26,6 +26,8 @@ export class InstallationListComponent implements OnInit {
   pagenumber: any = 0;
   loader: boolean = false;
   tab_active = 'all';
+  active_tab: any = 'Pending';
+  tab_count: any;
   scheme_active_count: any;
   filter_data: any = {};
   today_date: Date;
@@ -37,12 +39,15 @@ export class InstallationListComponent implements OnInit {
 
   constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) {
     this.downurl = service.downloadUrl
-    this.getinspectionList('');
     this.page_limit = service.pageLimit;
+    this.getinspectionList('');
    }
 
   ngOnInit() {
     this.filter_data = this.service.getData()
+    if (this.filter_data.status) {
+      this.active_tab = this.filter_data.status
+    }
   }
   
   pervious() {
@@ -81,6 +86,22 @@ export class InstallationListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
+
+    if (this.active_tab == 'All') {
+      this.filter_data.status = this.active_tab;
+      }
+      if (this.active_tab == 'Pending') {
+        this.filter_data.status = this.active_tab;
+      }
+  
+      if (this.active_tab == 'Reject') {
+        this.filter_data.status = this.active_tab;
+      }
+  
+      if (this.active_tab == 'Done') {
+        this.filter_data.status = this.active_tab;
+      }
+
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceInstallationList")
     
     this.loader = true;
@@ -94,6 +115,7 @@ export class InstallationListComponent implements OnInit {
         console.log(this.installationList);
         
         this.pageCount = result['count'];
+        this.tab_count = result['tab_count'];
         this.scheme_active_count = result['scheme_active_count'];
         this.loader = false;
         if (this.installationList.length == 0) {
