@@ -9,6 +9,7 @@ import { Location } from '@angular/common'
 import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
+import { WarrantyUpdateModelComponent } from '../warranty-update-model/warranty-update-model.component';
 
 @Component({
   selector: 'app-warranty-detail',
@@ -77,5 +78,22 @@ export class WarrantyDetailComponent implements OnInit {
       });
     }
     
+
+    updateWarrantyStataus(row)
+  {
+    const dialogRef = this.dialog.open(WarrantyUpdateModelComponent, {
+        width: '400px',
+        panelClass: 'cs-model',
+        data: {
+          id: row,
+        }
+      });
+      
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != false) {
+          // this.getComplaintDetail();
+        }
+      });
+    }
   }
   

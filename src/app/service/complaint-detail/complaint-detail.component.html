@@ -102,34 +102,71 @@
                 </div>
                 
             </div>
-            <div class="col s12 m12 l4">
-                <div class="card" *ngIf="!skLoading">
+            <div class="col s12 m4 l4">
+                
+                <div class="card" *ngIf="!loader">
                     <div class="card-head">
-                        <h2>Images</h2>
+                        <h2>Logs</h2>
                     </div>
-                    <div class="card-body">
-                        <div class="img-container">
-                            <div class="image-block" *ngFor="let row of complaintImg">
-                                <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
+                    
+                    <div class="logs-box">
+                        <ng-container *ngFor="let row of lead_logs">
+                            <div class="logshead ">{{row.changes_by_name}} :- {{row.date_created | date:'dd MMM yyyy'}}</div>
+                            <div class="logscontent ">
+                                <span>Remark : </span> {{row.msg ? row.msg : row.remark}}
                             </div>
-                        </div>
+                        </ng-container>
                     </div>
+                    
                 </div>
-                <!-- Skeleton start -->
-                <div class="card" *ngIf="skLoading">
+                
+                <div class="card" *ngIf="loader">
                     <div class="sk-head">
                         <h2>&nbsp;</h2>
                     </div>
                     <div class="card-body">
-                        <div class="img-container">
-                            <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
-                                &nbsp; 
+                        <div class="grid-box single mt10" *ngFor="let row of [].constructor(5)">
+                            <div class="sk-box">
+                                &nbsp;
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Skeleton end -->
                 
+            </div>
+            
+            <div class="container pt10 pl10 pr10 pb50" >
+                <div class="row">
+                    <div class="col s12 m12 l8">
+                        <div class="card" *ngIf="!skLoading">
+                            <div class="card-head">
+                                <h2>Images</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="img-container">
+                                    <div class="image-block" *ngFor="let row of complaintImg">
+                                        <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Skeleton start -->
+                        <div class="card" *ngIf="skLoading">
+                            <div class="sk-head">
+                                <h2>&nbsp;</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="img-container">
+                                    <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
+                                        &nbsp; 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Skeleton end -->
+                        
+                    </div>
+                </div>
             </div>
         </div> 
     </div>

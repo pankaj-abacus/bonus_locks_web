@@ -59,7 +59,7 @@
               <th class="w150">Warranty Start Date</th>
               <th class="w150">Warranty End Date</th>
               <th class="w250">Varification Status</th>
-              <th class="w70 text-center">Action</th>
+              <!-- <th class="w70 text-center">Action</th> -->
             </tr>
           </table>
         </div>
@@ -79,7 +79,14 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150"></th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="created_by_type"
+                      (keyup.enter)="getWarrantyList('')" #created_by_type="ngModel" [(ngModel)]="filter_data.created_by_type">
+                  </mat-form-field>
+                </div>
+              </th>
               <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field>
@@ -137,7 +144,7 @@
                 
               </th>
               <th class="w250 "></th>
-              <th class="w70 text-center"></th>
+              <!-- <th class="w70 text-center"></th> -->
 
             </tr>
             
@@ -151,7 +158,7 @@
             <ng-container *ngIf="!loader">
               <tr *ngFor="let row of warrantyList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
                 <td class="w50">{{i + 1 + sr_no}}</td>
-                <td class="w180">{{row.date_created}}</td>
+                <td class="w180">{{row.date_created | date : 'dd MMM yyy ,h:mm a' }}</td>
                 <td class="w150">{{row.created_by_name}}</td>
                 <td class="w150"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="warranty-detail/{{(row.id)}}" routerLinkActive="active"> {{row.customer_name}}</a></td>
                 <td class="w150">{{row.customer_mobile}}</td>
@@ -160,7 +167,7 @@
                 <td class="w150">{{row.date_of_purchase}}</td>
                 <td class="w150">{{row.warranty_end_date}}</td>
                 <td class="w250 ">{{row.company_verification_status}}</td>
-                <td class="w70 text-center">
+                <!-- <td class="w70 text-center">
                   <div class="action-button">
                     <button mat-icon-button matTooltip="Edit" (click)="updateWarrantyStataus(row.id)">
                       <i class="material-icons edit">edit</i>
@@ -168,7 +175,7 @@
 
                   </div>
 
-                </td>
+                </td> -->
 
               </tr>
             </ng-container>
