@@ -99,7 +99,21 @@ export class ComplaintListComponent implements OnInit {
       if (this.active_tab == 'Pending') {
         this.filter_data.status = this.active_tab;
       }
-  
+
+      if (this.active_tab == 'Carpenter_Assign') {
+        this.filter_data.status = this.active_tab;
+      }
+
+      if (this.active_tab == 'Inspection_Done') {
+        this.filter_data.status = this.active_tab;
+      }
+
+      if (this.active_tab == 'Replacement_Done') {
+        this.filter_data.status = this.active_tab;
+      }
+      if (this.active_tab == 'Return_Done') {
+        this.filter_data.status = this.active_tab;
+      }
       if (this.active_tab == 'Cancel') {
         this.filter_data.status = this.active_tab;
       }

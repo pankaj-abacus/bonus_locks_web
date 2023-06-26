@@ -10,6 +10,8 @@ import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
 import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-model-component/engineer-assign-model-component.component';
+import { AddComplaintRemarkComponent } from 'src/app/add-complaint-remark/add-complaint-remark.component';
+import { EngineerAssignModelComponent } from 'src/app/installation/engineer-assign-model/engineer-assign-model.component';
 
 @Component({
   selector: 'app-complaint-detail',
@@ -78,12 +80,13 @@ export class ComplaintDetailComponent implements OnInit {
     back(): void {
       this.location.back()
     }
-    openDialog(): void {
+    openDialog(row): void {
+      console.log(row);
       const dialogRef = this.dialog.open(EngineerAssignModelComponentComponent, {
         width: '400px',
         panelClass: 'cs-model',
         data: {
-          id: this.id,
+          id: row,
         }
       });
       
@@ -91,6 +94,20 @@ export class ComplaintDetailComponent implements OnInit {
         if (result != false) {
           this.getComplaintDetail();
         }
+      });
+    }
+
+    openDialog2(id) {
+      const dialogRef = this.dialog.open(AddComplaintRemarkComponent, {
+        width: '500px',
+        panelClass:'cs-modal',
+        data: {
+          id: id,
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.getComplaintDetail();
+        
       });
     }
   }

@@ -57,7 +57,7 @@
         <p *ngIf="excel_name == ''">Upload Product Data (In csv format)</p>
         <p *ngIf="excel_name != ''">{{excel_name}}</p>
       </label>
-      <a *ngIf="modal_type=='warrantyUpdate'" href="{{url}}sample_file/updateProductWarranty.csv" target="_blank"><i class="material-icons">download</i>Click Here To Download Sample File</a>
+      <a *ngIf="modal_type=='warrantyUpdate'" (click)="downloadExcel();" target="_blank"><i class="material-icons">download</i>Click Here To Download Sample File</a>
     </div>
     
   </div>

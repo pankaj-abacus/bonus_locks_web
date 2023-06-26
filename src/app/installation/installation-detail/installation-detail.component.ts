@@ -78,12 +78,14 @@ export class InstallationDetailComponent implements OnInit {
       this.location.back()
     }
 
-    openDialog(): void {
+    openDialog(id): void {
+      console.log(id);
+      
       const dialogRef = this.dialog.open(EngineerAssignModelComponent, {
         width: '400px',
         panelClass: 'cs-model',
         data: {
-          id: this.id,
+          id:id,
         }
       });
       

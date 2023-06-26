@@ -19,6 +19,7 @@ export class ProductUploadComponent implements OnInit {
   file_name:any;
   loader:any;
   url:any;
+  downloadUrl:any;
   typecheck:any='';
   istrue:boolean=false;
   assign_login_data:any={};
@@ -29,6 +30,7 @@ export class ProductUploadComponent implements OnInit {
   
   constructor(@Inject(MAT_DIALOG_DATA)public data, public session: sessionStorage, public toast: ToastrManager,public service: DatabaseService,public dialog: DialogComponent,public dialogRef: MatDialogRef<ProductUploadComponent>) {
     this.url = this.service.uploadUrl;
+    this.downloadUrl = this.service.downloadUrl;
     this.assign_login_data = this.session.getSession();
     this.logined_user_data = this.assign_login_data.value.data;
     this.come_from = data['from']
@@ -151,6 +153,15 @@ export class ProductUploadComponent implements OnInit {
       }
       
     },err => {this.formData = new FormData();});
+}
+
+downloadExcel() {
+  this.service.post_rqst({}, "Excel/sample_product_warranty").subscribe((result => {
+    if (result['msg'] == true) {
+      window.open(this.downloadUrl + result['filename'])
+    } else {
+    }
+  }));
 }
   
 }

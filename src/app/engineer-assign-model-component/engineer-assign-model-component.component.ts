@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
 import { DialogComponent } from '../dialog.component';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-engineer-assign-model-component',
@@ -11,11 +12,16 @@ import { MatDialog } from '@angular/material';
 })
 export class EngineerAssignModelComponentComponent implements OnInit {
   
-  data:any={}
-  engineerList: any = [];
+  formData:any={}
+  engineerList: any = [];  
+  id;
+
   
   
-  constructor(public service: DatabaseService,public toast: ToastrManager,public alert:DialogComponent,public dialog:MatDialog) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data,public dialogRef: MatDialogRef<EngineerAssignModelComponentComponent>,public service: DatabaseService,public toast: ToastrManager,public alert:DialogComponent,public dialog:MatDialog) {
+    console.log(this.data);
+    
+   }
 
   
   ngOnInit() {
@@ -36,9 +42,26 @@ export class EngineerAssignModelComponentComponent implements OnInit {
     }, error => {
     })
   }
+
+  getCarpenterInfo(id)
+  {
+    console.log(id);
+    if(id){
+      let index= this.engineerList.findIndex(d=> d.id==id);
+      if(index!=-1){
+        this.formData.id= this.engineerList[index].id;
+        this.formData.name= this.engineerList[index].name;
+        this.formData.mobile_no= this.engineerList[index].mobile_no;
+      }
+      console.log(this.data.id);
+      console.log(this.data.mobile_no);
+      console.log(this.data.name);
+    }
+  }
   
   assign_engineer(){ 
-    this.service.post_rqst(this.data,"Expense/updateStatus").subscribe((result)=>{
+    console.log(this.id);
+    this.service.post_rqst({'complaint_id':this.data.id,'data':this.formData},"ServiceTask/carpenterAssign").subscribe((result)=>{
       
       if(result['statusCode']==200)
       {

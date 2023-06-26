@@ -99,8 +99,6 @@
                 <th class="w50">Sr.No</th>
                 <th class="w180">Date Created</th>
                 <th class="w150">Created By</th>
-                <th class="w150">Customer Name</th>
-                <th class="w150">Customer Mobile No.</th>
                 <th class="w150">Product Serial No.</th>
                 <th class="w150">Product Detail</th>
                 <th class="w150">Warranty Start Date</th>
@@ -131,23 +129,6 @@
                       (keyup.enter)="getWarrantyDetail('')" #created_by_type="ngModel" [(ngModel)]="filter_data.created_by_type">
                     </mat-form-field>
                   </div>
-                </th>
-                <th class="w150">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_name"
-                      (keyup.enter)="getWarrantyDetail('')" #customer_name="ngModel" [(ngModel)]="filter_data.customer_name">
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w150">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                      (keyup.enter)="getWarrantyDetail('')" #customer_mobile="ngModel" [(ngModel)]="filter_data.customer_mobile">
-                    </mat-form-field>
-                  </div>
-                  
                 </th>
                 <th class="w150">
                   <div class="th-search-acmt">
@@ -206,9 +187,7 @@
                   <td class="w50">{{i + 1 + sr_no}}</td>
                   <td class="w180">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
                   <td class="w150">{{row.created_by_name}}</td>
-                  <td class="w150"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="warranty-detail/{{(row.id)}}" routerLinkActive="active"> {{row.customer_name}}</a></td>
-                  <td class="w150">{{row.customer_mobile}}</td>
-                  <td class="w150">{{row.serial_no}}</td>
+                  <td class="w150"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="warranty-detail/{{(row.id)}}" routerLinkActive="active"> {{row.serial_no}}</a></td>
                   <td class="w150">{{row.product_name}}-{{row.product_code}}</td>
                   <td class="w150">{{row.date_of_purchase | date : 'dd MMM yyy'}}</td>
                   <td class="w150">{{row.warranty_end_date | date : 'dd MMM yyy'}}</td>
