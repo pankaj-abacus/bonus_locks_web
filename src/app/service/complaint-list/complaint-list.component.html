@@ -83,7 +83,14 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100"></th>
+              <th class="w100">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="created_by_type"
+                      (keyup.enter)="getComplantList('')" #created_by_type="ngModel" [(ngModel)]="filter_data.created_by_type">
+                  </mat-form-field>
+                </div>
+              </th>
               <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field>
@@ -203,7 +210,7 @@
       <ng-container *ngIf="!loader">
           <tr *ngFor="let row of complaintList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
             <td class="w60">{{i + 1 + sr_no}}</td>
-            <td class="w180">{{row.date_created ? row.date_created : '--'}}</td>
+            <td class="w180">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
             <td class="w100">{{row.created_by_type ? row.created_by_type : '--'}}</td>
             <td class="w120"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
             <td class="w130">{{row.serial_no ? row.serial_no : '--'}}</td>
@@ -218,8 +225,8 @@
             <td class="w130">{{row.return_status ? row.return_status : '--'}}</td>
             <td class="w70 text-center">
               <div class="action-button">
-                <button mat-icon-button matTooltip="Delete" (click)="deleteProduct(row.id)">
-                  <i class="material-icons red-clr">delete</i>
+                <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
+                  <i class="material-icons edit">edit</i>
                 </button>
 
               </div>

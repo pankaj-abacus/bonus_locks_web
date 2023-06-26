@@ -26,7 +26,7 @@
                   <div class="alert alert-danger" *ngIf="customer_mobile.touched || f.submitted">
                     <p *ngIf="customer_mobile.errors?.required">This field is required</p>
                   </div>
-                  <div class="alert alert-danger">
+                  <div class="alert alert-danger" *ngIf="exist">
                     Mobile no. already Exists.
                   </div>
                 </div>

@@ -181,22 +181,22 @@ export class WarrantyListComponent implements OnInit {
     this.fabBtnValue = value;
   }
 
-  updateWarrantyStataus(row)
-  {
-    const dialogRef = this.dialogs.open(WarrantyUpdateModelComponent, {
-        width: '400px',
-        panelClass: 'cs-model',
-        data: {
-          id: row,
-        }
-      });
+  // updateWarrantyStataus(row)
+  // {
+  //   const dialogRef = this.dialogs.open(WarrantyUpdateModelComponent, {
+  //       width: '400px',
+  //       panelClass: 'cs-model',
+  //       data: {
+  //         id: row,
+  //       }
+  //     });
       
-      dialogRef.afterClosed().subscribe(result => {
-        if (result != false) {
-          // this.getComplaintDetail();
-        }
-      });
-    }
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       if (result != false) {
+  //         // this.getComplaintDetail();
+  //       }
+  //     });
+  //   }
   
   
   downloadExcel() {

@@ -174,4 +174,8 @@ export class ComplaintListComponent implements OnInit {
       }
     }));
   }
+
+  rejectComplaint(){
+    
+  }
 }

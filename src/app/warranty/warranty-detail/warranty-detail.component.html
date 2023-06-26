@@ -24,7 +24,7 @@
             <div class="grid-box">
               <div class="block-feilds">
                 <span>Date Created</span>
-                <p>{{getData.date_created ? getData.date_created :'---'}}</p>
+                <p>{{getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a') :'---'}}</p>
               </div>
               
               <div class="block-feilds">
@@ -65,19 +65,29 @@
 
               <div class="block-feilds">
                 <span>Date Of Purchase</span>
-                <p>{{getData.date_of_purchase ? getData.date_of_purchase :'---'}}</p>
+                <p>{{getData.date_of_purchase ?  (getData.date_of_purchase | date : 'dd MMM yyy') :'---'}}</p>
               </div>
 
               <div class="block-feilds">
-                <span>warranty End Date</span>
-                <p>{{getData.warranty_end_date ? getData.warranty_end_date :'---'}}</p>
+                <span>Warranty End Date</span>
+                <p>{{getData.warranty_end_date ? (getData.warranty_end_date | date : 'dd MMM yyy') :'---'}}</p>
               </div>
 
               
-              <!-- <div class="block-feilds">
-                <span>Warranty Status</span>
-                <p>{{getData.warranty_status ? getData.warranty_status : '--'}}</p>
-              </div> -->
+              <div class="block-feilds flex-heading">
+                <div>
+
+                  <span>Warranty Status</span>
+                  <p>peding</p>
+                </div>
+
+                <div class="left-auto">
+                  <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
+                    (click)="updateWarrantyStataus(getData.id)">
+                    <i class="material-icons">edit</i>
+                  </a>
+                </div>
+              </div>
               
               <!-- <div class="block-feilds">
                 <span>Inspection Status</span>
