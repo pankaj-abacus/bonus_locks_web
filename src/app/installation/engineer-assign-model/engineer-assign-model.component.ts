@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
 import { DialogComponent } from 'src/app/dialog.component';
@@ -10,11 +10,15 @@ import { DialogComponent } from 'src/app/dialog.component';
   styleUrls: ['./engineer-assign-model.component.scss']
 })
 export class EngineerAssignModelComponent implements OnInit {
-  data:any={}
+  data2:any={}
   engineerList: any = [];
+  id;
   
   
-  constructor(public service: DatabaseService,public toast: ToastrManager,public alert:DialogComponent,public dialog:MatDialog) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data,public dialogRef: MatDialogRef<EngineerAssignModelComponent>,public service: DatabaseService,public toast: ToastrManager,public alert:DialogComponent,public dialog:MatDialog) { 
+    console.log(this.id);
+    
+  }
   
   ngOnInit() {
     this.assign_engineerget('');
@@ -35,9 +39,28 @@ export class EngineerAssignModelComponent implements OnInit {
     })
   }
   
+  getCarpenterInfo(id)
+  {
+    console.log(id);
+    
+    if(id){
+      let index= this.engineerList.findIndex(d=> d.id==id);
+      if(index!=-1){
+        this.data2.id= this.engineerList[index].id;
+        this.data2.name= this.engineerList[index].name;
+        this.data2.mobile_no= this.engineerList[index].mobile_no;
+      }
+      console.log(this.data2.id);
+      console.log(this.data2.mobile_no);
+      console.log(this.data2.name);
+    }
+  }
   
-  assign_engineer(){ 
-    this.service.post_rqst(this.data,"Expense/updateStatus").subscribe((result)=>{
+  
+  assign_engineer(){   
+    console.log(this.id);
+      
+    this.service.post_rqst({'complaint_id':this.data.id,'data':this.data2},"ServiceTask/carpenterAssign").subscribe((result)=>{
       
       if(result['statusCode']==200)
       {

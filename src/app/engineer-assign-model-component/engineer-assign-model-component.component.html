@@ -19,15 +19,15 @@
         <div class="col s12">
           <mat-form-field  appearance="outline">
             <mat-label>Assign Engineer</mat-label>
-            <mat-select  name="engineer_name" [(ngModel)]="data.engineer_name" #engineer_name="ngModel">
+            <mat-select  name="id" [(ngModel)]="formData.id" #id="ngModel" (selectionChange)="getCarpenterInfo(formData.id)">
               <mat-option >
                 <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.." (keyup)="assign_engineerget($event.target.value)"></ngx-mat-select-search>
               </mat-option>
-              <mat-option *ngFor="let row of engineerList" value="{{row.id}}">{{row.name}}</mat-option>
+              <mat-option *ngFor="let row of engineerList" [value]="row.id">{{row.name}}-{{row.mobile_no}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <!-- <div class="alert alert-danger" *ngIf="engineer_name.touched || f.submitted">
-            <p *ngIf="engineer_name.errors?.required">This field is required</p>
+          <!-- <div class="alert alert-danger" *ngIf="id.touched || f.submitted">
+            <p *ngIf="id.errors?.required">This field is required</p>
           </div> -->
         </div>
 

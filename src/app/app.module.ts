@@ -60,6 +60,7 @@ import { InstallationModuleModule } from './installation/installation-module/ins
 import { EngineerAssignModelComponent } from './installation/engineer-assign-model/engineer-assign-model.component';
 import { EngineerAssignModelComponentComponent } from './engineer-assign-model-component/engineer-assign-model-component.component';
 import { WarrantyUpdateModelComponent } from './warranty/warranty-update-model/warranty-update-model.component';
+import { AddComplaintRemarkComponent } from './add-complaint-remark/add-complaint-remark.component';
 
 
 @NgModule({
@@ -141,7 +142,8 @@ import { WarrantyUpdateModelComponent } from './warranty/warranty-update-model/w
         UploadFileModalComponent,
         EngineerAssignModelComponent,
         EngineerAssignModelComponentComponent,
-        WarrantyUpdateModelComponent
+        WarrantyUpdateModelComponent,
+        AddComplaintRemarkComponent
     ],
 
     exports: [RouterModule],

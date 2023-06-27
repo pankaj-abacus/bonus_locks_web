@@ -13,6 +13,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
 import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
 import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-model-component/engineer-assign-model-component.component';
+import { AddComplaintRemarkComponent } from 'src/app/add-complaint-remark/add-complaint-remark.component';
 
 
 const serviceRoutes = [
@@ -29,7 +30,7 @@ const serviceRoutes = [
 ]
 
 @NgModule({
-  declarations: [ComplaintListComponent,ComplaintAddComponent,ComplaintDetailComponent,EngineerAssignModelComponentComponent],
+  declarations: [ComplaintListComponent,ComplaintAddComponent,ComplaintDetailComponent,EngineerAssignModelComponentComponent,AddComplaintRemarkComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(serviceRoutes),

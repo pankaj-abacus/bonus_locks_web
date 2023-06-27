@@ -34,11 +34,26 @@
         
         <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
         (click)="active_tab = 'Pending';getComplantList()"><i class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
+
+        <button mat-button [ngClass]="active_tab == 'Carpenter_Assign' ? 'active' : ''"
+        (click)="active_tab = 'Carpenter_Assign';getComplantList()"><i class="material-icons">pending_actions</i>Carpenter Assign({{tab_count.pending_count}})</button>
+
+        <button mat-button [ngClass]="active_tab == 'Inspection_Done' ? 'active' : ''"
+        (click)="active_tab = 'Inspection_Done';getComplantList()"><i class="material-icons">pending_actions</i>Inspection Done({{tab_count.pending_count}})</button>
+
+        <button mat-button [ngClass]="active_tab == 'Replacement_Done' ? 'active' : ''"
+        (click)="active_tab = 'Replacement_Done';getComplantList()"><i class="material-icons">pending_actions</i>Replacement Done({{tab_count.pending_count}})</button>
+
+        <button mat-button [ngClass]="active_tab == 'Return_Done' ? 'active' : ''"
+        (click)="active_tab = 'Return_Done';getComplantList()"><i class="material-icons">pending_actions</i>Return Done({{tab_count.pending_count}})</button>
+
+        <button mat-button [ngClass]="active_tab == 'Close' ? 'active' : ''"
+        (click)="active_tab = 'Close'; getComplantList()"><i class="material-icons">thumb_up_alt</i>Close({{tab_count.closed_count}})</button>
+
+        <button mat-button [ngClass]="active_tab == 'Cancel' ? 'active' : ''"
+        (click)="active_tab = 'Cancel'; getComplantList()"><i class="material-icons">thumb_down_alt</i>Cancel({{tab_count.reject_count}})</button>
+
       </ng-container>
-      <button mat-button [ngClass]="active_tab == 'Close' ? 'active' : ''"
-      (click)="active_tab = 'Close'; getComplantList()"><i class="material-icons">thumb_up_alt</i>Close({{tab_count.closed_count}})</button>
-      <button mat-button [ngClass]="active_tab == 'Cancel' ? 'active' : ''"
-      (click)="active_tab = 'Cancel'; getComplantList()"><i class="material-icons">thumb_down_alt</i>Cancel({{tab_count.reject_count}})</button>
     </div>
     
   </div>
@@ -58,12 +73,12 @@
               <th class="w130">Product Code</th>
               <th class="w130">Customer Name</th>
               <th class="w130">Customer Mobile No.</th>
-              <th class="w130">New Serial No.</th>
+              <th class="w130" *ngIf="active_tab != 'Pending'">Carpenter Details</th>
               <th class="w130">Warranty Status</th>
               <th class="w130">Inspection Status</th>
               <th class="w130">Complaint Status</th>
               <th class="w130">Return Status</th>
-              <th class="w70 text-center">Action</th>
+              <!-- <th class="w70 text-center">Action</th> -->
             </tr>
           </table>
         </div>
@@ -139,11 +154,11 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w130">
+              <th class="w130" *ngIf="active_tab != 'Pending'">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="new_serial_no"
-                    (keyup.enter)="getComplantList('')" #new_serial_no="ngModel" [(ngModel)]="filter_data.new_serial_no">
+                    <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
+                    (keyup.enter)="getComplantList('')" #carpenter_detail="ngModel" [(ngModel)]="filter_data.carpenter_detail">
                   </mat-form-field>
                 </div>
               </th>
@@ -198,7 +213,7 @@
           </mat-form-field>
         </div>
       </th>
-      <th class="w70 text-center"></th>
+      <!-- <th class="w70 text-center"></th> -->
     </tr>
   </table>
 </div>
@@ -218,19 +233,19 @@
             <td class="w130">{{row.product_code ? row.product_code : '--'}}</td>
             <td class="w130">{{row.customer_name}}</td>
             <td class="w130">{{row.customer_mobile}}</td>
-            <td class="w130">{{row.new_serial_no ? row.new_serial_no : '--'}}</td>
+            <td class="w130" *ngIf="active_tab != 'Pending'">{{row.carpenter_name ? row.carpenter_name : '--'}}-({{row.carpenter_mobile ? row.carpenter_mobile : '--'}})</td>
             <td class="w130">{{row.warranty_status ? row.warranty_status : '--'}}</td>
             <td class="w130">{{row.inspection_status ? row.inspection_status : '--'}}</td>
             <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
             <td class="w130">{{row.return_status ? row.return_status : '--'}}</td>
-            <td class="w70 text-center">
+            <!-- <td class="w70 text-center">
               <div class="action-button">
                 <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
                   <i class="material-icons edit">edit</i>
                 </button>
 
               </div>
-            </td>
+            </td> -->
           </tr>
         </ng-container>
         <ng-container *ngIf="loader">
