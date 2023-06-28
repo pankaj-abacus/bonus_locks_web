@@ -28,7 +28,7 @@
                                         <span>1</span>
                                         <div class="tracking-con">
                                             <p>date_created</p>
-                                            <p>{{getData.date_created ? (getData.date_created | date) :'---'}}</p>
+                                            <p>{{getData.date_created != '0000-00-00' ? (getData.date_created | date) :'---'}}</p>
                                             <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
                                         </div>
                                     </li>
@@ -36,7 +36,7 @@
                                         <span>2</span>
                                         <div class="tracking-con">
                                             <p>Carpenter Assign Date</p>
-                                            <p>{{getData.carpenter_assign_date ? (getData.carpenter_assign_date | date) :'---'}}</p>
+                                            <p>{{getData.carpenter_assign_date != '0000-00-00' ? (getData.carpenter_assign_date | date) :'---'}}</p>
                                             <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
                                         </div>
                                     </li>
@@ -44,7 +44,7 @@
                                         <span>3</span>
                                         <div class="tracking-con">
                                             <p>Inspection Date</p>
-                                            <p>{{getData.inspection_date ? (getData.inspection_date | date) :'---'}}</p>
+                                            <p>{{getData.inspection_date != '0000-00-00' ? (getData.inspection_date | date) :'---'}}</p>
                                             <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
                                         </div>
                                     </li>
@@ -52,7 +52,7 @@
                                         <span>4</span>
                                         <div class="tracking-con">
                                             <p>Closed Date</p>
-                                            <p>{{getData.closed_date ? (getData.closed_date | date) :'---'}}</p>
+                                            <p>{{getData.closed_date != '0000-00-00' ? (getData.closed_date | date) :'---'}}</p>
                                             <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
                                         </div>
                                     </li>
@@ -60,7 +60,7 @@
                                         <span>5</span>
                                         <div class="tracking-con">
                                             <p>Feedback Date</p>
-                                            <p>{{getData.feedback_date ? (getData.feedback_date | date) :'---'}}</p>
+                                            <p>{{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date) :'---'}}</p>
                                             <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
                                         </div>
                                     </li>
