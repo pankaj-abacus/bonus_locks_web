@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-
+    
     <div class="mat-tabbar">
       <ng-container>
         <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
@@ -34,25 +34,51 @@
         
         <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
         (click)="active_tab = 'Pending';getComplantList()"><i class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
-
-        <button mat-button [ngClass]="active_tab == 'Carpenter_Assign' ? 'active' : ''"
-        (click)="active_tab = 'Carpenter_Assign';getComplantList()"><i class="material-icons">pending_actions</i>Carpenter Assign({{tab_count.pending_count}})</button>
-
-        <button mat-button [ngClass]="active_tab == 'Inspection_Done' ? 'active' : ''"
-        (click)="active_tab = 'Inspection_Done';getComplantList()"><i class="material-icons">pending_actions</i>Inspection Done({{tab_count.pending_count}})</button>
-
-        <button mat-button [ngClass]="active_tab == 'Replacement_Done' ? 'active' : ''"
-        (click)="active_tab = 'Replacement_Done';getComplantList()"><i class="material-icons">pending_actions</i>Replacement Done({{tab_count.pending_count}})</button>
-
-        <button mat-button [ngClass]="active_tab == 'Return_Done' ? 'active' : ''"
-        (click)="active_tab = 'Return_Done';getComplantList()"><i class="material-icons">pending_actions</i>Return Done({{tab_count.pending_count}})</button>
-
+        
         <button mat-button [ngClass]="active_tab == 'Close' ? 'active' : ''"
         (click)="active_tab = 'Close'; getComplantList()"><i class="material-icons">thumb_up_alt</i>Close({{tab_count.closed_count}})</button>
-
+        
         <button mat-button [ngClass]="active_tab == 'Cancel' ? 'active' : ''"
         (click)="active_tab = 'Cancel'; getComplantList()"><i class="material-icons">thumb_down_alt</i>Cancel({{tab_count.reject_count}})</button>
-
+        
+      </ng-container>
+    </div>
+  </div>
+  <div class="tools-container" *ngIf="active_tab == 'Pending'">
+    <div class="mat-tabbar" >
+      <ng-container>        
+        <button mat-button [ngClass]="sub_active_tab == 'Carpenter_Not_Assigned' ? 'active' : ''"
+        (click)="sub_active_tab = 'Carpenter_Not_Assigned';getComplantList()"><i class="material-icons">thumb_up_alt</i>Carpenter Not Assigned()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Carpenter_Assigned' ? 'active' : ''"
+        (click)="sub_active_tab = 'Carpenter_Assigned';getComplantList()"><i class="material-icons">thumb_up_alt</i>Carpenter Assigned()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Inspection_Complete' ? 'active' : ''"
+        (click)="sub_active_tab = 'Inspection_Complete';getComplantList()"><i class="material-icons">thumb_up_alt</i>Inspection Complete()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Replacement_Pending' ? 'active' : ''"
+        (click)="sub_active_tab = 'Replacement_Pending';getComplantList()"><i class="material-icons">thumb_up_alt</i>Replacement Pending()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Sparepart_Pending' ? 'active' : ''"
+        (click)="sub_active_tab = 'Sparepart_Pending';getComplantList()"><i class="material-icons">thumb_up_alt</i>Spare Part Pending()</button>
+      </ng-container>
+    </div>
+    
+  </div>
+  
+  <div class="tools-container" *ngIf="active_tab == 'Close'">
+    <div class="mat-tabbar" >
+      <ng-container>        
+        <button mat-button [ngClass]="sub_active_tab == 'Closed_By_Service' ? 'active' : ''" (click)="sub_active_tab = 'Closed_By_Service';getComplantList()"><i class="material-icons">thumb_up_alt</i>Closed By Service()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Closed_By_Replacement' ? 'active' : ''"
+        (click)="sub_active_tab = 'Closed_By_Replacement';getComplantList()"><i class="material-icons">thumb_up_alt</i>Closed By Replacement()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Return_Pending' ? 'active' : ''"
+        (click)="sub_active_tab = 'Return_Pending';getComplantList()"><i class="material-icons">thumb_up_alt</i>Return Pending()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Feedback_Complete' ? 'active' : ''"
+        (click)="sub_active_tab = 'Feedback_Complete';getComplantList()"><i class="material-icons">thumb_up_alt</i>Feedback Complete()</button>
       </ng-container>
     </div>
     
@@ -102,7 +128,7 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="created_by_type"
-                      (keyup.enter)="getComplantList('')" #created_by_type="ngModel" [(ngModel)]="filter_data.created_by_type">
+                    (keyup.enter)="getComplantList('')" #created_by_type="ngModel" [(ngModel)]="filter_data.created_by_type">
                   </mat-form-field>
                 </div>
               </th>
@@ -182,7 +208,7 @@
                   <mat-option value="">All</mat-option>
                   <mat-option value="Pending">Pending</mat-option>
                   <mat-option value="Done">Done </mat-option>
-
+                  
                 </mat-select>
               </mat-form-field>
             </div>
@@ -223,83 +249,83 @@
   <div class="table-content">
     <table>
       <ng-container *ngIf="!loader">
-          <tr *ngFor="let row of complaintList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
-            <td class="w60">{{i + 1 + sr_no}}</td>
-            <td class="w180">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-            <td class="w100">{{row.created_by_type ? row.created_by_type : '--'}}</td>
-            <td class="w120"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
-            <td class="w130">{{row.serial_no ? row.serial_no : '--'}}</td>
-            <td class="w130">{{row.product_name ? row.product_name : '--'}}</td>
-            <td class="w130">{{row.product_code ? row.product_code : '--'}}</td>
-            <td class="w130">{{row.customer_name}}</td>
-            <td class="w130">{{row.customer_mobile}}</td>
-            <td class="w130" *ngIf="active_tab != 'Pending'">{{row.carpenter_name ? row.carpenter_name : '--'}}-({{row.carpenter_mobile ? row.carpenter_mobile : '--'}})</td>
-            <td class="w130">{{row.warranty_status ? row.warranty_status : '--'}}</td>
-            <td class="w130">{{row.inspection_status ? row.inspection_status : '--'}}</td>
-            <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
-            <td class="w130">{{row.return_status ? row.return_status : '--'}}</td>
-            <!-- <td class="w70 text-center">
-              <div class="action-button">
-                <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
-                  <i class="material-icons edit">edit</i>
-                </button>
-
-              </div>
-            </td> -->
-          </tr>
-        </ng-container>
-        <ng-container *ngIf="loader">
-          <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
-            <td class="w60">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w100">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w130">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w100">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w100">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w130">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w130">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w100">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w130 " >
-              <div>&nbsp;</div>
-            </td>
-            <td class="w100 " >
-              <div>&nbsp;</div>
-            </td>
-            <td class="w130 " >
-              <div>&nbsp;</div>
-            </td>
-            <td class="w130 " >
-              <div>&nbsp;</div>
-            </td>
-            <td class="w130 " >
-              <div>&nbsp;</div>
-            </td>
-            <td class="w130 " >
-              <div>&nbsp;</div>
-            </td>
-            <td class="w120 text-center">
-              <div>&nbsp;</div>
-            </td>
-          </tr>
-        </ng-container>
-      </table>
-    </div>
+        <tr *ngFor="let row of complaintList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
+          <td class="w60">{{i + 1 + sr_no}}</td>
+          <td class="w180">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+          <td class="w100">{{row.created_by_type ? row.created_by_type : '--'}}</td>
+          <td class="w120"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
+          <td class="w130">{{row.serial_no ? row.serial_no : '--'}}</td>
+          <td class="w130">{{row.product_name ? row.product_name : '--'}}</td>
+          <td class="w130">{{row.product_code ? row.product_code : '--'}}</td>
+          <td class="w130">{{row.customer_name}}</td>
+          <td class="w130">{{row.customer_mobile}}</td>
+          <td class="w130" *ngIf="active_tab != 'Pending'">{{row.carpenter_name ? row.carpenter_name : '--'}}-({{row.carpenter_mobile ? row.carpenter_mobile : '--'}})</td>
+          <td class="w130">{{row.warranty_status ? row.warranty_status : '--'}}</td>
+          <td class="w130">{{row.inspection_status ? row.inspection_status : '--'}}</td>
+          <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
+          <td class="w130">{{row.return_status ? row.return_status : '--'}}</td>
+          <!-- <td class="w70 text-center">
+            <div class="action-button">
+              <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
+                <i class="material-icons edit">edit</i>
+              </button>
+              
+            </div>
+          </td> -->
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="loader">
+        <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+          <td class="w60">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w100">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w100">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w100">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w100">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w100 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w120 text-center">
+            <div>&nbsp;</div>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
   </div>
+</div>
 </div>
 <ng-container *ngIf="datanotofound==true && complaintList.length == 0;">
   <app-not-result-found></app-not-result-found>

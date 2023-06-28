@@ -25,8 +25,8 @@ export class ComplaintListComponent implements OnInit {
   total_page: any = 0;
   pagenumber: any = 0;
   loader: boolean = false;
-  tab_active = 'all';
-  active_tab: any = 'Pending';
+  active_tab: any = 'all';
+  sub_active_tab: any = '';
   tab_count: any;
   scheme_active_count: any;
   filter_data: any = {};
@@ -52,6 +52,10 @@ export class ComplaintListComponent implements OnInit {
 
     if (this.filter_data.status) {
       this.active_tab = this.filter_data.status
+    }
+
+    if (this.filter_data.status) {
+      this.sub_active_tab = this.filter_data.status
     }
   }
   
@@ -100,26 +104,45 @@ export class ComplaintListComponent implements OnInit {
         this.filter_data.status = this.active_tab;
       }
 
-      if (this.active_tab == 'Carpenter_Assign') {
-        this.filter_data.status = this.active_tab;
-      }
-
-      if (this.active_tab == 'Inspection_Done') {
-        this.filter_data.status = this.active_tab;
-      }
-
-      if (this.active_tab == 'Replacement_Done') {
-        this.filter_data.status = this.active_tab;
-      }
-      if (this.active_tab == 'Return_Done') {
-        this.filter_data.status = this.active_tab;
-      }
       if (this.active_tab == 'Cancel') {
         this.filter_data.status = this.active_tab;
       }
   
       if (this.active_tab == 'Close') {
         this.filter_data.status = this.active_tab;
+      }
+
+      if (this.sub_active_tab == 'Carpenter_Not_Assigned') {
+        this.filter_data.status = this.sub_active_tab;
+      }
+
+      if (this.sub_active_tab == 'Carpenter_Assigned') {
+        this.filter_data.status = this.sub_active_tab;
+      }
+
+      if (this.sub_active_tab == 'Inspection_Complete') {
+        this.filter_data.status = this.sub_active_tab;
+      }
+      if (this.sub_active_tab == 'Replacement_Pending') {
+        this.filter_data.status = this.sub_active_tab;
+      }
+      if (this.sub_active_tab == 'Sparepart_Pending') {
+        this.filter_data.status = this.sub_active_tab;
+      }
+
+      if (this.sub_active_tab == 'Closed_By_Service') {
+        this.filter_data.status = this.sub_active_tab;
+      }
+
+      if (this.sub_active_tab == 'Closed_By_Replacement') {
+        this.filter_data.status = this.sub_active_tab;
+      }
+
+      if (this.sub_active_tab == 'Return_Pending') {
+        this.filter_data.status = this.sub_active_tab;
+      }
+      if (this.sub_active_tab == 'Feedback_Complete') {
+        this.filter_data.status = this.sub_active_tab;
       }
 
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceComplaintList")
