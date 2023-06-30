@@ -47,11 +47,11 @@
   <div class="tools-container" *ngIf="active_tab == 'Pending'">
     <div class="mat-tabbar" >
       <ng-container>        
-        <button mat-button [ngClass]="sub_active_tab == 'Carpenter_Not_Assigned' ? 'active' : ''"
-        (click)="sub_active_tab = 'Carpenter_Not_Assigned';getComplantList()"><i class="material-icons">thumb_up_alt</i>Carpenter Not Assigned()</button>
+        <button mat-button [ngClass]="sub_active_tab == 'Not_Assigned' ? 'active' : ''"
+        (click)="sub_active_tab = 'Not_Assigned';getComplantList()"><i class="material-icons">thumb_up_alt</i>Not Assigned()</button>
         
-        <button mat-button [ngClass]="sub_active_tab == 'Carpenter_Assigned' ? 'active' : ''"
-        (click)="sub_active_tab = 'Carpenter_Assigned';getComplantList()"><i class="material-icons">thumb_up_alt</i>Carpenter Assigned()</button>
+        <button mat-button [ngClass]="sub_active_tab == 'Assigned' ? 'active' : ''"
+        (click)="sub_active_tab = 'Assigned';getComplantList()"><i class="material-icons">thumb_up_alt</i>Assigned()</button>
         
         <button mat-button [ngClass]="sub_active_tab == 'Inspection_Complete' ? 'active' : ''"
         (click)="sub_active_tab = 'Inspection_Complete';getComplantList()"><i class="material-icons">thumb_up_alt</i>Inspection Complete()</button>
@@ -100,10 +100,10 @@
               <th class="w130">Customer Name</th>
               <th class="w130">Customer Mobile No.</th>
               <th class="w130" *ngIf="active_tab != 'Pending'">Carpenter Details</th>
-              <th class="w130">Warranty Status</th>
-              <th class="w130">Inspection Status</th>
+              <!-- <th class="w130">Warranty Status</th> -->
+              <!-- <th class="w130">Inspection Status</th> -->
               <th class="w130">Complaint Status</th>
-              <th class="w130">Return Status</th>
+              <!-- <th class="w130">Return Status</th> -->
               <!-- <th class="w70 text-center">Action</th> -->
             </tr>
           </table>
@@ -188,19 +188,19 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w130">
+              <!-- <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input select-input">
                     <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.warranty_status"
                     (selectionChange)="getComplantList('')">
                     <mat-option value="">All</mat-option>
                     <mat-option value="In Warranty">In Warranty</mat-option>
-                    <mat-option value="Out Warranty">Out Warranty </mat-option>
+                    <mat-option value="Out Of Warranty">Out Of Warranty </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
-            </th>
-            <th class="w130">
+            </th> -->
+            <!-- <th class="w130">
               <div class="th-search-acmt">
                 <mat-form-field class="cs-input select-input">
                   <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.inspection_status"
@@ -212,7 +212,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-          </th>
+          </th> -->
           <th class="w130">
             <div class="th-search-acmt">
               <mat-form-field class="cs-input select-input">
@@ -226,7 +226,7 @@
             </mat-form-field>
           </div>
         </th>
-        <th class="w130">
+        <!-- <th class="w130">
           <div class="th-search-acmt">
             
             <mat-form-field class="cs-input select-input">
@@ -238,7 +238,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-      </th>
+      </th> -->
       <!-- <th class="w70 text-center"></th> -->
     </tr>
   </table>
@@ -259,11 +259,11 @@
           <td class="w130">{{row.product_code ? row.product_code : '--'}}</td>
           <td class="w130">{{row.customer_name}}</td>
           <td class="w130">{{row.customer_mobile}}</td>
-          <td class="w130" *ngIf="active_tab != 'Pending'">{{row.carpenter_name ? row.carpenter_name : '--'}}-({{row.carpenter_mobile ? row.carpenter_mobile : '--'}})</td>
-          <td class="w130">{{row.warranty_status ? row.warranty_status : '--'}}</td>
-          <td class="w130">{{row.inspection_status ? row.inspection_status : '--'}}</td>
+          <td class="w130" *ngIf="active_tab != 'Pending'">{{row.carpenter_name ? row.carpenter_name : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
+          <!-- <td class="w130">{{row.warranty_status ? row.warranty_status : '--'}}</td> -->
+          <!-- <td class="w130">{{row.inspection_status ? row.inspection_status : '--'}}</td> -->
           <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
-          <td class="w130">{{row.return_status ? row.return_status : '--'}}</td>
+          <!-- <td class="w130">{{row.return_status ? row.return_status : '--'}}</td> -->
           <!-- <td class="w70 text-center">
             <div class="action-button">
               <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">

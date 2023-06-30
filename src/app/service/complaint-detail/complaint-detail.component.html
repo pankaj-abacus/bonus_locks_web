@@ -7,7 +7,7 @@
         <h2>Complaint Details</h2>
         
         <div class="left-auto" >
-            <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id)">Assign Engineer</button>
+            <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id)">Assign Carpenter</button>
         </div>
     </div>
     
@@ -22,6 +22,12 @@
                     <div class="card-body">
                         
                         <div class="tracking">
+                            <div style="display: flex;width: 80%;justify-content: space-around;">
+                                <p style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">10 days</p>
+                                <p style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">4 days</p>
+                                <p style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">5 days</p>
+                                <p style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">2 days</p>
+                            </div>
                             <div class="tracking-header">
                                 <ul>
                                     <li class="check">
@@ -44,7 +50,7 @@
                                         <span>3</span>
                                         <div class="tracking-con">
                                             <p>Inspection Date</p>
-                                            <p>{{getData.inspection_date != '0000-00-00' ? (getData.inspection_date | date) :'---'}}</p>
+                                            <!-- <p>{{getData.inspection_date != '0000-00-00' ? (getData.inspection_date | date) :'---'}}</p> -->
                                             <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
                                         </div>
                                     </li>
@@ -52,7 +58,7 @@
                                         <span>4</span>
                                         <div class="tracking-con">
                                             <p>Closed Date</p>
-                                            <p>{{getData.closed_date != '0000-00-00' ? (getData.closed_date | date) :'---'}}</p>
+                                            <!-- <p>{{getData.closed_date != '0000-00-00' ? (getData.closed_date | date) :'---'}}</p> -->
                                             <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
                                         </div>
                                     </li>
@@ -60,7 +66,7 @@
                                         <span>5</span>
                                         <div class="tracking-con">
                                             <p>Feedback Date</p>
-                                            <p>{{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date) :'---'}}</p>
+                                            <!-- <p>{{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date) :'---'}}</p> -->
                                             <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
                                         </div>
                                     </li>

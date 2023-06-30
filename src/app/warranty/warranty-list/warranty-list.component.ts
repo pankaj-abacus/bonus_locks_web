@@ -94,6 +94,11 @@ export class WarrantyListComponent implements OnInit {
     this.filter_data.warranty_end_date = moment(this.filter_data.warranty_end_date).format('YYYY-MM-DD');
     this.getWarrantyList('');
   }
+
+  date_format4(): void {
+    this.filter_data.verification_on = moment(this.filter_data.verification_on).format('YYYY-MM-DD');
+    this.getWarrantyList('');
+  }
   
   getWarrantyList(data) {
     if (this.pagenumber > this.total_page) {
@@ -117,7 +122,7 @@ export class WarrantyListComponent implements OnInit {
       this.filter_data.status = this.active_tab;
     }
 
-    if (this.active_tab == 'Rejected') {
+    if (this.active_tab == 'Reject') {
       this.filter_data.status = this.active_tab;
     }
     console.log(this.page_limit);

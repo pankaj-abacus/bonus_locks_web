@@ -41,18 +41,6 @@
                 </div>
                 <div class="col s12 m4 20">
                   <mat-form-field appearance="outline">
-                    <mat-label>Pincode</mat-label>
-                    <input matInput type="text" name="pincode" placeholder="Type Here ..." #pincode="ngModel" minlength="6" maxlength="6"
-                    [(ngModel)]="data.pincode" onkeypress="return event.charCode>=48 && event.charCode<=57" required>
-                  </mat-form-field>
-                  <div class="alert alert-danger" *ngIf="pincode.touched || f.submitted">
-                    <p *ngIf="pincode.errors?.required">This field is required</p>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col s12 m4 20">
-                  <mat-form-field appearance="outline">
                     <mat-label>State</mat-label>
                     <mat-select name="state" #state="ngModel" [(ngModel)]="data.state" required
                     (selectionChange)="getDistrict(1)">
@@ -68,6 +56,10 @@
                 </div>
                 
               </div>
+                
+              </div>
+              <div class="row">
+                
               <div class="col s12 m4 20">
                 <mat-form-field appearance="outline">
                   <mat-label>District</mat-label>
@@ -92,7 +84,16 @@
                   <p *ngIf="city.errors?.required">This field is required</p>
                 </div>
               </div>
-              
+              <div class="col s12 m4 20">
+                <mat-form-field appearance="outline">
+                  <mat-label>Pincode</mat-label>
+                  <input matInput type="text" name="pincode" placeholder="Type Here ..." #pincode="ngModel" minlength="6" maxlength="6"
+                  [(ngModel)]="data.pincode" onkeypress="return event.charCode>=48 && event.charCode<=57" required>
+                </mat-form-field>
+                <div class="alert alert-danger" *ngIf="pincode.touched || f.submitted">
+                  <p *ngIf="pincode.errors?.required">This field is required</p>
+                </div>
+              </div>
               
             </div>
             <div class="row mb0">
