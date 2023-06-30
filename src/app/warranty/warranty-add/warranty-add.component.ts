@@ -60,11 +60,10 @@ export class WarrantyAddComponent implements OnInit {
   warranty_card_copy_img :any;
   warrantyImg:any =[];
   uploadurl:any;
+  warranty_period:string;
+  selectedWarrantyDate: string;
+  warrantyEndDate: string;
 
-
-  
-  
-  
   constructor(private renderer: Renderer2,
     public location: Location,
     public service: DatabaseService,
@@ -252,11 +251,22 @@ export class WarrantyAddComponent implements OnInit {
             if(index!=-1){
               this.data.product_name= this.productList[index].product_name;
               this.data.product_code= this.productList[index].product_code;
+              this.warranty_period= this.productList[index].warranty_period;
             }
             console.log(this.data.product_name);
             console.log(this.data.product_code);
+            console.log(this.warranty_period);
           }
         }
+
+        calculateWarrantyEnd() {
+          const warrantyStartDate = new Date(this.data.date_of_purchase);
+          const warrantyEnd = new Date(warrantyStartDate.getFullYear() , warrantyStartDate.getMonth() + parseInt(this.warranty_period), warrantyStartDate.getDate());
+          console.log(warrantyEnd);
+          this.data.warranty_end_date=warrantyEnd;
+        }
+
+        
         
         
       }

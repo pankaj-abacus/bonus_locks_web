@@ -25,7 +25,7 @@ export class ComplaintListComponent implements OnInit {
   total_page: any = 0;
   pagenumber: any = 0;
   loader: boolean = false;
-  active_tab: any = 'all';
+  active_tab: any = 'All';
   sub_active_tab: any = '';
   tab_count: any;
   scheme_active_count: any;
@@ -36,24 +36,24 @@ export class ComplaintListComponent implements OnInit {
   sr_no: number;
   datanotofound: boolean = false;
   downurl: any = ''
-
-
+  
+  
   constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { 
     this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
     this.getComplantList('');
-
-
+    
+    
   }
-
+  
   ngOnInit() {
     this.filter_data = this.service.getData()
     this.getComplantList('');
-
+    
     if (this.filter_data.status) {
       this.active_tab = this.filter_data.status
     }
-
+    
     if (this.filter_data.status) {
       this.sub_active_tab = this.filter_data.status
     }
@@ -95,56 +95,59 @@ export class ComplaintListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
-
-
+    
+    
     if (this.active_tab == 'All') {
       this.filter_data.status = this.active_tab;
-      }
-      if (this.active_tab == 'Pending') {
-        this.filter_data.status = this.active_tab;
-      }
-
-      if (this.active_tab == 'Cancel') {
-        this.filter_data.status = this.active_tab;
-      }
-  
-      if (this.active_tab == 'Close') {
-        this.filter_data.status = this.active_tab;
-      }
-
-      if (this.sub_active_tab == 'Carpenter_Not_Assigned') {
-        this.filter_data.status = this.sub_active_tab;
-      }
-
-      if (this.sub_active_tab == 'Carpenter_Assigned') {
-        this.filter_data.status = this.sub_active_tab;
-      }
-
-      if (this.sub_active_tab == 'Inspection_Complete') {
-        this.filter_data.status = this.sub_active_tab;
-      }
-      if (this.sub_active_tab == 'Replacement_Pending') {
-        this.filter_data.status = this.sub_active_tab;
-      }
-      if (this.sub_active_tab == 'Sparepart_Pending') {
-        this.filter_data.status = this.sub_active_tab;
-      }
-
-      if (this.sub_active_tab == 'Closed_By_Service') {
-        this.filter_data.status = this.sub_active_tab;
-      }
-
-      if (this.sub_active_tab == 'Closed_By_Replacement') {
-        this.filter_data.status = this.sub_active_tab;
-      }
-
-      if (this.sub_active_tab == 'Return_Pending') {
-        this.filter_data.status = this.sub_active_tab;
-      }
-      if (this.sub_active_tab == 'Feedback_Complete') {
-        this.filter_data.status = this.sub_active_tab;
-      }
-
+      this.filter_data.sub_status = ''; 
+    }
+    if (this.active_tab == 'Pending') {
+      this.filter_data.status = this.active_tab;
+    }
+    
+    if (this.active_tab == 'Cancel') {
+      this.filter_data.status = this.active_tab;
+      this.filter_data.sub_status = ''; 
+    }
+    
+    if (this.active_tab == 'Close') {
+      this.filter_data.status = this.active_tab;
+      this.filter_data.sub_status = ''; 
+    }
+    
+    if (this.sub_active_tab == 'Not_Assigned') {
+      this.filter_data.sub_status = this.sub_active_tab;
+    }
+    
+    if (this.sub_active_tab == 'Assigned') {
+      this.filter_data.sub_status = this.sub_active_tab;
+    }
+    
+    if (this.sub_active_tab == 'Inspection_Complete') {
+      this.filter_data.sub_status = this.sub_active_tab;
+    }
+    if (this.sub_active_tab == 'Replacement_Pending') {
+      this.filter_data.sub_status = this.sub_active_tab;
+    }
+    if (this.sub_active_tab == 'Sparepart_Pending') {
+      this.filter_data.sub_status = this.sub_active_tab;
+    }
+    
+    if (this.sub_active_tab == 'Closed_By_Service') {
+      this.filter_data.sub_status = this.sub_active_tab;
+    }
+    
+    if (this.sub_active_tab == 'Closed_By_Replacement') {
+      this.filter_data.sub_status = this.sub_active_tab;
+    }
+    
+    if (this.sub_active_tab == 'Return_Pending') {
+      this.filter_data.sub_status = this.sub_active_tab;
+    }
+    if (this.sub_active_tab == 'Feedback_Complete') {
+      this.filter_data.sub_status = this.sub_active_tab;
+    }
+    
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceComplaintList")
     
     this.loader = true;
@@ -200,8 +203,8 @@ export class ComplaintListComponent implements OnInit {
   lastBtnValue(value) {
     this.fabBtnValue = value;
   }
-
-
+  
+  
   downloadExcel() {
     this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_complaint_list").subscribe((result => {
       if (result['msg'] == true) {
@@ -211,7 +214,7 @@ export class ComplaintListComponent implements OnInit {
       }
     }));
   }
-
+  
   rejectComplaint(){
     
   }
