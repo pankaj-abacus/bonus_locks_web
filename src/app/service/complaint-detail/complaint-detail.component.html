@@ -23,10 +23,10 @@
                         
                         <div class="tracking">
                             <div style="display: flex;width: 80%;justify-content: space-around;">
-                                <p style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">10 days</p>
-                                <p style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">4 days</p>
-                                <p style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">5 days</p>
-                                <p style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">2 days</p>
+                                <span style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">{{getData.date_created_to_assign ? getData.date_created_to_assign :''}}</span>
+                                <span style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">{{getData.assign_to_inspection ? getData.assign_to_inspection :''}}</span>
+                                <span style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">{{getData.inspection_to_closed ? getData.inspection_to_closed :''}}</span>
+                                <span style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">{{getData.closed_to_feedback ? getData.closed_to_feedback :''}}</span>
                             </div>
                             <div class="tracking-header">
                                 <ul>
@@ -35,41 +35,43 @@
                                         <div class="tracking-con">
                                             <p>date_created</p>
                                             <p>{{getData.date_created != '0000-00-00' ? (getData.date_created | date) :'---'}}</p>
-                                            <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
                                         </div>
                                     </li>
-                                    <li>
+                                    <li [ngClass]="getData.carpenter_assign_status == 'Done' ?'check' :'reject'">
                                         <span>2</span>
                                         <div class="tracking-con">
                                             <p>Carpenter Assign Date</p>
                                             <p>{{getData.carpenter_assign_date != '0000-00-00' ? (getData.carpenter_assign_date | date) :'---'}}</p>
-                                            <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
                                         </div>
                                     </li>
-                                    <li>
+                                    <li [ngClass]="getData.inspection_status == 'Done' ?'check' :'reject'">
                                         <span>3</span>
                                         <div class="tracking-con">
                                             <p>Inspection Date</p>
-                                            <!-- <p>{{getData.inspection_date != '0000-00-00' ? (getData.inspection_date | date) :'---'}}</p> -->
-                                            <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
+                                            <p>{{getData.inspection_date != '0000-00-00' ? (getData.inspection_date | date) :'---'}}</p>
                                         </div>
                                     </li>
-                                    <li>
+                                    <li [ngClass]="getData.complaint_status == 'Closed' ?'check' :'reject'">
                                         <span>4</span>
                                         <div class="tracking-con">
                                             <p>Closed Date</p>
-                                            <!-- <p>{{getData.closed_date != '0000-00-00' ? (getData.closed_date | date) :'---'}}</p> -->
-                                            <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
+                                            <p>{{getData.closed_date != '0000-00-00' ? (getData.closed_date | date) :'---'}}</p>
                                         </div>
                                     </li>
-                                    <li>
+                                    <li [ngClass]="getData.feedback_status == 'Done' ?'check' :'reject'">
                                         <span>5</span>
                                         <div class="tracking-con">
                                             <p>Feedback Date</p>
-                                            <!-- <p>{{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date) :'---'}}</p> -->
-                                            <!-- <p *ngIf="redeem_detail.status == 'Approved'">{{redeem_detail.redeem_status_date | date : 'dd MMM yyyy'}}</p> -->
+                                            <p>{{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date) :'---'}}</p>
                                         </div>
                                     </li>
+                                    <!-- <li [ngClass]="getData.feedback_status == 'Done' ?'check' :'reject'">
+                                        <span>5</span>
+                                        <div class="tracking-con">
+                                            <p>Feedback Date</p>
+                                            <p>{{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date) :'---'}}</p>
+                                        </div>
+                                    </li> -->
                                 </ul>
                             </div>
                         </div>

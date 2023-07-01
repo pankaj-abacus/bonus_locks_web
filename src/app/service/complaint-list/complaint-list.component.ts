@@ -28,6 +28,7 @@ export class ComplaintListComponent implements OnInit {
   active_tab: any = 'All';
   sub_active_tab: any = '';
   tab_count: any;
+  sub_tab_count: any;
   scheme_active_count: any;
   filter_data: any = {};
   today_date: Date;
@@ -86,6 +87,14 @@ export class ComplaintListComponent implements OnInit {
     this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
     this.getComplantList('');
   }
+  date_format2(): void {
+    this.filter_data.closed_date = moment(this.filter_data.closed_date).format('YYYY-MM-DD');
+    this.getComplantList('');
+  }
+  date_format3(): void {
+    this.filter_data.return_on = moment(this.filter_data.return_on).format('YYYY-MM-DD');
+    this.getComplantList('');
+  }
   
   getComplantList(data) {
     if (this.pagenumber > this.total_page) {
@@ -103,14 +112,15 @@ export class ComplaintListComponent implements OnInit {
     }
     if (this.active_tab == 'Pending') {
       this.filter_data.status = this.active_tab;
+      this.filter_data.sub_status = 'Not_Assigned';
     }
     
     if (this.active_tab == 'Cancel') {
       this.filter_data.status = this.active_tab;
-      this.filter_data.sub_status = ''; 
+      this.filter_data.sub_status = 'Closed_By_Service'; 
     }
     
-    if (this.active_tab == 'Close') {
+    if (this.active_tab == 'Closed') {
       this.filter_data.status = this.active_tab;
       this.filter_data.sub_status = ''; 
     }
@@ -162,6 +172,7 @@ export class ComplaintListComponent implements OnInit {
         
         this.pageCount = result['count'];
         this.tab_count = result['tab_count'];
+        this.sub_tab_count = result['sub_tab_count'];
         this.scheme_active_count = result['scheme_active_count'];
         this.loader = false;
         if (this.complaintList.length == 0) {
