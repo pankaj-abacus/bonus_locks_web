@@ -53,11 +53,8 @@ export class ComplaintDetailComponent implements OnInit {
     this.service.post_rqst({'complaint_id':this.id},"ServiceTask/serviceComplaintDetail").subscribe((result=>
       {
         this.getData = result['result'];
-        console.log('getData',this.getData);
-        
+        // console.log('getData',this.getData);        
         this.complaintImg = this.getData['image'];
-        console.log(this.complaintImg);
-        
         this.skLoading = false;
       }
       ));
