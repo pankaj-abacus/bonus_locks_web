@@ -259,6 +259,11 @@
       <mat-icon>cloud_upload</mat-icon>
       <span>Upload New Data</span>
     </button>
+
+    <button mat-menu-item (click)="upload_excel('warrantyUpdate');" *ngIf="logined_user_data.import_products_master=='1'">
+      <mat-icon>cloud_upload</mat-icon>
+      <span>Upload Warranty Excel Data</span>
+    </button>
     <!-- <button mat-menu-item (click)="upload_excel('update');"
       *ngIf="productlist.length > 0 && logined_user_data.import_master=='1'">
       <mat-icon>update</mat-icon>

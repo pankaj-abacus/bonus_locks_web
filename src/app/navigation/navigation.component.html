@@ -325,32 +325,32 @@
                 <a mat-button (click)="clearFilter(); toggleDropdown(2); " [ngClass]="{'active':ordersactive}"><i
                         class="material-icons ">construction</i>Service</a>
                 <ul>
-                    <li *ngIf=" login_data.view_primary_orders=='1'">
-                        <a mat-button (click)="clearFilter();" routerLink="/" routerLinkActive="active">
+                    <li>
+                        <a mat-button (click)="clearFilter();" routerLink="/customer-list" routerLinkActive="active">
                             Customer
-                            <span class="nav-counter " *ngIf="serve.counterArray.primary_order > 0">{{serve.counterArray.secondary_order}}</span>
+                            <span class="nav-counter " *ngIf="serve.counterArray.primary_order > 0">{{serve.counterArray.service_customer}}</span>
                         </a>
                     </li>
-                    <li *ngIf="login_data.view_secondary_orders=='1'">
-                        <a mat-button (click)="clearFilter()" routerLink="/" routerLinkActive="active">
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/warranty-list" routerLinkActive="active">
                             Warranty Registration
-                            <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.secondary_order}}</span>
+                            <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_warranty}}</span>
                         </a>
                     </li>
-                    <li *ngIf="login_data.view_secondary_orders=='1'">
+                    <li>
                         <a mat-button (click)="clearFilter()" routerLink="/complaint-list" routerLinkActive="active">
                             Complaint List
-                            <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.secondary_order}}</span>
+                            <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_complaint}}</span>
                         </a>
                     </li>
-                    <!-- <li *ngIf="login_data.view_secondary_orders=='1'">
-                        <a mat-button (click)="clearFilter()" routerLink="/complaint-list" routerLinkActive="active">
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/installation-list" routerLinkActive="active">
                             Installation List
-                            <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.secondary_order}}</span>
+                            <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_installation}}</span>
                         </a>
-                    </li> -->
-                    <li *ngIf="login_data.view_secondary_orders=='1'">
-                        <a mat-button (click)="clearFilter()" routerLink="/" routerLinkActive="active">
+                    </li>
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/claimDispatch-list" routerLinkActive="active">
                             Claim Dispatch
                             <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.secondary_order}}</span>
                         </a>

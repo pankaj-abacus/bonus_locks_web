@@ -1,7 +1,7 @@
 
 
-<h1 mat-dialog-title>{{savingFlag == true ? 'Please Wait ...': (modal_type=='insert'?'Upload product':modal_type=='update'?'Update product basic details':modal_type=='update_mrp'?'Update product price':modal_type=='update_point'?'Update category point':'Update product')}}</h1>
-<div mat-dialog-content>
+<h1 mat-dialog-title  *ngIf="modal_type!='warrantyUpdate'">{{savingFlag == true ? 'Please Wait ...': (modal_type=='insert'?'Upload product':modal_type=='update'?'Update product basic details':modal_type=='update_mrp'?'Update product price':modal_type=='update_point'?'Update category point':'Update product')}}</h1>
+<div mat-dialog-content  *ngIf="modal_type!='warrantyUpdate'">
   <div class="dialog-content">
     <div class="excel-box">
       <label>
@@ -22,22 +22,50 @@
     
   </div>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions *ngIf="modal_type!='warrantyUpdate'">
   <div class="text-right wp100">
     <button class="mr10" mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
     <button *ngIf="modal_type=='insert'" mat-raised-button color="accent" [disabled]="savingFlag == true" [ngClass]="{'loading': savingFlag == true}"  (click)="upload_user_data_excel('insert')" accept=".csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
       {{savingFlag == true ? 'Saving' : 'Upload'}}
     </button>
-
     <button *ngIf="modal_type=='update'" mat-raised-button color="accent" [disabled]="savingFlag == true" [ngClass]="{'loading': savingFlag == true}"  (click)="upload_user_data_excel('update')" accept=".csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
       {{savingFlag == true ? 'Saving' : 'Upload'}}
     </button>
-
+    
     <button *ngIf="modal_type=='update_mrp'" mat-raised-button color="accent" [disabled]="savingFlag == true" [ngClass]="{'loading': savingFlag == true}"  (click)="upload_user_data_excel('update_mrp')" accept=".csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
       {{savingFlag == true ? 'Saving' : 'Upload'}}
     </button>
- 
+    
     <button *ngIf="modal_type=='update_point'" mat-raised-button color="accent" [disabled]="savingFlag == true" [ngClass]="{'loading': savingFlag == true}"  (click)="upload_user_data_excel('update_point')" accept=".csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+      {{savingFlag == true ? 'Saving' : 'Upload'}}
+    </button>
+  </div>
+</div>
+
+
+<h1 mat-dialog-title *ngIf="modal_type=='warrantyUpdate'">Update Warranty Product Data</h1>
+<div mat-dialog-content *ngIf="modal_type=='warrantyUpdate'">
+  <div class="dialog-content">
+    <div class="excel-box">
+      <label>
+        <form name="couponForm" #f="ngForm" novalidate autocomplete="off">
+          <input type="file"  (change)="onUploadChange($event, f)" name="fileupload" accept=".csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"  style="display: none;">
+        </form>
+        <i class="material-icons">
+          cloud_upload
+        </i>
+        <p *ngIf="excel_name == ''">Upload Product Data (In csv format)</p>
+        <p *ngIf="excel_name != ''">{{excel_name}}</p>
+      </label>
+      <a *ngIf="modal_type=='warrantyUpdate'" (click)="downloadExcel();" target="_blank"><i class="material-icons">download</i>Click Here To Download Sample File</a>
+    </div>
+    
+  </div>
+</div>
+<div mat-dialog-actions *ngIf="modal_type=='warrantyUpdate'">
+  <div class="text-right wp100">
+    <button class="mr10" mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+    <button *ngIf="modal_type=='warrantyUpdate'" mat-raised-button color="accent" [disabled]="savingFlag == true" [ngClass]="{'loading': savingFlag == true}"  (click)="upload_user_data_excel2('warrantyUpdate')" accept=".csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
       {{savingFlag == true ? 'Saving' : 'Upload'}}
     </button>
   </div>

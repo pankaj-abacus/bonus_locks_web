@@ -458,7 +458,7 @@ export class AddDistributionComponent implements OnInit {
             }
             header.subscribe((result => {
                 
-                if (result['statusCode'] == 200) {
+                if (result['statusCode'] == 200 && !this.params_id) {
                     console.log(this.dr_type);
                     console.log(this.params_type);
                     

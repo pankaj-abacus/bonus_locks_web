@@ -8435,18 +8435,18 @@ ul.flex-input {
 
 .tracking {
     // border: dashed 1px #ccc;
-    width: 70%;
+    width: 90%;
     margin: 0 auto;
     
     .tracking-header {
         ul {
-            display: grid;
+            display: flex;
             align-items: flex-start;
             ;
             justify-content: space-between;
             width: 100%;
             margin-top: 16px;
-            grid-template-columns: 1fr 1fr 1fr auto;
+            // grid-template-columns: 1fr 1fr 1fr auto;
             
             li {
                 position: relative;

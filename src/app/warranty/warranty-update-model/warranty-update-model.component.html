@@ -1,0 +1,26 @@
+<div class="edit-modal">
+  <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="update()">
+    
+    <p class="heading">Change Warranty Status</p>
+    <div mat-dialog-content>
+      <div class="cs-form">
+        <div class="row">
+          <div class="col s12">
+            <mat-form-field class="cs-input" appearance="outline">
+              <mat-label>Update Warranty Status</mat-label>
+              <mat-select name="status" #status="ngModel" [(ngModel)]="formData.status">
+                <mat-option value="Verified">Verified</mat-option>
+                <mat-option value="Reject">Reject</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="savingFlag == true" [ngClass]="{'loading': savingFlag == true}">{{savingFlag == true ? 'Saving' : 'Save'}}</button>
+    </div>
+  </form>
+</div>

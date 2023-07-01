@@ -12,19 +12,25 @@ import { MatDialogModule, MatIconModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
 import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
+import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-model-component/engineer-assign-model-component.component';
+import { AddComplaintRemarkComponent } from 'src/app/add-complaint-remark/add-complaint-remark.component';
 
 
 const serviceRoutes = [
   { path: "", children:[
     { path: "", component: ComplaintListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     { path: 'add-complaint', component: ComplaintAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: 'complaint-detail', component: ComplaintDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
+    { path: "complaint-detail/:id", children:[
+      {path:"", component:ComplaintDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+      {path:'add-complaint/:id', component: ComplaintAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
+
+    ] }
   ]},
   
 ]
 
 @NgModule({
-  declarations: [ComplaintListComponent,ComplaintAddComponent,ComplaintDetailComponent],
+  declarations: [ComplaintListComponent,ComplaintAddComponent,ComplaintDetailComponent,EngineerAssignModelComponentComponent,AddComplaintRemarkComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(serviceRoutes),

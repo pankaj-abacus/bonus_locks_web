@@ -27,6 +27,61 @@
       </div>
     </div>
     
+    <div class="mat-tabbar">
+      <ng-container>
+        <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
+        (click)="active_tab = 'All'; getComplantList()"><i class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
+        
+        <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
+        (click)="active_tab = 'Pending';getComplantList()"><i class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
+        
+        <button mat-button [ngClass]="active_tab == 'Close' ? 'active' : ''"
+        (click)="active_tab = 'Close'; getComplantList()"><i class="material-icons">thumb_up_alt</i>Close({{tab_count.closed_count}})</button>
+        
+        <button mat-button [ngClass]="active_tab == 'Cancel' ? 'active' : ''"
+        (click)="active_tab = 'Cancel'; getComplantList()"><i class="material-icons">thumb_down_alt</i>Cancel({{tab_count.reject_count}})</button>
+        
+      </ng-container>
+    </div>
+  </div>
+  <div class="tools-container" *ngIf="active_tab == 'Pending'">
+    <div class="mat-tabbar" >
+      <ng-container>        
+        <button mat-button [ngClass]="sub_active_tab == 'Not_Assigned' ? 'active' : ''"
+        (click)="sub_active_tab = 'Not_Assigned';getComplantList()"><i class="material-icons">thumb_up_alt</i>Not Assigned()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Assigned' ? 'active' : ''"
+        (click)="sub_active_tab = 'Assigned';getComplantList()"><i class="material-icons">thumb_up_alt</i>Assigned()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Inspection_Complete' ? 'active' : ''"
+        (click)="sub_active_tab = 'Inspection_Complete';getComplantList()"><i class="material-icons">thumb_up_alt</i>Inspection Complete()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Replacement_Pending' ? 'active' : ''"
+        (click)="sub_active_tab = 'Replacement_Pending';getComplantList()"><i class="material-icons">thumb_up_alt</i>Replacement Pending()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Sparepart_Pending' ? 'active' : ''"
+        (click)="sub_active_tab = 'Sparepart_Pending';getComplantList()"><i class="material-icons">thumb_up_alt</i>Spare Part Pending()</button>
+      </ng-container>
+    </div>
+    
+  </div>
+  
+  <div class="tools-container" *ngIf="active_tab == 'Close'">
+    <div class="mat-tabbar" >
+      <ng-container>        
+        <button mat-button [ngClass]="sub_active_tab == 'Closed_By_Service' ? 'active' : ''" (click)="sub_active_tab = 'Closed_By_Service';getComplantList()"><i class="material-icons">thumb_up_alt</i>Closed By Service()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Closed_By_Replacement' ? 'active' : ''"
+        (click)="sub_active_tab = 'Closed_By_Replacement';getComplantList()"><i class="material-icons">thumb_up_alt</i>Closed By Replacement()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Return_Pending' ? 'active' : ''"
+        (click)="sub_active_tab = 'Return_Pending';getComplantList()"><i class="material-icons">thumb_up_alt</i>Return Pending()</button>
+        
+        <button mat-button [ngClass]="sub_active_tab == 'Feedback_Complete' ? 'active' : ''"
+        (click)="sub_active_tab = 'Feedback_Complete';getComplantList()"><i class="material-icons">thumb_up_alt</i>Feedback Complete()</button>
+      </ng-container>
+    </div>
+    
   </div>
   
   <div class="container container-scroll">
@@ -36,20 +91,20 @@
           <table>
             <tr>
               <th class="w60">Sr.No</th>
-              <th class="w100">Date Created</th>
+              <th class="w180">Date Created</th>
               <th class="w100">Created By</th>
-              <th class="w100">Complaint No.</th>
-              <th class="w100">Serial No.</th>
+              <th class="w120">Complaint No.</th>
+              <th class="w130">Serial No.</th>
               <th class="w130">Product Name</th>
               <th class="w130">Product Code</th>
-              <th class="w100">Customer Name</th>
+              <th class="w130">Customer Name</th>
               <th class="w130">Customer Mobile No.</th>
-              <th class="w100">New Serial No.</th>
-              <th class="w130">Warranty Status</th>
-              <th class="w130">Inspection Status</th>
+              <th class="w130" *ngIf="active_tab != 'Pending'">Carpenter Details</th>
+              <!-- <th class="w130">Warranty Status</th> -->
+              <!-- <th class="w130">Inspection Status</th> -->
               <th class="w130">Complaint Status</th>
-              <th class="w130">Return Status</th>
-              <th class="w120 text-center">Action</th>
+              <!-- <th class="w130">Return Status</th> -->
+              <!-- <th class="w70 text-center">Action</th> -->
             </tr>
           </table>
         </div>
@@ -58,7 +113,7 @@
           <table>
             <tr>
               <th class="w60"></th>
-              <th class="w100">
+              <th class="w180">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
@@ -69,20 +124,27 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100"></th>
               <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getProductList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
+                    <input type="text" matInput placeholder="Search ..." name="created_by_type"
+                    (keyup.enter)="getComplantList('')" #created_by_type="ngModel" [(ngModel)]="filter_data.created_by_type">
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
+              <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getProductList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
+                    <input type="text" matInput placeholder="Search ..." name="complain_no"
+                    (keyup.enter)="getComplantList('')" #complain_no="ngModel" [(ngModel)]="filter_data.complain_no">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w130">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="serial_no"
+                    (keyup.enter)="getComplantList('')" #serial_no="ngModel" [(ngModel)]="filter_data.serial_no">
                   </mat-form-field>
                 </div>
               </th>
@@ -90,119 +152,94 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getProductList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
+                    (keyup.enter)="getComplantList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getProductList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w100">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getProductList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
+                    <input type="text" matInput placeholder="Search ..." name="product_code"
+                    (keyup.enter)="getComplantList('')" #product_code="ngModel" [(ngModel)]="filter_data.product_code">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getProductList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w100">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getProductList('')" #product_name="ngModel" [(ngModel)]="filter_data.product_name">
+                    <input type="text" matInput placeholder="Search ..." name="customer_name"
+                    (keyup.enter)="getComplantList('')" #customer_name="ngModel" [(ngModel)]="filter_data.customer_name">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w130">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="customer_mobile"
+                    (keyup.enter)="getComplantList('')" #customer_mobile="ngModel" [(ngModel)]="filter_data.customer_mobile">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w130" *ngIf="active_tab != 'Pending'">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
+                    (keyup.enter)="getComplantList('')" #carpenter_detail="ngModel" [(ngModel)]="filter_data.carpenter_detail">
+                  </mat-form-field>
+                </div>
+              </th>
+              <!-- <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input select-input">
-                    <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.status"
-                    (selectionChange)="getProductList('')">
+                    <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.warranty_status"
+                    (selectionChange)="getComplantList('')">
                     <mat-option value="">All</mat-option>
                     <mat-option value="In Warranty">In Warranty</mat-option>
-                    <mat-option value="Out Warranty">Out Warranty </mat-option>
+                    <mat-option value="Out Of Warranty">Out Of Warranty </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
-            </th>
-            <th class="w130">
+            </th> -->
+            <!-- <th class="w130">
               <div class="th-search-acmt">
                 <mat-form-field class="cs-input select-input">
-                  <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.status"
-                  (selectionChange)="getProductList('')">
+                  <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.inspection_status"
+                  (selectionChange)="getComplantList('')">
                   <mat-option value="">All</mat-option>
-                  <mat-option value="Pass">Pass</mat-option>
-                  <mat-option value="Fail">Fail </mat-option>
+                  <mat-option value="Pending">Pending</mat-option>
+                  <mat-option value="Done">Done </mat-option>
+                  
                 </mat-select>
               </mat-form-field>
             </div>
-          </th>
+          </th> -->
           <th class="w130">
             <div class="th-search-acmt">
               <mat-form-field class="cs-input select-input">
-                <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.status"
-                (selectionChange)="getProductList('')">
+                <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.complaint_status"
+                (selectionChange)="getComplantList('')">
                 <mat-option value="">All</mat-option>
                 <mat-option value="Pending">Pending</mat-option>
-                <mat-option value="Close">Close </mat-option>
+                <mat-option value="Closed">Closed </mat-option>
+                <mat-option value="Reject">Reject </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
         </th>
-        <th class="w130">
+        <!-- <th class="w130">
           <div class="th-search-acmt">
             
             <mat-form-field class="cs-input select-input">
-              <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.status"
-              (selectionChange)="getProductList('')">
+              <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.return_status"
+              (selectionChange)="getComplantList('')">
               <mat-option value="">All</mat-option>
               <mat-option value="Pending">Pending</mat-option>
               <mat-option value="Done">Done </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-      </th>
-      <th class="w120 text-center"></th>
-      <!-- <th class="w100">
-        <div class="th-search-acmt">
-          <mat-form-field class="cs-input date-column infix-bodr">
-            <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-            #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
-            [max]="today_date" readonly>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
       </th> -->
-      <!-- <th class="w100">
-        <div class="th-search-acmt">
-          <mat-form-field>
-            <input type="text" matInput placeholder="Search ..." name="brand" (keyup.enter)="getProductList('')"
-            #brand="ngModel" [(ngModel)]="filter_data.brand">
-          </mat-form-field>
-        </div>
-      </th>
-      <th class="w100">
-        <div class="th-search-acmt">
-          <mat-form-field>
-            <input type="text" matInput placeholder="Search ..." name="color" (keyup.enter)="getProductList('')"
-            #color="ngModel" [(ngModel)]="filter_data.color">
-          </mat-form-field>
-        </div>
-      </th> -->
+      <!-- <th class="w70 text-center"></th> -->
     </tr>
   </table>
 </div>
@@ -212,94 +249,85 @@
   <div class="table-content">
     <table>
       <ng-container *ngIf="!loader">
-        <!-- <tr *ngFor="let row of productlist; let i = index "
-          [ngClass]="{'Current': service.currentUserID == row.id}">
+        <tr *ngFor="let row of complaintList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
           <td class="w60">{{i + 1 + sr_no}}</td>
-          <td class="w100">{{row.date_created | date}}</td>
-          <td class="w150">{{row.category && row.category!=''? row.category:'--'}}</td>
-          <td class="w150">{{row.sub_category_name && row.sub_category_name!=''? row.sub_category_name:'--'}}</td>
-          <td class="w250"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
-            routerLink="product-detail/{{(row.id)}}" routerLinkActive="active"> {{row.product_name}}</a></td>
-            <td class="w100">{{row.product_code && row.product_code!=''? row.product_code:'--'}}</td>
-            <td class="w120 one-line" matTooltip={{row.point_category_name}}>{{row.point_category_name &&
-              row.point_category_name!=''? row.point_category_name:'--'}}</td>
-              <td class="w120 one-line" matTooltip={{row.mrp}}>{{row.mrp && row.mrp!=''? row.mrp:'--'}}</td>
+          <td class="w180">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+          <td class="w100">{{row.created_by_type ? row.created_by_type : '--'}}</td>
+          <td class="w120"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
+          <td class="w130">{{row.serial_no ? row.serial_no : '--'}}</td>
+          <td class="w130">{{row.product_name ? row.product_name : '--'}}</td>
+          <td class="w130">{{row.product_code ? row.product_code : '--'}}</td>
+          <td class="w130">{{row.customer_name}}</td>
+          <td class="w130">{{row.customer_mobile}}</td>
+          <td class="w130" *ngIf="active_tab != 'Pending'">{{row.carpenter_name ? row.carpenter_name : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
+          <!-- <td class="w130">{{row.warranty_status ? row.warranty_status : '--'}}</td> -->
+          <!-- <td class="w130">{{row.inspection_status ? row.inspection_status : '--'}}</td> -->
+          <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
+          <!-- <td class="w130">{{row.return_status ? row.return_status : '--'}}</td> -->
+          <!-- <td class="w70 text-center">
+            <div class="action-button">
+              <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
+                <i class="material-icons edit">edit</i>
+              </button>
               
-              <td class="w100 text-center" *ngIf="logined_user_data.edit_products_master=='1'">
-                <div class="action-button">
-                  <mat-slide-toggle color="accent" [name]="'status'+i" [(ngModel)]="row.newStatus"
-                  (change)="updateStatus(i,row.id,$event)">
-                </mat-slide-toggle>
-              </div>
-            </td>
-            <td class="w100 text-center" *ngIf="logined_user_data.delete_products_master=='1'">
-              <div class="action-button">
-                <button mat-icon-button matTooltip="Delete" (click)="deleteProduct(row.id)">
-                  <i class="material-icons red-clr">delete</i>
-                </button>
-                
-              </div>
-            </td>
-            
-          </tr> -->
-          <tr>
-            <td class="w60">1</td>
-            <td class="w100">10/12/2023</td>
-            <td class="w100">test</td>
-            <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
-              routerLink="complaint-detail" routerLinkActive="active">test1234345</a></td>
-            <td class="w100">123456789</td>
-            <td class="w130">test product</td>
-            <td class="w130">test Product Code</td>
-            <td class="w100">test cust</td>
-            <td class="w130">cust Mobile</td>
-            <td class="w100">687687676</td>
-            <td class="w130">in</td>
-            <td class="w130">done</td>
-            <td class="w130">done</td>
-            <td class="w130">done</td>
-            <td class="w120 text-center">action</td>
-          </tr>
-        </ng-container>
-        <ng-container *ngIf="loader">
-          <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
-            <td class="w60">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w100">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w150">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w150">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w250">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w100">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w120">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w120">
-              <div>&nbsp;</div>
-            </td>
-            <td class="w100 text-center" >
-              <div>&nbsp;</div>
-            </td>
-            <td class="w100 text-center" >
-              <div>&nbsp;</div>
-            </td>
-          </tr>
-        </ng-container>
-      </table>
-    </div>
+            </div>
+          </td> -->
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="loader">
+        <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+          <td class="w60">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w100">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w100">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w100">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w100">
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w100 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w130 " >
+            <div>&nbsp;</div>
+          </td>
+          <td class="w120 text-center">
+            <div>&nbsp;</div>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
   </div>
 </div>
-<ng-container>
+</div>
+<ng-container *ngIf="datanotofound==true && complaintList.length == 0;">
   <app-not-result-found></app-not-result-found>
 </ng-container>
 </div>

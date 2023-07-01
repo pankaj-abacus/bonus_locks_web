@@ -1,0 +1,277 @@
+<div class="main-container">
+  <app-loader *ngIf="excelLoader"></app-loader>
+  <div class="tools-container">
+    <h2>Warranty List</h2>
+    
+    
+    <div class="left-auto df ac flex-gap-10">
+      <a mat-icon-button matTooltip="Refresh" (click)="refresh()">
+        <i class="material-icons">refresh</i>
+      </a>
+      
+      <div class="pagination" >
+        <div class="pagination-content">
+          Pages
+          <span>{{pagenumber}}</span>
+          of
+          <span>{{total_page}}</span>
+        </div>
+        <div class="page-nav">
+          <button mat-icon-button matTooltip="Older" (click)="pervious()" [disabled]="start == 0">
+            <i class="material-icons">navigate_before</i>
+          </button>
+          <button mat-icon-button matTooltip="Newer" (click)="nextPage()" [disabled]="pagenumber == total_page ">
+            <i class="material-icons">navigate_next</i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mat-tabbar">
+      <ng-container>
+        <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
+        (click)="active_tab = 'All'; getWarrantyList()"><i class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
+        
+        <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
+        (click)="active_tab = 'Pending';getWarrantyList()"><i class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
+      </ng-container>
+      <button mat-button [ngClass]="active_tab == 'Verified' ? 'active' : ''"
+      (click)="active_tab = 'Verified'; getWarrantyList()"><i class="material-icons">thumb_up_alt</i>Verified({{tab_count.verified_count}})</button>
+      <button mat-button [ngClass]="active_tab == 'Reject' ? 'active' : ''"
+      (click)="active_tab = 'Reject'; getWarrantyList()"><i class="material-icons">thumb_down_alt</i>Reject({{tab_count.reject_count}})</button>
+    </div>
+    
+  </div>
+  
+  <div class="container container-scroll">
+    <div class="cs-table horizontal-scroll">
+      <div class="sticky-head">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w50">Sr.No</th>
+              <th class="w180">Date Created</th>
+              <th class="w150">Created By</th>
+              <th class="w150">Customer Name</th>
+              <th class="w150">Customer Mobile No.</th>
+              <th class="w150">Product Serial No.</th>
+              <th class="w150">Product Detail</th>
+              <th class="w150">Warranty Start Date</th>
+              <th class="w150">Warranty End Date</th>
+              <th class="w150"  >Varification Status</th>
+              <th class="w180" *ngIf="active_tab != 'Pending'">Varification Date</th>
+              <th class="w100" *ngIf="active_tab != 'Pending'">Varification By</th>
+              <!-- <th class="w70 text-center">Action</th> -->
+            </tr>
+          </table>
+        </div>
+        
+        <div class="table-head bdrt">
+          <table>
+            <tr>
+              <th class="w50"></th>
+              <th class="w180">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
+                    #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
+                    [max]="today_date" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="created_by_type"
+                      (keyup.enter)="getWarrantyList('')" #created_by_type="ngModel" [(ngModel)]="filter_data.created_by_type">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="customer_name"
+                    (keyup.enter)="getWarrantyList('')" #customer_name="ngModel" [(ngModel)]="filter_data.customer_name">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="customer_mobile"
+                    (keyup.enter)="getWarrantyList('')" #customer_mobile="ngModel" [(ngModel)]="filter_data.customer_mobile">
+                  </mat-form-field>
+                </div>
+                
+              </th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="serial_no"
+                    (keyup.enter)="getWarrantyList('')" #serial_no="ngModel" [(ngModel)]="filter_data.serial_no">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="product_detail"
+                    (keyup.enter)="getWarrantyList('')" #product_detail="ngModel" [(ngModel)]="filter_data.product_detail">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="picker2" placeholder="Date" name="date_of_purchase"
+                    #date_of_purchase="ngModel" [(ngModel)]="filter_data.date_of_purchase" (ngModelChange)="date_format2()"
+                    [max]="today_date" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="picker3" placeholder="Date" name="warranty_end_date"
+                    #warranty_end_date="ngModel" [(ngModel)]="filter_data.warranty_end_date" (ngModelChange)="date_format3()"
+                    [max]="today_date" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                
+              </th>
+              <th class="w150 ">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="company_verification_status"
+                    (keyup.enter)="getWarrantyList('')" #company_verification_status="ngModel" [(ngModel)]="filter_data.company_verification_status">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w180 " *ngIf="active_tab != 'Pending'">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="picker4" placeholder="Date" name="verification_on"
+                    #verification_on="ngModel" [(ngModel)]="filter_data.verification_on" (ngModelChange)="date_format4()"
+                    [max]="today_date" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w100 " *ngIf="active_tab != 'Pending'">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="verification_by_name"
+                    (keyup.enter)="getWarrantyList('')" #verification_by_name="ngModel" [(ngModel)]="filter_data.verification_by_name">
+                  </mat-form-field>
+                </div>
+              </th>
+              <!-- <th class="w70 text-center"></th> -->
+
+            </tr>
+            
+          </table>
+        </div>
+      </div>
+      
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <ng-container *ngIf="!loader">
+              <tr *ngFor="let row of warrantyList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
+                <td class="w50">{{i + 1 + sr_no}}</td>
+                <td class="w180">{{row.date_created | date : 'dd MMM yyy ,h:mm a' }}</td>
+                <td class="w150">{{row.created_by_name}}</td>
+                <td class="w150"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="warranty-detail/{{(row.id)}}" routerLinkActive="active"> {{row.customer_name}}</a></td>
+                <td class="w150">{{row.customer_mobile}}</td>
+                <td class="w150">{{row.serial_no}}</td>
+                <td class="w150">{{row.product_name}}-{{row.product_code}}</td>
+                <td class="w150">{{row.date_of_purchase}}</td>
+                <td class="w150">{{row.warranty_end_date}}</td>
+                <td class="w150 ">{{row.company_verification_status}}</td>
+                <td class="w180 " *ngIf="active_tab != 'Pending'">{{row.verification_on !='0000-00-00 00:00:00' ? (row.verification_on | date : 'dd MMM yyy ,h:mm a') :'--'}}</td>
+                <td class="w100 " *ngIf="active_tab != 'Pending'">{{row.verification_by_name ? row.verification_by_name :'--'}}</td>
+                <!-- <td class="w70 text-center">
+                  <div class="action-button">
+                    <button mat-icon-button matTooltip="Edit" (click)="updateWarrantyStataus(row.id)">
+                      <i class="material-icons edit">edit</i>
+                    </button>
+
+                  </div>
+
+                </td> -->
+
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="loader">
+              <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                <td class="w50">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w180">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w150">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w150">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w150">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w150">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w150">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w150">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w150 " >
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w250 " >
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w70 text-center">
+                  <div>&nbsp;</div>
+                </td>
+
+              </tr>
+            </ng-container>
+          </table>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="datanotofound==true && warrantyList.length == 0;">
+      <app-not-result-found></app-not-result-found>
+    </ng-container>
+  </div>
+  <div>
+  </div>
+  
+  <div class="fab-btns">
+    <button class="pulse excel" mat-fab color="primary" [ngClass]="{'pulse': fabBtnValue=='add'}" [matMenuTriggerFor]="menu">
+      <i class="material-icons">apps</i>
+      Action
+    </button>
+  </div>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="downloadExcel();">
+      <mat-icon>download</mat-icon>
+      <span>Download excel</span>
+    </button>
+    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-warranty" routerLinkActive="router-link-active">
+      <mat-icon>add</mat-icon>
+      <span>Add New</span>
+    </button>
+  </mat-menu>
+</div>
