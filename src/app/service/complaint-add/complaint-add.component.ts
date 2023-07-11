@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material';
 export class ComplaintAddComponent implements OnInit {
   
   data: any = {};
+  @ViewChild('fileInput') fileInput: any;
   states:any =[];
   dr_type: any;
   district_list: any = [];
@@ -146,39 +147,62 @@ export class ComplaintAddComponent implements OnInit {
         this.location.back()
       }
       
-      deleteProductImage(arrayIndex, id, name) {
-        
-        if (id) {
-          this.service.post_rqst({ 'image_id': id, 'image': name }, "Master/productImageDeleted").subscribe((result => {
-            if (result['statusCode'] == '200') {
-              this.toast.successToastr(result['statusMsg']);
-              this.selected_image.splice(arrayIndex, 1);
-              
-            } else {
-              this.toast.errorToastr(result['statusMsg']);
-            }
-          }
-          ))
-        }
-        else {
-          this.selected_image.splice(arrayIndex, 1);
-        }
-      }
+      // deleteProductImage(arrayIndex, id, name) {
+      
+      //   if (id) {
+      //     this.service.post_rqst({ 'image_id': id, 'image': name }, "Master/productImageDeleted").subscribe((result => {
+      //       if (result['statusCode'] == '200') {
+      //         this.toast.successToastr(result['statusMsg']);
+      //         this.selected_image.splice(arrayIndex, 1);
+      
+      //       } else {
+      //         this.toast.errorToastr(result['statusMsg']);
+      //       }
+      //     }
+      //     ))
+      //   }
+      //   else {
+      //     this.selected_image.splice(arrayIndex, 1);
+      //   }
+      // }
+      
+      // onUploadChange(data: any) {
+      //   this.errorMsg = false;
+      //   this.image_id = '';
+      //   for (let i = 0; i < data.target.files.length; i++) {
+      //     let files = data.target.files[i];
+      //     if (files) {
+      //       let reader = new FileReader();
+      //       reader.onload = (e: any) => {
+      //         this.selected_image.push({ "image": e.target.result });
+      //       }
+      //       reader.readAsDataURL(files);
+      //     }
+      //     this.image.append("" + i, data.target.files[i], data.target.files[i].name);
+      //   }
+      // }
       
       onUploadChange(data: any) {
-        this.errorMsg = false;
-        this.image_id = '';
         for (let i = 0; i < data.target.files.length; i++) {
           let files = data.target.files[i];
+          if (files.size > 2028812) {
+            this.dialog.error('Image size more than 2 Mb is not allowed.');
+            return;
+          }
           if (files) {
             let reader = new FileReader();
             reader.onload = (e: any) => {
-              this.selected_image.push({ "image": e.target.result });
+              this.selected_image.push(e.target.result);
             }
             reader.readAsDataURL(files);
           }
-          this.image.append("" + i, data.target.files[i], data.target.files[i].name);
+          // this.image.append(""+i,data.target.files[i],data.target.files[i].name);
         }
+        this.fileInput.nativeElement.value = '';
+      }
+      
+      remove_image(i: any) {
+        this.selected_image.splice(i, 1);
       }
       
       getComplaintDetail(id)
