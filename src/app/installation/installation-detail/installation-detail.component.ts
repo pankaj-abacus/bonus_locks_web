@@ -29,6 +29,10 @@ export class InstallationDetailComponent implements OnInit {
   featureFlag :boolean = false;
   allMrpFlag :boolean = false;
   complaintImg:any =[];
+  fabBtnValue: any = 'excel';
+  loader: boolean = false;
+
+
   
   
   constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {

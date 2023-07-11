@@ -30,16 +30,16 @@
     <div class="mat-tabbar">
       <ng-container>
         <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
-        (click)="active_tab = 'All'; getComplantList()"><i class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
+        (click)="active_tab = 'All'; getComplantList('')"><i class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
         
         <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
-        (click)="active_tab = 'Pending';sub_active_tab = 'Not_Assigned';getComplantList()"><i class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
+        (click)="active_tab = 'Pending';sub_active_tab = 'Not_Assigned';getComplantList('')"><i class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
         
         <button mat-button [ngClass]="active_tab == 'Closed' ? 'active' : ''"
-        (click)="active_tab = 'Closed';sub_active_tab = 'Closed_By_Service'; getComplantList()"><i class="material-icons">thumb_up_alt</i>Close({{tab_count.closed_count}})</button>
+        (click)="active_tab = 'Closed';sub_active_tab = 'Closed_By_Service'; getComplantList('')"><i class="material-icons">thumb_up_alt</i>Close({{tab_count.closed_count}})</button>
         
         <button mat-button [ngClass]="active_tab == 'Cancel' ? 'active' : ''"
-        (click)="active_tab = 'Cancel'; getComplantList()"><i class="material-icons">thumb_down_alt</i>Cancel({{tab_count.reject_count}})</button>
+        (click)="active_tab = 'Cancel'; getComplantList('')"><i class="material-icons">thumb_down_alt</i>Cancel({{tab_count.reject_count}})</button>
         
       </ng-container>
     </div>
@@ -48,19 +48,19 @@
     <div class="mat-tabbar" >
       <ng-container>        
         <button mat-button [ngClass]="sub_active_tab == 'Not_Assigned' ? 'active' : ''"
-        (click)="sub_active_tab = 'Not_Assigned';getComplantList()"><i class="material-icons">thumb_down_alt</i>Not Assigned({{sub_tab_count.Not_Assigned}})</button>
+        (click)="sub_active_tab = 'Not_Assigned';getComplantList('')"><i class="material-icons">thumb_down_alt</i>Not Assigned({{sub_tab_count.Not_Assigned}})</button>
         
         <button mat-button [ngClass]="sub_active_tab == 'Assigned' ? 'active' : ''"
-        (click)="sub_active_tab = 'Assigned';getComplantList()"><i class="material-icons">thumb_up_alt</i>Assigned({{sub_tab_count.Assigned}})</button>
+        (click)="sub_active_tab = 'Assigned';getComplantList('')"><i class="material-icons">thumb_up_alt</i>Assigned({{sub_tab_count.Assigned}})</button>
         
         <button mat-button [ngClass]="sub_active_tab == 'Inspection_Complete' ? 'active' : ''"
-        (click)="sub_active_tab = 'Inspection_Complete';getComplantList()"><i class="material-icons">ballot</i>Inspection Complete({{sub_tab_count.Inspection_Complete}})</button>
+        (click)="sub_active_tab = 'Inspection_Complete';getComplantList('')"><i class="material-icons">ballot</i>Inspection Complete({{sub_tab_count.Inspection_Complete}})</button>
         
         <button mat-button [ngClass]="sub_active_tab == 'Replacement_Pending' ? 'active' : ''"
-        (click)="sub_active_tab = 'Replacement_Pending';getComplantList()"><i class="material-icons">thumb_down_alt</i>Replacement Pending({{sub_tab_count.Replacement_Pending}})</button>
+        (click)="sub_active_tab = 'Replacement_Pending';getComplantList('')"><i class="material-icons">thumb_down_alt</i>Replacement Pending({{sub_tab_count.Replacement_Pending}})</button>
         
         <button mat-button [ngClass]="sub_active_tab == 'Sparepart_Pending' ? 'active' : ''"
-        (click)="sub_active_tab = 'Sparepart_Pending';getComplantList()"><i class="material-icons">thumb_down_alt</i>Spare Part Pending({{sub_tab_count.Sparepart_Pending}})</button>
+        (click)="sub_active_tab = 'Sparepart_Pending';getComplantList('')"><i class="material-icons">thumb_down_alt</i>Spare Part Pending({{sub_tab_count.Sparepart_Pending}})</button>
       </ng-container>
     </div>
     
@@ -69,16 +69,16 @@
   <div class="tools-container" *ngIf="active_tab == 'Closed'">
     <div class="mat-tabbar" >
       <ng-container>        
-        <button mat-button [ngClass]="sub_active_tab == 'Closed_By_Service' ? 'active' : ''" (click)="sub_active_tab = 'Closed_By_Service';getComplantList()"><i class="material-icons">thumb_up_alt</i>Closed By Service({{sub_tab_count.Closed_By_Service}})</button>
+        <button mat-button [ngClass]="sub_active_tab == 'Closed_By_Service' ? 'active' : ''" (click)="sub_active_tab = 'Closed_By_Service';getComplantList('')"><i class="material-icons">thumb_up_alt</i>Closed By Service({{sub_tab_count.Closed_By_Service}})</button>
         
         <button mat-button [ngClass]="sub_active_tab == 'Closed_By_Replacement' ? 'active' : ''"
-        (click)="sub_active_tab = 'Closed_By_Replacement';getComplantList()"><i class="material-icons">cancel</i>Closed By Replacement({{sub_tab_count.Closed_By_Replacement}})</button>
+        (click)="sub_active_tab = 'Closed_By_Replacement';getComplantList('')"><i class="material-icons">cancel</i>Closed By Replacement({{sub_tab_count.Closed_By_Replacement}})</button>
         
         <button mat-button [ngClass]="sub_active_tab == 'Return_Pending' ? 'active' : ''"
-        (click)="sub_active_tab = 'Return_Pending';getComplantList()"><i class="material-icons">thumb_down_alt</i>Return Pending({{sub_tab_count.Return_Pending}})</button>
+        (click)="sub_active_tab = 'Return_Pending';getComplantList('')"><i class="material-icons">thumb_down_alt</i>Return Pending({{sub_tab_count.Return_Pending}})</button>
         
         <button mat-button [ngClass]="sub_active_tab == 'Feedback_Complete' ? 'active' : ''"
-        (click)="sub_active_tab = 'Feedback_Complete';getComplantList()"><i class="material-icons">comment</i>Feedback Complete({{sub_tab_count.Feedback_Complete}})</button>
+        (click)="sub_active_tab = 'Feedback_Complete';getComplantList('')"><i class="material-icons">comment</i>Feedback Complete({{sub_tab_count.Feedback_Complete}})</button>
       </ng-container>
     </div>
     
