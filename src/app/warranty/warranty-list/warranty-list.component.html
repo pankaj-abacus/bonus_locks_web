@@ -30,15 +30,15 @@
     <div class="mat-tabbar">
       <ng-container>
         <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
-        (click)="active_tab = 'All'; getWarrantyList()"><i class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
+        (click)="active_tab = 'All'; getWarrantyList('')"><i class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
         
         <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
-        (click)="active_tab = 'Pending';getWarrantyList()"><i class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
+        (click)="active_tab = 'Pending';getWarrantyList('')"><i class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
       </ng-container>
       <button mat-button [ngClass]="active_tab == 'Verified' ? 'active' : ''"
-      (click)="active_tab = 'Verified'; getWarrantyList()"><i class="material-icons">thumb_up_alt</i>Verified({{tab_count.verified_count}})</button>
+      (click)="active_tab = 'Verified'; getWarrantyList('')"><i class="material-icons">thumb_up_alt</i>Verified({{tab_count.verified_count}})</button>
       <button mat-button [ngClass]="active_tab == 'Reject' ? 'active' : ''"
-      (click)="active_tab = 'Reject'; getWarrantyList()"><i class="material-icons">thumb_down_alt</i>Reject({{tab_count.reject_count}})</button>
+      (click)="active_tab = 'Reject'; getWarrantyList('')"><i class="material-icons">thumb_down_alt</i>Reject({{tab_count.reject_count}})</button>
     </div>
     
   </div>

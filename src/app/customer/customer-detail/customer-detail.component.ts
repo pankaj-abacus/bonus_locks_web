@@ -51,6 +51,7 @@ export class CustomerDetailComponent implements OnInit {
   user_assign_name: any = '';
   savingFlag: boolean = false;
   filter_data: any = {};
+  fabBtnValue: any = 'excel';
   
   
   constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
