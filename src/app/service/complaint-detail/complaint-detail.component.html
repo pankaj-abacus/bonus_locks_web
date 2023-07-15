@@ -172,7 +172,7 @@
                     <!-- Skeleton end -->
                     
                 </div>
-                <div class="col s12 mt16 m12 l12">
+                <div class="col s12 mt16 m12 l12" *ngIf="getData.inspection_status!='Pending'">
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
                             <h2>Inspection Details</h2>
@@ -194,14 +194,43 @@
                                 </div>
                                 
                                 <div class="block-feilds">
-                                    <span>Nature Of Problem</span>
-                                    <p>{{getData.nature_of_problem ? getData.nature_of_problem:'N/A'}}</p>
+                                    <span>Inspection Remark</span>
+                                    <p>{{getData.inspection_remark ? getData.inspection_remark:'N/A'}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>             
                 </div>
-                <div class="col s12 mt16 m12 l12">
+                <div class="col s12 mt16 m12 l12" *ngIf="getData.inspection_status!='Pending'">
+                    <div class="card" *ngIf="!skLoading">
+                        <div class="card-head">
+                            <h2>Inspection Images</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="img-container">
+                                <div class="image-block" *ngFor="let row of inspectionImg">
+                                    <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Skeleton start -->
+                    <div class="card" *ngIf="skLoading">
+                        <div class="sk-head">
+                            <h2>&nbsp;</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="img-container">
+                                <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
+                                    &nbsp; 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Skeleton end -->
+                    
+                </div>
+                <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Closed'">
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
                             <h2>Closing Details</h2>
@@ -210,7 +239,7 @@
                             <div class="grid-box">
                                 <div class="block-feilds">
                                     <span>Closing Date</span>
-                                    <p>{{getData.closed_date != '0000-00-00' ? (getData.closed_date | date):'N/A'}}</p>
+                                    <p>{{getData.closed_date != '0000-00-00 00:00:00' ? (getData.closed_date | date):'N/A'}}</p>
                                 </div>
                                 
                                 <div class="block-feilds">
@@ -226,7 +255,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 mt16 m12 l12">
+                <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Closed'">
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
                             <h2>Feedback Details</h2>
@@ -235,7 +264,7 @@
                             <div class="grid-box">
                                 <div class="block-feilds">
                                     <span>Feedback Date</span>
-                                    <p>{{getData.feedback_date ? getData.feedback_date:'N/A'}}</p>
+                                    <p>{{getData.feedback_date !='0000-00-00 00:00:00' ? getData.feedback_date:'N/A'}}</p>
                                 </div>
                                 <div class="block-feilds">
                                     <span>Feedback Remark</span>
