@@ -59,6 +59,7 @@ export class ComplaintAddComponent implements OnInit {
     public dialog: DialogComponent,
     public dialog2: MatDialog
     ) { 
+      this.url = this.service.uploadUrl + 'service_task/'
       this.data.country = 'india';
       this.getStateList();
       this.route.params.subscribe(params => {
@@ -108,10 +109,8 @@ export class ComplaintAddComponent implements OnInit {
         this.service.post_rqst({ 'customer_mobile':this.data.customer_mobile },"ServiceTask/customerCheck").subscribe((d) => {
           console.log(d);
           if (d.statusMsg == "Exist") {
-            // this.toast.errorToastr("This Mobile No. alresdy exist in Complaint!");
             this.data=d.data
             this.getDistrict(1)
-            // console.log(this.data,'this.data');
           }
         });
       }
@@ -147,56 +146,20 @@ export class ComplaintAddComponent implements OnInit {
         this.location.back()
       }
       
-      // deleteProductImage(arrayIndex, id, name) {
-      
-      //   if (id) {
-      //     this.service.post_rqst({ 'image_id': id, 'image': name }, "Master/productImageDeleted").subscribe((result => {
-      //       if (result['statusCode'] == '200') {
-      //         this.toast.successToastr(result['statusMsg']);
-      //         this.selected_image.splice(arrayIndex, 1);
-      
-      //       } else {
-      //         this.toast.errorToastr(result['statusMsg']);
-      //       }
-      //     }
-      //     ))
-      //   }
-      //   else {
-      //     this.selected_image.splice(arrayIndex, 1);
-      //   }
-      // }
-      
-      // onUploadChange(data: any) {
-      //   this.errorMsg = false;
-      //   this.image_id = '';
-      //   for (let i = 0; i < data.target.files.length; i++) {
-      //     let files = data.target.files[i];
-      //     if (files) {
-      //       let reader = new FileReader();
-      //       reader.onload = (e: any) => {
-      //         this.selected_image.push({ "image": e.target.result });
-      //       }
-      //       reader.readAsDataURL(files);
-      //     }
-      //     this.image.append("" + i, data.target.files[i], data.target.files[i].name);
-      //   }
-      // }
-      
       onUploadChange(data: any) {
         for (let i = 0; i < data.target.files.length; i++) {
           let files = data.target.files[i];
-          if (files.size > 2028812) {
-            this.dialog.error('Image size more than 2 Mb is not allowed.');
+          if (files.size > 7340032) {
+            this.dialog.error('Image size more than 7 Mb is not allowed.');
             return;
           }
           if (files) {
             let reader = new FileReader();
             reader.onload = (e: any) => {
-              this.selected_image.push(e.target.result);
+              this.selected_image.push({'image':e.target.result});
             }
             reader.readAsDataURL(files);
           }
-          // this.image.append(""+i,data.target.files[i],data.target.files[i].name);
         }
         this.fileInput.nativeElement.value = '';
       }
@@ -205,12 +168,11 @@ export class ComplaintAddComponent implements OnInit {
         this.selected_image.splice(i, 1);
       }
       
-      getComplaintDetail(id)
-      {
+      getComplaintDetail(id){
         this.service.post_rqst({'complaint_id':id},"ServiceTask/serviceComplaintDetail").subscribe((result=>
           {
             this.getData = result['result'];
-            this.data.image=this.getData['image'];
+            this.selected_image=this.getData['image'];
             console.log('image',this.image);
             console.log('getData',this.getData);
             this.data = this.getData;
@@ -220,6 +182,5 @@ export class ComplaintAddComponent implements OnInit {
           ));
           
         }
-        
       }
       

@@ -128,32 +128,11 @@
           </div>
           <div class="row" >
             <div class="col s12">
-              <!-- <div class="uploade-image">
-                <ul>
-                  <li *ngFor="let row of selected_image; let i=index">
-                    <img src="{{row.img_id ? url+row.image : row.image}}">
-                    <span class="cancel-icon">
-                      <i class="material-icons crose-icon" (click)="deleteProductImage(i,row.img_id, row.image)">clear</i>
-                    </span>
-                  </li>
-                  <li class="add-bg-1" [ngClass]="{'error': errorMsg == true}" *ngIf="!selected_image.length">
-                    <label>
-                      <input type="file" (change)="onUploadChange($event)" style="display:none;" accept=".png, .jpg, .jpeg," multiple required />
-                      <div class="other">
-                        <i class="material-icons">cloud_upload</i>
-                        <p>Upload Images</p>
-                      </div>
-                    </label>
-                  </li>
-                </ul>
-              </div> -->
               <div class="uploade-image">
-                <!-- <h4>Upload Image</h4> -->
                 <ul>
                   <li *ngFor="let image of selected_image; let i=index">
-                    <img src="{{image.id ? url+image.actual_image_name : image}}">
+                    <img src="{{image.id ? url+image.image : image.image}}">
                     <span class="cancel-icon">
-                      <!-- <i class="material-icons check-icon"  (click)="ProductProfile(i)">done</i> -->
                       <i class="material-icons crose-icon"  (click)="remove_image(i)">clear</i>
                     </span>									
                   </li>
