@@ -78,7 +78,8 @@ export class RedeemRequestListComponent implements OnInit {
   }
   redeemRequestList() {
     this.filter.status = this.active_tab;
-    this.filter.paymentMode = this.redeemType;
+    // this.filter.paymentMode = this.redeemType;
+    this.filter.redeem_type = this.redeemType;
     this.loader = true;
     if (this.pagenumber > this.total_page) {
       this.pagenumber = this.total_page;
@@ -111,7 +112,7 @@ export class RedeemRequestListComponent implements OnInit {
         } else {
           this.datanotfound = false
         }
-    
+
         if (this.pagenumber > this.total_page) {
           this.pagenumber = this.total_page;
           this.start = this.pageCount - this.page_limit;
@@ -138,7 +139,15 @@ export class RedeemRequestListComponent implements OnInit {
   public onDate(event): void {
     if (this.filter.last_status_updated_on) {
       this.filter.last_status_updated_on = moment(event.value).format('YYYY-MM-DD');
-    } else {
+    }
+
+   else if (this.filter.transfer_date) {
+      this.filter.transfer_date = moment(event.value).format('YYYY-MM-DD');
+    }
+    else if (this.filter.shipped_date) {
+      this.filter.shipped_date = moment(event.value).format('YYYY-MM-DD');
+    }
+    else {
       this.filter.date_created = moment(event.value).format('YYYY-MM-DD');
     }
     this.redeemRequestList();
@@ -147,7 +156,7 @@ export class RedeemRequestListComponent implements OnInit {
   openDialog(id, type, redeem_type, gift_status, amount): void {
     this.service.currentUserID = id
     if (gift_status == 'Approved') {
-      this.alert.confirm('You want to transfer ₹' + amount + '?').then((result) => {
+      this.alert.confirm('You want to Change Status?').then((result) => {
         if (result) {
           this.savingFlag = true;
           this.service.post_rqst({ 'status': gift_status, 'id': id, 'created_by_id': this.assign_login_data2.created_by, 'created_by_name': this.assign_login_data2.created_by_name }, 'RedeemRequest/redeemRequestStatusChange').subscribe((result) => {
@@ -238,6 +247,39 @@ export class RedeemRequestListComponent implements OnInit {
         this.toast.errorToastr(result['statusMsg'])
       }
     }));
+  }
+
+  opengiftDialog(id,type, redeem_type, gift_status ): void {
+    if(gift_status == 'Received'){
+      this.alert.confirm('You want to change status ?').then((result) => {
+        if (result) {
+          this.service.post_rqst({'status': gift_status, 'id':id},'RedeemRequest/redeemRequestGiftStatusChange').subscribe((result)=>
+          {
+            if (result['statusCode'] == 200){
+              this.toast.successToastr(result['statusMsg']);
+              this.redeemRequestList();
+            }
+            else{
+              this.toast.errorToastr(result['statusMsg']);
+            }
+          })
+        }
+      });
+    }
+    else{
+      const dialogRef = this.dialog.open(RedeemStatusModalComponent, {
+        width: '400px', data: {
+          'id': id,
+          'delivery_from': type,
+          'redeem_type':redeem_type,
+          'gift_status':gift_status,
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.redeemRequestList();
+      });
+    }
   }
 
 
