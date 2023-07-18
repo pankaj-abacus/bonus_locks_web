@@ -256,7 +256,8 @@ export class AddItemComponent implements OnInit {
         console.log(existIndex);
         if (existIndex == -1) {
           this.product_list[i]['product_name'] = this.orderData.product_name;
-          // this.product_list[i]['segment_id'] = this.orderData.segment.id;
+          this.product_list[i]['segment_id'] = this.product_detail.category_id;
+          this.product_list[i]['segment_name'] = this.product_detail.category;
           this.product_list[i]['product_code'] = this.orderData.product_code;
           this.product_list[i]['discount_amount'] = this.product_list[i]['discounted_price'];
           this.product_list[i]['discount_percent'] = this.product_list[i]['dr_disc'];
@@ -271,8 +272,8 @@ export class AddItemComponent implements OnInit {
         }
         else {
           this.product_list[i]['product_name'] = this.orderData.product_name;
-          // this.product_list[i]['segment_id'] = this.orderData.segment.id;
-          // this.product_list[i]['segment_name'] = this.orderData.segmentName;
+          this.product_list[i]['segment_id'] = this.product_detail.category_id;
+          this.product_list[i]['segment_name'] = this.product_detail.category;
           this.product_list[i]['color'] = this.orderData.color;
           this.product_list[i]['brand'] = this.orderData.brand;
           this.product_list[i]['product_code'] = this.orderData.product_code;

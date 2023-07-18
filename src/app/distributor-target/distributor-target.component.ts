@@ -85,10 +85,10 @@ export class DistributorTargetComponent implements OnInit {
           this.datanotfound = false
         }
 
-        for (let i = 0; i < this.distributor_list.length; i++) {
-          this.distributor_list[i].achieve = parseFloat(this.distributor_list[i].achieve)
-          this.distributor_list[i].achieve = this.distributor_list[i].achieve.toFixed(2)
-        }
+        // for (let i = 0; i < this.distributor_list.length; i++) {
+        //   this.distributor_list[i].achieve = parseFloat(this.distributor_list[i].achieve)
+        //   this.distributor_list[i].achieve = this.distributor_list[i].achieve.toFixed(2)
+        // }
 
         if (this.pagenumber > this.total_page) {
           this.pagenumber = this.total_page;

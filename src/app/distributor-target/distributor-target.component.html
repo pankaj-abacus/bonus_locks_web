@@ -136,12 +136,12 @@
                                 <td class="w150 text-right"><strong>
                                         {{row.assign_user?row.assign_user:'--' }} </strong></td>
                                 <td class="w100 text-right">
-                                    <!-- <strong>&#x20B9; {{row.value?(row.value*100000).toLocaleString('en-IN', {style:'decimal', currency:'INR'}):'--' }} </strong> -->
-                                    <strong>&#x20B9; {{row.value.toLocaleString('en-In', {style:'decimal' , currency:'INR'})}}</strong>
+                                    <strong>&#x20B9; {{row.value?(row.value*100000).toLocaleString('en-IN', {style:'decimal', currency:'INR'}):'--' }} </strong>
+                                    <!-- <strong>&#x20B9; {{row.value.toLocaleString('en-In', {style:'decimal' , currency:'INR'})}}</strong> -->
                                 </td>
                                 <td class="w120 text-right">
-                                    <!-- <strong class="Approve">&#x20B9; {{row.achieve ? (row.achieve*100000).toLocaleString('en-IN',{style:'decimal', currency:'INR'}):'--'}}</strong> -->
-                                    <strong class="Approve">&#x20B9; {{row.achieve.toLocaleString('en-In', {style:'decimal' , currency:'INR'})}}</strong>
+                                    <strong class="Approve">&#x20B9; {{row.achieve ? (row.achieve*100000).toLocaleString('en-IN',{style:'decimal', currency:'INR'}):'--'}}</strong>
+                                    <!-- <strong class="Approve">&#x20B9; {{row.achieve.toLocaleString('en-In', {style:'decimal' , currency:'INR'})}}</strong> -->
                                 </td>
                             </tr>
                         </ng-container>
