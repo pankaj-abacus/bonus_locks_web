@@ -5,152 +5,152 @@
   
   <p class="heading">{{data.order_status == 'readyToDispatch' ? 'Dispatch Planning': 'Update Status'}}</p>
   <div mat-dialog-content>
-      <div class="cs-form">
-          <ng-container *ngIf="data.order_status != 'readyToDispatch'">
-              <div class="row" >
-                  <div class="col s12">
-                      <mat-form-field class="cs-input" appearance="outline">
-                          <mat-label>{{data.order_status=='Approved' ? 'Dispatch Status' : 'Change Status'}}</mat-label>
-                          <mat-select name="order_status" placeholder="Select Status" #order_status="ngModel" [(ngModel)]="data.order_status" required>
-                              <mat-option value="Approved" *ngIf="tmpOrderStatus == 'Pending' || tmpOrderStatus == 'Reject'" (click)="getCompanyData()">Approved</mat-option>
-                              <mat-option value="Hold" *ngIf="tmpOrderStatus == 'Approved'">Hold</mat-option>
-                              <mat-option value="dispatchPlanning" *ngIf="tmpOrderStatus == 'Approved' || tmpOrderStatus == 'Hold'">Dispatch Plan</mat-option>
-                              <mat-option value="readyToDispatch" *ngIf="tmpOrderStatus == 'dispatchPlanning' || tmpOrderStatus == 'partialDispatched'">Dispatch Planning</mat-option>
-                              <mat-option value="Reject" *ngIf="tmpOrderStatus == 'Pending' || tmpOrderStatus == 'Approved'">Reject</mat-option>
-                          </mat-select>
-                      </mat-form-field>
-                      <div class="alert alert-danger" *ngIf="order_status.touched || update_basic.submitted">
-                          <p *ngIf="order_status.errors?.required">This field is required</p>
-                      </div>
-                      
-                  </div>
-                  
-              </div>
-              
-              <div class="row" *ngIf="data.order_status=='Approved'">
-                  <div class="col s12">
-                      <mat-form-field class="cs-input" appearance="outline">
-                          <mat-label>Select Organization Name</mat-label>
-                          <mat-select name="organisation_id" placeholder="Select Organization Name" #organisation_id="ngModel"
-                          [(ngModel)]="data.organisation_id" required>
-                          <mat-option *ngFor="let row of organisationData" value="{{row.id}}">{{row.company_name}}</mat-option>
-                      </mat-select>
-                  </mat-form-field>
-                  <div class="alert alert-danger" *ngIf="organisation_id.touched || update_basic.submitted">
-                      <p *ngIf="organisation_id.errors?.required">This field is required</p>
-                  </div>
-              </div>
+    <div class="cs-form">
+      <ng-container *ngIf="data.order_status != 'readyToDispatch'">
+        <div class="row" >
+          <div class="col s12">
+            <mat-form-field class="cs-input" appearance="outline">
+              <mat-label>{{data.order_status=='Approved' ? 'Dispatch Status' : 'Change Status'}}</mat-label>
+              <mat-select name="order_status" placeholder="Select Status" #order_status="ngModel" [(ngModel)]="data.order_status" required>
+                <mat-option value="Approved" *ngIf="tmpOrderStatus == 'Pending' || tmpOrderStatus == 'Reject'" (click)="getCompanyData()">Approved</mat-option>
+                <mat-option value="Hold" *ngIf="tmpOrderStatus == 'Approved'">Hold</mat-option>
+                <mat-option value="dispatchPlanning" *ngIf="tmpOrderStatus == 'Approved' || tmpOrderStatus == 'Hold'">Dispatch Plan</mat-option>
+                <mat-option value="readyToDispatch" *ngIf="tmpOrderStatus == 'dispatchPlanning' || tmpOrderStatus == 'partialDispatched'">Dispatch Planning</mat-option>
+                <mat-option value="Reject" *ngIf="tmpOrderStatus == 'Pending' || tmpOrderStatus == 'Approved'">Reject</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="order_status.touched || update_basic.submitted">
+              <p *ngIf="order_status.errors?.required">This field is required</p>
+            </div>
+            
           </div>
           
-          <div class="row">
-              <div class="col s12" *ngIf="data.order_status=='Reject' ||  data.order_status=='Hold'">
-                  <mat-form-field class="cs-input" appearance="outline">
-                      <mat-label>Reason</mat-label>
-                      <textarea class="h100" matInput name="reason" placeholder="Reason" #reason="ngModel"
-                      [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required></textarea>
-                  </mat-form-field>
-                  <div class="alert alert-danger" *ngIf="reason.touched || update_basic.submitted">
-                      <p *ngIf="reason.errors?.required">This field is required</p>
-                  </div>
-                  
-              </div>
+        </div>
+        
+        <div class="row" *ngIf="data.order_status=='Approved'">
+          <div class="col s12">
+            <mat-form-field class="cs-input" appearance="outline">
+              <mat-label>Select Organization Name</mat-label>
+              <mat-select name="organisation_id" placeholder="Select Organization Name" #organisation_id="ngModel"
+              [(ngModel)]="data.organisation_id" required>
+              <mat-option *ngFor="let row of organisationData" value="{{row.id}}">{{row.company_name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="organisation_id.touched || update_basic.submitted">
+            <p *ngIf="organisation_id.errors?.required">This field is required</p>
           </div>
-      </ng-container>
-      
-      
-      
-      <!-- ITEM DATA -->
-      <div class="row" *ngIf="data.order_status=='readyToDispatch'">
-          <div class="col s12 m12 l12" >
-              <div class="row mt16" [ngClass]="{'mb16': data.checkWareHouse=='No'}">
-                  <div class="col s3">
-                      <p style="font-size: 15px;">Do you want to dispatch from </p>
-                  </div>
-                  <div class="col s3">
-                      <mat-radio-group  class="example-section"  name="checkWareHouse"  #checkWareHouse="ngModel" [(ngModel)]="data.checkWareHouse" (change)="selectWarehouse($event)">
-                          <mat-radio-button class="wp50" value="No">Company</mat-radio-button>
-                          <mat-radio-button class="wp50" value="Yes">Warehouse</mat-radio-button>
-                          
-                      </mat-radio-group>
-                  </div>
-              </div>
-              <ng-container *ngIf="data.checkWareHouse=='Yes'">
-                  <div class="row" [ngClass]="{'mb16': data.checkWareHouse=='Yes'}">
-                      <div class="col s12">
-                          <mat-form-field class="cs-input" appearance="outline">
-                              <mat-label>Warehouse</mat-label>
-                              <mat-select name="warehouse_id" placeholder="Warehouse" #warehouse_id="ngModel" [(ngModel)]="data.warehouse_id" required>
-                                  <mat-option *ngFor="let row of warehouse" value="{{row.id}}">{{row.company_name}}</mat-option>
-                              </mat-select>
-                          </mat-form-field>
-                          <div class="alert alert-danger" *ngIf="warehouse_id.touched || update_basic.submitted">
-                              <p *ngIf="warehouse_id.errors?.required">This field is required</p>
-                          </div>
-                      </div>
-                  </div>
-              </ng-container>
-              <div class="card">
-                  <div class="card-head">
-                      <h2>Dispatch Planned Item Details</h2>
-                  </div>
-                  <div class="card-body">
-                      <div class="cs-table left-right-10" >
-                          <div class=" border-top">
-                              <div class="table-head">
-                                  <table>
-                                      <tr>
-                                          <th class="w50 text-center">Sr.No</th>
-                                          <th>Item</th>
-                                          <th class="w130 text-right">QTY.</th>
-                                          <th class="w130 text-right">Dispatched QTY.	</th>
-                                          <th class="w130 text-right">Remaining QTY.	</th>
-                                          
-                                      </tr>
-                                  </table>
-                              </div>
-                          </div>
-                          
-                          <div class="table-container pb0">
-                              <div class="table-content none-shadow">
-                                  <table>
-                                      <ng-container *ngFor="let row of order_item;let i=index;">
-                                          <tr [ngClass]="{'dispatched': row.order_qty  == row.qty}">
-                                              <td class="w50 text-center">{{i+1}}</td>
-                                              <td> {{row.product_name | titlecase}} 
-                                                  <strong  *ngIf="row.product_code != ''">({{row.product_code}})</strong> 
-                                              </td>
-                                              <td class="w130 text-right">{{row.order_qty}}</td>
-                                              <td class="w130 text-right">{{row.qty}}</td>
-                                              <td class="w130 text-right">
-                                                  <ng-container *ngIf="row.order_qty  == row.qty">
-                                                      {{row.dispatch_qty}}
-                                                  </ng-container>
-                                                  
-                                                  
-                                                  <ng-container *ngIf="row.order_qty  != row.qty">
-                                                      
-                                                      <div class="th-search-acmt" [ngClass]="{'error-block' :row.qty == 0 ?  row.dispatch_qty > row.order_qty : row.dispatch_qty > (row.qty > 0 && row.order_qty - row.qty)}">
-                                                          <mat-form-field>
-                                                              <input type="text" class="text-right"  matInput onkeypress="return event.charCode>=48 && event.charCode<=57" placeholder="Dispatch QTY."
-                                                              [name]="'dispatch_qty'+i"
-                                                              #dispatch_qty="ngModel"
-                                                              [(ngModel)]="row.dispatch_qty"  (ngModelChange)="checkValidation(row.order_qty, row.qty,row.dispatch_qty, i+1)">
-                                                          </mat-form-field>
-                                                      </div>
-                                                  </ng-container>
-                                              </td>
-                                              
-                                          </tr>  
-                                      </ng-container>
-                                  </table>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
+        </div>
       </div>
-      <!-- ITEM DATA -->
+      
+      <div class="row">
+        <div class="col s12" *ngIf="data.order_status=='Reject' ||  data.order_status=='Hold'">
+          <mat-form-field class="cs-input" appearance="outline">
+            <mat-label>Reason</mat-label>
+            <textarea class="h100" matInput name="reason" placeholder="Reason" #reason="ngModel"
+            [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required></textarea>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="reason.touched || update_basic.submitted">
+            <p *ngIf="reason.errors?.required">This field is required</p>
+          </div>
+          
+        </div>
+      </div>
+    </ng-container>
+    
+    
+    
+    <!-- ITEM DATA -->
+    <div class="row" *ngIf="data.order_status=='readyToDispatch'">
+      <div class="col s12 m12 l12" >
+        <div class="row mt16" [ngClass]="{'mb16': data.checkWareHouse=='No'}">
+          <div class="col s3">
+            <p style="font-size: 15px;">Do you want to dispatch from </p>
+          </div>
+          <div class="col s3">
+            <mat-radio-group  class="example-section"  name="checkWareHouse"  #checkWareHouse="ngModel" [(ngModel)]="data.checkWareHouse" (change)="selectWarehouse($event)">
+              <mat-radio-button class="wp50" value="No">Company</mat-radio-button>
+              <mat-radio-button class="wp50" value="Yes">Warehouse</mat-radio-button>
+              
+            </mat-radio-group>
+          </div>
+        </div>
+        <ng-container *ngIf="data.checkWareHouse=='Yes'">
+          <div class="row" [ngClass]="{'mb16': data.checkWareHouse=='Yes'}">
+            <div class="col s12">
+              <mat-form-field class="cs-input" appearance="outline">
+                <mat-label>Warehouse</mat-label>
+                <mat-select name="warehouse_id" placeholder="Warehouse" #warehouse_id="ngModel" [(ngModel)]="data.warehouse_id" required>
+                  <mat-option *ngFor="let row of warehouse" value="{{row.id}}">{{row.company_name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="warehouse_id.touched || update_basic.submitted">
+                <p *ngIf="warehouse_id.errors?.required">This field is required</p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div class="card">
+          <div class="card-head">
+            <h2>Dispatch Planned Item Details</h2>
+          </div>
+          <div class="card-body">
+            <div class="cs-table left-right-10" >
+              <div class=" border-top">
+                <div class="table-head">
+                  <table>
+                    <tr>
+                      <th class="w50 text-center">Sr.No</th>
+                      <th>Item</th>
+                      <th class="w130 text-right">QTY.</th>
+                      <th class="w130 text-right">Dispatched QTY.	</th>
+                      <th class="w130 text-right">Remaining QTY.	</th>
+                      
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="table-container pb0">
+                <div class="table-content none-shadow">
+                  <table>
+                    <ng-container *ngFor="let row of order_item;let i=index;">
+                      <tr [ngClass]="{'dispatched': row.order_qty  == row.qty}">
+                        <td class="w50 text-center">{{i+1}}</td>
+                        <td> {{row.product_name | titlecase}} 
+                          <strong  *ngIf="row.product_code != ''">({{row.product_code}})</strong> 
+                        </td>
+                        <td class="w130 text-right">{{row.order_qty}}</td>
+                        <td class="w130 text-right">{{row.qty}}</td>
+                        <td class="w130 text-right">
+                          <ng-container *ngIf="row.order_qty  == row.qty">
+                            {{row.dispatch_qty}}
+                          </ng-container>
+                          
+                          
+                          <ng-container *ngIf="row.order_qty  != row.qty">
+                            
+                            <div class="th-search-acmt" [ngClass]="{'error-block' :row.qty == 0 ?  row.dispatch_qty > row.order_qty : row.dispatch_qty > (row.qty > 0 && row.order_qty - row.qty)}">
+                              <mat-form-field>
+                                <input type="text" class="text-right"  matInput onkeypress="return event.charCode>=48 && event.charCode<=57" placeholder="Dispatch QTY."
+                                [name]="'dispatch_qty'+i"
+                                #dispatch_qty="ngModel"
+                                [(ngModel)]="row.dispatch_qty"  (ngModelChange)="checkValidation(row.order_qty, row.qty,row.dispatch_qty, i+1)">
+                              </mat-form-field>
+                            </div>
+                          </ng-container>
+                        </td>
+                        
+                      </tr>  
+                    </ng-container>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ITEM DATA -->
   </div>
 </div>
 <div mat-dialog-actions>
@@ -165,250 +165,250 @@
 
 <div class="edit-modal" *ngIf="data.from=='Secondary_order'">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?secondary_order_status_change(data.reason,data.order_status):''">
-
-    <p class="heading">Update Status</p>
-    <div mat-dialog-content>
-      <div class="cs-form">
-        <div class="row">
-          <div class="col s12">
-            <mat-form-field class="cs-input" appearance="outline">
-              <mat-label>Order Status</mat-label>
-              <mat-select name="order_status" placeholder="Select Status" #order_status="ngModel"
-                [(ngModel)]="data.order_status">
-                <mat-option value="Pending">
-                  Pending
-                </mat-option>
-                <mat-option value="Approved">
-                  Approved
-                </mat-option>
-                <mat-option value="Reject">
-                  Reject
-                </mat-option>
-                <!-- <mat-option  value="Hold">
+  (ngSubmit)="(update_basic.valid && update_basic.submitted)?secondary_order_status_change(data.reason,data.order_status):''">
+  
+  <p class="heading">Update Status</p>
+  <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s12">
+          <mat-form-field class="cs-input" appearance="outline">
+            <mat-label>Order Status</mat-label>
+            <mat-select name="order_status" placeholder="Select Status" #order_status="ngModel"
+            [(ngModel)]="data.order_status">
+            <mat-option value="Pending">
+              Pending
+            </mat-option>
+            <mat-option value="Approved">
+              Approved
+            </mat-option>
+            <mat-option value="Reject">
+              Reject
+            </mat-option>
+            <!-- <mat-option  value="Hold">
               Hold
             </mat-option> -->
-
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col s12" *ngIf="data.order_status=='Reject'">
-            <mat-form-field class="cs-input" appearance="outline">
-              <mat-label>Reason</mat-label>
-              <textarea class="h100" matInput name="reason" placeholder="Reason" #reason="ngModel"
-                [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
-              Reason is Required....
-            </div>
-          </div>
+            
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+    </div>
+    
+    <div class="row">
+      <div class="col s12" *ngIf="data.order_status=='Reject'">
+        <mat-form-field class="cs-input" appearance="outline">
+          <mat-label>Reason</mat-label>
+          <textarea class="h100" matInput name="reason" placeholder="Reason" #reason="ngModel"
+          [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
+        </mat-form-field>
+        <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
+          Reason is Required....
         </div>
       </div>
     </div>
-    <div mat-dialog-actions>
-      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-      <button mat-button color="accent" [disabled]="savingFlag" type="submit">Save</button>
-    </div>
-  </form>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  <button mat-button color="accent" [disabled]="savingFlag" type="submit">Save</button>
+</div>
+</form>
 </div>
 
 <!-- Add Segment Modal Start Here -->
 
 <div class="edit-modal" *ngIf="data.from=='segment_list_page'">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?add_segment():''">
-
-    <p class="heading">{{data.type}} Category</p>
-    <div mat-dialog-content>
-      <div class="cs-form">
-        <div class="row">
-          <div class="col s12 l6 m6">
-            <mat-form-field appearance="outline">
-              <mat-label>Category</mat-label>
-              <input matInput placeholder="Type Here ..." name="category" #category="ngModel"
-                [(ngModel)]="data.category" required>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="category.touched || update_basic.submitted">
-              <p *ngIf="category.errors?.required">This field is required</p>
-            </div>
-          </div>
-          <div class="col s12 l6 m6">
-            <div class="col s12">
-              <mat-form-field appearance="outline">
-                <mat-label>GST (%)</mat-label>
-                <input matInput placeholder="Type Here ..." onkeypress="return event.charCode>=48 && event.charCode<=57"
-                  name="gst" #gst="ngModel" [(ngModel)]="data.gst">
-              </mat-form-field>
-            </div>
+  (ngSubmit)="(update_basic.valid && update_basic.submitted)?add_segment():''">
+  
+  <p class="heading">{{data.type}} Category</p>
+  <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s12 l6 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <input matInput placeholder="Type Here ..." name="category" #category="ngModel"
+            [(ngModel)]="data.category" required>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="category.touched || update_basic.submitted">
+            <p *ngIf="category.errors?.required">This field is required</p>
           </div>
         </div>
-        <div class="row">
-          <div class="col s12 l6 m6">
+        <div class="col s12 l6 m6">
+          <div class="col s12">
             <mat-form-field appearance="outline">
-              <mat-label>Distributor Discount (%)</mat-label>
+              <mat-label>GST (%)</mat-label>
               <input matInput placeholder="Type Here ..." onkeypress="return event.charCode>=48 && event.charCode<=57"
-                name="sub_category_name" #distributor_discount="ngModel" [(ngModel)]="data.distributor_discount"
-                required>
+              name="gst" #gst="ngModel" [(ngModel)]="data.gst">
             </mat-form-field>
-            <div class="alert alert-danger" *ngIf="distributor_discount.touched || update_basic.submitted">
-              <p *ngIf="distributor_discount.errors?.required">This field is required</p>
-            </div>
-          </div>
-
-          <div class="col s12 l6 m6">
-            <mat-form-field appearance="outline">
-              <mat-label>Direct Dealer Discount (%)</mat-label>
-              <input matInput placeholder="Type Here ..." onkeypress="return event.charCode>=48 && event.charCode<=57"
-                name="direct_dealer_discount" #direct_dealer_discount="ngModel"
-                [(ngModel)]="data.direct_dealer_discount" required>
-            </mat-form-field>
-
-            <div class="alert alert-danger" *ngIf="direct_dealer_discount.touched || update_basic.submitted">
-              <p *ngIf="direct_dealer_discount.errors?.required">This field is required</p>
-            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col s12 l6 m6">
-            <mat-form-field appearance="outline">
-              <mat-label>Retailer Discount (%)</mat-label>
-              <input matInput placeholder="Type Here ..." onkeypress="return event.charCode>=48 && event.charCode<=57"
-                name="retailer_discount" #retailer_discount="ngModel" [(ngModel)]="data.retailer_discount" required>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="retailer_discount.touched || update_basic.submitted">
-              <p *ngIf="retailer_discount.errors?.required">This field is required</p>
-            </div>
+      </div>
+      <div class="row">
+        <div class="col s12 l6 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Distributor Discount (%)</mat-label>
+            <input matInput placeholder="Type Here ..." onkeypress="return event.charCode>=48 && event.charCode<=57"
+            name="sub_category_name" #distributor_discount="ngModel" [(ngModel)]="data.distributor_discount"
+            required>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="distributor_discount.touched || update_basic.submitted">
+            <p *ngIf="distributor_discount.errors?.required">This field is required</p>
+          </div>
+        </div>
+        
+        <div class="col s12 l6 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Direct Dealer Discount (%)</mat-label>
+            <input matInput placeholder="Type Here ..." onkeypress="return event.charCode>=48 && event.charCode<=57"
+            name="direct_dealer_discount" #direct_dealer_discount="ngModel"
+            [(ngModel)]="data.direct_dealer_discount" required>
+          </mat-form-field>
+          
+          <div class="alert alert-danger" *ngIf="direct_dealer_discount.touched || update_basic.submitted">
+            <p *ngIf="direct_dealer_discount.errors?.required">This field is required</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 l6 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Retailer Discount (%)</mat-label>
+            <input matInput placeholder="Type Here ..." onkeypress="return event.charCode>=48 && event.charCode<=57"
+            name="retailer_discount" #retailer_discount="ngModel" [(ngModel)]="data.retailer_discount" required>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="retailer_discount.touched || update_basic.submitted">
+            <p *ngIf="retailer_discount.errors?.required">This field is required</p>
           </div>
         </div>
       </div>
     </div>
-    <div mat-dialog-actions>
-      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-      <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
-        [disabled]="savingFlag == true">
-        {{savingFlag == true ? 'Saving' : (data.type == 'edit' ? 'Update':'Save')}}
-      </button>
-    </div>
-  </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+    <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
+    [disabled]="savingFlag == true">
+    {{savingFlag == true ? 'Saving' : (data.type == 'edit' ? 'Update':'Save')}}
+  </button>
+</div>
+</form>
 </div>
 
 
 
 <div class="edit-modal" *ngIf="data.delivery_from=='subcategory-list'">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?add_subCategory():''">
-
-    <p class="heading">{{data.type}} Sub Category</p>
-    <div mat-dialog-content>
-      <div class="cs-form">
-        <div class="row">
-          <div class="col s12 l6 m6">
-            <mat-form-field appearance="outline" [ngClass]="{'has-error' : segment_id.invalid } ">
-              <mat-label>Category</mat-label>
-              <mat-select name="segment_id" #segment_id="ngModel" [(ngModel)]="data.segment_id" required>
-                <mat-option *ngFor="let row of segmentList" value="{{row.id}}"
-                  color="accent">{{row.category}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="update_basic.submitted && segment_id?.invalid ">
-              This field is required
-            </div>
+  (ngSubmit)="(update_basic.valid && update_basic.submitted)?add_subCategory():''">
+  
+  <p class="heading">{{data.type}} Sub Category</p>
+  <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s12 l6 m6">
+          <mat-form-field appearance="outline" [ngClass]="{'has-error' : segment_id.invalid } ">
+            <mat-label>Category</mat-label>
+            <mat-select name="segment_id" #segment_id="ngModel" [(ngModel)]="data.segment_id" required>
+              <mat-option *ngFor="let row of segmentList" value="{{row.id}}"
+              color="accent">{{row.category}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="update_basic.submitted && segment_id?.invalid ">
+            This field is required
           </div>
-          <div class="col s12 l6 m6">
-            <mat-form-field appearance="outline">
-              <mat-label>Sub Category</mat-label>
-              <input matInput placeholder="Type Here ..." name="sub_category_name" #sub_category_name="ngModel"
-                [(ngModel)]="data.sub_category_name" required>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="sub_category_name.touched || update_basic.submitted">
-              <p *ngIf="sub_category_name.errors?.required">This field is required</p>
-            </div>
+        </div>
+        <div class="col s12 l6 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Sub Category</mat-label>
+            <input matInput placeholder="Type Here ..." name="sub_category_name" #sub_category_name="ngModel"
+            [(ngModel)]="data.sub_category_name" required>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="sub_category_name.touched || update_basic.submitted">
+            <p *ngIf="sub_category_name.errors?.required">This field is required</p>
           </div>
         </div>
       </div>
     </div>
-    <div mat-dialog-actions>
-      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-      <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
-        [disabled]="savingFlag == true">
-        {{savingFlag == true ? 'Saving' : (data.type == 'edit' ? 'Update':'Save')}}
-      </button>
-    </div>
-  </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+    <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
+    [disabled]="savingFlag == true">
+    {{savingFlag == true ? 'Saving' : (data.type == 'edit' ? 'Update':'Save')}}
+  </button>
+</div>
+</form>
 </div>
 
 
 <div class="edit-modal" *ngIf="delivery_from=='assignSales'">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?UpdateSalesUser():''">
-
-    <p class="heading">Update Sales User</p>
-    <div mat-dialog-content>
-      <div class="cs-form">
-        <div class="row">
-          <div class="col s12 l12 m12">
-            <mat-form-field appearance="outline">
-              <mat-label>Sales User</mat-label>
-              <mat-select name="assigned_sales_user_name" [(ngModel)]="data.assigned_sales_user_name"
-                #assigned_sales_user_name="ngModel" multiple required>
-                <mat-option>
-                  <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
-                    (keyup)="getSalesUser($event.target.value)"></ngx-mat-select-search>
-                </mat-option>
-                <mat-option *ngFor="let row of salesUser" value="{{row.id}}">{{row.name}} {{row.role_name}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-        </div>
+  (ngSubmit)="(update_basic.valid && update_basic.submitted)?UpdateSalesUser():''">
+  
+  <p class="heading">Update Sales User</p>
+  <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s12 l12 m12">
+          <mat-form-field appearance="outline">
+            <mat-label>Sales User</mat-label>
+            <mat-select name="assigned_sales_user_name" [(ngModel)]="data.assigned_sales_user_name"
+            #assigned_sales_user_name="ngModel" multiple required>
+            <mat-option>
+              <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+              (keyup)="getSalesUser($event.target.value)"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let row of salesUser" value="{{row.id}}">{{row.name}} {{row.role_name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
+      
     </div>
-    <div mat-dialog-actions>
-      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-      <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
-        [disabled]="savingFlag == true">{{savingFlag == true ? 'Updating' : 'Update'}}</button>
-    </div>
-  </form>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
+  [disabled]="savingFlag == true">{{savingFlag == true ? 'Updating' : 'Update'}}</button>
+</div>
+</form>
 </div>
 <div class="edit-modal" *ngIf="delivery_from=='assignDist'">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?UpdateDistributor():''">
-    <p class="heading">Update Distributor User</p>
-    <div mat-dialog-content>
-      <div class="cs-form">
-        <div class="row">
-          <div class="col s12 l12 m12">
-            <mat-form-field appearance="outline">
-              <mat-label>Distributor</mat-label>
-              <!-- (selectionChange)="distArray(data.distributor_id)" -->
-              <mat-select name="distributor_id" [(ngModel)]="data.distributor_id" #distributor_id="ngModel" multiple
-                required>
-                <mat-option>
-                  <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
-                    (keyup)="distributorList($event.target.value, '')"></ngx-mat-select-search>
-                </mat-option>
-                <mat-option *ngFor="let row of drlist" value="{{row.id}}">{{row.company_name | titlecase}}
-                  {{row.dr_code}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="distributor_id.touched || update_basic.submitted">
-              <p *ngIf="distributor_id.errors?.required">This field is required</p>
-            </div>
+  (ngSubmit)="(update_basic.valid && update_basic.submitted)?UpdateDistributor():''">
+  <p class="heading">Update Distributor User</p>
+  <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s12 l12 m12">
+          <mat-form-field appearance="outline">
+            <mat-label>Distributor</mat-label>
+            <!-- (selectionChange)="distArray(data.distributor_id)" -->
+            <mat-select name="distributor_id" [(ngModel)]="data.distributor_id" #distributor_id="ngModel" multiple
+            required>
+            <mat-option>
+              <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+              (keyup)="distributorList($event.target.value, '')"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let row of drlist" value="{{row.id}}">{{row.company_name | titlecase}}
+              {{row.dr_code}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="distributor_id.touched || update_basic.submitted">
+            <p *ngIf="distributor_id.errors?.required">This field is required</p>
           </div>
-
         </div>
+        
       </div>
     </div>
-    <div mat-dialog-actions>
-      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-      <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
-        [disabled]="savingFlag == true">{{savingFlag == true ? 'Updating' : 'Update'}}</button>
-    </div>
-  </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+    <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
+    [disabled]="savingFlag == true">{{savingFlag == true ? 'Updating' : 'Update'}}</button>
+  </div>
+</form>
 </div>
 
 <!-- Add Segment Modal End Here -->
@@ -416,37 +416,37 @@
 <!-- eddit travel plan for user -->
 <div class="edit-modal" *ngIf="delivery_from=='edit_travel_plan_retailer'">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?UpdateCustomerNetworkTravel():''">
-
-    <p class="heading">Update Customer Network Detail</p>
-    <div mat-dialog-content>
-      <div class="cs-form">
-        <div class="row">
-          <div class="col s12 l12 m12">
-            <mat-form-field appearance="outline">
-              <mat-label>Customer Network</mat-label>
-              <!-- (selectionChange)="distArray(data.distributor_id)" -->
-              <mat-select name="distributor_id" [(ngModel)]="data.distributor_id" #distributor_id="ngModel" required>
-                <mat-option>
-                  <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
-                    (keyup)="allCustomerNetworkList($event.target.value)"></ngx-mat-select-search>
-                </mat-option>
-                <mat-option *ngFor="let row of drlist" value="{{row.id}}">{{row.company_name | titlecase}}
-                  {{row.mobile}}</mat-option>
+  (ngSubmit)="(update_basic.valid && update_basic.submitted)?UpdateCustomerNetworkTravel():''">
+  
+  <p class="heading">Update Customer Network Detail</p>
+  <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s12 l12 m12">
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Network</mat-label>
+            <!-- (selectionChange)="distArray(data.distributor_id)" -->
+            <mat-select name="distributor_id" [(ngModel)]="data.distributor_id" #distributor_id="ngModel" required>
+              <mat-option>
+                <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                (keyup)="allCustomerNetworkList($event.target.value)"></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let row of drlist" value="{{row.id}}">{{row.company_name | titlecase}}
+                {{row.mobile}}</mat-option>
               </mat-select>
             </mat-form-field>
             <div class="alert alert-danger" *ngIf="distributor_id.touched || update_basic.submitted">
               <p *ngIf="distributor_id.errors?.required">This field is required</p>
             </div>
           </div>
-
+          
         </div>
       </div>
     </div>
     <div mat-dialog-actions>
       <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
       <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
-        [disabled]="savingFlag == true">{{savingFlag == true ? 'Updating' : 'Update'}}</button>
+      [disabled]="savingFlag == true">{{savingFlag == true ? 'Updating' : 'Update'}}</button>
     </div>
   </form>
 </div>
@@ -457,54 +457,54 @@
 <!-- Add travel plan for user -->
 <div class="edit-modal" *ngIf="delivery_from=='add_travel_plan_retailer'">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?AddCustomerNetworkTravel():''">
-
-    <p class="heading">Add Customer Network Detail</p>
-    <div mat-dialog-content>
-      <div class="cs-form">
-        <div class="row">
-          <!-- <div class="col s12 l12 m12">
-            <mat-form-field appearance="outline">
-              <mat-label>Customer Network</mat-label>
-              <mat-select name="drType" [(ngModel)]="data.drType"  #drType="ngModel" (selectionChange)="allCustomerNetworkList('')"  required>
-                <mat-option value="1">Distributor</mat-option>
-                <mat-option value="3">Dealer</mat-option>
-                <mat-option value="7">Direct Dealer</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="drType.touched || update_basic.submitted">
-              <p *ngIf="drType.errors?.required">This field is required</p>
-            </div>
-          </div> -->
-
-          <div class="col s12 l12 m12">
-            <mat-form-field appearance="outline">
-              <mat-label>Customer Network</mat-label>
-              <mat-select name="distributor_id" [(ngModel)]="data.distributor_id" #distributor_id="ngModel" multiple
-                required>
-                <mat-option>
-                  <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
-                    (keyup)="allCustomerNetworkList($event.target.value)"></ngx-mat-select-search>
-                </mat-option>
-                <mat-option *ngFor="let row of drlist" value="{{row.id}}" (click)="getDrType(row)">{{row.company_name |
-                  titlecase}}
-                  {{row.mobile}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="distributor_id.touched || update_basic.submitted">
-              <p *ngIf="distributor_id.errors?.required">This field is required</p>
-            </div>
+  (ngSubmit)="(update_basic.valid && update_basic.submitted)?AddCustomerNetworkTravel():''">
+  
+  <p class="heading">Add Customer Network Detail</p>
+  <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <!-- <div class="col s12 l12 m12">
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Network</mat-label>
+            <mat-select name="drType" [(ngModel)]="data.drType"  #drType="ngModel" (selectionChange)="allCustomerNetworkList('')"  required>
+              <mat-option value="1">Distributor</mat-option>
+              <mat-option value="3">Dealer</mat-option>
+              <mat-option value="7">Direct Dealer</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="drType.touched || update_basic.submitted">
+            <p *ngIf="drType.errors?.required">This field is required</p>
           </div>
-
+        </div> -->
+        
+        <div class="col s12 l12 m12">
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Network</mat-label>
+            <mat-select name="distributor_id" [(ngModel)]="data.distributor_id" #distributor_id="ngModel" multiple
+            required>
+            <mat-option>
+              <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+              (keyup)="allCustomerNetworkList($event.target.value)"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let row of drlist" value="{{row.id}}" (click)="getDrType(row)">{{row.company_name |
+              titlecase}}
+              {{row.mobile}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="distributor_id.touched || update_basic.submitted">
+            <p *ngIf="distributor_id.errors?.required">This field is required</p>
+          </div>
         </div>
+        
       </div>
     </div>
-    <div mat-dialog-actions>
-      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-      <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
-        [disabled]="savingFlag == true">{{savingFlag == true ? 'Updating' : 'Update'}}</button>
-    </div>
-  </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+    <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
+    [disabled]="savingFlag == true">{{savingFlag == true ? 'Updating' : 'Update'}}</button>
+  </div>
+</form>
 </div>
 
 
@@ -515,44 +515,44 @@
 
 <div class="edit-modal" *ngIf="(delivery_from=='tavel_plan')">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted) ? downloadReport():''">
-    <p class="heading" *ngIf="delivery_from=='tavel_plan'">Travel Plan Report</p>
-    <div mat-dialog-content>
-      <div class="cs-form">
-        <div class="row">
-          <div class="col s12 l6 m6">
-            <mat-form-field appearance="outline">
-              <mat-label>Date From</mat-label>
-              <input matInput [matDatepicker]="picker2" placeholder="Date" name="date_from" #date_from="ngModel"
-                [max]="today_date||data.date_to" [(ngModel)]="data.date_from" readonly required>
-              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-              <mat-datepicker #picker2></mat-datepicker>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="date_from.touched || update_basic.submitted">
-              <p *ngIf="date_from.errors?.required">This field is required</p>
-            </div>
+  (ngSubmit)="(update_basic.valid && update_basic.submitted) ? downloadReport():''">
+  <p class="heading" *ngIf="delivery_from=='tavel_plan'">Travel Plan Report</p>
+  <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s12 l6 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Date From</mat-label>
+            <input matInput [matDatepicker]="picker2" placeholder="Date" name="date_from" #date_from="ngModel"
+            [max]="today_date||data.date_to" [(ngModel)]="data.date_from" readonly required>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="date_from.touched || update_basic.submitted">
+            <p *ngIf="date_from.errors?.required">This field is required</p>
           </div>
-          <div class="col s12 l6 m6">
-            <mat-form-field appearance="outline">
-              <mat-label>Date To</mat-label>
-              <input matInput [matDatepicker]="picker3" placeholder="Date" name="date_to" #date_to="ngModel"
-                [min]="data.date_from" [max]="today_date" [(ngModel)]="data.date_to" readonly required>
-              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-              <mat-datepicker #picker3></mat-datepicker>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="date_to.touched || update_basic.submitted">
-              <p *ngIf="date_to.errors?.required">This field is required</p>
-            </div>
+        </div>
+        <div class="col s12 l6 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Date To</mat-label>
+            <input matInput [matDatepicker]="picker3" placeholder="Date" name="date_to" #date_to="ngModel"
+            [min]="data.date_from" [max]="today_date" [(ngModel)]="data.date_to" readonly required>
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="date_to.touched || update_basic.submitted">
+            <p *ngIf="date_to.errors?.required">This field is required</p>
           </div>
         </div>
       </div>
     </div>
-    <div mat-dialog-actions>
-      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-      <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
-        [disabled]="savingFlag == true">{{savingFlag == true ? 'Downloading' : 'Download'}}</button>
-    </div>
-  </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+    <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
+    [disabled]="savingFlag == true">{{savingFlag == true ? 'Downloading' : 'Download'}}</button>
+  </div>
+</form>
 </div>
 <!-- excel download provisioon -->
 
@@ -562,39 +562,109 @@
 
 <div class="edit-modal" *ngIf="(delivery_from=='month_wise_secondary_sale')">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted) ? downloadsecondarySaleReport():''">
-    <p class="heading" *ngIf="delivery_from=='month_wise_secondary_sale'">Month Wise Secondary Sale Report</p>
-    <div mat-dialog-content>
-      <div class="cs-form">
-        <div class="row">
-          <div class="col s12 m12 l12">
-            <mat-form-field appearance="outline">
-              <mat-label>State</mat-label>
-              <mat-select name="state" #state="ngModel" [(ngModel)]="data.state" multiple required>
-                <mat-option disabled="">Select State</mat-option>
-                <mat-option *ngFor="let row of states" value="{{row.state_name}}">
-                  {{row.state_name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="state.touched || update_basic.submitted">
-              <p *ngIf="state.errors?.required">This field is required</p>
-            </div>
+  (ngSubmit)="(update_basic.valid && update_basic.submitted) ? downloadsecondarySaleReport():''">
+  <p class="heading" *ngIf="delivery_from=='month_wise_secondary_sale'">Month Wise Secondary Sale Report</p>
+  <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <mat-form-field appearance="outline">
+            <mat-label>State</mat-label>
+            <mat-select name="state" #state="ngModel" [(ngModel)]="data.state" multiple required>
+              <mat-option disabled="">Select State</mat-option>
+              <mat-option *ngFor="let row of states" value="{{row.state_name}}">
+                {{row.state_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="state.touched || update_basic.submitted">
+            <p *ngIf="state.errors?.required">This field is required</p>
           </div>
         </div>
       </div>
     </div>
-    <div mat-dialog-actions>
-      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-      <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
-        [disabled]="savingFlag == true">{{savingFlag == true ? 'Downloading' : 'Download'}}</button>
-    </div>
-  </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+    <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
+    [disabled]="savingFlag == true">{{savingFlag == true ? 'Downloading' : 'Download'}}</button>
+  </div>
+</form>
 </div>
 <!--month wise secondary excel download provisioon -->
 
 
+<div class="edit-modal" *ngIf="data.from == 'request_product_data'">
+  <p class="heading">Product Information</p>
+  <div mat-dialog-content>
+      <div class="cs-table left-right-10" >
+          <div class=" border-top">
+              <div class="table-head">
+                  <table>
+                      <tr>
+                          <th class="w50 text-center">Sr.No</th>
+                          <th>Product Detail</th>
+                          <th class="w80 text-center">Qty</th>
+                      </tr>
+                  </table>
+              </div>
+          </div>
+          
+          <div class="table-container pb0">
+              <div class="table-content none-shadow">
+                  <table>
+                      <ng-container *ngFor="let row of reqProductDetails;let i=index;">
+                          <tr>
+                              <td class="w50 text-center">{{i+1}}</td>
+                              <td>{{row.product_detail | titlecase}}</td>
+                              <td class="w80 text-center">{{row.product_qty}}</td>
+                          </tr>  
+                      </ng-container>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</div>
 
+<div class="edit-modal" *ngIf="data.from == 'send_product_data'">
+  <p class="heading">Product Information</p>
+  <div mat-dialog-content>
+      <div class="cs-table left-right-10" >
+          <div class=" border-top">
+              <div class="table-head">
+                  <table>
+                      <tr>
+                          <th class="w50 text-center">Sr.No</th>
+                          <th>Product Detail</th>
+                          <th class="w80 text-center">Qty</th>
+                      </tr>
+                  </table>
+              </div>
+          </div>
+          
+          <div class="table-container pb0">
+              <div class="table-content none-shadow">
+                  <table>
+                      <ng-container *ngFor="let row of sendProductDetails;let i=index;">
+                          <tr>
+                              <td class="w50 text-center">{{i+1}}</td>
+                              <td>{{row.product_detail | titlecase}}</td>
+                              <td class="w80 text-center">{{row.product_qty}}</td>
+                          </tr>  
+                      </ng-container>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</div>
 
 <div class="edit-modal" *ngIf="data.from == 'stock_product_trans'">
   <p class="heading">Product:- {{data.stockProductTrans.product_detail}}</p>
@@ -742,5 +812,40 @@
   </div>
   <div mat-dialog-actions>
       <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</div>
+
+<div class="edit-modal" *ngIf="data.from=='approve_transfer_equest'">
+  <p class="heading">Update Status</p>
+  <div mat-dialog-content>
+      <div class="cs-form">
+          <div class="row">
+              <div class="col s12">
+                  <mat-form-field class="cs-input" appearance="outline">
+                      <mat-label>Order Status</mat-label>
+                      <mat-select name="request_status" placeholder="Select Status" #request_status="ngModel" [(ngModel)]="data.request_status">
+                          <mat-option value="Approved">Approved</mat-option>
+                          <mat-option value="Reject">Reject</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+          </div>
+          
+          <div class="row">
+              <div class="col s12" *ngIf="data.request_status=='Reject'">
+                  <mat-form-field class="cs-input" appearance="outline">
+                      <mat-label>Reason</mat-label>
+                      <textarea class="h100" matInput name="reason" placeholder="Reason" #reason="ngModel" [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
+                      Reason is Required....
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-button color="accent" [disabled]="savingFlag" type="submit" (click)="requestStatusChange(data.reason,data.request_status,data.requestId)">Save</button>
   </div>
 </div>

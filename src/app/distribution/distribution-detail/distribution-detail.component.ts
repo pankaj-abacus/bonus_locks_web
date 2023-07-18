@@ -78,11 +78,11 @@ export class DistributionDetailComponent implements OnInit {
     stockTab: any = 'in_stock'
     drType
     tabCount: any = [];
-
+    
     removePercent20(inputString: string): string {
         return decodeURIComponent(inputString.replace(/%20/g, ' '));
     }
-
+    
     constructor(
         public route: ActivatedRoute,
         public rout: Router,
@@ -191,7 +191,7 @@ export class DistributionDetailComponent implements OnInit {
                         this.clearFilter(); 
                         this.getDrStock(this.stockTab);
                     }
-
+                    
                     else  if (this.tabType=='Target') {
                         this.clearFilter(); 
                         this.getTarget(this.currentMonth_no,this.currentYear);
@@ -1129,8 +1129,8 @@ export class DistributionDetailComponent implements OnInit {
                 }
             });
         }
-
-
+        
+        
         openStockProductTransaction( stockProductTrans): void {
             const dialogRef = this.dialog.open(StatusModalComponent, {
                 width: '500px',
@@ -1166,8 +1166,8 @@ export class DistributionDetailComponent implements OnInit {
                 }
             });
         }
-
-
+        
+        
         transferRequestsListLoader: boolean = false
         getTransferRequests(activeTab) {
             this.transferRequestsListLoader = true
@@ -1548,16 +1548,109 @@ export class DistributionDetailComponent implements OnInit {
             this.rout.navigate(['/secondary-order-detail/' + id], { queryParams: { id, status } });
         }
         
+        convert_dr(type) {
+            
+            this.alert.confirm('Convert').then((result) => {
+                if (result) {
+                    console.log(type);
+                    // let otp = '';
+                    // for (let i = 0; i <= 6; i++) {
+                    //     otp += Math.floor(Math.random() * 10)
+                    // }
+                    
+                    // this.serve.fetchData({ type: type, dr_id: this.dr_id, otp }, 'CustomerNetwork/sendOtp').subscribe((result => {
+                    //     console.log(result);
+                    
+                    //     if (result['statusCode'] == '200') {
+                    //         const dialogRef = this.dialog.open(ConvertToDistributorComponent, {
+                    //             width: '350px',
+                    //             data: {
+                    //                 id: this.dr_id,
+                    //                 type: type,
+                    //                 otp: otp
+                    //             }
+                    //         });
+                    //         dialogRef.afterClosed().subscribe(result => {
+                    //             console.log(result);
+                    //             console.log('The dialog was closed');
+                    //         });
+                    //     } else {
+                    
+                    //     }
+                    // }));
+                    
+                    
+                    // console.log(type);
+                    this.serve.post_rqst({ type: type, dr_id: this.dr_id }, "CustomerNetwork/dr_type_update").subscribe((result => {
+                        console.log(result);
+                        if (result['statusCode'] == 200) {
+                            this.toast.successToastr(result['statusMsg']);
+                            if (type == 1) {
+                                this.rout.navigate(['/distribution-list/' + 1 + '/Channel Partner']);
+                            }
+                            if (type == 7) {
+                                this.rout.navigate(['/distribution-list/' + 7 + '/Direct Dealers']);
+                            }
+                            if (type == 3) {
+                                this.rout.navigate(['/distribution-list/' + 3 + '/Dealer']);
+                            }
+                        } else {
+                            this.toast.errorToastr(result['statusMsg']);
+                        }
+                    }));
+                }
+            });
+            
+            
+            
+        }
+        
+        openReqProductsDialog( reqProductData): void {
+            const dialogRef = this.dialog.open(StatusModalComponent, {
+                width: '500px',
+                panelClass: 'cs-modal',
+                data: {
+                    from: 'request_product_data',
+                    reqProductData : reqProductData
+                }
+                
+            });
+            
+            dialogRef.afterClosed().subscribe(result => {
+                if (result == true) {
+                    this.distributorDetail()
+                }
+            });
+        }
+        
+        openSendProductsDialog( sendProductData): void {
+            const dialogRef = this.dialog.open(StatusModalComponent, {
+                width: '500px',
+                panelClass: 'cs-modal',
+                data: {
+                    from: 'send_product_data',
+                    sendProductData : sendProductData
+                }
+                
+            });
+            
+            dialogRef.afterClosed().subscribe(result => {
+                if (result == true) {
+                    this.distributorDetail()
+                }
+            });
+        }
+        
         goToImage(image) {
             const dialogRef = this.dialogs.open(ImageModuleComponent, {
-              panelClass: 'Image-modal',
-              data: {
-                'image': image,
-                'type': 'base64'
-              }
+                panelClass: 'Image-modal',
+                data: {
+                    'image': image,
+                    'type': 'base64'
+                }
             });
             dialogRef.afterClosed().subscribe(result => {
             });
-        
-          }
+            
+        }
     }
