@@ -5,7 +5,7 @@
     </a>
     <h2>Add New Scheme</h2>
   </div>
-  
+
   <div class="container pt10 pl10 pr10 pb50" >
     <form #f="ngForm" (ngSubmit)=" f.valid && submitDetail()">
       <div class="row">
@@ -20,7 +20,7 @@
                   <mat-form-field appearance="outline">
                     <mat-label>User Type</mat-label>
                     <mat-select  name="types" [(ngModel)]="data.types" #types="ngModel" (selectionChange)="pointCategory_data(data.types == 'Retailer' ? 'Master Box' : 'Item Box'); districts = []; getState()" >
-                      <mat-option  value="Retailer">Retailer</mat-option>
+                      <!-- <mat-option  value="Retailer">Retailer</mat-option> -->
                       <mat-option  value="Influencer">Influencer</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -28,8 +28,8 @@
                     <p *ngIf="types.errors?.required">This field is required</p>
                   </div>
                 </div>
-                
-                
+
+
                 <div class="col s12 m3 l3" *ngIf="data.types == 'Influencer'">
                   <mat-form-field appearance="outline">
                     <mat-label>Influencer Type</mat-label>
@@ -41,8 +41,8 @@
                     <p *ngIf="influencer_type.errors?.required">This field is required</p>
                   </div>
                 </div>
-                
-                
+
+
                 <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>Title</mat-label>
@@ -55,7 +55,7 @@
                 <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>Start Date</mat-label>
-                    <input name="start_date" matInput [matDatepicker]="pickers" placeholder="" [min]="minDate" #start_date="ngModel" readonly [(ngModel)]="data.start_date">
+                    <input name="start_date" matInput [matDatepicker]="pickers" placeholder="" [min]="minDate" #start_date="ngModel" readonly [(ngModel)]="data.start_date" required>
                     <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
                     <mat-datepicker #pickers></mat-datepicker>
                   </mat-form-field>
@@ -63,11 +63,11 @@
                     <p *ngIf="start_date.errors?.required">This field is required</p>
                   </div>
                 </div>
-                
+
                 <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>End Date</mat-label>
-                    <input name="end_date" matInput [matDatepicker]="picker1" placeholder="" [min]="data.start_date" #end_date="ngModel" readonly [(ngModel)]="data.end_date">
+                    <input name="end_date" matInput [matDatepicker]="picker1" placeholder="" [min]="data.start_date" #end_date="ngModel" readonly [(ngModel)]="data.end_date" required>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                   </mat-form-field>
@@ -76,14 +76,14 @@
                   </div>
                 </div>
               </div>
-              
+
             </div>
           </div>
         </div>
       </div>
-      
+
       <div class="row">
-        <div class="col s12 m8 l8" *ngIf="data.types">
+        <!-- <div class="col s12 m8 l8" *ngIf="data.types">
           <div class="card pb0">
             <div class="card-head">
               <h2>Area Wise Influencer Selection</h2>
@@ -112,16 +112,16 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="col s12 m4 l4" *ngIf="data.types != 'Retailer'">
                   <div class="check-box">
-                    <!-- <div class="check-head">
+                     <div class="check-head">
                       <div class="th-search-acmt">
                         <mat-form-field>
                           <input type="text"  matInput placeholder="Search ..." name="influencer_name" (ngModelChange)="getAreaInfluencer(filter.influencer_name)" #influencer_name="ngModel" [(ngModel)]="filter.influencer_name" >
                         </mat-form-field>
                       </div>
-                    </div> -->
+                    </div>
                     <div class="check-head">
                       <mat-checkbox color="primary" [labelPosition]="labelPosition" [(ngModel)]="data.Influencer" (change)="allInfluncer()"  name="Influencer"  value="true">Select All</mat-checkbox>
                     </div>
@@ -135,7 +135,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="col s12 m4 l4" *ngIf="data.types">
           <div class="card pb0">
             <div class="card-head">
@@ -164,7 +164,7 @@
                           <td class="w100  text-center">
                             <div class="th-search-acmt">
                               <mat-form-field>
-                                <input type="text" matInput class="cs-text-input text-center" placeholder="Enter Points" [name]="'scheme_influencer_point'+i"  [(ngModel)] = "row.scheme_influencer_point"  onkeypress="return event.charCode>=48 && event.charCode<=57">
+                                <input type="text" matInput class="cs-text-input text-center" placeholder="Enter Points" [name]="'scheme_influencer_point'+i"  [(ngModel)] = "row.scheme_influencer_point"  onkeypress="return event.charCode>=48 && event.charCode<=57" >
                               </mat-form-field>
                             </div>
                           </td>
@@ -178,7 +178,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col s12">
           <div class="text-right">
@@ -188,7 +188,7 @@
           </div>
         </div>
       </div>
-      
+
     </form>
   </div>
 </div>
