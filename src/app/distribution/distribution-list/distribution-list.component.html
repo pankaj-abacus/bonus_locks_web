@@ -138,6 +138,7 @@
                   </a>
                 </div>
               </th>
+              <th class="w120">District</th>
               <th *ngIf="type_id=='3'" class="w150">Assign Distributor
               </th>
               <th class="w150">Assigned To
@@ -251,6 +252,14 @@
                   </mat-form-field>
                 </div>
               </th>
+              <th class="w120">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." name="district" (keyup.enter)="distributorList('', '', '')"
+                      [(ngModel)]="filter.district">
+                  </mat-form-field>
+                </div>
+              </th>
               <th *ngIf="type_id=='3'" class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input select-input">
@@ -320,6 +329,7 @@
                 <td class="w120" *ngIf="type != 'Retailer'">{{row.dr_code}}</td>
                 <td class="w120" *ngIf="type_id!=1 && type_id !=3 && type_id==7">{{row.direct_dealer_type}}</td>
                 <td class="w120">{{row.state | titlecase}}</td>
+                <td class="w120">{{row.district | titlecase}}</td>
                 <td *ngIf="type_id=='3'" class="w150">{{row.assign_distributors_company_name}}</td>
                 <td class="w150">
                   <ng-container *ngFor="let item of row.assign_user; let j = index;">
@@ -376,6 +386,9 @@
                   <div>&nbsp;</div>
                 </td>
                 <td class="w120" *ngIf="type != 'Retailer' ">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w120">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w120">
