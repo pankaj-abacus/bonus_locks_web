@@ -1,75 +1,166 @@
 <div class="edit-modal" *ngIf="data.from=='primary_order'">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?primary_order_status_change(data.reason,data.order_status):''">
-
-    <p class="heading">Update Status</p>
-    <div mat-dialog-content>
+  (ngSubmit)="(update_basic.valid && update_basic.submitted)?primary_order_status_change(data.reason,data.order_status):''">
+  
+  
+  <p class="heading">{{data.order_status == 'readyToDispatch' ? 'Dispatch Planning': 'Update Status'}}</p>
+  <div mat-dialog-content>
       <div class="cs-form">
-        <div class="row">
-          <div class="col s12">
-            <mat-form-field class="cs-input" appearance="outline">
-              <mat-label>Order Status</mat-label>
-              <mat-select name="order_status" placeholder="Select Status" #order_status="ngModel"
-                [(ngModel)]="data.order_status">
-                <!-- <mat-option value="Pending" disable>Pending</mat-option>
-                <mat-option value="Approved" (click)="getCompanyData()" >Approved</mat-option>
-                <mat-option value="Reject">Reject </mat-option>
-                <mat-option value="Hold">Hold</mat-option> -->
-
-                <mat-option value="Approved" *ngIf="tmpOrderStatus == 'Pending'" (click)="getCompanyData()">
-                  Approved
-                </mat-option>
-                <mat-option value="Hold" *ngIf="tmpOrderStatus == 'Approved'">
-                  Hold
-                </mat-option>
-                <mat-option value="readyToDispatch" *ngIf="tmpOrderStatus == 'Approved' || tmpOrderStatus == 'Hold'">
-                  Dispatch Planned
-                </mat-option>
-                <mat-option value="Reject" *ngIf="tmpOrderStatus == 'Pending'">
-                  Reject
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+          <ng-container *ngIf="data.order_status != 'readyToDispatch'">
+              <div class="row" >
+                  <div class="col s12">
+                      <mat-form-field class="cs-input" appearance="outline">
+                          <mat-label>{{data.order_status=='Approved' ? 'Dispatch Status' : 'Change Status'}}</mat-label>
+                          <mat-select name="order_status" placeholder="Select Status" #order_status="ngModel" [(ngModel)]="data.order_status" required>
+                              <mat-option value="Approved" *ngIf="tmpOrderStatus == 'Pending' || tmpOrderStatus == 'Reject'" (click)="getCompanyData()">Approved</mat-option>
+                              <mat-option value="Hold" *ngIf="tmpOrderStatus == 'Approved'">Hold</mat-option>
+                              <mat-option value="dispatchPlanning" *ngIf="tmpOrderStatus == 'Approved' || tmpOrderStatus == 'Hold'">Dispatch Plan</mat-option>
+                              <mat-option value="readyToDispatch" *ngIf="tmpOrderStatus == 'dispatchPlanning' || tmpOrderStatus == 'partialDispatched'">Dispatch Planning</mat-option>
+                              <mat-option value="Reject" *ngIf="tmpOrderStatus == 'Pending' || tmpOrderStatus == 'Approved'">Reject</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      <div class="alert alert-danger" *ngIf="order_status.touched || update_basic.submitted">
+                          <p *ngIf="order_status.errors?.required">This field is required</p>
+                      </div>
+                      
+                  </div>
+                  
+              </div>
+              
+              <div class="row" *ngIf="data.order_status=='Approved'">
+                  <div class="col s12">
+                      <mat-form-field class="cs-input" appearance="outline">
+                          <mat-label>Select Organization Name</mat-label>
+                          <mat-select name="organisation_id" placeholder="Select Organization Name" #organisation_id="ngModel"
+                          [(ngModel)]="data.organisation_id" required>
+                          <mat-option *ngFor="let row of organisationData" value="{{row.id}}">{{row.company_name}}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="organisation_id.touched || update_basic.submitted">
+                      <p *ngIf="organisation_id.errors?.required">This field is required</p>
+                  </div>
+              </div>
           </div>
-
-        </div>
-        <div class="row" *ngIf="data.order_status=='Approved'">
-          <div class="col s12">
-            <mat-form-field class="cs-input" appearance="outline">
-              <mat-label>Select Organisation Name</mat-label>
-              <mat-select name="organisation_id" placeholder="Select Organisation Name" #organisation_id="ngModel"
-                [(ngModel)]="data.organisation_id">
-                <mat-option *ngFor="let row of organisationData"
-                  value="{{row.id}}">{{row.company_name}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
+          
+          <div class="row">
+              <div class="col s12" *ngIf="data.order_status=='Reject' ||  data.order_status=='Hold'">
+                  <mat-form-field class="cs-input" appearance="outline">
+                      <mat-label>Reason</mat-label>
+                      <textarea class="h100" matInput name="reason" placeholder="Reason" #reason="ngModel"
+                      [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required></textarea>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="reason.touched || update_basic.submitted">
+                      <p *ngIf="reason.errors?.required">This field is required</p>
+                  </div>
+                  
+              </div>
           </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col s12" *ngIf="data.order_status=='Reject' ||  data.order_status=='Hold'">
-            <mat-form-field class="cs-input" appearance="outline">
-              <mat-label>Reason</mat-label>
-              <textarea class="h100" matInput name="reason" placeholder="Reason" #reason="ngModel"
-                [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
-              Reason is Required....
-            </div>
+      </ng-container>
+      
+      
+      
+      <!-- ITEM DATA -->
+      <div class="row" *ngIf="data.order_status=='readyToDispatch'">
+          <div class="col s12 m12 l12" >
+              <div class="row mt16" [ngClass]="{'mb16': data.checkWareHouse=='No'}">
+                  <div class="col s3">
+                      <p style="font-size: 15px;">Do you want to dispatch from </p>
+                  </div>
+                  <div class="col s3">
+                      <mat-radio-group  class="example-section"  name="checkWareHouse"  #checkWareHouse="ngModel" [(ngModel)]="data.checkWareHouse" (change)="selectWarehouse($event)">
+                          <mat-radio-button class="wp50" value="No">Company</mat-radio-button>
+                          <mat-radio-button class="wp50" value="Yes">Warehouse</mat-radio-button>
+                          
+                      </mat-radio-group>
+                  </div>
+              </div>
+              <ng-container *ngIf="data.checkWareHouse=='Yes'">
+                  <div class="row" [ngClass]="{'mb16': data.checkWareHouse=='Yes'}">
+                      <div class="col s12">
+                          <mat-form-field class="cs-input" appearance="outline">
+                              <mat-label>Warehouse</mat-label>
+                              <mat-select name="warehouse_id" placeholder="Warehouse" #warehouse_id="ngModel" [(ngModel)]="data.warehouse_id" required>
+                                  <mat-option *ngFor="let row of warehouse" value="{{row.id}}">{{row.company_name}}</mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                          <div class="alert alert-danger" *ngIf="warehouse_id.touched || update_basic.submitted">
+                              <p *ngIf="warehouse_id.errors?.required">This field is required</p>
+                          </div>
+                      </div>
+                  </div>
+              </ng-container>
+              <div class="card">
+                  <div class="card-head">
+                      <h2>Dispatch Planned Item Details</h2>
+                  </div>
+                  <div class="card-body">
+                      <div class="cs-table left-right-10" >
+                          <div class=" border-top">
+                              <div class="table-head">
+                                  <table>
+                                      <tr>
+                                          <th class="w50 text-center">Sr.No</th>
+                                          <th>Item</th>
+                                          <th class="w130 text-right">QTY.</th>
+                                          <th class="w130 text-right">Dispatched QTY.	</th>
+                                          <th class="w130 text-right">Remaining QTY.	</th>
+                                          
+                                      </tr>
+                                  </table>
+                              </div>
+                          </div>
+                          
+                          <div class="table-container pb0">
+                              <div class="table-content none-shadow">
+                                  <table>
+                                      <ng-container *ngFor="let row of order_item;let i=index;">
+                                          <tr [ngClass]="{'dispatched': row.order_qty  == row.qty}">
+                                              <td class="w50 text-center">{{i+1}}</td>
+                                              <td> {{row.product_name | titlecase}} 
+                                                  <strong  *ngIf="row.product_code != ''">({{row.product_code}})</strong> 
+                                              </td>
+                                              <td class="w130 text-right">{{row.order_qty}}</td>
+                                              <td class="w130 text-right">{{row.qty}}</td>
+                                              <td class="w130 text-right">
+                                                  <ng-container *ngIf="row.order_qty  == row.qty">
+                                                      {{row.dispatch_qty}}
+                                                  </ng-container>
+                                                  
+                                                  
+                                                  <ng-container *ngIf="row.order_qty  != row.qty">
+                                                      
+                                                      <div class="th-search-acmt" [ngClass]="{'error-block' :row.qty == 0 ?  row.dispatch_qty > row.order_qty : row.dispatch_qty > (row.qty > 0 && row.order_qty - row.qty)}">
+                                                          <mat-form-field>
+                                                              <input type="text" class="text-right"  matInput onkeypress="return event.charCode>=48 && event.charCode<=57" placeholder="Dispatch QTY."
+                                                              [name]="'dispatch_qty'+i"
+                                                              #dispatch_qty="ngModel"
+                                                              [(ngModel)]="row.dispatch_qty"  (ngModelChange)="checkValidation(row.order_qty, row.qty,row.dispatch_qty, i+1)">
+                                                          </mat-form-field>
+                                                      </div>
+                                                  </ng-container>
+                                              </td>
+                                              
+                                          </tr>  
+                                      </ng-container>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
-    <div mat-dialog-actions>
-      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-      <button mat-raised-button color="accent" type="submit" [disabled]="savingFlag == true"
-        [ngClass]="{'loading': savingFlag == true}">
-        {{savingFlag == true ? 'Saving' : 'Save'}}
-      </button>
-    </div>
-  </form>
+      <!-- ITEM DATA -->
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  <button mat-raised-button color="accent" type="submit" [disabled]="savingFlag == true"
+  [ngClass]="{'loading': savingFlag == true}">
+  {{savingFlag == true ? 'Saving' : 'Save'}}
+</button>
+</div>
+</form>
 </div>
 
 <div class="edit-modal" *ngIf="data.from=='Secondary_order'">
@@ -501,3 +592,155 @@
   </form>
 </div>
 <!--month wise secondary excel download provisioon -->
+
+
+
+
+<div class="edit-modal" *ngIf="data.from == 'stock_product_trans'">
+  <p class="heading">Product:- {{data.stockProductTrans.product_detail}}</p>
+  <div mat-dialog-content>
+      <div class="mat-tabbar">
+          <button mat-button [ngClass]="{'active' : tabType=='stock'}" (click)="tabType='stock';">
+              Stock
+          </button>
+          
+          <button mat-button [ngClass]="{'active' : tabType=='sales_return'}" (click)="tabType='sales_return'; ActiveTab='sales_incoming'; getStock()">
+              Sales Return
+          </button>
+      </div>
+      
+      <div class="mat-tabbar">
+          <ng-container *ngIf="tabType == 'stock' ">
+              <button mat-button [ngClass]="{'active' : ActiveTab=='incoming'}" (click)="ActiveTab='incoming';">
+                  Incoming
+              </button>
+              <button mat-button [ngClass]="{'active' : ActiveTab=='outgoing'}" (click)="ActiveTab='outgoing';">
+                  Outgoing
+              </button>
+          </ng-container>
+          
+          <ng-container *ngIf="tabType == 'sales_return' ">
+              <button mat-button [ngClass]="{'active' : ActiveTab=='sales_incoming'}" (click)="ActiveTab='sales_incoming';">
+                  Incoming
+              </button>
+              
+              <button mat-button [ngClass]="{'active' : ActiveTab=='sales_outgoing'}" (click)="ActiveTab='sales_outgoing';">
+                  Outgoing
+              </button>
+          </ng-container>
+      </div>
+      
+      <ng-container *ngIf="tabType=='stock'">
+          <div class="cs-table left-right-10" *ngIf="ActiveTab == 'incoming' && dr_inDetails.length">
+              <div class=" border-top">
+                  <div class="table-head">
+                      <table>
+                          <tr>
+                              <th class="w50 text-center">Sr.No</th>
+                              <th class="w100">Date Created</th>
+                              <th class="w100 text-center">Qty</th>
+                              <!-- <th class="w100 text-center">Point Credit</th> -->
+                          </tr>
+                      </table>
+                  </div>
+              </div>
+              
+              <div class="table-container pb0">
+                  <div class="table-content none-shadow">
+                      <table>
+                          <ng-container *ngFor="let row of dr_inDetails;let i=index;">
+                              <tr>
+                                  <td class="w50 text-center">{{i+1}}</td>
+                                  <td class="w100">{{row.date_created | date:'d MMM y hh:mm a'}}</td>
+                                  <td class="w100 text-center">{{row.product_qty}}</td>
+                                  <!-- <td class="w100 text-center">{{row.product_points}}</td> -->
+                              </tr>  
+                          </ng-container>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          
+          
+          
+          <div class="cs-table left-right-10" *ngIf="ActiveTab == 'outgoing' && dr_outDetails.length">
+              <div class=" border-top">
+                  <div class="table-head">
+                      <table>
+                          <tr>
+                              <th class="w50 text-center">Sr.No</th>
+                              <th class="w100">Date Created</th>
+                              <th class="w100 text-center">Qty</th>
+                              <!-- <th class="w100 text-center">Point Debit</th> -->
+                          </tr>
+                      </table>
+                  </div>
+              </div>
+              
+              <div class="table-container pb0">
+                  <div class="table-content none-shadow">
+                      <table>
+                          <ng-container *ngFor="let row of dr_outDetails;let i=index;">
+                              <tr>
+                                  <td class="w50 text-center">{{i+1}}</td>
+                                  <td class="w100">{{row.date_created | date:'d MMM y hh:mm a'}}</td>
+                                  <td class="w100 text-center">{{row.product_qty}}</td>
+                                  <!-- <td class="w100 text-center">{{row.product_points}}</td> -->
+                              </tr>  
+                          </ng-container>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          
+          <ng-container *ngIf="(dr_outDetails.length <= 0 && ActiveTab == 'outgoing') || (dr_inDetails.length <= 0 && ActiveTab == 'incoming')">
+              <app-not-result-found></app-not-result-found>
+          </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="tabType=='stock'">
+          <div class="cs-table left-right-10" *ngIf="ActiveTab == 'sales_incoming' || ActiveTab == 'sales_outgoing'">
+              <div class=" border-top">
+                  <div class="table-head">
+                      <table>
+                          <tr>
+                              <th class="w50 text-center">Sr.No</th>
+                              <th class="w100">Date Created</th>
+                              <th class="w100 text-center">Qty</th>
+                              <!-- <th class="w100 text-center">Point Credit</th> -->
+                          </tr>
+                      </table>
+                  </div>
+              </div>
+              
+              <div class="table-container pb0">
+                  <div class="table-content none-shadow">
+                      <table>
+                          <ng-container *ngFor="let row of salesIn;let i=index;">
+                              <tr>
+                                  <td class="w50 text-center">{{i+1}}</td>
+                                  <td class="w100">{{row.date_created | date:'d MMM y hh:mm a'}}</td>
+                                  <td class="w100 text-center">{{row.product_qty}}</td>
+                              </tr>  
+                          </ng-container>
+
+                          <ng-container *ngFor="let row of salesOut;let i=index;">
+                              <tr>
+                                  <td class="w50 text-center">{{i+1}}</td>
+                                  <td class="w100">{{row.date_created | date:'d MMM y hh:mm a'}}</td>
+                                  <td class="w100 text-center">{{row.product_qty}}</td>
+                              </tr>  
+                          </ng-container>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          <ng-container *ngIf="(salesIn.length == 0 && ActiveTab == 'sales_incoming') || (salesOut.length == 0 && ActiveTab == 'sales_outgoing')">
+              <app-not-result-found></app-not-result-found>
+          </ng-container>
+      </ng-container>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</div>

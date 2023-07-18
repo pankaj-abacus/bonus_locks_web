@@ -41,7 +41,9 @@ export class CompanyDispatchDetailComponent implements OnInit {
   cartennumber:any;
   gatePassAssign:any =[];
   assign_login_data2:any ={};
-
+  
+  
+  
   constructor(public route:ActivatedRoute,public service:DatabaseService, public rout: Router,
     public dialog: MatDialog,public session:sessionStorage ,public dialogs:DialogComponent,public toast:ToastrManager) { 
       
@@ -70,6 +72,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
     billDatadetail()
     {
       this.skLoading = true;
+      this.invoice_detail = '';
       this.service.post_rqst({'bill_id': this.id},"Dispatch/tallyInvoiceCreditBillingDetail")
       .subscribe((result=>{
         if(result['statusCode']==200){
@@ -80,9 +83,9 @@ export class CompanyDispatchDetailComponent implements OnInit {
           this.dispacthItemDetail();
           this.getdispatchMasterboxdetail();
           this.getmasterbox('',this.invoice_detail.order_no);
-          for (let i = 0; i < this.billing_list.length; i++) {
-            this.dispatchItem.push({'item_code':this.billing_list[i]['product_code'], 'sale_qty':this.billing_list[i]['qty'], 'item_name':this.billing_list[i]['product_name'], 'dispatch_qty':0, })
-          }
+          // for (let i = 0; i < this.billing_list.length; i++) {
+          //   this.dispatchItem.push({'item_code':this.billing_list[i]['product_code'], 'sale_qty':this.billing_list[i]['qty'], 'remaining_qty':this.billing_list[i]['qty'], 'item_name':this.billing_list[i]['product_name'], 'dispatch_qty':0, })
+          // }
           this.payment_list=result['payment_list'];
           this.dispatch_coupon=result['all_dispatch'];
           this.getdispatchDetail();
@@ -97,7 +100,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
         }
       }))
     }
-
+    
     openDialog(type, number): void {  
       const dialogRef = this.dialog.open(GatepassAddComponent, {
         width: '1024px',
@@ -112,7 +115,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result != false){
-         
+          
         }
       });
     }
@@ -172,6 +175,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
     }
     
     getdispatchDetail(){
+      this.dispatchItem =[];
       this.service.post_rqst({'invoice_id':this.id, 'invoice_no':this.invoice_detail.order_no},'Dispatch/checkCouponCodeCheck').subscribe((result)=>
       {
         if (result['statusCode'] == 200){
@@ -181,7 +185,12 @@ export class CompanyDispatchDetailComponent implements OnInit {
           if(this.dispatchQTY == this.dispatchInvoice){
             this.dispatch_status = 'Dispatched';
           };  
-          this.dispatchItem = result['dispatch']['dispatch_item'];
+          for (let i = 0; i < result['dispatch']['dispatch_item'].length; i++) {
+            this.dispatchItem.push({'item_code':result['dispatch']['dispatch_item'][i]['item_code'], 'sale_qty':result['dispatch']['dispatch_item'][i]['sale_qty'], 'remaining_qty':result['dispatch']['dispatch_item'][i]['sale_qty'], 'item_name':result['dispatch']['dispatch_item'][i]['item_name'], 'sale_dispatch_qty':result['dispatch']['dispatch_item'][i]['sale_dispatch_qty'], 'id':result['dispatch']['dispatch_item'][i]['id'], 'dispatch_qty':0, })
+          }
+          if(this.dispatchItem.length == 0){
+            this.rout.navigate(['company-dispatch']);
+          }
           this.couponNumber.coupon_number ='';
         }
         else{
@@ -197,6 +206,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
     dispatchedCoupon:any ={};
     
     dispatchItems(number,couponGrandMasterId){
+      this.dispatchItem = [];
       this.service.post_rqst({'coupon_code':number, 'dispatch_status':this.dispatch_status, 'bill_dispatch_type':this.invoice_detail.bill_dispatch_type, 'dr_code':this.invoice_detail.dr_code, 'created_by_name':this.data.created_by_name, 'created_by_id':this.data.created_by_id, 'company_name':this.invoice_detail.company_name,  'invoice_id':this.id, 'invoice_no':this.invoice_detail.order_no,'couponGrandMasterId':couponGrandMasterId},'Dispatch/checkCouponCodeCheck').subscribe((result)=>
       {
         if (result['statusCode'] == 200){
@@ -204,6 +214,10 @@ export class CompanyDispatchDetailComponent implements OnInit {
           this.dispatchQTY= result['sale_dispatch_qty'];
           this.dispatchInvoice= result['invoice_qty'];
           this.dispatchItem = result['dispatch'];
+          
+          console.log(this.dispatchItem, 'this.dispatchItem');
+          
+          
           if(this.dispatchedCoupon){
             for (let i = 0; i < this.temCoupon.length; i++) {
               if(this.temCoupon[i]['coupon_no'] == this.dispatchedCoupon){
@@ -270,7 +284,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
       });
     }
     dispacthItemDetail(){
-      this.service.post_rqst({'invoice_no':this.invoice_detail.order_no},'Dispatch/dispatchedCouponList').subscribe((result)=>
+      this.service.post_rqst({'invoice_id':this.id, 'invoice_no':this.invoice_detail.order_no},'Dispatch/dispatchedCouponList').subscribe((result)=>
       {
         if (result['statusCode'] == 200){
           this.couponList= result['result'];
@@ -300,7 +314,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
     }
     getmasterbox(searcValue,bill_number) {
       this.filter.coupon_code =searcValue;
-      this.service.post_rqst({ 'data':{'filter': this.filter,'bill_number':bill_number} }, 'Dispatch/fetchMasterGrandCouponDropdown').subscribe((resp) => {
+      this.service.post_rqst({ 'data':{'filter': this.filter, 'invoice_id':this.id, 'bill_number':bill_number} }, 'Dispatch/fetchMasterGrandCouponDropdown').subscribe((resp) => {
         if (resp['statusCode'] == 200) {
           this.masterboxData = resp['master_grand_coupon'];
         }
@@ -326,11 +340,11 @@ export class CompanyDispatchDetailComponent implements OnInit {
     }
     
     masterQTY:any = 0;
-
+    
     printData(data,invoice): void
     {
       
-      this.service.post_rqst({ 'data':{'id': data.id,'bill_number':invoice} }, 'Dispatch/fetchMasterGrandCouponForPrint').subscribe((resp) => {
+      this.service.post_rqst({ 'data':{'id': data.id,'bill_number':invoice, 'invoice_id':this.id, 'print':'yes'} }, 'Dispatch/fetchMasterGrandCouponForPrint').subscribe((resp) => {
         if (resp['statusCode'] == 200) {
           this.printdata = resp['master_grand_coupon'];
           if(this.printdata.length > 0){
@@ -420,7 +434,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
           @page { 
             margin: 0.00in 0.00in  0.00in 0.00in;
           }
-         
+          
           body
           {
             font-family: 'arial';
@@ -450,6 +464,42 @@ export class CompanyDispatchDetailComponent implements OnInit {
               }, error => {
               })
             }
+          })
+        }
+        
+        
+        
+        
+        checkQty(sale_dispatch_qty, sale_qty, remaining_qty, id, i){ 
+          if(sale_dispatch_qty == 0 ){
+            if((parseInt(remaining_qty)) > sale_qty){
+              this.toast.errorToastr('Row number ' + i + ' QTY. can not be greater than' + sale_qty);
+              return;
+            }
+            else{
+              this.updateQTY(id, remaining_qty)
+            }
+          }
+          else{
+            this.updateQTY(id, remaining_qty);
+          }
+        }
+        
+        updateQTY(id, remaining_qty){
+          this.savingFlag = true;
+          this.service.post_rqst({'id': id,'cancel_qty':remaining_qty}, 'Dispatch/deleteDispatchItem').subscribe((resp) => {
+            if (resp['statusCode'] == 200) {
+              this.toast.successToastr(resp['statusMsg']);     
+              this.dispatchItem =[];         
+              this.billDatadetail();
+              this.savingFlag = false;
+            }
+            else {
+              this.toast.errorToastr(resp['statusMsg']);
+              this.savingFlag = false;
+              return;
+            }
+          }, error => {
           })
         }
       }

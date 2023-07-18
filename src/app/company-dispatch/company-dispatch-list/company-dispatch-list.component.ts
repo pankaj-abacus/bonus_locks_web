@@ -97,7 +97,7 @@ export class CompanyDispatchListComponent implements OnInit {
       }
       if (this.filter.active_tab && (this.filter.active_tab=='Pending Gatepass' || this.filter.active_tab=='Dispatch Gatepass')) {
         this.active_tab = this.filter.active_tab
-        this.getGeatePass('');
+        this.getGatePass('');
       }
       else if(this.filter.active_tab && (this.filter.active_tab=='Pending Dispatch' || this.filter.active_tab=='Dispatched')){
         this.active_tab = this.filter.active_tab
@@ -108,7 +108,7 @@ export class CompanyDispatchListComponent implements OnInit {
       }
 
       else if((this.assign_login_data2.view_dispatch_guard== '1' && this.assign_login_data2.add_dispatch_guard== '1') && (this.active_tab=='Pending Gatepass' || this.active_tab=='Dispatched Gatepass')){
-        this.getGeatePass('');
+        this.getGatePass('');
       }
       else{
 
@@ -122,7 +122,7 @@ export class CompanyDispatchListComponent implements OnInit {
       this.start = this.start - this.page_limit;
       
       if(active_tab == 'Dispatch Gatepass' || active_tab=='Pending Gatepass'){
-        this.getGeatePass('');
+        this.getGatePass('');
       }
       else if(active_tab == 'Sales Retun'){
         this.getSalesReturn('');
@@ -136,7 +136,7 @@ export class CompanyDispatchListComponent implements OnInit {
       
       this.start = this.start + this.page_limit;
       if(active_tab == 'Dispatch Gatepass' || active_tab=='Pending Gatepass'){
-        this.getGeatePass('');
+        this.getGatePass('');
       }
       else if(active_tab == 'Sales Retun'){
         this.getSalesReturn('');
@@ -173,6 +173,7 @@ export class CompanyDispatchListComponent implements OnInit {
     
     billData(action: any = '') {
       this.loader = true;
+      this.gatePassAssign = [];
       
       if (action == "refresh") {
         this.filter = {};
@@ -236,7 +237,7 @@ export class CompanyDispatchListComponent implements OnInit {
     
     
     gate_pass_list:any =[];
-    getGeatePass(action: any = '') {
+    getGatePass(action: any = '') {
       if (action == "refresh") {
         this.filter = {};
         this.gate_pass_list = [];
@@ -339,7 +340,7 @@ export class CompanyDispatchListComponent implements OnInit {
     
     
     
-    select_item(event,indx)
+    select_item(event,indx,organisation_name)
     {        
 
 
@@ -348,17 +349,26 @@ export class CompanyDispatchListComponent implements OnInit {
         this.organizationFlag = true;
         return
       }
+      
 
       if(event.checked)
       {
-        this.gatePassAssign.push(this.distributor_list[indx]);
-        let idx = this.gatePassUnassign.findIndex(row => row.id == this.distributor_list[indx].id);
-        this.gatePassUnassign.splice(idx,1);
+        if(this.filter.organisation_name != organisation_name){
+          this.toast.errorToastr('Organization filter not match');
+          this.organizationFlag = true;
+          return
+        }
+        else{
+          this.gatePassAssign.push(this.distributor_list[indx]);
+          let index = this.gatePassUnassign.findIndex(row => row.id == this.distributor_list[indx].id);
+          this.gatePassUnassign.splice(index,1);
+        }
+        
       }
       else
       {
-        let idx = this.gatePassAssign.findIndex(row => row.id == this.distributor_list[indx].id);
-        this.gatePassAssign.splice(idx,1);
+        let index = this.gatePassAssign.findIndex(row => row.id == this.distributor_list[indx].id);
+        this.gatePassAssign.splice(index,1);
         this.gatePassUnassign.push(this.distributor_list[indx]);
         this.organizationFlag = false;
       }
@@ -400,7 +410,7 @@ export class CompanyDispatchListComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result != false){
-          this.getGeatePass('');
+          this.getGatePass('');
         }
       });
     }
@@ -414,7 +424,7 @@ export class CompanyDispatchListComponent implements OnInit {
       this.filter={};
       this.organizationFlag = false;
       if(active_tab == 'Dispatch Gatepass' || active_tab=='Pending Gatepass'){
-        this.getGeatePass('');
+        this.getGatePass('');
       }
       else if(active_tab == 'Sales Retun'){
         this.getSalesReturn('');

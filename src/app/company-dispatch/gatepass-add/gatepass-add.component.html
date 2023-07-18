@@ -21,29 +21,29 @@
               <mat-label>Invoice No.</mat-label>
               <input matInput placeholder="Type Here ..."  name="invoice_number" #invoice_number="ngModel" [(ngModel)]="data.invoice_number" required>
             </mat-form-field>
-
+            
             <div class="alert alert-danger" *ngIf="delivery_boy_name.touched || f.submitted">
               <p *ngIf="delivery_boy_name.errors?.required">This field is required</p>
             </div>
           </div>
-
+          
           <div class="col s12 m3 l3">
             <mat-form-field  appearance="outline">
               <mat-label>E-Way Bill no.</mat-label>
               <input matInput placeholder="Type Here ..."  name="ev_bill_no" #ev_bill_no="ngModel" [(ngModel)]="data.ev_bill_no" required>
             </mat-form-field>
-
+            
             <div class="alert alert-danger" *ngIf="delivery_boy_name.touched || f.submitted">
               <p *ngIf="delivery_boy_name.errors?.required">This field is required</p>
             </div>
           </div>
-
+          
           <div class="col s12 m3 l3">
             <mat-form-field  appearance="outline">
               <mat-label>Driver Name</mat-label>
               <input matInput placeholder="Type Here ..."  name="delivery_boy_name" #delivery_boy_name="ngModel" [(ngModel)]="data.delivery_boy_name" required>
             </mat-form-field>
-
+            
             <div class="alert alert-danger" *ngIf="delivery_boy_name.touched || f.submitted">
               <p *ngIf="delivery_boy_name.errors?.required">This field is required</p>
             </div>
@@ -59,7 +59,7 @@
               <p *ngIf="mobile_number.errors?.maxlength || mobile_number.errors?.minlength">Mobile No should be of 10 digits..</p>
             </div>
           </div>
-      
+          
           
         </div>
         <div class="row">
@@ -73,7 +73,7 @@
               <p *ngIf="vehicle_number.errors?.required">This field is required</p>
             </div>
           </div>
-
+          
           <div class="col s12 m3 l3">
             <mat-form-field  appearance="outline">
               <mat-label>Transportation Mode</mat-label>
@@ -125,7 +125,7 @@
                 <tr *ngFor="let row of gatePassAssign; let i=index;">
                   <td class="w60 text-center">{{i+1}}</td>
                   <td class="w100">{{row.date_created | date:'dd MMM yyyy'}}</td>
-                  <td>{{row.company_name}}</td>
+                  <td>{{row.customer_name ? row.customer_name : row.company_name}}</td>
                   <!-- <td class="w120">{{row.bill_dispatch_type}}</td> -->
                   <td class="w120">{{row.order_no}}</td>
                 </tr>
@@ -265,13 +265,13 @@
       <tr>
         <td style="font-size: 13px; padding: 10px 16px; font-weight: 600; border-bottom: 1px solid #000; width: 120px;">Date Created</td>
         <td style="font-size: 13px; padding: 10px 16px; font-weight: 600; border-bottom: 1px solid #000;">Company Name</td>
-        <td style="font-size: 13px; padding: 10px 16px; font-weight: 600; border-bottom: 1px solid #000; width: 120px;">Bill Number</td>
+        <td style="font-size: 13px; padding: 10px 16px; font-weight: 600; border-bottom: 1px solid #000; width: 120px;">Order Number</td>
         <td style="font-size: 13px; padding: 10px 16px; font-weight: 600; border-bottom: 1px solid #000; width: 120px; text-align:center">Total Quantity</td>
       </tr>
       <tr *ngFor="let row of gatePassDetail.invoice;">
         <td style="font-size: 13px; padding: 10px 16px;">{{row.date_created | date:'d MMM y'}}</td>
         <td style="font-size: 13px; padding: 10px 16px;">{{row.customer_name  ? (row.customer_name | titlecase) : ''}}</td>
-        <td style="font-size: 13px; padding: 10px 16px;">{{row.invoice_number}}</td>
+        <td style="font-size: 13px; padding: 10px 16px;">{{row.order_no}}</td>
         <td style="font-size: 13px; padding: 10px 16px; text-align:center">{{row.total_order_qty}}</td>
       </tr>
     </table>
@@ -298,9 +298,18 @@
             <table>
               <tr>
                 <th class="w60  text-center">Sr. No</th>
-                <th class="w140">Coupon Code</th>
-                <th class="w140">Coupon Type</th>
+                <ng-container *ngIf="modalData.status != 'scan' ">
+                  <th class="w200">Company Name</th>
+                </ng-container>
+                <ng-container *ngIf="modalData.status == 'scan' ">
+                  <th class="w140">Coupon Code</th>
+                  <th class="w140">Coupon Type</th>
+                </ng-container>
+                
                 <th>Product Detail</th>
+                <ng-container *ngIf="modalData.status != 'scan' ">
+                  <th class="w80 text-center">QTY</th>
+                </ng-container>
               </tr>
             </table>
           </div>
@@ -312,17 +321,27 @@
               <ng-container *ngIf="!skLoading">
                 <tr *ngFor="let row of itemData; let i=index;">
                   <td class="w60 text-center">{{i+1}}</td>
-                  <td class="w140">{{row.coupon_code}}</td>
-                  <td class="w140">{{row.coupon_type}}</td>
+                  <ng-container *ngIf="modalData.status != 'scan' ">
+                    <td class="w200">{{row.dr_detail}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="modalData.status == 'scan' ">
+                    <td class="w140">{{row.coupon_code}}</td>
+                    <td class="w140">{{row.coupon_type}}</td>
+                  </ng-container>
                   <td>{{row.product_detail}}</td>
+                  <ng-container *ngIf="modalData.status != 'scan' ">
+                  <td class="w80 text-center">{{row.product_qty}}</td>
+                  </ng-container>
                 </tr>
               </ng-container>
               
               <ng-container *ngIf="skLoading">
                 <tr class="sk-loading" *ngFor="let row of [].constructor(5)">
                   <td class="w60"><div>&nbsp;</div></td>
-                  <td class="w140"><div>&nbsp;</div></td>
-                  <td class="w140"><div>&nbsp;</div></td>
+                  <ng-container *ngIf="modalData.status == 'scan' ">
+                    <td class="w140"><div>&nbsp;</div></td>
+                    <td class="w140"><div>&nbsp;</div></td>
+                  </ng-container>
                   <td><div>&nbsp;</div></td>
                 </tr>
               </ng-container>

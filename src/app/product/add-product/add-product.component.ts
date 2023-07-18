@@ -123,6 +123,7 @@ export class AddProductComponent implements OnInit {
       this.data.sub_segment_id = this.data.sub_category_id.toString();
       this.data.brand = this.data.brand.map(el => el.trim());
       this.data.color = this.data.color.map(el => el.trim());
+      this.data.point_category_id = this.data.point_category_id.toString();
       this.data.boxWOItem=this.data.boxWOItem.toString();
 
       if (this.data.category_id) {
