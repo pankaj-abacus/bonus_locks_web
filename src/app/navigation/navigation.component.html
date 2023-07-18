@@ -282,29 +282,44 @@
                                 Redeem Request
                             </a>
                         </li> -->
-            <li class="dropdown" *ngIf="login_data.id =='1' || login_data.view_redeem_request=='1'">
-                <a mat-button (click)="toggleDropdown(6);clearFilter()" [ngClass]="{'active':accountactive}"><i
+            <li class="dropdown"  *ngIf="login_data.id =='1' || login_data.view_redeem_request=='1'">
+                <a mat-button (click)="clearFilter();toggleDropdown(6)" [ngClass]="{'active':accountactive}" ><i
                         class="material-icons">redeem</i>Redeem Request</a>
-                <ul>
+
+                        <ul>
+                          <li>
+                            <a mat-button routerLink="/redeem-request/Cash" routerLinkActive="active"
+                                (click)="clearFilter()">
+                                Cash Request
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a mat-button routerLink="/redeem-request/Gift" routerLinkActive="active"
+                                (click)="clearFilter()">
+                                Gift Request
+                            </a>
+                        </li> -->
+                        </ul>
+                <!-- <ul>
                     <li>
                         <a mat-button routerLink="/redeem-request/Bank" routerLinkActive="active"
                             (click)="clearFilter()">
                             Bank Request
                         </a>
                     </li>
-                    <!-- <li>
+                    <li>
                         <a mat-button routerLink="/redeem-request/Paytm" routerLinkActive="active"
                             (click)="clearFilter()">
                             Paytm Request
                         </a>
-                    </li> -->
-                    <!-- <li>
+                    </li>
+                    <li>
                         <a mat-button routerLink="/redeem-request/Khalti" routerLinkActive="active"
                             (click)="clearFilter()">
                             Khalti Request
                         </a>
-                    </li> -->
-                </ul>
+                    </li>
+                </ul> -->
             </li>
 
             <li *ngIf="login_data.view_task=='1'">
