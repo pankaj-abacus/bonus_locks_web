@@ -37,6 +37,7 @@ export class AddDistributionComponent implements OnInit {
     assignUserId = [];
     dr_type: any;
     brand_list: any = [];
+    competitorBrandList: any = [];
     
     options: string[] = ['One', 'Two', 'Three'];
     filteredOptions: Observable<string[]>;
@@ -47,7 +48,7 @@ export class AddDistributionComponent implements OnInit {
     tmp_drlist: any = [];
     drlist: any = [];
     tmpsearchdr: any = {};
-    
+
     filter_data: any;
     isLoading = false;
     errorMsg: string;
@@ -61,19 +62,19 @@ export class AddDistributionComponent implements OnInit {
     myDate: Date;
     userData: any;
     pageType: any;
-    front_img_id:any;
-    back_img_id:any;
-    pan_img_id:any;
-    bank_img_id:any;
-    uploadurl:any;
-    panBase64:boolean = false;
-    bankImgBase64:boolean = false;
-    docFrontBase64:boolean = false;
-    docBackBase64:boolean = false;
-    document_image :any;
-    document_image_back :any;
-    pan_img :any;
-    image_id:any;
+    front_img_id: any;
+    back_img_id: any;
+    pan_img_id: any;
+    bank_img_id: any;
+    uploadurl: any;
+    panBase64: boolean = false;
+    bankImgBase64: boolean = false;
+    docFrontBase64: boolean = false;
+    docBackBase64: boolean = false;
+    document_image: any;
+    document_image_back: any;
+    pan_img: any;
+    image_id: any;
     image = new FormData();
     
     constructor(
