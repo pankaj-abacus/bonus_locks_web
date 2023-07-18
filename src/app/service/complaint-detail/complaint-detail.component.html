@@ -140,36 +140,21 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                </div>
-                <div class="col s12 mt16 m12 l12">
-                    <div class="card" *ngIf="!skLoading">
-                        <div class="card-head">
+                        <div class="card-head mt15" >
                             <h2>Complaint Images</h2>
                         </div>
-                        <div class="card-body">
-                            <div class="img-container">
-                                <div class="image-block" *ngFor="let row of complaintImg">
-                                    <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
+                        <div class="card-body" >
+                            <div class="grid-box">
+                                <div class="block-feilds">
+                                    <div class="doc-img">
+                                        <div class="image-block" *ngFor="let row of complaintImg">
+                                            <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Skeleton start -->
-                    <div class="card" *ngIf="skLoading">
-                        <div class="sk-head">
-                            <h2>&nbsp;</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="img-container">
-                                <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
-                                    &nbsp; 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Skeleton end -->
                     
                 </div>
                 <div class="col s12 mt16 m12 l12" *ngIf="getData.inspection_status!='Pending'">
@@ -198,37 +183,22 @@
                                     <p>{{getData.inspection_remark ? getData.inspection_remark:'N/A'}}</p>
                                 </div>
                             </div>
+                            <div class="card-head mt15" >
+                                <h2>Inspection Images</h2>
+                            </div>
+                            <div class="card-body" >
+                                <div class="grid-box">
+                                    <div class="block-feilds">
+                                        <div class="doc-img">
+                                            <div class="image-block" *ngFor="let row of inspectionImg">
+                                                <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>             
-                </div>
-                <div class="col s12 mt16 m12 l12" *ngIf="getData.inspection_status!='Pending'">
-                    <div class="card" *ngIf="!skLoading">
-                        <div class="card-head">
-                            <h2>Inspection Images</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="img-container">
-                                <div class="image-block" *ngFor="let row of inspectionImg">
-                                    <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Skeleton start -->
-                    <div class="card" *ngIf="skLoading">
-                        <div class="sk-head">
-                            <h2>&nbsp;</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="img-container">
-                                <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
-                                    &nbsp; 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Skeleton end -->
-                    
                 </div>
                 <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Closed'">
                     <div class="card" *ngIf="!skLoading">
@@ -250,6 +220,20 @@
                                 <div class="block-feilds">
                                     <span>Closing Remark</span>
                                     <p>{{getData.closing_remark ? getData.closing_remark:'N/A'}}</p>
+                                </div>
+                            </div>
+                            <div class="card-head mt15" >
+                                <h2>Closing Images</h2>
+                            </div>
+                            <div class="card-body" >
+                                <div class="grid-box">
+                                    <div class="block-feilds">
+                                        <div class="doc-img">
+                                            <div class="image-block" *ngFor="let row of closeImg">
+                                                <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -274,7 +258,6 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
             <div class="col s12 m8  l4">
