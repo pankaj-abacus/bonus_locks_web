@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component,NgModule, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrManager } from 'ng6-toastr-notifications';
-import { DatabaseService } from 'src/_services/DatabaseService';
 import { DialogComponent } from 'src/app/dialog.component';
+import { MatDialog, } from '@angular/material';
+import { DatabaseService } from 'src/_services/DatabaseService';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-stock-list',
   templateUrl: './stock-list.component.html',
   styleUrls: ['./stock-list.component.scss']
+  
 })
 export class StockListComponent implements OnInit {
-
   stock_list: any = [];
   active_tab: any;
   loader: boolean = false;
@@ -58,15 +58,15 @@ export class StockListComponent implements OnInit {
         this.stock_list = [];
         this.start = 0;
       }
-      // if (this.pagenumber > this.total_page) {
-      //   this.pagenumber = this.total_page;
-      //   this.start = this.pageCount - this.page_limit;
-      // }
+      if (this.pagenumber > this.total_page) {
+        this.pagenumber = this.total_page;
+        this.start = this.pageCount - this.page_limit;
+      }
       if (this.start < 0) {
         this.start = 0;
       }
       
-      this.apiHit.post_rqst({'filter': this.filter,'start': this.start, 'pagelimit': this.page_limit},"Stock/stockDetails")
+      this.apiHit.post_rqst({'filter': this.filter,'start': this.start, 'pagelimit': this.page_limit},"Stock/stock_details")
       .subscribe((result => {
         if(result['statusCode']==200){
           this.stock_list = result['result'];
@@ -83,7 +83,6 @@ export class StockListComponent implements OnInit {
           this.total_page = Math.ceil(this.pageCount / this.page_limit);
           this.sr_no = this.pagenumber - 1;
           this.sr_no = this.sr_no * this.page_limit;
-          // this.service.count_list();
         }
         else{
           this.loader = false;
@@ -91,21 +90,7 @@ export class StockListComponent implements OnInit {
         }
       })
       )}
-      // openDialog(): void {
-      //   const dialogRef = this.dialog.open(StockmodalComponent,{
-      //     width: '600px',
-      //     panelClass:'cs-modal',
-      //     data:{
-            
-      //     }
-      //   })
-        
-      //   dialogRef.afterClosed().subscribe(result => {
-      //     if (result == true) {
-      //       this.stockdata('');
-      //     }
-      //   })
-      // }
+      
       refresh() 
       {
         this.start= 0;
@@ -114,5 +99,6 @@ export class StockListComponent implements OnInit {
         this.service.currentUserID = ''
         this.stockdata();
       }
-
-}
+    }
+    // https://devcrm.abacusdesk.com/pearlnew/api/index.php/Work/stockDetails
+    // https://devcrm.abacusdesk.com/pearlnew/api/index.php/Stock/stockDetails

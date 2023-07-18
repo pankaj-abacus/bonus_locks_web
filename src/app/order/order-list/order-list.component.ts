@@ -158,7 +158,6 @@ export class OrderListComponent implements OnInit {
             date.setMonth(this.calenderInfo[index].month - 1);
             let MonthName = ''
             MonthName = date.toLocaleString('en-US', { month: 'short' });
-            console.log(MonthName)
             this.calenderInfo[index].month_name = MonthName
           }
 
@@ -188,12 +187,16 @@ export class OrderListComponent implements OnInit {
             this.pageCount = this.count.Hold;
             this.total_page = Math.ceil(this.pageCount / this.page_limit);
           }
-          else if (this.active_tab == 'Partially') {
-            this.pageCount = this.count.Partial_Dispact;
+          else if (this.active_tab == 'partialDispatched') {
+            this.pageCount = this.count.partialDispatched;
             this.total_page = Math.ceil(this.pageCount / this.page_limit);
           }
-          else if (this.active_tab == 'readyToDispatch') {
-            this.pageCount = this.count.readyToDispatch;
+          else if (this.active_tab == 'Dispatched') {
+            this.pageCount = this.count.Dispatched;
+            this.total_page = Math.ceil(this.pageCount / this.page_limit);
+          }
+          else if (this.active_tab == 'completeDispatched') {
+            this.pageCount = this.count.completeDispatched;
             this.total_page = Math.ceil(this.pageCount / this.page_limit);
           }
           else {

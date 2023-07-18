@@ -16,7 +16,6 @@ export class ViewMasterBoxDispatchDetailComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA)public data,  public toast:ToastrManager, public serve:DatabaseService,  public dialog:MatDialog,) { }
 
   ngOnInit() {
-    console.log(this.data);
     this.viewType=this.data.type
     this.getMasterboxdata()
     
@@ -43,8 +42,6 @@ export class ViewMasterBoxDispatchDetailComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      // this.billDatadetail();
       this.getMasterboxdata()
       
     }); 

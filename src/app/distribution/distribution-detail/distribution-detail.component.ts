@@ -70,6 +70,18 @@ export class DistributionDetailComponent implements OnInit {
     currentMonth_no: any;
     currentYear: any;
     assignedBrands:any;
+    transferRequestsList: any = [];
+    sendRequestList: any = [];
+    drStockData: any = [];
+    activeTab: any = 'Pending'
+    sendRequestTab: any = 'Pending'
+    stockTab: any = 'in_stock'
+    drType
+    tabCount: any = [];
+
+    removePercent20(inputString: string): string {
+        return decodeURIComponent(inputString.replace(/%20/g, ' '));
+    }
 
     constructor(
         public route: ActivatedRoute,
@@ -94,12 +106,17 @@ export class DistributionDetailComponent implements OnInit {
             this.userName = this.userData['data']['name'];
             this.login_data = this.session.getSession();
             this.login_data = this.login_data.data;
+            this.url = this.service.uploadUrl + 'retailer_doc/'
             this.route.params.subscribe(params => {
-                this.url = this.service.uploadUrl + 'retailer_doc/'
-                console.log(params);
-                this.dr_id=params.id
-                console.log(this.login_data);
-                
+                let  usertype
+                usertype = params.type
+                this.dr_id = params.id
+                if(usertype == 'Channel Partner'){
+                    this.drType = this.removePercent20(usertype);
+                }
+                else{
+                    this.drType = usertype
+                }
                 this.distributorDetail();
             })
             
@@ -162,6 +179,19 @@ export class DistributionDetailComponent implements OnInit {
                         this.clearFilter(); 
                         this.getRetailer();
                     }
+                    else  if (this.tabType=='transferRequests') {
+                        this.clearFilter(); 
+                        this.getTransferRequests(this.activeTab);
+                    }
+                    else  if (this.tabType=='sendRequest') {
+                        this.clearFilter(); 
+                        this.getSendRequest(this.sendRequestTab);
+                    }
+                    else  if (this.tabType=='stock') {
+                        this.clearFilter(); 
+                        this.getDrStock(this.stockTab);
+                    }
+
                     else  if (this.tabType=='Target') {
                         this.clearFilter(); 
                         this.getTarget(this.currentMonth_no,this.currentYear);
@@ -228,6 +258,15 @@ export class DistributionDetailComponent implements OnInit {
             else if (tabType == 'Point Ledger') {
                 this.getPointLedger();
             }
+            else if (tabType == 'transferRequests') {
+                this.getTransferRequests(this.activeTab);
+            }
+            else if (tabType == 'sendRequest') {
+                this.getSendRequest(this.sendRequestTab);
+            }
+            else if (tabType == 'stock') {
+                this.getDrStock(this.stockTab);
+            }
             else {
                 
             }
@@ -292,6 +331,18 @@ export class DistributionDetailComponent implements OnInit {
             
             else if (tabType == 'Point Ledger') {
                 this.getPointLedger();
+            }
+            else if (tabType == 'transferRequests') {
+                this.getTransferRequests(this.activeTab);
+            }
+            else if (tabType == 'sendRequest') {
+                this.getSendRequest(this.sendRequestTab);
+            }
+            else if (tabType == 'stock') {
+                this.getDrStock(this.stockTab);
+            }
+            else if (tabType == 'Point Ledger') {
+                this.getPointLedger()
             }
             
             else {
@@ -625,6 +676,15 @@ export class DistributionDetailComponent implements OnInit {
             else if (page == 'Point Ledger') {
                 this.getPointLedger()
             }
+            else if (page == 'transferRequests') {
+                this.getTransferRequests(this.activeTab);
+            }
+            else if (page == 'sendRequest') {
+                this.getSendRequest(this.sendRequestTab);
+            }
+            else if (page == 'stock') {
+                this.getDrStock(this.stockTab);
+            }
             else {
                 
             }
@@ -648,7 +708,8 @@ export class DistributionDetailComponent implements OnInit {
             } else if (page == 'retailer') {
                 this.getRetailer()
                 
-            } else if (page == 'ledger') {
+            } 
+            else if (page == 'ledger') {
                 if (this.ledgerType == 'ledger') {
                     this.getLedger()
                 } else
@@ -664,6 +725,15 @@ export class DistributionDetailComponent implements OnInit {
             }
             else if (page == 'Point Ledger') {
                 this.getPointLedger()
+            }
+            else if (page == 'transferRequests') {
+                this.getTransferRequests(this.activeTab);
+            }
+            else if (page == 'sendRequest') {
+                this.getSendRequest(this.sendRequestTab);
+            }
+            else if (page == 'stock') {
+                this.getDrStock(this.stockTab);
             }
             else {
                 
@@ -1055,6 +1125,144 @@ export class DistributionDetailComponent implements OnInit {
                     this.sr_no = this.sr_no * this.page_limit;
                 } else {
                     this.ledger_loader = false
+                    this.toast.errorToastr(result['statusMsg'])
+                }
+            });
+        }
+
+
+        openStockProductTransaction( stockProductTrans): void {
+            const dialogRef = this.dialog.open(StatusModalComponent, {
+                width: '500px',
+                panelClass: 'cs-modal',
+                data: {
+                    from: 'stock_product_trans',
+                    id: this.dr_id,
+                    stockProductTrans : stockProductTrans
+                }
+                
+            });
+            
+            dialogRef.afterClosed().subscribe(result => {
+                if (result == true) {
+                    this.distributorDetail()
+                }
+            });
+        }
+        
+        approveTransferRequest( requestData): void {
+            const dialogRef = this.dialog.open(StatusModalComponent, {
+                width: '500px',
+                panelClass: 'cs-modal',
+                data: {
+                    from: 'approve_transfer_equest',
+                    requestData : requestData
+                }
+            });
+            
+            dialogRef.afterClosed().subscribe(result => {
+                if (result == true) {
+                    this.distributorDetail()
+                }
+            });
+        }
+
+
+        transferRequestsListLoader: boolean = false
+        getTransferRequests(activeTab) {
+            this.transferRequestsListLoader = true
+            if (this.pagenumber > this.total_page) {
+                this.pagenumber = this.total_page;
+                this.start = this.pageCount - this.page_limit;
+            }
+            if (this.start < 0) {
+                this.start = 0;
+            }
+            this.serve.post_rqst({ id: this.dr_id, 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit, activeTab : activeTab}, "Stock/distributorRecieveRequest").subscribe((result) => {
+                if (result['statusCode'] == 200) {
+                    this.transferRequestsListLoader = false
+                    this.transferRequestsList = result['result'];
+                    this.tabCount = result['tab_count'];
+                    this.pageCount = result['count'];
+                    if (this.pagenumber > this.total_page) {
+                        this.pagenumber = this.total_page;
+                        this.start = this.pageCount - this.page_limit;
+                    }
+                    else {
+                        this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
+                    }
+                    this.total_page = Math.ceil(this.pageCount / this.page_limit);
+                    this.sr_no = this.pagenumber - 1;
+                    this.sr_no = this.sr_no * this.page_limit;
+                } else {
+                    this.transferRequestsListLoader = false
+                    this.toast.errorToastr(result['statusMsg'])
+                }
+            });
+        }
+        
+        sendRequestLoader: boolean = false
+        getSendRequest(sendRequestTab) {
+            this.sendRequestLoader = true
+            if (this.pagenumber > this.total_page) {
+                this.pagenumber = this.total_page;
+                this.start = this.pageCount - this.page_limit;
+            }
+            if (this.start < 0) {
+                this.start = 0;
+            }
+            
+            this.serve.post_rqst({ id: this.dr_id, 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit, activeTab : sendRequestTab}, "Stock/retailerSendRequest").subscribe((result) => {
+                if (result['statusCode'] == 200) {
+                    this.sendRequestLoader = false
+                    this.sendRequestList = result['result'];
+                    this.tabCount = result['tab_count'];
+                    this.pageCount = result['count'];
+                    if (this.pagenumber > this.total_page) {
+                        this.pagenumber = this.total_page;
+                        this.start = this.pageCount - this.page_limit;
+                    }
+                    else {
+                        this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
+                    }
+                    this.total_page = Math.ceil(this.pageCount / this.page_limit);
+                    this.sr_no = this.pagenumber - 1;
+                    this.sr_no = this.sr_no * this.page_limit;
+                } else {
+                    this.sendRequestLoader = false
+                    this.toast.errorToastr(result['statusMsg'])
+                }
+            });
+        }
+        
+        drStockLoader: boolean = false
+        getDrStock(stockTab) {
+            this.drStockLoader = true
+            if (this.pagenumber > this.total_page) {
+                this.pagenumber = this.total_page;
+                this.start = this.pageCount - this.page_limit;
+            }
+            if (this.start < 0) {
+                this.start = 0;
+            }
+            this.serve.post_rqst({ 'type' : this.drType , 'dr_id': this.dr_id, 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit, activeTab : stockTab}, "Stock/stockDetailsWeb").subscribe((result) => {
+                if (result['statusCode'] == 200) {
+                    this.drStockLoader = false
+                    this.drStockData = result['result'];
+                    this.tabCount = result['result']['tab_count'];
+                    this.pageCount = result['result']['count'];
+                    if (this.pagenumber > this.total_page) {
+                        this.pagenumber = this.total_page;
+                        this.start = this.pageCount - this.page_limit;
+                    }
+                    else {
+                        this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
+                    }
+                    this.total_page = Math.ceil(this.pageCount / this.page_limit);
+                    this.sr_no = this.pagenumber - 1;
+                    this.sr_no = this.sr_no * this.page_limit;
+                } else {
+                    this.drStockLoader = false
                     this.toast.errorToastr(result['statusMsg'])
                 }
             });

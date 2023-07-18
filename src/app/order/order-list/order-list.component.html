@@ -1,13 +1,13 @@
 <div class="main-container">
-  <div class="tab-surface">
+  <div class="tab-surface"  *ngIf="login_data.designation_name != 'Dispatch Planning'">
     <button *ngFor="let row of calenderInfo; let i =index;" mat-button
       [ngClass]="OrderMonth == row.month && OrderYear == row.year ? 'active' : ''"
-      (click)="orderList('',row.month,row.year);">{{row.monthYEAR | date :'MMM'}} {{row.year}}<span
-        class="order-value">&#x20B9;
-        {{row.sale ? (row.sale | number:'1.0-0') : '0'}}</span></button>
+      (click)="orderList('',row.month,row.year);">{{row.monthYEAR | date :'MMM'}} {{row.year}}
+      <span class="order-value">&#x20B9; {{row.sale ? (row.sale | number:'1.0-0') : '0'}}</span>
+    </button>
   </div>
   <div class="tools-container">
-    <h2>Primary Order</h2>
+    <h2>Primary Order </h2>
     <div class="left-auto left-auto df ac flex-gap-10">
       <button mat-icon-button matTooltip="Refresh" (click)="refresh('refresh',OrderMonth,OrderYear)">
         <i class="material-icons">refresh</i>
@@ -37,36 +37,39 @@
         </div>
       </div>
       <div class="mat-tabbar">
-        <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
-        (click)="active_tab='All';orderList('',OrderMonth,OrderYear);"><i
-          class="material-icons">done_all</i>All ({{count.all}}) </button>
+        <ng-container *ngIf="login_data.designation_name != 'Dispatch Planning'">
         <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
-          (click)="active_tab = 'Pending';orderList('',OrderMonth,OrderYear);"><i
-            class="material-icons">pending_actions</i>Pending ({{count.Pending}})</button>
+          (click)="active_tab = 'Pending';orderList('',OrderMonth,OrderYear);">
+          Pending ({{count.Pending}})
+        </button>
         <button mat-button [ngClass]="active_tab == 'Approved' ? 'active' : ''"
-          (click)="active_tab = 'Approved';orderList('',OrderMonth,OrderYear);"><i
-            class="material-icons">task_alt</i>Approved
-          ({{count.Approved}})</button>
+          (click)="active_tab = 'Approved';orderList('',OrderMonth,OrderYear);">
+          Approved ({{count.Approved}})</button>
         <button mat-button [ngClass]="active_tab == 'Reject' ? 'active' : ''"
-          (click)="active_tab = 'Reject';orderList('',OrderMonth,OrderYear);"><i
-            class="material-icons">unpublished</i>Reject
-          ({{count.Reject}})</button>
+          (click)="active_tab = 'Reject';orderList('',OrderMonth,OrderYear);">
+            Reject ({{count.Reject}})</button>
         <button mat-button [ngClass]="active_tab == 'Hold' ? 'active' : ''"
-          (click)="active_tab = 'Hold';orderList('',OrderMonth,OrderYear);"><i class="material-icons">back_hand</i>Hold
-          ({{count.Hold}})</button>
-        <!-- <button mat-button [ngClass]="active_tab == 'Partial_Dispatch' ? 'active' : ''"
-          (click)="active_tab = 'Partial_Dispatch';orderList('',OrderMonth,OrderYear);"><i
-            class="material-icons">local_shipping</i>Partially Dispatch
-          ({{count.Partial_Dispatch}})</button>
-        <button mat-button [ngClass]="active_tab == 'Dispatch' ? 'active' : ''"
-          (click)="active_tab = 'Dispatch';orderList('',OrderMonth,OrderYear);"><i
-            class="material-icons">local_shipping</i>Dispatched
-          ({{count.Dispatch}})</button> -->
-          <button mat-button [ngClass]="active_tab == 'readyToDispatch' ? 'active' : ''"
-          (click)="active_tab = 'readyToDispatch';orderList('',OrderMonth,OrderYear);"><i
-            class="material-icons">local_shipping</i>Dispatch Planned
-          ({{count.readyToDispatch}})</button>
-        </div>
+          (click)="active_tab = 'Hold';orderList('',OrderMonth,OrderYear);">
+          Hold ({{count.Hold}})</button>
+        </ng-container>
+        <ng-container *ngIf="login_data.designation_name == 'Dispatch Planning' || login_data.id == '1'">
+        <button mat-button [ngClass]="active_tab == 'dispatchPlanning' ? 'active' : ''"
+          (click)="active_tab = 'dispatchPlanning';orderList('',OrderMonth,OrderYear);">
+            Dispatch Planning ({{count.dispatchPlanning}})</button>
+          </ng-container>
+          <button mat-button [ngClass]="active_tab == 'partialDispatched' ? 'active' : ''"
+          (click)="active_tab = 'partialDispatched';orderList('',OrderMonth,OrderYear);">
+            Partially Planned ({{count.partialDispatched}})</button>
+         <button mat-button [ngClass]="active_tab == 'completeDispatched' ? 'active' : ''"
+          (click)="active_tab = 'completeDispatched';orderList('',OrderMonth,OrderYear);">
+            Complete Planned ({{count.completeDispatched}})</button>
+
+          <ng-container *ngIf="login_data.designation_name != 'Dispatch Planning'">
+        <button mat-button [ngClass]="active_tab == 'Dispatched' ? 'active' : ''"
+          (click)="active_tab = 'Dispatched';orderList('',OrderMonth,OrderYear);">
+          Dispatched ({{count.Dispatched}})</button>
+          </ng-container>
+      </div>
     </div>
   </div>
 
@@ -77,21 +80,22 @@
           <table>
             <tr>
               <th class="w50">S NO</th>
-              <th class="w140">Date</th>
-              <th class="w150">Created By</th>
-              <th class="w100">Order Id</th>
+              <th class="w110">Date</th>
+              <th class="w110">Created By</th>
+              <th class="w80">Order Id</th>
               <!-- <th class="w110" *ngIf="active_tab == 'Approved' || active_tab == 'Dispatch'">Order Number</th> -->
               <th class="w200">Company Details</th>
               <th class="w100">Account Code</th>
               <th class="w80 text-center">Total Items</th>
               <th class="w90 text-right">Item QTY.</th>
-              <th class="w90 text-right" *ngIf="active_tab == 'Partial_Dispatch'">Dispatch QTY.</th>
-              <th class="w90 text-right" *ngIf="active_tab == 'Partial_Dispatch'">Pending QTY.</th>
+              <th class="w90 text-right" *ngIf="active_tab == 'partialDispatched'">Dispatch QTY.</th>
+              <th class="w90 text-right" *ngIf="active_tab == 'partialDispatched'">Pending QTY.</th>
               <th class="w90 text-right">Order Amount</th>
               <th class="w120 text-right">Order Type</th>
               <th class="w200">Remark</th>
               <th class="w200" *ngIf="active_tab == 'Reject' || active_tab == 'Hold'">Reason</th>
-              <th class="w80" *ngIf="active_tab == 'Pending'">Action</th>
+              <th class="w100" *ngIf="active_tab == 'All'">Status</th>
+              <th class="w80 text-center" *ngIf="active_tab == 'Pending'">Action</th>
             </tr>
           </table>
         </div>
@@ -99,8 +103,8 @@
         <div class="table-head border-top">
           <table>
             <tr>
-              <th class="w50 text-center">&nbsp;</th>
-              <th class="w140">
+              <th class="w50">&nbsp;</th>
+              <th class="w110">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input">
                     <input matInput [matDatepicker]="picker2" placeholder="Date" name="date_created"
@@ -110,7 +114,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w110">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input">
                     <input matInput placeholder="Search" name="created_by_name" [(ngModel)]="search_val.created_by_name"
@@ -118,7 +122,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
+              <th class="w80">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input">
                     <input matInput placeholder="Search" name="order_id" [(ngModel)]="search_val.order_id"
@@ -152,12 +156,13 @@
               </th>
               <th class="w80 text-center">&nbsp; {{totalData.total_item}}</th>
               <th class="w90 text-right">&nbsp; {{totalData.total_order_qty}}</th>
-              <th class="w90 text-right" *ngIf="active_tab == 'Partial_Dispatch'">&nbsp;</th>
-              <th class="w90 text-right" *ngIf="active_tab == 'Partial_Dispatch'">&nbsp;</th>
-              <th class="w90 text-right">₹ {{totalData.total_amount}}</th>
+              <th class="w90 text-right" *ngIf="active_tab == 'partialDispatched'">&nbsp;</th>
+              <th class="w90 text-right" *ngIf="active_tab == 'partialDispatched'">&nbsp;</th>
+              <th class="w90 text-right">₹ {{totalData.total_amount > 0 ? (totalData.total_amount.toLocaleString('en-IN', {style:'decimal',currency:'INR'})) : '0'}}</th>
               <th class="w120 text-right">&nbsp;</th>
               <th class="w200"></th>
               <th class="w200" *ngIf="active_tab == 'Reject' || active_tab == 'Hold'">&nbsp;</th>
+              <th class="w100" *ngIf="active_tab == 'All'"></th>
               <th class="w80" *ngIf="active_tab == 'Pending'">
                 <!-- <button mat-icon-button matTooltip="Delete" [(ngModel)]="search_val.deleteAll"
                   (click)="delete('deleteAll')">
@@ -175,11 +180,11 @@
             <ng-container *ngIf="!loader">
               <tr *ngFor="let row of tmp_orderlist; let i =index;"
                 [ngClass]="{'Current': serve.currentUserID == row.id}">
-                <td class="w50 text-center">{{ i + 1 + sr_no }}</td>
-                <td class="w140">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
-                <td class="w150">{{row.created_by_name}}</td>
-                <td class="w100"><a class="link-btn" (click)="serve.setData(search_val)"
-                    [routerLink]="[ 'order-detail/', row.id ]" [queryParams]="{'id':row.id, 'status':active_tab}"
+                <td class="w50">{{ i + 1 + sr_no }}</td>
+                <td class="w110">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
+                <td class="w110">{{row.created_by_name}}</td>
+                <td class="w80"><a class="link-btn" (click)="serve.setData(search_val)"
+                    routerLink="order-detail/{{row.id }}" [queryParams]="{'id':row.id, 'status':active_tab}"
                     routerLinkActive="active">{{row.order_no}}</a></td>
                 <!-- <td class="w110" *ngIf="active_tab == 'Approved' || active_tab == 'Dispatch'">{{row.account_order_no}}
                 </td> -->
@@ -188,14 +193,17 @@
                 <td class="w100">{{row.dr_code}}</td>
                 <td class="w80 text-center">{{row.order_item}}</td>
                 <td class="w90 text-right">{{row.total_order_qty}}</td>
-                <td class="w90 text-right" *ngIf="active_tab == 'Partial_Dispatch'">{{row.dispatch_qty}}</td>
-                <td class="w90 text-right" *ngIf="active_tab == 'Partial_Dispatch'">{{row.pending_qty}}</td>
+                <td class="w90 text-right" *ngIf="active_tab == 'partialDispatched'">{{row.dispatch_qty}}</td>
+                <td class="w90 text-right" *ngIf="active_tab == 'partialDispatched'">{{row.pending_qty}}</td>
                 <td class="w90 text-right"><strong>&#x20B9; {{row.order_grand_total}}</strong></td>
                 <td class="w120 text-right"><strong>{{row.order_type}}</strong></td>
                 <td class="w200">{{row.order_create_remark}}</td>
                 <td class="w200" *ngIf="active_tab == 'Reject'|| active_tab == 'Hold' ">{{row.reason_reject}}</td>
+                <td class="w100 {{row.order_status}}" *ngIf="active_tab == 'All'">
+                  {{row.order_status=='partialDispatched'?'In Process':row.order_status}}
+                </td>
                 <td class="w80" *ngIf="active_tab == 'Pending'">
-                  <div class="action-button" *ngIf="login_data.delete_secondary_orders=='1'">
+                  <div class="action-button text-center" *ngIf="login_data.delete_secondary_orders=='1'">
                     <button mat-icon-button matTooltip="Delete" (click)="delete('singleDelete', row.id)">
                       <i class="material-icons del">delete</i>
                     </button>
@@ -210,13 +218,13 @@
                 <td class="w50">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w140 text-center">
+                <td class="w110 text-center">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w110">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100">
+                <td class="w80">
                   <div>&nbsp;</div>
                 </td>
                 <!-- <td *ngIf="active_tab == 'Approved' || active_tab == 'Dispatch'" class="w110">
@@ -234,10 +242,10 @@
                 <td class="w90">
                   <div>&nbsp;</div>
                 </td>
-                <td *ngIf="active_tab == 'Partial_Dispatch'" class="w90">
+                <td *ngIf="active_tab == 'partialDispatched'" class="w90">
                   <div>&nbsp;</div>
                 </td>
-                <td *ngIf="active_tab == 'Partial_Dispatch'" class="w90">
+                <td *ngIf="active_tab == 'partialDispatched'" class="w90">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w90">
@@ -250,6 +258,9 @@
                   <div>&nbsp;</div>
                 </td>
                 <td *ngIf="active_tab == 'Reject' || active_tab == 'Hold'" class="w200">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w100" *ngIf="active_tab == 'All'">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w80" *ngIf="active_tab == 'Pending'">

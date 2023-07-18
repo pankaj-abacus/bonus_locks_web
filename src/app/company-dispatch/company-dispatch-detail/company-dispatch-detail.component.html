@@ -6,11 +6,11 @@
     <h2>Dispatch Details</h2>
     <div class="left-auto">
       
-      <ng-container *ngIf="invoice_detail.order_status == 'Dispatched' && logined_user_data.view_dispatch_billing== '1' && logined_user_data.add_dispatch_billing== '1'">
+      <!-- <ng-container *ngIf="invoice_detail.order_status == 'Dispatched' && logined_user_data.view_dispatch_billing== '1' && logined_user_data.add_dispatch_billing== '1'">
         <button class="mr16" matTooltip="Generate Gate Pass"  (click)="openDialog('add', '')" mat-raised-button color="primary">
           <i class="material-icons mr5">local_shipping</i>Generate Gate Pass
         </button>
-      </ng-container>
+      </ng-container> -->
       <ng-container *ngIf="invoice_detail.order_status != 'Dispatched'">
         <button class="mr16" matTooltip="Add Master Boxes"  (click)="addGrandmasterboxes(invoice_detail.order_no,invoice_detail.id,'add')" mat-raised-button color="primary">
           <i class="material-icons">add</i>
@@ -171,7 +171,8 @@
                 <div class="col s12 m6 l3" *ngIf="masterboxData.length">
                   <mat-form-field appearance="outline">
                     <mat-label>Grand Master Box</mat-label>
-                    <mat-select  name="couponGrandMasterId" [(ngModel)]="couponNumber.couponGrandMasterId" #couponGrandMasterId="ngModel" (ngModelChange)="setcouponnoFocused()">
+                    <!-- (ngModelChange)="setcouponnoFocused()" -->
+                    <mat-select  name="couponGrandMasterId" [(ngModel)]="couponNumber.couponGrandMasterId" #couponGrandMasterId="ngModel" >
                       <mat-option >
                         <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.." (keyup)="getmasterbox($event.target.value,invoice_detail.order_no)"></ngx-mat-select-search>
                       </mat-option>
@@ -297,7 +298,7 @@
                     <tr>
                       <th class="w50">S.no.</th>
                       <th>Item Details</th>
-                      <th class="w80 text-center">QTY.</th>
+                      <th class="w150 text-center">QTY.</th>
                       <th class="w100 text-center">Dispatch Qty.</th>
                     </tr>
                   </table>
@@ -312,7 +313,26 @@
                           <tr  [ngClass]="{'dispatchWait': row.sale_dispatch_qty == 0, 'dispatchPending': row.sale_dispatch_qty > 0 && row.sale_dispatch_qty < row.sale_qty, 'dispatchCom': row.sale_dispatch_qty == row.sale_qty}">
                             <td class="w50">{{i+1}}</td>
                             <td>{{row.item_name |  titlecase}} <strong>({{row.item_code}})</strong></td>
-                            <td class="w80 text-center">{{row.sale_qty}}</td>
+                            <td class="w150 text-center">
+                              <ng-container *ngIf="row.sale_qty == row.sale_dispatch_qty">{{row.sale_qty}}</ng-container>
+                              <ng-container *ngIf="row.sale_qty != row.sale_dispatch_qty">
+                                <div class="df ac flex-gap-5">
+                                <div class="th-search-acmt" [ngClass]="{'error-block' :row.sale_dispatch_qty == 0 ?  row.remaining_qty > row.sale_qty : ''}">
+                                    <mat-form-field>
+                                        <input type="text" class="text-right"  matInput onkeypress="return event.charCode>=48 && event.charCode<=57" placeholder="Dispatch QTY."
+                                        [name]="'remaining_qty'+i"
+                                        #remaining_qty="ngModel"
+                                        [(ngModel)]="row.remaining_qty">
+                                    </mat-form-field>
+                                </div>
+                                <div class="action-button flat w30">
+                                  <button  mat-icon-button  matTooltip="Update" [disabled]="savingFlag == true" (click)="checkQty(row.sale_dispatch_qty, row.sale_qty, row.remaining_qty,  row.id, i+1)">
+                                      <i class="material-icons edit">save</i>
+                                  </button>
+                              </div>
+                            </div>
+                              </ng-container>
+                            </td>
                             <td class="w100 text-center"><strong>{{row.sale_dispatch_qty}}</strong></td>
                           </tr>
                         </ng-container>
