@@ -346,7 +346,8 @@ export class StatusModalComponent implements OnInit {
 
   AddCustomerNetworkTravel() {
     this.savingFlag = true;
-    this.serve.post_rqst({ 'id': this.data.id, 'drData': this.dr_data, }, "Travel/addDr").subscribe((result => {
+
+    this.serve.post_rqst({ 'id': this.data.id, 'drData': this.dr_data,'data':this.data}, "Travel/addDr").subscribe((result => {
       if (result['statusCode'] == 200) {
         this.dialogRef.close(true);
         this.savingFlag = false;
