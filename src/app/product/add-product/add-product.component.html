@@ -7,7 +7,7 @@
     </a>
     <h2>{{product_id ? 'Edit':'Add New'}} Product</h2>
   </div>
-  
+
   <div class="container pt10 pl10 pr10 pb50" >
     <form #f="ngForm" (ngSubmit)="f.valid && submit()">
       <div class="row">
@@ -55,7 +55,7 @@
                   <mat-form-field appearance="outline"  [ngClass]="{'has-error' : product_code.invalid } ">
                     <mat-label>Product Code</mat-label>
                     <input matInput placeholder="Type Here ..."  name="product_code" #product_code="ngModel" [(ngModel)]="data.product_code" required>
-                    
+
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="f.submitted && product_code?.invalid">
                     This field is required
@@ -97,7 +97,7 @@
                       <mat-option >
                         <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.." (keyup)="pointCategory_data($event.target.value)"></ngx-mat-select-search>
                       </mat-option>
-                      <mat-option *ngFor="let row of pointCategories_data" value="{{row.id}}">{{row.point_category_name}}</mat-option>
+                      <mat-option *ngFor="let row of pointCategories_data" [value]="row.id">{{row.point_category_name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <!-- <div class="alert alert-danger" *ngIf="point_category_id.touched || f.submitted">
@@ -107,7 +107,7 @@
               </div>
 
               <div class="row">
-             
+
                 <!-- <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>Brands</mat-label>
@@ -119,7 +119,7 @@
                     <p *ngIf="brand.errors?.required">This field is required</p>
                   </div>
                 </div> -->
-                <!-- <div class="col s12 m3 l3"> 
+                <!-- <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>Colors</mat-label>
                     <mat-select  name="color" [(ngModel)]="data.color" #color="ngModel" multiple>
@@ -168,7 +168,7 @@
                   </div>
                 </div>
               </div>
-         
+
               <div class="row mb0">
                 <div class="col s12 m6 l6">
                   <div class="row">
@@ -184,8 +184,8 @@
                   </div>
                 </div>
               </div>
-              
-              
+
+
               <div class="row">
                 <div class="col s12">
                   <div class="uploade-image">
