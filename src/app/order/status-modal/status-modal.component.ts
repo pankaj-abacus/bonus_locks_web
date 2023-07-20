@@ -484,7 +484,7 @@ export class StatusModalComponent implements OnInit {
   salesOut:any =[];
 
   getStock() {
-    this.serve.post_rqst({'id': this.data.stockProductTrans.id, 'dr_id':this.data.id}, "stock/salesReturnPartyList").subscribe((result => {
+    this.serve.post_rqst({'id': this.data.stockProductTrans.product_id, 'dr_id':this.data.id}, "stock/salesReturnPartyList").subscribe((result => {
       if (result['statusCode'] == 200) {
         this.salesIn = result['return_in'];
         this.salesOut = result['return_out'];

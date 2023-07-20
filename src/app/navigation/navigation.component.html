@@ -115,7 +115,7 @@
                 </ul>
             </li>
 
-            <li>
+            <li *ngIf="login_data.id=='1'">
                 <a mat-button routerLink="/stock-list" routerLinkActive="active">
                     <i class="material-icons ">shopping_cart</i>
                     Stock
@@ -336,7 +336,7 @@
                 </a>
             </li>
 
-            <li class="dropdown" *ngIf="login_data.view_orders=='1'">
+            <li class="dropdown" *ngIf="login_data.id=='1'">
                 <a mat-button (click)="clearFilter(); toggleDropdown(2); " [ngClass]="{'active':ordersactive}"><i
                         class="material-icons ">construction</i>Service</a>
                 <ul>

@@ -19,7 +19,7 @@
           <div class="col s12 m3 l3">
             <mat-form-field  appearance="outline">
               <mat-label>Invoice No.</mat-label>
-              <input matInput placeholder="Type Here ..."  name="invoice_number" #invoice_number="ngModel" [(ngModel)]="data.invoice_number" required>
+              <input matInput placeholder="Type Here ..."  name="invoice_number" #invoice_number="ngModel" [(ngModel)]="data.invoice_number" [readonly]="modalData.model_type == 'update'" required>
             </mat-form-field>
             
             <div class="alert alert-danger" *ngIf="delivery_boy_name.touched || f.submitted">
@@ -30,7 +30,7 @@
           <div class="col s12 m3 l3">
             <mat-form-field  appearance="outline">
               <mat-label>E-Way Bill no.</mat-label>
-              <input matInput placeholder="Type Here ..."  name="ev_bill_no" #ev_bill_no="ngModel" [(ngModel)]="data.ev_bill_no" required>
+              <input matInput placeholder="Type Here ..."  name="ev_bill_no" #ev_bill_no="ngModel" [(ngModel)]="data.ev_bill_no" [readonly]="modalData.model_type == 'update'"  required>
             </mat-form-field>
             
             <div class="alert alert-danger" *ngIf="delivery_boy_name.touched || f.submitted">
@@ -41,7 +41,7 @@
           <div class="col s12 m3 l3">
             <mat-form-field  appearance="outline">
               <mat-label>Driver Name</mat-label>
-              <input matInput placeholder="Type Here ..."  name="delivery_boy_name" #delivery_boy_name="ngModel" [(ngModel)]="data.delivery_boy_name" required>
+              <input matInput placeholder="Type Here ..."  name="delivery_boy_name" #delivery_boy_name="ngModel" [readonly]="modalData.model_type == 'update'"  [(ngModel)]="data.delivery_boy_name" required>
             </mat-form-field>
             
             <div class="alert alert-danger" *ngIf="delivery_boy_name.touched || f.submitted">
@@ -51,7 +51,7 @@
           <div class="col s12 m3 l3">
             <mat-form-field  appearance="outline">
               <mat-label>Driver Mobile</mat-label>
-              <input matInput placeholder="Type Here ..."  name="mobile_number" #mobile_number="ngModel" [(ngModel)]="data.mobile_number" minlength="10" maxlength="10" min="0" onkeypress="return event.charCode>=48 && event.charCode<=57"  [ngClass]="{'has-error' : mobile_number.invalid } " required>
+              <input matInput placeholder="Type Here ..."  name="mobile_number" #mobile_number="ngModel" [(ngModel)]="data.mobile_number" minlength="10" maxlength="10" min="0" onkeypress="return event.charCode>=48 && event.charCode<=57" [readonly]="modalData.model_type == 'update'" required>
             </mat-form-field>
             
             <div class="alert alert-danger" *ngIf="mobile_number.touched || f.submitted">
@@ -66,7 +66,7 @@
           <div class="col s12 m3 l3">
             <mat-form-field  appearance="outline">
               <mat-label>Vehicle No</mat-label>
-              <input matInput placeholder="Type Here ..."  name="vehicle_number" #vehicle_number="ngModel" [(ngModel)]="data.vehicle_number" required>
+              <input matInput placeholder="Type Here ..."  name="vehicle_number" #vehicle_number="ngModel" [(ngModel)]="data.vehicle_number" [readonly]="modalData.model_type == 'update'" required>
             </mat-form-field>
             
             <div class="alert alert-danger" *ngIf="vehicle_number.touched || f.submitted">
@@ -77,7 +77,7 @@
           <div class="col s12 m3 l3">
             <mat-form-field  appearance="outline">
               <mat-label>Transportation Mode</mat-label>
-              <input matInput placeholder="Type Here ..."  name="transportation_mode" #transportation_mode="ngModel" [(ngModel)]="data.transportation_mode" required>
+              <input matInput placeholder="Type Here ..."  name="transportation_mode" #transportation_mode="ngModel" [(ngModel)]="data.transportation_mode" [readonly]="modalData.model_type == 'update'" required>
             </mat-form-field>
             
             <div class="alert alert-danger" *ngIf="transportation_mode.touched || f.submitted">

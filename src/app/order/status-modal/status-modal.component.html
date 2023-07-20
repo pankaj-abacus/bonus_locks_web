@@ -768,47 +768,47 @@
           </ng-container>
       </ng-container>
 
-      <ng-container *ngIf="tabType=='stock'">
-          <div class="cs-table left-right-10" *ngIf="ActiveTab == 'sales_incoming' || ActiveTab == 'sales_outgoing'">
-              <div class=" border-top">
-                  <div class="table-head">
-                      <table>
-                          <tr>
-                              <th class="w50 text-center">Sr.No</th>
-                              <th class="w100">Date Created</th>
-                              <th class="w100 text-center">Qty</th>
-                              <!-- <th class="w100 text-center">Point Credit</th> -->
-                          </tr>
-                      </table>
-                  </div>
-              </div>
-              
-              <div class="table-container pb0">
-                  <div class="table-content none-shadow">
-                      <table>
-                          <ng-container *ngFor="let row of salesIn;let i=index;">
-                              <tr>
-                                  <td class="w50 text-center">{{i+1}}</td>
-                                  <td class="w100">{{row.date_created | date:'d MMM y hh:mm a'}}</td>
-                                  <td class="w100 text-center">{{row.product_qty}}</td>
-                              </tr>  
-                          </ng-container>
+      <ng-container *ngIf="tabType=='sales_return'">
+        <div class="cs-table left-right-10" *ngIf="ActiveTab == 'sales_incoming' || ActiveTab == 'sales_outgoing'">
+            <div class=" border-top">
+                <div class="table-head">
+                    <table>
+                        <tr>
+                            <th class="w50 text-center">Sr.No</th>
+                            <th class="w100">Date Created</th>
+                            <th class="w100 text-center">Qty</th>
+                            <!-- <th class="w100 text-center">Point Credit</th> -->
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="table-container pb0">
+                <div class="table-content none-shadow">
+                    <table>
+                        <ng-container *ngIf="ActiveTab=='sales_incoming'">
+                            <tr *ngFor="let row of salesIn;let i=index;">
+                                <td class="w50 text-center">{{i+1}}</td>
+                                <td class="w100">{{row.date_created | date:'d MMM y hh:mm a'}}</td>
+                                <td class="w100 text-center">{{row.product_qty}}</td>
+                            </tr>  
+                        </ng-container>
 
-                          <ng-container *ngFor="let row of salesOut;let i=index;">
-                              <tr>
-                                  <td class="w50 text-center">{{i+1}}</td>
-                                  <td class="w100">{{row.date_created | date:'d MMM y hh:mm a'}}</td>
-                                  <td class="w100 text-center">{{row.product_qty}}</td>
-                              </tr>  
-                          </ng-container>
-                      </table>
-                  </div>
-              </div>
-          </div>
-          <ng-container *ngIf="(salesIn.length == 0 && ActiveTab == 'sales_incoming') || (salesOut.length == 0 && ActiveTab == 'sales_outgoing')">
-              <app-not-result-found></app-not-result-found>
-          </ng-container>
-      </ng-container>
+                        <ng-container *ngIf="ActiveTab=='sales_outgoing'">
+                            <tr *ngFor="let row of salesOut;  let i=index;">
+                                <td class="w50 text-center">{{i+1}}</td>
+                                <td class="w100">{{row.date_created | date:'d MMM y hh:mm a'}}</td>
+                                <td class="w100 text-center">{{row.product_qty}}</td>
+                            </tr>  
+                        </ng-container>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="(salesIn.length == 0 && ActiveTab == 'sales_incoming') || (salesOut.length == 0 && ActiveTab == 'sales_outgoing')">
+            <app-not-result-found></app-not-result-found>
+        </ng-container>
+    </ng-container>
   </div>
   <div mat-dialog-actions>
       <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>

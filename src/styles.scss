@@ -1990,6 +1990,28 @@ label.upload-file-input {
         }
     }
     
+    &.flat {
+        position: inherit;
+        top: inherit;
+        left: inherit;
+        transform: inherit;
+
+        button,a{
+            background:var(--light);
+        }
+    }
+
+    &.right-action-circel {
+        left: inherit;
+        right: 10px;
+        transform: inherit;
+        top: 10px;
+        
+        button {
+            background: var(--light);
+        }
+    }
+    
     
 }
 
@@ -2015,6 +2037,22 @@ label.upload-file-input {
         font-size: 14px;
         font-weight: 600;
         color: var(--dark);
+    }
+}
+
+
+.single_qr{
+    .qr_img ngx-qrcode, .aclass{
+
+        width: 84.488189px !important;
+        height: 84.488189px !important;
+        text-align: center;
+        margin: 0 auto;
+
+        img{
+            width:100% !important;
+            height:100% !important;
+        }
     }
 }
 
@@ -7177,6 +7215,12 @@ ul.flex-input {
         .mat-slide-toggle-thumb {
             background: #52a1e3;
         }
+    }
+}
+
+.min400{
+    .mat-dialog-container {
+        min-width: 400px;
     }
 }
 
