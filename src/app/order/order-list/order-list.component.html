@@ -37,7 +37,8 @@
         </div>
       </div>
       <div class="mat-tabbar">
-        <ng-container *ngIf="login_data.designation_name != 'Dispatch Planning'">
+        <!-- *ngIf="login_data.designation_name != 'Dispatch Planning'" -->
+        <ng-container >
         <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
           (click)="active_tab = 'Pending';orderList('',OrderMonth,OrderYear);">
           Pending ({{count.Pending}})
@@ -52,7 +53,8 @@
           (click)="active_tab = 'Hold';orderList('',OrderMonth,OrderYear);">
           Hold ({{count.Hold}})</button>
         </ng-container>
-        <ng-container *ngIf="login_data.designation_name == 'Dispatch Planning' || login_data.id == '1'">
+        <!-- *ngIf="login_data.designation_name == 'Dispatch Planning' || login_data.id == '1'" -->
+        <ng-container >
         <button mat-button [ngClass]="active_tab == 'dispatchPlanning' ? 'active' : ''"
           (click)="active_tab = 'dispatchPlanning';orderList('',OrderMonth,OrderYear);">
             Dispatch Planning ({{count.dispatchPlanning}})</button>
@@ -63,8 +65,8 @@
          <button mat-button [ngClass]="active_tab == 'completeDispatched' ? 'active' : ''"
           (click)="active_tab = 'completeDispatched';orderList('',OrderMonth,OrderYear);">
             Complete Planned ({{count.completeDispatched}})</button>
-
-          <ng-container *ngIf="login_data.designation_name != 'Dispatch Planning'">
+            <!-- *ngIf="login_data.designation_name != 'Dispatch Planning'" -->
+          <ng-container >
         <button mat-button [ngClass]="active_tab == 'Dispatched' ? 'active' : ''"
           (click)="active_tab = 'Dispatched';orderList('',OrderMonth,OrderYear);">
           Dispatched ({{count.Dispatched}})</button>
