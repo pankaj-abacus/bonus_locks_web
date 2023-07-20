@@ -16,6 +16,8 @@ const giftGalleryRoutes = [
   { path: "", children:[
     {path:'', component: GiftGalleryListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     { path: "gift-add", component: GiftAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: "gift-edit/:id/:type", component: GiftAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+
   ]},
   
 ]
