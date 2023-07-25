@@ -7,7 +7,7 @@
         <h2>Complaint Details</h2>
         
         <div class="left-auto" >
-            <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id)">Assign Carpenter</button>
+            <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id)" *ngIf="getData.complaint_status!='Closed'">Assign Engineer</button>
         </div>
     </div>
     

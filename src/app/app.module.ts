@@ -61,6 +61,7 @@ import { EngineerAssignModelComponent } from './installation/engineer-assign-mod
 import { EngineerAssignModelComponentComponent } from './engineer-assign-model-component/engineer-assign-model-component.component';
 import { WarrantyUpdateModelComponent } from './warranty/warranty-update-model/warranty-update-model.component';
 import { AddComplaintRemarkComponent } from './add-complaint-remark/add-complaint-remark.component';
+import { AddInstallationRemarkComponent } from './installation/add-installation-remark/add-installation-remark.component';
 
 
 @NgModule({
@@ -143,7 +144,8 @@ import { AddComplaintRemarkComponent } from './add-complaint-remark/add-complain
         EngineerAssignModelComponent,
         EngineerAssignModelComponentComponent,
         WarrantyUpdateModelComponent,
-        AddComplaintRemarkComponent
+        AddComplaintRemarkComponent,
+        AddInstallationRemarkComponent
     ],
 
     exports: [RouterModule],
