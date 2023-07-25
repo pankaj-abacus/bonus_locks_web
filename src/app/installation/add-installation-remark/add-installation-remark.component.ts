@@ -1,16 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { DatabaseService } from 'src/_services/DatabaseService';
-import * as moment from 'moment';
-import { DialogComponent } from 'src/app/dialog.component';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { ToastrManager } from 'ng6-toastr-notifications';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { DatabaseService } from 'src/_services/DatabaseService';
+import { AddComplaintRemarkComponent } from 'src/app/add-complaint-remark/add-complaint-remark.component';
+import { DialogComponent } from 'src/app/dialog.component';
 
 @Component({
-  selector: 'app-add-complaint-remark',
-  templateUrl: './add-complaint-remark.component.html',
-  styleUrls: ['./add-complaint-remark.component.scss']
+  selector: 'app-add-installation-remark',
+  templateUrl: './add-installation-remark.component.html',
+  styleUrls: ['./add-installation-remark.component.scss']
 })
-export class AddComplaintRemarkComponent implements OnInit {
+export class AddInstallationRemarkComponent implements OnInit {
   id;
   savingFlag:boolean = false;
 

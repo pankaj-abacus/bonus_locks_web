@@ -10,6 +10,7 @@ import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
 import { EngineerAssignModelComponent } from '../engineer-assign-model/engineer-assign-model.component';
+import { AddInstallationRemarkComponent } from '../add-installation-remark/add-installation-remark.component';
 
 @Component({
   selector: 'app-installation-detail',
@@ -31,7 +32,8 @@ export class InstallationDetailComponent implements OnInit {
   complaintImg:any =[];
   fabBtnValue: any = 'excel';
   loader: boolean = false;
-
+  inspectionImg:any =[];
+  closeImg:any =[];
 
   
   
@@ -59,6 +61,8 @@ export class InstallationDetailComponent implements OnInit {
         console.log('getData',this.getData);
         this.add_list = this.getData['add_list'];
         console.log('add_list',this.add_list);
+        this.inspectionImg = this.getData['inspection_image'];
+        this.closeImg = this.getData['closing_image'];
         this.skLoading = false;
       }
       ));
@@ -86,6 +90,23 @@ export class InstallationDetailComponent implements OnInit {
       console.log(id);
       
       const dialogRef = this.dialog.open(EngineerAssignModelComponent, {
+        width: '400px',
+        panelClass: 'cs-model',
+        data: {
+          id:id,
+        }
+      });
+      
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != false) {
+          this.getInstallationDetail();
+        }
+      });
+    }
+    openDialog2(id): void {
+      console.log(id);
+      
+      const dialogRef = this.dialog.open(AddInstallationRemarkComponent, {
         width: '400px',
         panelClass: 'cs-model',
         data: {

@@ -7,7 +7,7 @@
         
         <div class="left-auto" >
             <div class="left-auto" >
-                <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id)">Assign Carpenter</button>   
+                <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id)" *ngIf="getData.complaint_status !='Done' &&   getData.complaint_status != 'Reject'">Assign Engineer</button>   
             </div>
         </div>
     </div>
@@ -76,14 +76,74 @@
                                 <span>Address</span>
                                 <p>{{getData.address ? getData.address:'N/A'}}</p>
                             </div>
+
+                            <div class="block-feilds">
+                                <span>Plumber Name</span>
+                                <p>{{getData.carpenter_name ? getData.carpenter_name:'N/A'}}</p>
+                            </div>
                             
                             <div class="block-feilds">
-                                <span>Nature Of Problem</span>
-                                <p>{{getData.nature_of_problem ? getData.nature_of_problem:'N/A'}}</p>
+                                <span>Plumber Mobile No.</span>
+                                <p>{{getData.carpenter_mobile ? getData.carpenter_mobile:'N/A'}}</p>
+                            </div>
+                        </div>
+                        <!-- <div class="card-head mt15" >
+                            <h2>Installation Images</h2>
+                        </div>
+                        <div class="card-body" >
+                            <div class="grid-box">
+                                <div class="block-feilds">
+                                    <div class="doc-img">
+                                        <div class="image-block" *ngFor="let row of inspectionImg">
+                                            <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="col s12 mt16 m12 l12" >
+                    <div class="card" *ngIf="!skLoading">
+                        <div class="card-head">
+                            <h2>Closing Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid-box">
+                                <div class="block-feilds">
+                                    <span>Closing Date</span>
+                                    <p>{{getData.closed_date != '0000-00-00 00:00:00' ? (getData.closed_date | date):'N/A'}}</p>
+                                </div>
+                                
+                                <div class="block-feilds">
+                                    <span>Closing Type</span>
+                                    <p>{{getData.closing_type ? getData.closing_type:'N/A'}}</p>
+                                </div>
+                                
+                                <div class="block-feilds">
+                                    <span>Closing Remark</span>
+                                    <p>{{getData.closing_remark ? getData.closing_remark:'N/A'}}</p>
+                                </div>
+                            </div>
+                            <div class="card-head mt15" >
+                                <h2>Closing Images</h2>
+                            </div>
+                            <div class="card-body" >
+                                <div class="grid-box">
+                                    <div class="block-feilds">
+                                        <div class="doc-img">
+                                            <div class="image-block" *ngFor="let row of closeImg">
+                                                <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 
             </div>
             <div class="col s12 m4 l4">
@@ -94,8 +154,8 @@
                     </div>
                     
                     <div class="logs-box">
-                        <ng-container *ngFor="let row of lead_logs">
-                            <div class="logshead ">{{row.changes_by_name}} :- {{row.date_created | date:'dd MMM yyyy'}}</div>
+                        <ng-container *ngFor="let row of getData.log">
+                            <div class="logshead ">{{row.created_by_name}} :- {{row.date_created | date:'dd MMM yyyy'}}</div>
                             <div class="logscontent ">
                                 <span>Remark : </span> {{row.msg ? row.msg : row.remark}}
                             </div>
@@ -117,39 +177,6 @@
                     </div>
                 </div>
                 
-            </div>
-            
-            <div class="container pt10 pl10 pr10 pb50" >
-                <div class="row">
-                    <div class="col s12 m12 l8">
-                        
-                        <div class="card" *ngIf="!skLoading">
-                            <div class="card-head">
-                                <h2>Images</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="img-container">
-                                    <div class="image-block" *ngFor="let row of complaintImg">
-                                        <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Skeleton start -->
-                        <div class="card" *ngIf="skLoading">
-                            <div class="sk-head">
-                                <h2>&nbsp;</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="img-container">
-                                    <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
-                                        &nbsp; 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             
         </div> 
@@ -202,4 +229,12 @@
             </div>
         </div>
     </div>
+    <div class="fab-btns">
+        
+        <button
+        (click)="openDialog2(getData.id)"
+        mat-fab color="primary" [ngClass]="{'pulse': fabBtnValue=='activity'}">
+        <i class="material-icons">add</i>
+        Add Remark
+    </button>
 </div>

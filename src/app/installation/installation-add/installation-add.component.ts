@@ -57,6 +57,7 @@ export class InstallationAddComponent implements OnInit {
   warrantyBase64:boolean = false;
   warranty_img_id:any;
   bill_img :any;
+  filter :any={};
   warranty_img :any;
   
   constructor(private renderer: Renderer2,
@@ -135,7 +136,11 @@ export class InstallationAddComponent implements OnInit {
       }
       
       getProduct(id) {
-        this.service.post_rqst({ 'id': id }, "Master/productList").subscribe((result => {
+        // this.filter.segment='3'
+        // this.filter.sub_category_name='5'
+        // this.filter.sub_category_name='5'
+        // this.filter.installation_responsibility= "Company"
+        this.service.post_rqst({ 'id': id ,'filter':this.filter}, "Master/productList").subscribe((result => {
           if (result['statusCode'] == 200) {
             this.productList = result['product_list'];
             console.log(this.productList);
