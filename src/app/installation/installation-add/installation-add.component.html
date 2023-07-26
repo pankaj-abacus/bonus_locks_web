@@ -148,7 +148,7 @@
                     <mat-option *ngFor="let row of productList" [value]="row.id" color="accent">{{row.product_name}} - {{row.product_code}}</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <div class="alert alert-danger" *ngIf="f.submitted && sub_segment_id?.invalid ">
+                <div class="alert alert-danger" *ngIf="f.submitted && product_id?.invalid ">
                   This field is required
                 </div>
               </div>
