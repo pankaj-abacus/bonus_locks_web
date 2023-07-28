@@ -1,16 +1,15 @@
-
 <div class="main-container">
   <app-loader *ngIf="excelLoader"></app-loader>
   <div class="tools-container">
     <h2>Customer List</h2>
-    
-    
+
+
     <div class="left-auto df ac flex-gap-10">
       <a mat-icon-button matTooltip="Refresh" (click)="refresh()">
         <i class="material-icons">refresh</i>
       </a>
-      
-      <div class="pagination" >
+
+      <div class="pagination">
         <div class="pagination-content">
           Pages
           <span>{{pagenumber}}</span>
@@ -27,9 +26,9 @@
         </div>
       </div>
     </div>
-    
+
   </div>
-  
+
   <div class="container container-scroll">
     <div class="cs-table horizontal-scroll">
       <div class="sticky-head">
@@ -49,7 +48,7 @@
             </tr>
           </table>
         </div>
-        
+
         <div class="table-head bdrt">
           <table>
             <tr>
@@ -58,8 +57,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                    #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
-                    [max]="today_date" readonly>
+                      #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
+                      [max]="today_date" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -69,15 +68,16 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="created_name"
-                      (keyup.enter)="getCumtomerList('')" #created_name="ngModel" [(ngModel)]="filter_data.created_name">
+                      (keyup.enter)="getCumtomerList('')" #created_name="ngModel"
+                      [(ngModel)]="filter_data.created_name">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="name"
-                      (keyup.enter)="getCumtomerList('')" #name="ngModel" [(ngModel)]="filter_data.name">
+                    <input type="text" matInput placeholder="Search ..." name="name" (keyup.enter)="getCumtomerList('')"
+                      #name="ngModel" [(ngModel)]="filter_data.name">
                   </mat-form-field>
                 </div>
               </th>
@@ -108,8 +108,8 @@
               <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="city"
-                      (keyup.enter)="getCumtomerList('')" #city="ngModel" [(ngModel)]="filter_data.city">
+                    <input type="text" matInput placeholder="Search ..." name="city" (keyup.enter)="getCumtomerList('')"
+                      #city="ngModel" [(ngModel)]="filter_data.city">
                   </mat-form-field>
                 </div>
               </th>
@@ -123,20 +123,23 @@
               </th>
               <th class="w250 "></th>
             </tr>
-            
+
           </table>
         </div>
       </div>
-      
+
       <div class="table-container">
         <div class="table-content">
           <table>
             <ng-container *ngIf="!loader">
-              <tr *ngFor="let row of customerList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
+              <tr *ngFor="let row of customerList; let i = index "
+                [ngClass]="{'Current': service.currentUserID == row.id}">
                 <td class="w50">{{i + 1 + sr_no}}</td>
                 <td class="w150">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
                 <td class="w150">{{row.created_name}}</td>
-                <td class="w150"><a class="link-btn" mat-button (click)="service.setData(filter_data)" routerLink="customer-detail/{{(row.id)}}" routerLinkActive="active"> {{row.name}}</a></td>
+                <td class="w150"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
+                    routerLink="customer-detail/{{(row.id)}}" routerLinkActive="active"> {{row.name | titlecase}}</a>
+                </td>
                 <td class="w150">{{row.mobile_no}}</td>
                 <td class="w150">{{row.state}}</td>
                 <td class="w150">{{row.district}}</td>
@@ -171,10 +174,10 @@
                 <td class="w150">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100 " >
+                <td class="w100 ">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w250 " >
+                <td class="w250 ">
                   <div>&nbsp;</div>
                 </td>
               </tr>
@@ -189,9 +192,10 @@
   </div>
   <div>
   </div>
-  
+
   <div class="fab-btns">
-    <button class="pulse excel" mat-fab color="primary" [ngClass]="{'pulse': fabBtnValue=='add'}" [matMenuTriggerFor]="menu">
+    <button class="pulse excel" mat-fab color="primary" [ngClass]="{'pulse': fabBtnValue=='add'}"
+      [matMenuTriggerFor]="menu">
       <i class="material-icons">apps</i>
       Action
     </button>

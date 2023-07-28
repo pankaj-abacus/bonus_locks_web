@@ -2,51 +2,59 @@
   <app-loader *ngIf="excelLoader"></app-loader>
   <div class="tools-container">
     <h2>Installation List</h2>
-    
-    
+
     <div class="left-auto df ac flex-gap-10">
       <a mat-icon-button matTooltip="Refresh" (click)="refresh()">
         <i class="material-icons">refresh</i>
       </a>
-      
+
       <div class="pagination">
         <div class="pagination-content">
           Pages
-          <span>{{pagenumber}}</span>
+          <span>{{ pagenumber }}</span>
           of
-          <span>{{total_page}}</span>
+          <span>{{ total_page }}</span>
         </div>
         <div class="page-nav">
           <button mat-icon-button matTooltip="Older" (click)="pervious()" [disabled]="start == 0">
             <i class="material-icons">navigate_before</i>
           </button>
-          <button mat-icon-button matTooltip="Newer" (click)="nextPage()" [disabled]="pagenumber == total_page ">
+          <button mat-icon-button matTooltip="Newer" (click)="nextPage()" [disabled]="pagenumber == total_page">
             <i class="material-icons">navigate_next</i>
           </button>
         </div>
       </div>
     </div>
-    
+
     <div class="mat-tabbar">
       <ng-container>
         <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
-        (click)="active_tab = 'All'; getinspectionList('')"><i
-        class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
-        
+          (click)="active_tab = 'All'; getinspectionList('')">
+          <i class="material-icons">all_inbox</i>All({{ tab_count.all_count }})
+        </button>
+
         <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
-        (click)="active_tab = 'Pending';getinspectionList('')"><i
-        class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
+          (click)="active_tab = 'Pending'; getinspectionList('')">
+          <i class="material-icons">pending_actions</i>Pending({{
+          tab_count.pending_count
+          }})
+        </button>
       </ng-container>
       <button mat-button [ngClass]="active_tab == 'Done' ? 'active' : ''"
-      (click)="active_tab = 'Done'; getinspectionList('')"><i
-      class="material-icons">thumb_up_alt</i>Done({{tab_count.done_count}})</button>
+        (click)="active_tab = 'Done'; getinspectionList('')">
+        <i class="material-icons">thumb_up_alt</i>Done({{
+        tab_count.done_count
+        }})
+      </button>
       <button mat-button [ngClass]="active_tab == 'Reject' ? 'active' : ''"
-      (click)="active_tab = 'Reject'; getinspectionList('')"><i
-      class="material-icons">thumb_down_alt</i>Reject({{tab_count.reject_count}})</button>
+        (click)="active_tab = 'Reject'; getinspectionList('')">
+        <i class="material-icons">thumb_down_alt</i>Reject({{
+        tab_count.reject_count
+        }})
+      </button>
     </div>
-    
   </div>
-  
+
   <div class="container container-scroll">
     <div class="cs-table horizontal-scroll">
       <div class="sticky-head">
@@ -63,7 +71,7 @@
             </tr>
           </table>
         </div>
-        
+
         <div class="table-head bdrt">
           <table>
             <tr>
@@ -72,8 +80,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                    #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
-                    [max]="today_date" readonly>
+                      #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
+                      [max]="today_date" readonly />
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -82,9 +90,9 @@
               <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="created_by_type"
-                    (keyup.enter)="getinspectionList('')" #created_by_type="ngModel"
-                    [(ngModel)]="filter_data.created_by_type">
+                    <input type="text" matInput placeholder="Search ..." name="created_name"
+                      (keyup.enter)="getinspectionList('')" #created_name="ngModel"
+                      [(ngModel)]="filter_data.created_name" />
                   </mat-form-field>
                 </div>
               </th>
@@ -92,8 +100,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="complain_no"
-                    (keyup.enter)="getinspectionList('')" #complain_no="ngModel"
-                    [(ngModel)]="filter_data.complain_no">
+                      (keyup.enter)="getinspectionList('')" #complain_no="ngModel"
+                      [(ngModel)]="filter_data.complain_no" />
                   </mat-form-field>
                 </div>
               </th>
@@ -101,8 +109,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="customer_name"
-                    (keyup.enter)="getinspectionList('')" #customer_name="ngModel"
-                    [(ngModel)]="filter_data.customer_name">
+                      (keyup.enter)="getinspectionList('')" #customer_name="ngModel"
+                      [(ngModel)]="filter_data.customer_name" />
                   </mat-form-field>
                 </div>
               </th>
@@ -110,8 +118,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                    (keyup.enter)="getinspectionList('')" #customer_mobile="ngModel"
-                    [(ngModel)]="filter_data.customer_mobile">
+                      (keyup.enter)="getinspectionList('')" #customer_mobile="ngModel"
+                      [(ngModel)]="filter_data.customer_mobile" />
                   </mat-form-field>
                 </div>
               </th>
@@ -120,28 +128,38 @@
           </table>
         </div>
       </div>
-      
+
       <div class="table-container">
         <div class="table-content">
           <table>
             <ng-container *ngIf="!loader">
-              <tr *ngFor="let row of installationList; let i = index "
-              [ngClass]="{'Current': service.currentUserID == row.id}">
-              <td class="w60">{{i + 1 + sr_no}}</td>
-              <td class="w180">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a'): '--'}}</td>
-              <td class="w100">{{row.created_by_type ? row.created_by_type : '--'}}</td>
-              <td class="w120"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
-                routerLink="installation-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
-                <td class="w130">{{row.customer_name}}</td>
-                <td class="w130">{{row.customer_mobile}}</td>
+              <tr *ngFor="let row of installationList; let i = index"
+                [ngClass]="{ Current: service.currentUserID == row.id }">
+                <td class="w60">{{ i + 1 + sr_no }}</td>
+                <td class="w180">
+                  {{
+                  row.date_created
+                  ? (row.date_created | date : "dd MMM yyy ,h:mm a")
+                  : "--"
+                  }}
+                </td>
+                <td class="w100">
+                  {{ row.created_name ? row.created_name : "--" }}
+                </td>
+                <td class="w120">
+                  <a class="link-btn" mat-button (click)="service.setData(filter_data)"
+                    routerLink="installation-detail/{{ row.id }}" routerLinkActive="active">{{ row.complain_no }}</a>
+                </td>
+                <td class="w130">{{ row.customer_name | titlecase }}</td>
+                <td class="w130">{{ row.customer_mobile }}</td>
                 <!-- <td class="w70 text-center">
-                  <div class="action-button">
-                    <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
-                      <i class="material-icons edit">edit</i>
-                    </button>
-                    
-                  </div>
-                </td> -->
+              <div class="action-button">
+                <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
+                  <i class="material-icons edit">edit</i>
+                </button>
+
+              </div>
+            </td> -->
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">
@@ -165,37 +183,36 @@
                   <div>&nbsp;</div>
                 </td>
                 <!-- <td class="w70">
-                  <div>&nbsp;</div>
-                </td> -->
+              <div>&nbsp;</div>
+            </td> -->
               </tr>
             </ng-container>
           </table>
         </div>
       </div>
     </div>
-    <ng-container *ngIf="datanotofound==true && installationList.length == 0;">
+    <ng-container *ngIf="datanotofound == true && installationList.length == 0">
       <app-not-result-found></app-not-result-found>
     </ng-container>
   </div>
-  <div>
-  </div>
-  
+  <div></div>
+
   <div class="fab-btns">
-    <button class="pulse excel" mat-fab color="primary" [ngClass]="{'pulse': fabBtnValue=='add'}"
-    [matMenuTriggerFor]="menu">
-    <i class="material-icons">apps</i>
-    Action
-  </button>
-</div>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="downloadExcel();">
-    <mat-icon>download</mat-icon>
-    <span>Download excel</span>
-  </button>
-  <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-installation"
-  routerLinkActive="router-link-active">
-  <mat-icon>add</mat-icon>
-  <span>Add New</span>
-</button>
-</mat-menu>
+    <button class="pulse excel" mat-fab color="primary" [ngClass]="{ pulse: fabBtnValue == 'add' }"
+      [matMenuTriggerFor]="menu">
+      <i class="material-icons">apps</i>
+      Action
+    </button>
+  </div>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="downloadExcel()">
+      <mat-icon>download</mat-icon>
+      <span>Download excel</span>
+    </button>
+    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-installation"
+      routerLinkActive="router-link-active">
+      <mat-icon>add</mat-icon>
+      <span>Add New</span>
+    </button>
+  </mat-menu>
 </div>
