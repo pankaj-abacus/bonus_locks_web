@@ -126,21 +126,21 @@ export class InstallationAddComponent implements OnInit {
       
       getSubCatgory(id) {
         console.log(id);
-        
-        
         this.service.post_rqst({ 'id': id }, "Master/subCategoryList").subscribe((result => {
           if (result['statusCode'] == 200) {
             this.SubcategoryList = result['result'];
+            if(this.SubcategoryList.length <= 0){
+              this.getProduct(this.product_data.segment_id,'')
+            }
           }
         }))
       }
       
-      getProduct(id) {
-        // this.filter.segment='3'
-        // this.filter.sub_category_name='5'
-        // this.filter.sub_category_name='5'
-        // this.filter.installation_responsibility= "Company"
-        this.service.post_rqst({ 'id': id ,'filter':this.filter}, "Master/productList").subscribe((result => {
+      getProduct(segment_id,sub_segment_id) {
+        this.filter.segment=segment_id
+        this.filter.sub_category_name=sub_segment_id
+        this.filter.installation_responsibility='Company'
+        this.service.post_rqst({'filter':this.filter}, "Master/productList").subscribe((result => {
           if (result['statusCode'] == 200) {
             this.productList = result['product_list'];
             console.log(this.productList);

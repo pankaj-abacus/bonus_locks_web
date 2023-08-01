@@ -133,7 +133,7 @@
               <div class="col s12 m3 l3" *ngIf="SubcategoryList.length > 0">
                 <mat-form-field appearance="outline" [ngClass]="{'has-error' : sub_segment_id.invalid } ">
                   <mat-label>Sub Category {{data.sub_segment_id}}</mat-label>
-                  <mat-select name="sub_segment_id" #sub_segment_id="ngModel" [(ngModel)]="product_data.sub_segment_id" (selectionChange)="getProduct(data.sub_segment_id)" >
+                  <mat-select name="sub_segment_id" #sub_segment_id="ngModel" [(ngModel)]="product_data.sub_segment_id" (selectionChange)="getProduct(product_data.segment_id,product_data.sub_segment_id)" >
                     <mat-option *ngFor="let row of SubcategoryList" [value]="row.id" color="accent">{{row.sub_category_name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
