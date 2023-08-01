@@ -63,6 +63,7 @@ export class WarrantyAddComponent implements OnInit {
   warranty_period:string;
   selectedWarrantyDate: string;
   warrantyEndDate: string;
+  filter:any={};
 
   constructor(private renderer: Renderer2,
     public location: Location,
@@ -206,7 +207,7 @@ export class WarrantyAddComponent implements OnInit {
               
               this.data.product_id=this.getData.product_id.toString()
               // console.log(typeof this.data.product_id);
-              this.getProduct(this.data.product_id);
+              this.getProduct('',this.data.product_id);
             }, 200);
             
             
@@ -228,12 +229,19 @@ export class WarrantyAddComponent implements OnInit {
           this.service.post_rqst({ 'id': id }, "Master/subCategoryList").subscribe((result => {
             if (result['statusCode'] == 200) {
               this.SubcategoryList = result['result'];
+              if(this.SubcategoryList.length <= 0){
+                this.getProduct(this.data.segment_id,'')
+              }
+
             }
           }))
         }
         
-        getProduct(id) {
-          this.service.post_rqst({ 'id': id }, "Master/productList").subscribe((result => {
+        getProduct(segment_id,sub_segment_id) {
+          this.filter.segment=segment_id
+          this.filter.sub_category_name=sub_segment_id
+          this.filter.installation_responsibility='Company'
+          this.service.post_rqst({ 'filter':this.filter}, "Master/productList").subscribe((result => {
             if (result['statusCode'] == 200) {
               this.productList = result['product_list'];
               console.log(this.productList);
