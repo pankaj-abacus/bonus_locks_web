@@ -7,6 +7,7 @@ import { MatDialogModule, MatFormFieldModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppUtilityModule } from 'src/app/app-utility.module';
+import { MaterialModule } from 'src/app/material';
 
 
 
@@ -31,6 +32,7 @@ const stockRoutes = [
     ReactiveFormsModule,
     CommonModule,
     MatDialogModule,
+    MaterialModule
 
   ]
 })
