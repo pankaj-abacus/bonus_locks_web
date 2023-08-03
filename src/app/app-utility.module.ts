@@ -66,6 +66,7 @@ import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-
     ReplacementComponent,
     BottomSheetComponent,
     AddGrandMasterBoxComponent,
+    ViewMasterBoxDispatchDetailComponent,
     ViewMasterBoxDispatchDetailComponent
 
 ],
@@ -102,7 +103,7 @@ import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-
     InfluencerDetailComponent,
     OrderDetailComponent,
   ],
-  entryComponents:[StatusModalComponent, RedeemStatusModalComponent, ImageModuleComponent,DesignationComponent, BottomSheetComponent]
+  entryComponents:[StatusModalComponent, RedeemStatusModalComponent, ImageModuleComponent,DesignationComponent, BottomSheetComponent, ViewMasterBoxDispatchDetailComponent]
   
 })
 export class AppUtilityModule { }

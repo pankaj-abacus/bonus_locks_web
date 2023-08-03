@@ -117,7 +117,7 @@
 
             <li *ngIf="login_data.id=='1'">
                 <a mat-button routerLink="/stock-list" routerLinkActive="active">
-                    <i class="material-icons ">shopping_cart</i>
+                    <i class="material-icons ">inventory</i>
                     Stock
                 </a>
             </li>
@@ -129,6 +129,14 @@
                     Dispatch
                 </a>
             </li>
+
+            <li *ngIf="login_data.id=='1'">
+                <a mat-button routerLink="/generate-master-box" routerLinkActive="active">
+                    <i class="material-icons ">shopping_cart</i>
+                    Master Box
+                </a>
+            </li>
+
 
             <!-- <li *ngIf="login_data.view_manual_dispatch== '1' ">
     <a mat-button routerLink="/manual-dispatch" (click)="toggleDropdown(0);clearFilter()"
