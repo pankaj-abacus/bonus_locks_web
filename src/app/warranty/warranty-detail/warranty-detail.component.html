@@ -111,10 +111,10 @@
           </div>
           <div class="card-body">
             <div class="img-container">
-              <div class="image-block">
+              <div class="image-block" *ngIf="getData.warranty_card_copy_img.length">
                 <img [src]="url+getData.warranty_card_copy_img" (click)="imageModel(url+getData.warranty_card_copy_img)" style="cursor: zoom-in;">
               </div>
-              <div class="image-block">
+              <div class="image-block" *ngIf="getData.bill_copy_img.length">
                 <img [src]="url+getData.bill_copy_img" (click)="imageModel(url+getData.bill_copy_img)" style="cursor: zoom-in;">
 
               </div>

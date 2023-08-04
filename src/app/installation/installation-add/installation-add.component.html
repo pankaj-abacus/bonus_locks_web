@@ -182,7 +182,7 @@
                           <tr>
                             <th class="w50 text-center">Sr.No</th>
                             <th class="w130 text-center">Category</th>
-                            <th class="w130 text-center">Sub Category</th>
+                            <th class="w130 text-center" *ngIf="SubcategoryList.length > 0">Sub Category</th>
                             <th class="w130 text-center">Product</th>
                             <th class="w80 text-center">Qty</th>
                             <th class="w50 text-center">Action</th>
@@ -197,7 +197,7 @@
                           <tr *ngFor="let row of add_list;let i=index;">
                             <td class="w50 text-center">{{i+1}}</td>
                             <td class="w130 text-center">{{row.category_name}}</td>
-                            <td class="w130 text-center">{{row.subcat_name}}</td>
+                            <td class="w130 text-center" *ngIf="SubcategoryList.length > 0">{{row.subcat_name}}</td>
                             <td class="w130 text-center">{{row.product_name}}</td>
                             <td class="w80 text-center">{{row.qty}}</td>
                             <td class="w50 text-center" >
