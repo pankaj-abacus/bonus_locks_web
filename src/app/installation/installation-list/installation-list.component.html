@@ -2,12 +2,12 @@
   <app-loader *ngIf="excelLoader"></app-loader>
   <div class="tools-container">
     <h2>Installation List</h2>
-
+    
     <div class="left-auto df ac flex-gap-10">
       <a mat-icon-button matTooltip="Refresh" (click)="refresh()">
         <i class="material-icons">refresh</i>
       </a>
-
+      
       <div class="pagination">
         <div class="pagination-content">
           Pages
@@ -25,194 +25,208 @@
         </div>
       </div>
     </div>
-
+    
     <div class="mat-tabbar">
       <ng-container>
         <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
-          (click)="active_tab = 'All'; getinspectionList('')">
-          <i class="material-icons">all_inbox</i>All({{ tab_count.all_count }})
-        </button>
-
-        <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
-          (click)="active_tab = 'Pending'; getinspectionList('')">
-          <i class="material-icons">pending_actions</i>Pending({{
-          tab_count.pending_count
-          }})
-        </button>
-      </ng-container>
-      <button mat-button [ngClass]="active_tab == 'Done' ? 'active' : ''"
-        (click)="active_tab = 'Done'; getinspectionList('')">
-        <i class="material-icons">thumb_up_alt</i>Done({{
-        tab_count.done_count
-        }})
+        (click)="active_tab = 'All'; getinspectionList('')">
+        <i class="material-icons">all_inbox</i>All({{ tab_count.all_count }})
       </button>
-      <button mat-button [ngClass]="active_tab == 'Reject' ? 'active' : ''"
-        (click)="active_tab = 'Reject'; getinspectionList('')">
-        <i class="material-icons">thumb_down_alt</i>Reject({{
-        tab_count.reject_count
-        }})
-      </button>
-    </div>
-  </div>
+      
+      <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
+      (click)="active_tab = 'Pending'; getinspectionList('')">
+      <i class="material-icons">pending_actions</i>Pending({{
+        tab_count.pending_count
+      }})
+    </button>
+  </ng-container>
+  <button mat-button [ngClass]="active_tab == 'Done' ? 'active' : ''"
+  (click)="active_tab = 'Done'; getinspectionList('')">
+  <i class="material-icons">thumb_up_alt</i>Done({{
+    tab_count.done_count
+  }})
+</button>
+<button mat-button [ngClass]="active_tab == 'Reject' ? 'active' : ''"
+(click)="active_tab = 'Reject'; getinspectionList('')">
+<i class="material-icons">thumb_down_alt</i>Reject({{
+  tab_count.reject_count
+}})
+</button>
+</div>
+</div>
 
-  <div class="container container-scroll">
-    <div class="cs-table horizontal-scroll">
-      <div class="sticky-head">
-        <div class="table-head">
-          <table>
-            <tr>
-              <th class="w60">Sr.No</th>
-              <th class="w180">Date Created</th>
-              <th class="w100">Created By</th>
-              <th class="w120">Installation No.</th>
-              <th class="w130">Customer Name</th>
-              <th class="w130">Customer Mobile No.</th>
-              <!-- <th class="w70 text-center">Action</th> -->
-            </tr>
-          </table>
-        </div>
-
-        <div class="table-head bdrt">
-          <table>
-            <tr>
-              <th class="w60"></th>
-              <th class="w180">
-                <div class="th-search-acmt">
-                  <mat-form-field class="cs-input date-column infix-bodr">
-                    <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                      #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
-                      [max]="today_date" readonly />
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w100">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="created_name"
-                      (keyup.enter)="getinspectionList('')" #created_name="ngModel"
-                      [(ngModel)]="filter_data.created_name" />
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w120">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="complain_no"
-                      (keyup.enter)="getinspectionList('')" #complain_no="ngModel"
-                      [(ngModel)]="filter_data.complain_no" />
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w130">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="customer_name"
-                      (keyup.enter)="getinspectionList('')" #customer_name="ngModel"
-                      [(ngModel)]="filter_data.customer_name" />
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w130">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                      (keyup.enter)="getinspectionList('')" #customer_mobile="ngModel"
-                      [(ngModel)]="filter_data.customer_mobile" />
-                  </mat-form-field>
-                </div>
-              </th>
-              <!-- <th class="w70 text-center"></th> -->
-            </tr>
-          </table>
-        </div>
+<div class="container container-scroll">
+  <div class="cs-table horizontal-scroll">
+    <div class="sticky-head">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w60">Sr.No</th>
+            <th class="w180">Date Created</th>
+            <th class="w100">Created By</th>
+            <th class="w120">Installation No.</th>
+            <th class="w130">Customer Name</th>
+            <th class="w130">Customer Mobile No.</th>
+            <th class="w180">Carpenter Details</th>
+            <!-- <th class="w70 text-center">Action</th> -->
+          </tr>
+        </table>
       </div>
-
-      <div class="table-container">
-        <div class="table-content">
-          <table>
-            <ng-container *ngIf="!loader">
-              <tr *ngFor="let row of installationList; let i = index"
-                [ngClass]="{ Current: service.currentUserID == row.id }">
-                <td class="w60">{{ i + 1 + sr_no }}</td>
-                <td class="w180">
-                  {{
-                  row.date_created
-                  ? (row.date_created | date : "dd MMM yyy ,h:mm a")
-                  : "--"
-                  }}
-                </td>
-                <td class="w100">
-                  {{ row.created_name ? row.created_name : "--" }}
-                </td>
-                <td class="w120">
-                  <a class="link-btn" mat-button (click)="service.setData(filter_data)"
-                    routerLink="installation-detail/{{ row.id }}" routerLinkActive="active">{{ row.complain_no }}</a>
-                </td>
-                <td class="w130">{{ row.customer_name | titlecase }}</td>
-                <td class="w130">{{ row.customer_mobile }}</td>
-                <!-- <td class="w70 text-center">
+      
+      <div class="table-head bdrt">
+        <table>
+          <tr>
+            <th class="w60"></th>
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="cs-input date-column infix-bodr">
+                  <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
+                  #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
+                  [max]="today_date" readonly />
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w100">
+              <div class="th-search-acmt">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Search ..." name="created_name"
+                  (keyup.enter)="getinspectionList('')" #created_name="ngModel"
+                  [(ngModel)]="filter_data.created_name" />
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w120">
+              <div class="th-search-acmt">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Search ..." name="complain_no"
+                  (keyup.enter)="getinspectionList('')" #complain_no="ngModel"
+                  [(ngModel)]="filter_data.complain_no" />
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w130">
+              <div class="th-search-acmt">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Search ..." name="customer_name"
+                  (keyup.enter)="getinspectionList('')" #customer_name="ngModel"
+                  [(ngModel)]="filter_data.customer_name" />
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w130">
+              <div class="th-search-acmt">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Search ..." name="customer_mobile"
+                  (keyup.enter)="getinspectionList('')" #customer_mobile="ngModel"
+                  [(ngModel)]="filter_data.customer_mobile" />
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
+                  (keyup.enter)="getComplantList('')" #carpenter_detail="ngModel"
+                  [(ngModel)]="filter_data.carpenter_detail">
+                </mat-form-field>
+              </div>
+            </th>
+            <!-- <th class="w70 text-center"></th> -->
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <ng-container *ngIf="!loader">
+            <tr *ngFor="let row of installationList; let i = index"
+            [ngClass]="{ Current: service.currentUserID == row.id }">
+            <td class="w60">{{ i + 1 + sr_no }}</td>
+            <td class="w180">
+              {{
+                row.date_created
+                ? (row.date_created | date : "dd MMM yyy ,h:mm a")
+                : "--"
+              }}
+            </td>
+            <td class="w100">
+              {{ row.created_name ? row.created_name : "--" }}
+            </td>
+            <td class="w120">
+              <a class="link-btn" mat-button (click)="service.setData(filter_data)"
+              routerLink="installation-detail/{{ row.id }}" routerLinkActive="active">{{ row.complain_no }}</a>
+            </td>
+            <td class="w130">{{ row.customer_name | titlecase }}</td>
+            <td class="w130">{{ row.customer_mobile }}</td>
+            <td class="w180">{{row.carpenter_name ? row.carpenter_name : '--'}}-{{row.carpenter_mobile ? row.carpenter_mobile : '--'}}</td>
+            <!-- <td class="w70 text-center">
               <div class="action-button">
                 <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
                   <i class="material-icons edit">edit</i>
                 </button>
-
+                
               </div>
             </td> -->
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="loader">
-              <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
-                <td class="w60">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w180">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w100">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w120">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w130">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w130">
-                  <div>&nbsp;</div>
-                </td>
-                <!-- <td class="w70">
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="loader">
+          <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+            <td class="w60">
+              <div>&nbsp;</div>
+            </td>
+            <td class="w180">
+              <div>&nbsp;</div>
+            </td>
+            <td class="w100">
+              <div>&nbsp;</div>
+            </td>
+            <td class="w120">
+              <div>&nbsp;</div>
+            </td>
+            <td class="w130">
+              <div>&nbsp;</div>
+            </td>
+            <td class="w130">
+              <div>&nbsp;</div>
+            </td>
+            <td class="w130">
+              <div>&nbsp;</div>
+            </td>
+            <!-- <td class="w70">
               <div>&nbsp;</div>
             </td> -->
-              </tr>
-            </ng-container>
-          </table>
-        </div>
-      </div>
+          </tr>
+        </ng-container>
+      </table>
     </div>
-    <ng-container *ngIf="datanotofound == true && installationList.length == 0">
-      <app-not-result-found></app-not-result-found>
-    </ng-container>
   </div>
-  <div></div>
+</div>
+<ng-container *ngIf="datanotofound == true && installationList.length == 0">
+  <app-not-result-found></app-not-result-found>
+</ng-container>
+</div>
+<div></div>
 
-  <div class="fab-btns">
-    <button class="pulse excel" mat-fab color="primary" [ngClass]="{ pulse: fabBtnValue == 'add' }"
-      [matMenuTriggerFor]="menu">
-      <i class="material-icons">apps</i>
-      Action
-    </button>
-  </div>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="downloadExcel()">
-      <mat-icon>download</mat-icon>
-      <span>Download excel</span>
-    </button>
-    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-installation"
-      routerLinkActive="router-link-active">
-      <mat-icon>add</mat-icon>
-      <span>Add New</span>
-    </button>
-  </mat-menu>
+<div class="fab-btns">
+  <button class="pulse excel" mat-fab color="primary" [ngClass]="{ pulse: fabBtnValue == 'add' }"
+  [matMenuTriggerFor]="menu">
+  <i class="material-icons">apps</i>
+  Action
+</button>
+</div>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="downloadExcel()">
+    <mat-icon>download</mat-icon>
+    <span>Download excel</span>
+  </button>
+  <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-installation"
+  routerLinkActive="router-link-active">
+  <mat-icon>add</mat-icon>
+  <span>Add New</span>
+</button>
+</mat-menu>
 </div>
