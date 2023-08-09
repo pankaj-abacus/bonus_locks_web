@@ -5,7 +5,7 @@ import { AuthComponentGuard } from 'src/app/auth-component.guard';
 import { GatepassAddComponent } from '../gatepass-add/gatepass-add.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule, MatDialogModule } from '@angular/material';
+import { MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
@@ -61,6 +61,8 @@ const dispatchRoutes = [
     AppUtilityModule,
     NgxQRCodeModule,
     NgxBarcodeModule,
+    MatFormFieldModule,
+    MatInputModule
     
   ],
   entryComponents:[GatepassAddComponent,AddGrandMasterBoxComponent,ViewMasterBoxDispatchDetailComponent]

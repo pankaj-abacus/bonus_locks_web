@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 import { AppUtilityModule } from 'src/app/app-utility.module';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 
 const stockRoutes = [
@@ -29,7 +30,8 @@ const stockRoutes = [
     NgxMatSelectSearchModule,
     MatSelectModule,
     FormsModule,
-    AppUtilityModule
+    AppUtilityModule,
+    NgxQRCodeModule
   ]
 })
 export class MasterModuleModule { }
