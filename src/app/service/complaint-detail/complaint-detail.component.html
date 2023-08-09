@@ -7,7 +7,7 @@
 
         <div class="left-auto">
             <button mat-button class="ouline-btns status" mat-raised-button color="accent"
-                (click)="openDialog(getData.id)" *ngIf="getData.complaint_status!='Closed'">Assign Engineer</button>
+                (click)="openDialog(getData.id)" *ngIf="getData.complaint_status!='Closed'">Assign Carpenter</button>
         </div>
     </div>
 
@@ -17,7 +17,7 @@
             <div class="col s12">
                 <div class="card">
                     <div class="card-head">
-                        <h2>Complaint Status</h2>
+                        <h2></h2>
                     </div>
                     <div class="card-body">
 
@@ -195,11 +195,6 @@
                                 </div>
 
                                 <div class="block-feilds">
-                                    <span>Return Status</span>
-                                    <p>{{getData.return_status ? getData.return_status:'N/A'}}</p>
-                                </div>
-
-                                <div class="block-feilds">
                                     <span>Inspection Remark</span>
                                     <p>{{getData.inspection_remark ? getData.inspection_remark:'N/A'}}</p>
                                 </div>
@@ -222,26 +217,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Closed'">
+                <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Closed' || getData.complaint_status=='Cancel'">
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
-                            <h2>Closing Details</h2>
+                            <h2>{{getData.complaint_status}} Details</h2>
                         </div>
                         <div class="card-body">
                             <div class="grid-box">
                                 <div class="block-feilds">
-                                    <span>Closing Date</span>
+                                    <span>{{getData.complaint_status}} Date</span>
                                     <p>{{getData.closed_date != '0000-00-00 00:00:00' ? (getData.closed_date |
                                         date):'N/A'}}</p>
                                 </div>
 
-                                <div class="block-feilds">
+                                <div class="block-feilds" *ngIf="getData.complaint_status=='Closed'">
                                     <span>Closing Type</span>
                                     <p>{{getData.closing_type ? getData.closing_type:'N/A'}}</p>
                                 </div>
 
                                 <div class="block-feilds">
-                                    <span>Closing Remark</span>
+                                    <span>{{getData.complaint_status}} Remark</span>
                                     <p>{{getData.closing_remark ? getData.closing_remark:'N/A'}}</p>
                                 </div>
                             </div>

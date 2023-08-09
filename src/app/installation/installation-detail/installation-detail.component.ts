@@ -62,7 +62,7 @@ export class InstallationDetailComponent implements OnInit {
         this.add_list = this.getData['add_list'];
         console.log('add_list',this.add_list);
         this.inspectionImg = this.getData['inspection_image'];
-        this.closeImg = this.getData['closing_image'];
+        this.closeImg = this.getData['image'];
         this.skLoading = false;
       }
       ));
