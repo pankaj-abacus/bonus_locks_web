@@ -41,11 +41,12 @@ export class CompanyDispatchDetailComponent implements OnInit {
   cartennumber:any;
   gatePassAssign:any =[];
   assign_login_data2:any ={};
-  
+  product_data: any = []
   
   
   constructor(public route:ActivatedRoute,public service:DatabaseService, public rout: Router,
-    public dialog: MatDialog,public session:sessionStorage ,public dialogs:DialogComponent,public toast:ToastrManager) { 
+    public apiHit: DatabaseService,
+    public dialog: MatDialog,public session:sessionStorage ,public dialogs:DialogComponent,public toast:ToastrManager,) { 
       
       this.userData = JSON.parse(localStorage.getItem('st_user'));
       this.data.created_by_id=this.userData['data']['id'];
@@ -60,6 +61,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
     
     ngOnInit() {
       this.billDatadetail()
+      this.getmasterboxnew('searchValue')
     }
     
     ngAfterViewInit() {
@@ -324,6 +326,18 @@ export class CompanyDispatchDetailComponent implements OnInit {
       }, error => {
       })
     }
+    getmasterboxnew(searcValue) {
+      this.filter.coupon_code =searcValue;
+      this.service.post_rqst({}, 'Dispatch/fetchMasterGrandCouponDropdownNew').subscribe((resp) => {
+        if (resp['statusCode'] == 200) {
+          this.masterboxData = resp['master_grand_coupon'];
+        }
+        else {
+          this.toast.errorToastr(resp['statusMsg']);
+        }
+      }, error => {
+      })
+    }
     viewmasterboxdetail(maindata,type){
       let data={'main_data':maindata,'type':type}
       const dialogRef = this.dialog.open(ViewMasterBoxDispatchDetailComponent,{
@@ -502,9 +516,31 @@ export class CompanyDispatchDetailComponent implements OnInit {
           }, error => {
           })
         }
+        updateGrandMasterCoupon(){
+          this.apiHit.post_rqst({'data':{'filter': this.filter, 'invoice_id':this.id, }},"Dispatch/updateMasterGrandCoupon").subscribe((result=>{
+            if(result['statusCode']==200){
+              this.masterboxData = result['master_grand_coupon']
+              console.log(result['master_grand_coupon']);
+            }
+            else{
+              this.toast.errorToastr(result['statusMsg'])
+            }
+          } 
+          ))
+        }
+        // getProduct(searcValue) {
+        //   this.filter.coupon_type = 'both';
+        //   this.filter.product_name = searcValue;
+        //   this.service.post_rqst({ 'filter': this.filter }, 'CouponCode/productListNew').subscribe((resp) => {
+        //     if (resp['statusCode'] == 200) {
+        //       this.product_data = resp['data'];
+        //     }
+        //     else {
+        //       this.toast.errorToastr(resp['statusMsg']);
+        //     }
+        //   }, error => {
+        //   })
+        // }
       }
-      
-      
-      
       
       

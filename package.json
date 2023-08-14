@@ -54,7 +54,7 @@
     "ngx-infinite-scroll": "^8.0.2",
     "ngx-loading": "^3.0.1",
     "ngx-loading-bar": "0.0.9",
-    "ngx-mat-select-search": "^3.2.0",
+    "ngx-mat-select-search": "^3.3.3",
     "ngx-pagination": "^3.3.1",
     "rxjs": "~6.3.3",
     "sass": "^1.55.0",

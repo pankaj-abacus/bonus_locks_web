@@ -82,86 +82,79 @@ export class CouponCodeDetailComponent implements OnInit {
         @page { 
           margin: 0.00in 0.00in  0.00in 0.00in;  
         }
-   
+        #qr_code_container  {
+          page-break-inside: always;
+          margin-bottom: 0px
+        }
+        @page { 
+          margin: 0.00in 0.00in  0.00in 0.00in;  
+        }
         
-        
-        // .qr_img{
-        //   position: relative;
-        //   text-align: center;
-        //   font-size: 0.5rem
-        // }
-        // .qr_img span {
-        //   position: absolute;
-        //   left: 0;
-        //   z-index: 1;
-        // }
-        // .qr_img ngx-qrcode, .aclass{
-        //   width: 94.488188976px !important;
-        //   height: 94.488188976px !important;
-        //   text-align: center;
-        //   position: relative;
-        // }
-        
-             
-        .single_qr .qr_img ngx-qrcode, .aclass{
-          width: 84.488189px !important;
-          height: 84.488189px !important;
+        .qr_img{
+          position: relative;
           text-align: center;
-          margin: 0 auto;
+          font-size: 0.5rem
         }
-        .single_qr .qr_img ngx-qrcode, .aclass img{
-          width:100% !important;
-          height:100% !important;
+        .qr_img span {
+          position: absolute;
+          left: 0;
+          z-index: 1;
+        }
+        .qr_img ngx-qrcode, .aclass{
+          width: 94.488188976px !important;
+          height: 94.488188976px !important;
+          text-align: center;
+          position: relative;
         }
         
+ 
         
-        // span.fix-text {
-        //   position: absolute;
-        //   left: -20px;
-        //   top: 30px;
-        //   transform: rotate(-90deg);
-        //   font-weight: bold;
-        //   font-size: 14px;
-        //   width: 60px;
-        //   height: 20px;
-        //   display: flex;
-        //   justify-content: center;
-        // }
+        span.fix-text {
+          position: absolute;
+          left: -20px;
+          top: 30px;
+          transform: rotate(-90deg);
+          font-weight: bold;
+          font-size: 14px;
+          width: 60px;
+          height: 20px;
+          display: flex;
+          justify-content: center;
+        }
         
-        // span.fix-text-code{
-        //   position: absolute;
-        //   top: 33px;
-        //   left: -20px;
-        //   transform: rotate(-90deg);
-        //   font-weight: bold;
-        //   font-size: 8px;
-        //   height: 15px;
-        //   width: 60px;
-        //   display: flex;
-        //   align-items: center;
-        //   justify-content: center;
-        // }
+        span.fix-text-code{
+          position: absolute;
+          top: 33px;
+          left: -20px;
+          transform: rotate(-90deg);
+          font-weight: bold;
+          font-size: 8px;
+          height: 15px;
+          width: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
         
-        // span.fix-text-right {
-        //   position: absolute;
-        //   left: 58px;
-        //   top: 30px;
-        //   transform: rotate(-90deg);
-        //   font-weight: bold;
-        //   font-size: 10px;
-        //   width: 60px;
-        //   height: 20px;
-        //   display: flex;
-        //   justify-content: center;
-        // }
+        span.fix-text-right {
+          position: absolute;
+          left: 58px;
+          top: 30px;
+          transform: rotate(-90deg);
+          font-weight: bold;
+          font-size: 10px;
+          width: 60px;
+          height: 20px;
+          display: flex;
+          justify-content: center;
+        }
         
-        // span.fix-code {
-        //   position: absolute;
-        //   bottom: 8px;
-        //   font-size: 9px;
-        //   width: 100%;
-        //   font-weight: 600;
-        // }
+        span.fix-code {
+          position: absolute;
+          bottom: 8px;
+          font-size: 7px;
+          width: 100%;
+        }
         .qr_img img{
           width: 82px !important;
           height: 82px !important;
@@ -169,18 +162,19 @@ export class CouponCodeDetailComponent implements OnInit {
         
         
         
-        // .qr-codes {
-        //   position: relative;
-        // }
-        // .qr-codes span{
-        //   position: absolute;
-        //   font-size: 10px;
-        //   bottom: -2px;
-        //   text-align: center;
-        //   width: 100%;
-        //   left:50%;
-        //   transform:translateX(-50%);
-        // }
+        .qr-codes {
+          position: relative;
+        }
+        .qr-codes span{
+          position: absolute;
+          font-size: 10px;
+          bottom: -2px;
+          text-align: center;
+          width: 100%;
+          left:50%;
+          transform:translateX(-50%);
+        }
+        
         
         
         

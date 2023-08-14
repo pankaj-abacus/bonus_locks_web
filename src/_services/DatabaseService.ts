@@ -30,9 +30,7 @@ export class DatabaseService implements OnInit {
 
     // <------------------ Live Link ------------------------------>
 
-    dbUrl = "https://apps.basiq360.com/bonus/api/index.php/"; 
-    uploadUrl = "https://apps.basiq360.com/bonus/api/uploads/";
-    downloadUrl = "https://apps.basiq360.com/bonus/api/uploads/Download_excel/"; 
+
 
 
 

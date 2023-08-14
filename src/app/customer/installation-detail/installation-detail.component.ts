@@ -25,6 +25,7 @@ export class InstallationDetailComponent implements OnInit {
   logined_user_data:any={};
   stateDetail:any =[];
   product_size:any =[];
+  image:any =[];
   featureFlag :boolean = false;
   allMrpFlag :boolean = false;
   complaintImg:any =[];
@@ -54,8 +55,10 @@ export class InstallationDetailComponent implements OnInit {
     this.skLoading = true;
     this.service.post_rqst({'complaint_id':this.id},"ServiceTask/serviceInstallationDetail").subscribe((result=>
       {
-        this.getData = result['result'];
+        this.getData = result['result']; 
         console.log('getData',this.getData);
+        this.complaintImg = this.getData['image'];
+        console.log(this.complaintImg);
         this.add_list = this.getData['add_list'];
         console.log('add_list',this.add_list);
         this.skLoading = false;

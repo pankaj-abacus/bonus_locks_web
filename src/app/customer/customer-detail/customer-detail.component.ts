@@ -19,7 +19,7 @@ import { ExportexcelService } from 'src/app/service/exportexcel.service';
   styleUrls: ['./customer-detail.component.scss']
 })
 export class CustomerDetailComponent implements OnInit {
-  
+
   id;
   tabType: any = 'Profile';
   filter: any = {}
@@ -52,8 +52,9 @@ export class CustomerDetailComponent implements OnInit {
   savingFlag: boolean = false;
   filter_data: any = {};
   fabBtnValue: any = 'excel';
-  
-  
+  today_date:any;
+
+
   constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
     this.page_limit = service.pageLimit;
     // this.page_limit = 1;
@@ -65,10 +66,10 @@ export class CustomerDetailComponent implements OnInit {
       }
     });
   }
-  
+
   ngOnInit() {
   }
-  
+
   getCustomerDetail()
   {
     this.skLoading = true;
@@ -77,16 +78,16 @@ export class CustomerDetailComponent implements OnInit {
       {
         this.getData = result['result'];
         console.log('getData',this.getData);
-        
+
         this.productImg = this.getData['img'];
-        
+
         this.skLoading = false;
       }
       ));
-      
+
     }
-    
-    
+
+
     pervious(type) {
       this.start = this.start - this.page_limit;
       if (type == 'warranty') {
@@ -112,11 +113,29 @@ export class CustomerDetailComponent implements OnInit {
       }
     }
 
-    date_format(): void {
+    date_format(type): void {
       this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
-      this.getWarrantyDetail();
+      if (type == 'warranty') {
+        this.getWarrantyDetail();
+      }
+      else if  (type == 'installation') {
+        this.getInstallationDetail();
+      }
+      else{
+        this.getComplaintDetail();
+      }
     }
-    
+
+    date_format2(): void {
+    this.filter_data.date_of_purchase = moment(this.filter_data.date_of_purchase).format('YYYY-MM-DD');
+    this.getWarrantyDetail();
+  }
+
+  date_format3(): void {
+    this.filter_data.warranty_end_date = moment(this.filter_data.warranty_end_date).format('YYYY-MM-DD');
+    this.getWarrantyDetail();
+  }
+
     getWarrantyDetail() {
       this.filter.status = this.tabType;
       this.loader = true;
@@ -127,9 +146,9 @@ export class CustomerDetailComponent implements OnInit {
       if (this.start < 0) {
         this.start = 0;
       }
-      
+
       this.service.post_rqst({'customer_id':this.id,'pagelimit': this.page_limit,'start': this.start,'filter': this.filter_data}, 'ServiceTask/serviceWarrantyList').subscribe((result) => {
-        
+
         if (result['statusCode'] == 200) {
           this.warrantyList = result['result'];
           this.loader = false;
@@ -152,10 +171,10 @@ export class CustomerDetailComponent implements OnInit {
         }
       })
     }
-    
+
     // getWarrantyDetail(){
     //   console.log(this.tabType);
-    
+
     //   this.skLoading = true;
     //   this.filter.status = this.tabType
     //   this.service.post_rqst({'customer_id':this.id},"ServiceTask/serviceWarrantyList").subscribe((result=>
@@ -178,9 +197,9 @@ export class CustomerDetailComponent implements OnInit {
       if (this.start < 0) {
         this.start = 0;
       }
-      
+
       this.service.post_rqst({'customer_id':this.id,'pagelimit': this.page_limit,'start': this.start,'filter': this.filter_data}, 'ServiceTask/serviceInstallationList').subscribe((result) => {
-        
+
         if (result['statusCode'] == 200) {
           this.installationList = result['result'];
           this.loader = false;
@@ -203,7 +222,7 @@ export class CustomerDetailComponent implements OnInit {
         }
       })
     }
-    
+
     // getInstallationDetail(){
     //   console.log(this.tabType);
     //   this.skLoading = true;
@@ -226,9 +245,9 @@ export class CustomerDetailComponent implements OnInit {
       if (this.start < 0) {
         this.start = 0;
       }
-      
+
       this.service.post_rqst({'customer_id':this.id,'pagelimit': this.page_limit,'start': this.start,'filter': this.filter_data}, 'ServiceTask/serviceComplaintList').subscribe((result) => {
-        
+
         if (result['statusCode'] == 200) {
           this.complaintList = result['result'];
           this.loader = false;
@@ -251,7 +270,7 @@ export class CustomerDetailComponent implements OnInit {
         }
       })
     }
-      
+
       // getComplaintDetail(){
       //   console.log(this.tabType);
       //   this.skLoading = true;
@@ -270,7 +289,7 @@ export class CustomerDetailComponent implements OnInit {
         editCustomer(){
           this.router.navigate(['add-customer/' +this.id]);
         }
-        
-        
+
+
+
       }
-      

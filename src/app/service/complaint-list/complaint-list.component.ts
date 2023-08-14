@@ -25,7 +25,7 @@ export class ComplaintListComponent implements OnInit {
   total_page: any = 0;
   pagenumber: any = 0;
   loader: boolean = false;
-  active_tab: any = 'All';
+  active_tab: any = 'Pending';
   sub_active_tab: any = '';
   tab_count: any;
   sub_tab_count: any;
@@ -117,12 +117,12 @@ export class ComplaintListComponent implements OnInit {
     
     if (this.active_tab == 'Cancel') {
       this.filter_data.status = this.active_tab;
-      this.filter_data.sub_status = 'Closed_By_Service'; 
+      this.filter_data.sub_status = ''; 
     }
     
     if (this.active_tab == 'Closed') {
       this.filter_data.status = this.active_tab;
-      this.filter_data.sub_status = ''; 
+      this.filter_data.sub_status = 'Closed_By_Service'; 
     }
     
     if (this.sub_active_tab == 'Not_Assigned') {

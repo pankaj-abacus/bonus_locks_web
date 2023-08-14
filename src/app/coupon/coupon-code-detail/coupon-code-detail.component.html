@@ -11,276 +11,267 @@
     
     <div id="print_card" style="width: 50%;margin-left: 250px;" hidden>
       <div id='qr_code_container'>
-        <div style="width: 377.95275591px; height:207.87401575px;position: relative;" *ngFor="let row of qrCode; let i = index;">
-          <div style="width:100%, height:10px;">&nbsp;</div>
-          <div style="border: 1.5px dashed #000;">
-            <div style="display: flex;">
-              <div style="min-width: 94px; width: 94px;" class="single_qr">
-                <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass qr_img_card" errorCorrectionLevel="L"> </ngx-qrcode>
-              </div>
-              
-              <div style="width: 100%; border-left: 1px dashed #000;">
-                <p style="text-align: center; font-weight: 500; border-bottom: 1px dashed #000; padding: 2px; line-height: 18px; margin:0px ">{{getData.product_name}}</p>
-                <div style="display: grid;  grid-template-columns: 1fr 1fr 1fr;     height: 60px;     align-items: center; ">
-                  <div style="border-right: 1px dashed #000; height: 100%;  align-items: center;  justify-content: center;  display: flex;">
-                    <p style="line-height: 16px; font-size: 14px; margin:0px; text-align:center;">BRUSH STEEL</p>
-                  </div>
-                  <div style="border-right: 1px dashed #000; height: 100%;  align-items: center;  justify-content: center;  display: flex;">
-                    <p style="line-height: 20px;  font-weight: 500; text-align: center; padding: 0px 18px; font-size: 18px; margin:0px;">Qty: 1 PC</p>
-                  </div>
-                  <div style="height: 100%;  align-items: center;  justify-content: center;  display: flex;">
-                    <p style="line-height: 20px;  font-weight: 500; text-align: center; padding: 0px 18px; font-size: 18px; margin:0px;">Ref.Id: {{getData.product_code}}</p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div style="border-top: 1px dashed #000; padding: 3px; font-size: 12px; font-weight: 500;">
-              {{getData.product_detail}}
-            </div>
-            <div style="display: grid;  grid-template-columns: 1fr 1fr; border-top: 1px dashed #000;">
-              <div style="border-right: 1px dashed #000; padding-left: 4px;">
-                <p style="border-right: 1px dashed #000; padding: 0px 2px; font-size:14px; line-height: 16px; margin:0px;">MRP : 1890</p>
-                <span style="font-size:9px; line-height:12px;  margin:0px; ">(Incl of all taxes)</span>
-              </div>
-              <div style="display: flex; align-items: center;  justify-content: center; font-size: 11px; font-weight: 500;">
-                Date Of Packaging: {{getData.date_created | date:'d MMM y'}}
-              </div>
-            </div>
-            <div style="display: grid;  grid-template-columns: 1fr 1fr; border-top: 1px dashed #000;">
-              <div style="border-right: 1px dashed #000; padding-left: 4px;">
-                <p style="border-right: 1px dashed #000; font-size: 11px; font-weight: 600; line-height:18px; margin:0px; ">CUSTOMER CARE</p>
-                <span style="font-size:9px; ">Manager: TEL: +91-8881750126</span>
-                <span style="font-size:9px; ">email:sales.imi@gmail.com</span>
-              </div>
-              <div style="padding-left: 4px;">
-                <p style="border-right: 1px dashed #000; font-size: 11px; font-weight: 600; line-height:18px; margin:0px; ">Lockmaster India Pvt.Ltd</p>
-                <span style="font-size:9px; ">C-20 Industrial Estate</span>
-                <span style="font-size:9px; ">Aligarh-202001(U.P) India</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        
-        
-        <!-- ***** CASE 1 BOX WITH ITEM START***** -->
-        <!-- <ng-container *ngIf="getData.box_type == 1">
-          <div id="print_card" style="width: 50%;margin-left: 250px;" hidden>
-            <div id='qr_code_container'  *ngFor="let row of qrCode; let i = index;">
-              <div style="width: 396.8503937px; position: relative; display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;">
-                <div class="qr_img" style="width: 94.488188976px; margin: 0 auto;  height: 94.488188976px;  position: relative;">
+        <ng-container *ngIf="getData.coupon_type == 'Master Box'">
+          <div style="width: 377.95275591px; height:207.87401575px;position: relative;" *ngFor="let row of qrCode; let i = index;">
+            <div style="width:100%; height:10px;">&nbsp;</div>
+            <div style="border: 1.5px dashed #000;">
+              <div style="display: flex;">
+                <div style="min-width: 94px; width: 94px;" class="single_qr">
                   <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass qr_img_card" errorCorrectionLevel="L"> </ngx-qrcode>
-                  <span class='fix-text'>Box {{i+1}}</span>
-                  <span class='fix-code' style="text-align: left; margin-left: 5px;">{{row.coupon_code}}</span>
-                  
                 </div>
                 
-                <ng-container *ngFor="let subRow of row.itembox">
-                  <div class="qr_img" style="width: 94.488188976px; margin: 0 auto;  height: 94.488188976px;  position: relative;">
-                    <ngx-qrcode [elementType]="elementType" value="{{subRow.coupon_code}}" cssClass="aclass qr_img_card" errorCorrectionLevel="L"> </ngx-qrcode>
-                    <span class='fix-code'>{{subRow.coupon_code}}</span>
-                    <span class='fix-text-code'>{{getData.product_code}}</span>
+                <div style="width: 100%; border-left: 1px dashed #000;">
+                  <p style="text-align: center; font-weight: 500; border-bottom: 1px dashed #000; padding: 2px; line-height: 18px; margin:0px ">{{getData.product_name}}</p>
+                  <div style="display: grid;  grid-template-columns: 1fr 1fr 1fr;     height: 60px;     align-items: center; ">
+                    <div style="border-right: 1px dashed #000; height: 100%;  align-items: center;  justify-content: center;  display: flex;">
+                      <p style="line-height: 16px; font-size: 14px; margin:0px; text-align:center;">BRUSH STEEL</p>
+                    </div>
+                    <div style="border-right: 1px dashed #000; height: 100%;  align-items: center;  justify-content: center;  display: flex;">
+                      <p style="line-height: 20px;  font-weight: 500; text-align: center; padding: 0px 18px; font-size: 18px; margin:0px;">Qty: 1 PC</p>
+                    </div>
+                    <div style="height: 100%;  align-items: center;  justify-content: center;  display: flex;">
+                      <p style="line-height: 20px;  font-weight: 500; text-align: center; padding: 0px 18px; font-size: 18px; margin:0px;">Ref.Id: {{getData.product_code}}</p>
+                    </div>
                   </div>
-                </ng-container>
+                  
+                </div>
               </div>
-            </div>
-          </div>
-        </ng-container> -->
-        <!-- ***** CASE 1 BOX WITH ITEM END***** -->
-        
-        
-        <!-- ***** CASE 2 ONLY BOX START ***** -->
-        <!-- <ng-container   *ngIf="getData.box_type == 2">
-          <div id="print_card" style="width: 50%;margin-left: 250px;" hidden>
-            <div id='qr_code_container'>
-              <div style="width: 396.8503937px; position: relative; display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;">
-                <div class="qr_img" style="width: 94.488188976px; margin: 0 auto;  height: 94.488188976px;  position: relative;" *ngFor="let row of qrCode; let i = index;">
-                  <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass qr_img_card" errorCorrectionLevel="L"> </ngx-qrcode>
-                  <span class='fix-text' >BOX {{i+1}}</span>
-                  <span class='fix-code' style="text-align: center; margin-left: -5px;">{{row.coupon_code}}</span>
-                  <span class='fix-text-right' style="text-align:left"> {{getData.product_code}}</span>
+              <div style="border-top: 1px dashed #000; padding: 3px; font-size: 12px; font-weight: 500;">
+                {{getData.product_detail}}
+              </div>
+              <div style="display: grid;  grid-template-columns: 1fr 1fr; border-top: 1px dashed #000;">
+                <div style="border-right: 1px dashed #000; padding-left: 4px;">
+                  <p style="border-right: 1px dashed #000; padding: 0px 2px; font-size:14px; line-height: 16px; margin:0px;">MRP : 1890</p>
+                  <span style="font-size:9px; line-height:12px;  margin:0px; ">(Incl of all taxes)</span>
+                </div>
+                <div style="display: flex; align-items: center;  justify-content: center; font-size: 11px; font-weight: 500;">
+                  Date Of Packaging: {{getData.date_created | date:'d MMM y'}}
+                </div>
+              </div>
+              <div style="display: grid;  grid-template-columns: 1fr 1fr; border-top: 1px dashed #000;">
+                <div style="border-right: 1px dashed #000; padding-left: 4px;">
+                  <p style="border-right: 1px dashed #000; font-size: 11px; font-weight: 600; line-height:18px; margin:0px; ">CUSTOMER CARE</p>
+                  <span style="font-size:9px; ">Manager: TEL: +91-8881750126</span>
+                  <span style="font-size:9px; ">email:sales.imi@gmail.com</span>
+                </div>
+                <div style="padding-left: 4px;">
+                  <p style="border-right: 1px dashed #000; font-size: 11px; font-weight: 600; line-height:18px; margin:0px; ">Lockmaster India Pvt.Ltd</p>
+                  <span style="font-size:9px; ">C-20 Industrial Estate</span>
+                  <span style="font-size:9px; ">Aligarh-202001(U.P) India</span>
                 </div>
               </div>
             </div>
           </div>
-        </ng-container> -->
-        <!-- ***** CASE 2 ONLY BOX END ***** -->
+        </ng-container>
         
         
-        <!-- ***** CASE 3 ONLY ITEM START***** -->
-        <!-- <ng-container  *ngIf="getData.box_type == 3">
-          <div id="print_card" style="width: 50%;margin-left: 250px;" hidden>
-            <div id='qr_code_container'  >
-              <div style="width: 396.8503937px; position: relative; display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;">
-                <div class="qr_img" style="width: 94.488188976px; margin: 0 auto;  height: 94.488188976px;  position: relative;" *ngFor="let row of qrCode">
-                  <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass qr_img_card" errorCorrectionLevel="L"> </ngx-qrcode>
-                  <span class='fix-code' style="text-align: center; margin-left: -3px;">{{row.coupon_code}}</span>
+        <ng-container *ngIf="getData.coupon_type == 'Item Box'">
+          <!-- ***** CASE 1 BOX WITH ITEM START***** -->
+          <ng-container *ngIf="getData.box_type == 1">
+            <div style="width: 396.8503937px; position: relative; display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;" *ngFor="let row of qrCode; let i = index;">
+              <div class="qr_img" style="width: 94.488188976px; margin: 0 auto;  height: 94.488188976px;  position: relative;">
+                <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass qr_img_card" errorCorrectionLevel="L"> </ngx-qrcode>
+                <span class='fix-text'>Box {{i+1}}</span>
+                <span class='fix-code' style="text-align: left; margin-left: 5px;">{{row.coupon_code}}</span>
+                
+              </div>
+              
+              <ng-container *ngFor="let subRow of row.itembox">
+                <div class="qr_img" style="width: 94.488188976px; margin: 0 auto;  height: 94.488188976px;  position: relative;">
+                  <ngx-qrcode [elementType]="elementType" value="{{subRow.coupon_code}}" cssClass="aclass qr_img_card" errorCorrectionLevel="L"> </ngx-qrcode>
+                  <span class='fix-code'>{{subRow.coupon_code}}</span>
                   <span class='fix-text-code'>{{getData.product_code}}</span>
                 </div>
+              </ng-container>
+            </div>
+          </ng-container>
+          <!-- ***** CASE 1 BOX WITH ITEM END***** -->
+          
+          
+          <!-- ***** CASE 2 ONLY BOX START ***** -->
+          <ng-container   *ngIf="getData.box_type == 2">
+            <div style="width: 396.8503937px; position: relative; display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;">
+              <div class="qr_img" style="width: 94.488188976px; margin: 0 auto;  height: 94.488188976px;  position: relative;" *ngFor="let row of qrCode; let i = index;">
+                <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass qr_img_card" errorCorrectionLevel="L"> </ngx-qrcode>
+                <span class='fix-text' >BOX {{i+1}}</span>
+                <span class='fix-code' style="text-align: center; margin-left: -5px;">{{row.coupon_code}}</span>
+                <span class='fix-text-right' style="text-align:left"> {{getData.product_code}}</span>
               </div>
             </div>
-          </div>
-        </ng-container> -->
-        <!-- ***** CASE 3 ONLY ITEM END***** -->
+          </ng-container>
+          <!-- ***** CASE 2 ONLY BOX END ***** -->
+          
+          
+          <!-- ***** CASE 3 ONLY ITEM START***** -->
+          <ng-container  *ngIf="getData.box_type == 3">
+            <div style="width: 396.8503937px; position: relative; display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;">
+              <div class="qr_img" style="width: 94.488188976px; margin: 0 auto;  height: 94.488188976px;  position: relative;" *ngFor="let row of qrCode">
+                <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass qr_img_card" errorCorrectionLevel="L"> </ngx-qrcode>
+                <span class='fix-code' style="text-align: center; margin-left: -3px;">{{row.coupon_code}}</span>
+                <span class='fix-text-code'>{{getData.product_code}}</span>
+              </div>
+            </div>
+          </ng-container>
+          <!-- ***** CASE 3 ONLY ITEM END***** -->
+        </ng-container>
       </div>
     </div>
-        
-        <div class="row">
-          <div class="col s12 m12 l12">
-            <div class="card" *ngIf="!skLoading">
-              <div class="card-head">
-                <h2>Basic Details</h2>
+    
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="card" *ngIf="!skLoading">
+          <div class="card-head">
+            <h2>Basic Details</h2>
+          </div>
+          <div class="card-body">
+            <div class="grid-box">
+              <div class="block-feilds">
+                <span>Date Created</span>
+                <p>{{getData.date_created | date:'d MMM y'}}</p>
               </div>
-              <div class="card-body">
-                <div class="grid-box">
-                  <div class="block-feilds">
-                    <span>Date Created</span>
-                    <p>{{getData.date_created | date:'d MMM y'}}</p>
-                  </div>
-                  
-                  <div class="block-feilds">
-                    <span>Created By</span>
-                    <p>{{getData.created_by_name}}</p>
-                  </div>
-                  
-                  <div class="block-feilds">
-                    <span>Coupon Count</span>
-                    <p>{{getData.total_coupon}}</p>
-                  </div>
-                  <div class="block-feilds">
-                    <span>Point Category Name</span>
-                    <p>{{getData.point_category_name ? getData.point_category_name : '---'}}</p>
-                  </div>
-                </div>
-                
-                <div class="grid-box two mt16">
-                  <div class="block-feilds">
-                    <span>Product Detail</span>
-                    <p>{{getData.product_detail}}</p>
-                  </div>
-                  
-                  <div class="block-feilds" *ngIf="getData.remarks">
-                    <span>Remark</span>
-                    <p>{{getData.remarks}}</p>
-                  </div>
-                </div>
+              
+              <div class="block-feilds">
+                <span>Created By</span>
+                <p>{{getData.created_by_name}}</p>
+              </div>
+              
+              <div class="block-feilds">
+                <span>Coupon Count</span>
+                <p>{{getData.total_coupon}}</p>
+              </div>
+              <div class="block-feilds">
+                <span>Point Category Name</span>
+                <p>{{getData.point_category_name ? getData.point_category_name : '---'}}</p>
               </div>
             </div>
             
-            
-            <!-- Skeleton start -->
-            <div class="card" *ngIf="skLoading">
-              <div class="sk-head">
-                <h2>&nbsp;</h2>
+            <div class="grid-box two mt16">
+              <div class="block-feilds">
+                <span>Product Detail</span>
+                <p>{{getData.product_detail}}</p>
               </div>
-              <div class="card-body">
-                <div class="grid-box">
-                  <div class="sk-box" *ngFor="let row of [].constructor(10)">
-                    &nbsp;
-                  </div>
-                </div>
+              
+              <div class="block-feilds" *ngIf="getData.remarks">
+                <span>Remark</span>
+                <p>{{getData.remarks}}</p>
               </div>
             </div>
-            <!-- Skeleton end -->
           </div>
         </div>
         
-        <div class="row mb100" *ngIf="!skLoading">
-          <div class="col s12 m12 l12 grid-two-box">
-            <div class="card" *ngFor="let row of qrCode; let i = index;">
-              <div class="card-head">
-                <div class="qr-head">
-                  <h2 class="mb0">{{getData.product_detail}}</h2>
-                  <h2 class="mb0" >{{getData.sku_code}}  {{getData.remarks ? '('+ getData.remarks + ')' : ''}}</h2>
-                  <h2  class="mb0" *ngIf="getData.hardner_code">{{getData.hardner_code}} {{getData.hardner_qty}}</h2>
-                </div>
+        
+        <!-- Skeleton start -->
+        <div class="card" *ngIf="skLoading">
+          <div class="sk-head">
+            <h2>&nbsp;</h2>
+          </div>
+          <div class="card-body">
+            <div class="grid-box">
+              <div class="sk-box" *ngFor="let row of [].constructor(10)">
+                &nbsp;
               </div>
-              <div class="card-body">
-                <div  class="qr-box">
-                  <div class="qr-content">
-                    <ul>
-                      <li>
-                        <p>MRP &#8377; {{row.product_mrp == 0  ? '': row.product_mrp }} (Inclusive of all Taxes)</p>
-                      </li>
-                      <li>
-                        <p>Net Content {{row.product_qty | titlecase}}.</p>
-                      </li>
-                      <!-- <li>Pearl, Precision Products</li> -->
-                      <li>Lock Master India Pvt Ltd.</li>
-                      <li>C-20, Industrial Estate, Aligarh-202 001 (U.P.) INDIA</li>
-                      <li>Customer Care No:0571-2406328, +91 8881750126</li>
-                      <li>Email- sales@bonus.in</li>
-                    </ul>
-                  </div>
-                  <div class="cs-barcode" *ngIf="getData.coupon_type == 'Master Box' ">
-                    <ngx-qrcode 
-                    [elementType]="elementType" 
-                    value="{{row.coupon_code}}"
-                    cssClass="aclass"
-                    errorCorrectionLevel="L">
-                  </ngx-qrcode>
-                  <span class="fix">{{i+1}} Box</span>
-                  <span class="qr-code-number">{{row.coupon_code}}</span>
-                </div>
-                
-                <div class="cs-barcode" *ngIf="getData.coupon_type == 'Item Box' ">
-                  <ngx-qrcode 
-                  [elementType]="elementType" 
-                  value="{{row.coupon_code}}"
-                  cssClass="aclass"
-                  errorCorrectionLevel="L">
-                </ngx-qrcode>
-                <span class="qr-code-number">{{row.coupon_code}}</span>
-              </div>
-              
             </div>
-            <div class="qr-box" *ngFor="let subRow of row.itembox">
+          </div>
+        </div>
+        <!-- Skeleton end -->
+      </div>
+    </div>
+    
+    <div class="row mb100" *ngIf="!skLoading">
+      <div class="col s12 m12 l12 grid-two-box">
+        <div class="card" *ngFor="let row of qrCode; let i = index;">
+          <div class="card-head">
+            <div class="qr-head">
+              <h2 class="mb0">{{getData.product_detail}}</h2>
+              <h2 class="mb0" >{{getData.sku_code}}  {{getData.remarks ? '('+ getData.remarks + ')' : ''}}</h2>
+              <h2  class="mb0" *ngIf="getData.hardner_code">{{getData.hardner_code}} {{getData.hardner_qty}}</h2>
+            </div>
+          </div>
+          <div class="card-body">
+            <div  class="qr-box">
               <div class="qr-content">
                 <ul>
                   <li>
-                    <p>MRP &#8377; {{subRow.product_mrp == 0  ? '': subRow.product_mrp }} (Inclusive of all Taxes)</p>
+                    <p>MRP &#8377; {{row.product_mrp == 0  ? '': row.product_mrp }} (Inclusive of all Taxes)</p>
                   </li>
                   <li>
-                    <p>Net Content {{subRow.product_qty | titlecase}}</p>
+                    <p>Net Content {{row.product_qty | titlecase}}.</p>
                   </li>
-                  <ng-container *ngIf="getData.product_source == 'Imported'">
-                    <li>COUNTRY OF ORIGIN ITALY</li>
-                    <li>Imported Packed and Marketed by</li>
-                  </ng-container>
                   <!-- <li>Pearl, Precision Products</li> -->
                   <li>Lock Master India Pvt Ltd.</li>
-                  <li>C-20, Industrial Estate,Aligarh-202 001 (U.P.)INDIA</li>
+                  <li>C-20, Industrial Estate, Aligarh-202 001 (U.P.) INDIA</li>
                   <li>Customer Care No:0571-2406328, +91 8881750126</li>
                   <li>Email- sales@bonus.in</li>
                 </ul>
               </div>
-              <div class="cs-barcode">
+              <div class="cs-barcode" *ngIf="getData.coupon_type == 'Master Box' ">
                 <ngx-qrcode 
                 [elementType]="elementType" 
-                value="{{subRow.coupon_code}}"
+                value="{{row.coupon_code}}"
                 cssClass="aclass"
                 errorCorrectionLevel="L">
               </ngx-qrcode>
-              <span class="qr-code-number">{{subRow.coupon_code}}</span> 
+              <span class="fix">{{i+1}} Box</span>
+              <span class="qr-code-number">{{row.coupon_code}}</span>
             </div>
+            
+            <div class="cs-barcode" *ngIf="getData.coupon_type == 'Item Box' ">
+              <ngx-qrcode 
+              [elementType]="elementType" 
+              value="{{row.coupon_code}}"
+              cssClass="aclass"
+              errorCorrectionLevel="L">
+            </ngx-qrcode>
+            <span class="qr-code-number">{{row.coupon_code}}</span>
           </div>
+          
+        </div>
+        <div class="qr-box" *ngFor="let subRow of row.itembox">
+          <div class="qr-content">
+            <ul>
+              <li>
+                <p>MRP &#8377; {{subRow.product_mrp == 0  ? '': subRow.product_mrp }} (Inclusive of all Taxes)</p>
+              </li>
+              <li>
+                <p>Net Content {{subRow.product_qty | titlecase}}</p>
+              </li>
+              <ng-container *ngIf="getData.product_source == 'Imported'">
+                <li>COUNTRY OF ORIGIN ITALY</li>
+                <li>Imported Packed and Marketed by</li>
+              </ng-container>
+              <!-- <li>Pearl, Precision Products</li> -->
+              <li>Lock Master India Pvt Ltd.</li>
+              <li>C-20, Industrial Estate,Aligarh-202 001 (U.P.)INDIA</li>
+              <li>Customer Care No:0571-2406328, +91 8881750126</li>
+              <li>Email- sales@bonus.in</li>
+            </ul>
+          </div>
+          <div class="cs-barcode">
+            <ngx-qrcode 
+            [elementType]="elementType" 
+            value="{{subRow.coupon_code}}"
+            cssClass="aclass"
+            errorCorrectionLevel="L">
+          </ngx-qrcode>
+          <span class="qr-code-number">{{subRow.coupon_code}}</span> 
         </div>
       </div>
-      
-      
-      
-      
     </div>
   </div>
-  <div class="fab-btns" *ngIf="qrCode.length > 0">
-    <div class="fab-btns" >
-      <button class="pulse excel" mat-fab color="primary"  (click)="printData();">
-        <i class="material-icons">print</i>
-        Print Coupon
-      </button>
-    </div>
+  
+  
+  
+  
+</div>
+</div>
+<div class="fab-btns" *ngIf="qrCode.length > 0">
+  <div class="fab-btns" >
+    <button class="pulse excel" mat-fab color="primary"  (click)="printData();">
+      <i class="material-icons">print</i>
+      Print Coupon
+    </button>
   </div>
+</div>
 </div>
 </div>
 
