@@ -12,7 +12,7 @@ import { AppUtilityModule } from 'src/app/app-utility.module';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 
-const stockRoutes = [
+const masterboxRoutes = [
   { path: "", children:[
     { path: "", component: GenerateMasterBoxComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
   ]},
@@ -25,7 +25,7 @@ const stockRoutes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(stockRoutes),
+    RouterModule.forChild(masterboxRoutes),
     MaterialModule,
     NgxMatSelectSearchModule,
     MatSelectModule,
