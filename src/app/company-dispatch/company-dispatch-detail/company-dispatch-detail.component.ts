@@ -21,6 +21,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
   orderType:any ='order';
   id:any;
   data:any ={};
+  search:any={}
   couponNumber:any= {};
   savingFlag:boolean = false;
   userData:any;
@@ -30,6 +31,8 @@ export class CompanyDispatchDetailComponent implements OnInit {
   payment_list:any=[];
   masterboxData:any=[];
   masterdispatchboxitemdetail:any=[];
+  masterboxDataforsearch:any=[];
+
   dispatch_coupon:any=[];
   dispatch_detail:any ={};
   skLoading:boolean = false;
@@ -61,7 +64,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
     
     ngOnInit() {
       this.billDatadetail()
-      this.getmasterboxnew('searchValue')
+      this.getmasterboxnew('searcValue')
     }
     
     ngAfterViewInit() {
@@ -330,7 +333,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
       this.filter.coupon_code =searcValue;
       this.service.post_rqst({}, 'Dispatch/fetchMasterGrandCouponDropdownNew').subscribe((resp) => {
         if (resp['statusCode'] == 200) {
-          this.masterboxData = resp['master_grand_coupon'];
+          this.masterboxDataforsearch = resp['master_grand_coupon'];
         }
         else {
           this.toast.errorToastr(resp['statusMsg']);
@@ -517,10 +520,11 @@ export class CompanyDispatchDetailComponent implements OnInit {
           })
         }
         updateGrandMasterCoupon(){
-          this.apiHit.post_rqst({'data':{'filter': this.filter, 'invoice_id':this.id, }},"Dispatch/updateMasterGrandCoupon").subscribe((result=>{
+          this.apiHit.post_rqst({'data':{ 'dr_id':this.invoice_detail.dr_id,'dr_code':this.invoice_detail.dr_code,'bill_dispatch_type':this.invoice_detail.bill_dispatch_type,'filter': this.filter,'id': this.search.couponGrandMasterId,'created_by_name':this.data.created_by_name, 'created_by_id':this.data.created_by_id, 'company_name':this.invoice_detail.company_name, 'invoice_id':this.id,'invoice_no':this.invoice_detail.order_no, }},"Dispatch/updateMasterGrandCouponNew").subscribe((result=>{
             if(result['statusCode']==200){
               this.masterboxData = result['master_grand_coupon']
-              console.log(result['master_grand_coupon']);
+              this.toast.successToastr('Success');              
+              this.billDatadetail()
             }
             else{
               this.toast.errorToastr(result['statusMsg'])

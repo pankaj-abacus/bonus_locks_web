@@ -167,9 +167,10 @@ export class GenerateMasterBoxComponent implements OnInit {
     this.dispatchItem = [];
     this.service.post_rqst({'coupon_code':number,'product_id':this.data.product_id,'bill_dispatch_type':this.invoice_detail.bill_dispatch_type, 'dr_code':this.invoice_detail.dr_code, 'created_by_name':this.data.created_by_name, 'created_by_id':this.data.created_by_id, 'company_name':this.invoice_detail.company_name,  'invoice_id':this.id, 'invoice_no':this.invoice_detail.order_no,'couponGrandMasterId':couponGrandMasterId},'Dispatch/checkCouponCodeCheckNew').subscribe((result)=>
     {
-      if (result['statusCode'] == 200 && result['statusMsg'] == ''){
+      if (result['statusCode'] == 200 && result['statusMsg'] == 'Success'){
         this.temCoupon.push(result['coupon_details'])
         console.log(this.temCoupon);
+        this.toast.successToastr(result['statusMsg']);
       }
       else{
         if(result['statusMsg'] == 'Coupon not exist.'){
@@ -183,58 +184,6 @@ export class GenerateMasterBoxComponent implements OnInit {
         }
         this.toast.errorToastr(result['statusMsg']);
       }
-      // if (result['statusCode'] == 200){
-      //   this.dispatchedCoupon= result['coupon_code'];
-      //   this.dispatchQTY= result['sale_dispatch_qty'];
-      //   this.dispatchInvoice= result['invoice_qty'];
-      //   this.dispatchItem = result['dispatch'];
-        
-      //   console.log(this.dispatchItem, 'this.dispatchItem');
-        
-        
-      //   if(this.dispatchedCoupon){
-      //     for (let i = 0; i < this.temCoupon.length; i++) {
-      //       if(this.temCoupon[i]['coupon_no'] == this.dispatchedCoupon){
-      //         if(result['statusMsg'] != 'Success' ){
-      //           this.toast.errorToastr(result['statusMsg']);
-      //         }
-              
-      //         this.temCoupon[i]['status']  = result['statusMsg'];
-      //         this.temCoupon[i]['product_detail']  = result['product_detail'];
-      //         // this.billDatadetail()
-      //       }
-      //     }
-      //   }
-        
-      // }
-      // else{
-      //   if(result['coupon_code']){
-      //     this.dispatchedCoupon= result['coupon_code'];
-      //     for (let i = 0; i < this.temCoupon.length; i++) {
-      //       if(this.temCoupon[i]['coupon_no'] == this.dispatchedCoupon){
-      //         if(result['statusMsg'] != 'Success' ){
-      //           this.toast.errorToastr(result['statusMsg']);
-      //         }
-      //         this.temCoupon[i]['status']  =result['statusMsg'];
-      //         this.temCoupon[i]['product_detail']  = result['product_detail'];
-      //       }
-      //     }
-      //     this.couponNumber.coupon_number='';
-      //     // this.billDatadetail()
-      //   }
-      //   else{
-      //     if(result['statusMsg'] == 'Coupon not exist.'){
-      //       for (let i = 0; i < this.temCoupon.length; i++) {
-      //         if(this.temCoupon[i]['coupon_no'] == number){
-      //           this.temCoupon[i]['status'] = result['statusMsg'];
-      //           this.temCoupon[i]['product_detail']  = result['product_detail'];
-      //         }
-      //       }
-      //       this.couponNumber.coupon_number='';
-      //     }
-      //     this.toast.errorToastr(result['statusMsg']);
-      //   }
-      // }
       this.couponNumber.coupon_number='';
       this.getmasterbox('')
       this.getdispatchMasterboxdetail()
@@ -288,7 +237,25 @@ export class GenerateMasterBoxComponent implements OnInit {
       if (result) {
         this.service.post_rqst({ 'data':data }, 'Dispatch/deleteGrandMasterBox').subscribe((resp) => {
           if (resp['statusCode'] == 200) {
-            this.toast.successToastr('Deleted Successfully..');              
+            this.toast.errorToastr('Deleted Successfully..');              
+            this.getdispatchMasterboxdetail();
+          }
+          else {
+            this.toast.errorToastr(resp['statusMsg']);
+            return;
+          }
+        }, error => {
+        })
+      }
+    })
+  }
+
+  reOpenMasterBox(data,number){
+    this.dialogs.confirm("Do You Want To Re Open Master Box?").then((result) => {
+      if (result) {
+        this.service.post_rqst({ 'data':data }, 'Dispatch/reOpenGrandMasterBox').subscribe((resp) => {
+          if (resp['statusCode'] == 200) {
+            this.toast.successToastr('Re Open Successfully..');              
             this.getdispatchMasterboxdetail();
           }
           else {

@@ -19,11 +19,11 @@
         <!-- <div class="mr16" *ngIf="masterboxData.length"> -->
           <mat-form-field class="mr15 mt15" appearance="outline">
             <mat-label>Select Master Box</mat-label>
-            <mat-select  name="couponGrandMasterId" [(ngModel)]="couponNumber.couponGrandMasterId"  #couponGrandMasterId="ngModel" *ngIf="masterboxData.length" (ngModelChange)="getProduct()">
+            <mat-select  name="couponGrandMasterId" [(ngModel)]="search.couponGrandMasterId"  #couponGrandMasterId="ngModel" *ngIf="masterboxDataforsearch.length" (ngModelChange)="getProduct()">
               <mat-option >
-                <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.." (keyup)="getmasterboxnew($event.target.value,invoice_detail.order_no)"></ngx-mat-select-search>
+                <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.." (keyup)="getmasterboxnew()"></ngx-mat-select-search>
               </mat-option>
-              <mat-option *ngFor="let row of masterboxData" value="{{row.id}}" (click)="updateGrandMasterCoupon()">{{row.coupon_code}}</mat-option>
+              <mat-option *ngFor="let row of masterboxDataforsearch" value="{{row.id}}" (click)="updateGrandMasterCoupon()">{{row.coupon_code}}</mat-option>
             </mat-select>
           </mat-form-field>  
           <!-- </div> -->
