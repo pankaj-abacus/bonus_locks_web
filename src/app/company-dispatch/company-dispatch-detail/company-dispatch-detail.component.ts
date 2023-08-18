@@ -64,7 +64,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
     
     ngOnInit() {
       this.billDatadetail()
-      this.getmasterboxnew('searcValue')
+      // this.getmasterboxnew('searcValue')
     }
     
     ngAfterViewInit() {
