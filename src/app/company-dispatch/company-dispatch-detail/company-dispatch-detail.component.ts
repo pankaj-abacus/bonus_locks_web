@@ -64,7 +64,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
     
     ngOnInit() {
       this.billDatadetail()
-      // this.getmasterboxnew('searcValue')
+      this.getmasterboxnew('searcValue')
     }
     
     ngAfterViewInit() {
@@ -532,19 +532,19 @@ export class CompanyDispatchDetailComponent implements OnInit {
           } 
           ))
         }
-        // getProduct(searcValue) {
-        //   this.filter.coupon_type = 'both';
-        //   this.filter.product_name = searcValue;
-        //   this.service.post_rqst({ 'filter': this.filter }, 'CouponCode/productListNew').subscribe((resp) => {
-        //     if (resp['statusCode'] == 200) {
-        //       this.product_data = resp['data'];
-        //     }
-        //     else {
-        //       this.toast.errorToastr(resp['statusMsg']);
-        //     }
-        //   }, error => {
-        //   })
-        // }
+        getProduct(searcValue) {
+          this.filter.coupon_type = 'both';
+          this.filter.product_name = searcValue;
+          this.service.post_rqst({ 'filter': this.filter }, 'CouponCode/productListNew').subscribe((resp) => {
+            if (resp['statusCode'] == 200) {
+              this.product_data = resp['data'];
+            }
+            else {
+              this.toast.errorToastr(resp['statusMsg']);
+            }
+          }, error => {
+          })
+        }
       }
       
       

@@ -20,7 +20,7 @@ import { AuthComponentGuard } from './auth-component.guard';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { AddDiscountComponent } from './discount/add-discount/add-discount.component';
 import { DiscountListComponent } from './discount/discount-list/discount-list.component';
-import { MatDialogModule, MatIconModule, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, MatSelectModule } from '@angular/material';
+import { MatDialogModule, MatIconModule, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, MatSelectModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 import { NgxEditorModule } from 'ngx-editor';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { DialogComponent } from './dialog.component';
@@ -126,6 +126,8 @@ import { AddInstallationRemarkComponent } from './installation/add-installation-
         WarrantyModuleModule,
         InstallationModuleModule,
         // FusionChartsModule
+        MatFormFieldModule,
+        MatInputModule
     ],
     providers: [
         DatabaseService,
