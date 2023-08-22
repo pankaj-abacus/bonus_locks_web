@@ -41,6 +41,7 @@ export class DatabaseService implements OnInit {
 
 
 
+
     header: any = new HttpHeaders();
     data: any;
     myProduct: any = {};
