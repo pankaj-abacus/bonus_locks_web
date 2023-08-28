@@ -235,7 +235,7 @@ export class GenerateMasterBoxComponent implements OnInit {
   deletemasterboxes(data,number){
     this.dialogs.confirm("Delete Master Box?").then((result) => {
       if (result) {
-        this.service.post_rqst({ 'data':data }, 'Dispatch/deleteGrandMasterBox').subscribe((resp) => {
+        this.service.post_rqst({ 'data':data }, 'Dispatch/deleteGrandMasterBoxNew').subscribe((resp) => {
           if (resp['statusCode'] == 200) {
             this.toast.errorToastr('Deleted Successfully..');              
             this.getdispatchMasterboxdetail();
