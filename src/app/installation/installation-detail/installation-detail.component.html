@@ -36,7 +36,7 @@
             <div class="grid-box">
               <div class="block-feilds">
                 <span>Date Created</span>
-                <p>{{ getData.date_created ? getData.date_created : "---" }}</p>
+                <p>{{ getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a'): "---" }}</p>
               </div>
 
               <div class="block-feilds">
@@ -141,7 +141,7 @@
                   <p>
                     {{
                     getData.closed_date != "0000-00-00 00:00:00"
-                    ? (getData.closed_date | date)
+                    ? (getData.closed_date | date : 'dd MMM yyy ,h:mm a')
                     : "N/A"
                     }}
                   </p>
@@ -191,7 +191,7 @@
             <ng-container *ngFor="let row of getData.log">
               <div class="logshead">
                 {{ row.created_by_name }} :-
-                {{ row.date_created | date : "dd MMM yyyy" }}
+                {{ row.date_created | date : 'dd MMM yyy ,h:mm a'}}
               </div>
               <div class="logscontent">
                 <span>Remark : </span> {{ row.msg ? row.msg : row.remark }}

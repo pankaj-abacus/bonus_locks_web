@@ -205,6 +205,10 @@
                                     <p>{{getData.product_code ? getData.product_code :'---'}}</p>
                                 </div>
                                 <div class="block-feilds">
+                                    <span>Warranty Status</span>
+                                    <p>{{getData.warranty_status ? getData.warranty_status :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
                                     <span>Closing Type</span>
                                     <p>{{getData.closing_type ? getData.closing_type:'N/A'}}</p>
                                 </div>
@@ -240,9 +244,8 @@
                         <div class="card-body">
                             <div class="grid-box">
                                 <div class="block-feilds">
-                                    <span>{{getData.complaint_status}} Date</span>
-                                    <p>{{getData.closed_date != '0000-00-00 00:00:00' ? (getData.closed_date |
-                                        date : 'dd MMM yyy ,h:mm a'):'N/A'}}</p>
+                                    <span>New Serial No.</span>
+                                    <p>{{getData.new_serial_no ? getData.new_serial_no:'N/A'}}</p>
                                 </div>
                                 <div class="block-feilds">
                                     <span>Replaced By</span>
@@ -256,13 +259,19 @@
                                     <span>Dealer Mobile</span>
                                     <p>{{getData.replaced_by_mobile ? getData.replaced_by_mobile:'N/A'}}</p>
                                 </div>
+
+                                <div class="block-feilds">
+                                    <span>{{getData.complaint_status}} Date</span>
+                                    <p>{{getData.closed_date != '0000-00-00 00:00:00' ? (getData.closed_date |
+                                        date : 'dd MMM yyy ,h:mm a'):'N/A'}}</p>
+                                </div>
                                 <div class="block-feilds">
                                     <span>{{getData.complaint_status}} Remark</span>
                                     <p>{{getData.closing_remark ? getData.closing_remark:'N/A'}}</p>
                                 </div>
                             </div>
                             <div class="card-head mt15">
-                                <h2>Closing Images</h2>
+                                <h2>{{getData.complaint_status}} Images</h2>
                             </div>
                             <div class="card-body">
                                 <div class="grid-box">
