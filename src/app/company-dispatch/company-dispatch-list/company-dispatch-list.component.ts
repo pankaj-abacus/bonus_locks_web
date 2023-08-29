@@ -344,7 +344,7 @@ export class CompanyDispatchListComponent implements OnInit {
     {        
 
 
-      if(!this.filter.organisation_name && event.checked){
+      if(!this.filter.organisation_name && event.checked && this.assign_login_data2.id == '1'){
         this.toast.errorToastr('Please select organization filter');
         this.organizationFlag = true;
         return
@@ -353,7 +353,7 @@ export class CompanyDispatchListComponent implements OnInit {
 
       if(event.checked)
       {
-        if(this.filter.organisation_name != organisation_name){
+        if(this.filter.organisation_name != organisation_name && this.assign_login_data2.id == '1'){
           this.toast.errorToastr('Organization filter not match');
           this.organizationFlag = true;
           return
