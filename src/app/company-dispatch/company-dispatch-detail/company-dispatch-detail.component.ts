@@ -471,7 +471,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
             if (result) {
               this.service.post_rqst({ 'data':{'id': data.id,'bill_number':number} }, 'Dispatch/deleteGrandMasterBox').subscribe((resp) => {
                 if (resp['statusCode'] == 200) {
-                  this.toast.successToastr('Deleted Successfully..');              
+                  this.toast.errorToastr('Deleted Successfully..');              
                   this.billDatadetail();
                 }
                 else {
