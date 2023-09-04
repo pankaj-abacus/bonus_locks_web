@@ -99,6 +99,8 @@ export class AddOrderComponent implements OnInit {
         if (result['statusCode'] == 200) {
           this.loader = false
           this.dr_detail = result['distributor_detail'];
+          console.log(this.dr_detail);
+          
           // this.getitem('', this.dr_detail.brand)
         } else {
           this.loader = true
@@ -155,7 +157,7 @@ export class AddOrderComponent implements OnInit {
         if (resp['statusCode'] == 200) {
           this.item_list = resp['result'];
           for (let index = 0; index < this.item_list.length; index++) {
-            this.item_list[index].display_name = this.item_list[index].product_code + " " + this.item_list[index].display_name
+            this.item_list[index].display_name = this.item_list[index].display_name
           }
         } else {
           this.toast.errorToastr(resp['statusMsg']);
@@ -176,6 +178,8 @@ export class AddOrderComponent implements OnInit {
       this.data.brand = '';
       this.data.color = '';
       console.log(this.data.product_id);
+      console.log(this.dr_detail);
+      
       // this.product_id='';
       this.serve.post_rqst({ 'product_id': id, 'order_type': 'primary', 'brand': this.dr_detail.brand }, "Order/segmentItemsDetails")
       .subscribe(resp => {

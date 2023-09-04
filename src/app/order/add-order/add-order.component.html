@@ -79,7 +79,7 @@
                   (keyup)="get_item_list($event)"></ngx-mat-select-search>
                 </mat-option>
                 <mat-option *ngFor="let row of item_list" value="{{row.id}}">
-                  {{row.product_name}}
+                  {{row.display_name}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
