@@ -155,7 +155,7 @@ export class AddOrderComponent implements OnInit {
         if (resp['statusCode'] == 200) {
           this.item_list = resp['result'];
           for (let index = 0; index < this.item_list.length; index++) {
-            this.item_list[index].display_name = this.item_list[index].product_code + " " + this.item_list[index].display_name
+            this.item_list[index].display_name = this.item_list[index].display_name
           }
         } else {
           this.toast.errorToastr(resp['statusMsg']);
