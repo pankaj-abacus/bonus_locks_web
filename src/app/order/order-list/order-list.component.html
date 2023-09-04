@@ -1,5 +1,5 @@
 <div class="main-container">
-  <div class="tab-surface"  *ngIf="login_data.designation_name != 'Dispatch Planning'">
+  <div class="tab-surface" *ngIf="login_data.designation_name != 'Dispatch Planning'">
     <button *ngFor="let row of calenderInfo; let i =index;" mat-button
       [ngClass]="OrderMonth == row.month && OrderYear == row.year ? 'active' : ''"
       (click)="orderList('',row.month,row.year);">{{row.monthYEAR | date :'MMM'}} {{row.year}}
@@ -38,39 +38,39 @@
       </div>
       <div class="mat-tabbar">
         <!-- *ngIf="login_data.designation_name != 'Dispatch Planning'" -->
-        <ng-container >
-        <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
-          (click)="active_tab = 'Pending';orderList('',OrderMonth,OrderYear);">
-          Pending ({{count.Pending}})
-        </button>
-        <button mat-button [ngClass]="active_tab == 'Approved' ? 'active' : ''"
-          (click)="active_tab = 'Approved';orderList('',OrderMonth,OrderYear);">
-          Approved ({{count.Approved}})</button>
-        <button mat-button [ngClass]="active_tab == 'Reject' ? 'active' : ''"
-          (click)="active_tab = 'Reject';orderList('',OrderMonth,OrderYear);">
+        <ng-container>
+          <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
+            (click)="active_tab = 'Pending';orderList('',OrderMonth,OrderYear);">
+            Pending ({{count.Pending}})
+          </button>
+          <button mat-button [ngClass]="active_tab == 'Approved' ? 'active' : ''"
+            (click)="active_tab = 'Approved';orderList('',OrderMonth,OrderYear);">
+            Approved ({{count.Approved}})</button>
+          <button mat-button [ngClass]="active_tab == 'Reject' ? 'active' : ''"
+            (click)="active_tab = 'Reject';orderList('',OrderMonth,OrderYear);">
             Reject ({{count.Reject}})</button>
-        <button mat-button [ngClass]="active_tab == 'Hold' ? 'active' : ''"
-          (click)="active_tab = 'Hold';orderList('',OrderMonth,OrderYear);">
-          Hold ({{count.Hold}})</button>
+          <button mat-button [ngClass]="active_tab == 'Hold' ? 'active' : ''"
+            (click)="active_tab = 'Hold';orderList('',OrderMonth,OrderYear);">
+            Hold ({{count.Hold}})</button>
         </ng-container>
         <!-- *ngIf="login_data.designation_name == 'Dispatch Planning' || login_data.id == '1'" -->
-        <ng-container >
-        <button mat-button [ngClass]="active_tab == 'dispatchPlanning' ? 'active' : ''"
-          (click)="active_tab = 'dispatchPlanning';orderList('',OrderMonth,OrderYear);">
+        <ng-container>
+          <button mat-button [ngClass]="active_tab == 'dispatchPlanning' ? 'active' : ''"
+            (click)="active_tab = 'dispatchPlanning';orderList('',OrderMonth,OrderYear);">
             Dispatch Planning ({{count.dispatchPlanning}})</button>
-          </ng-container>
-          <button mat-button [ngClass]="active_tab == 'partialDispatched' ? 'active' : ''"
+        </ng-container>
+        <button mat-button [ngClass]="active_tab == 'partialDispatched' ? 'active' : ''"
           (click)="active_tab = 'partialDispatched';orderList('',OrderMonth,OrderYear);">
-            Partially Planned ({{count.partialDispatched}})</button>
-         <button mat-button [ngClass]="active_tab == 'completeDispatched' ? 'active' : ''"
+          Partially Planned ({{count.partialDispatched}})</button>
+        <button mat-button [ngClass]="active_tab == 'completeDispatched' ? 'active' : ''"
           (click)="active_tab = 'completeDispatched';orderList('',OrderMonth,OrderYear);">
-            Complete Planned ({{count.completeDispatched}})</button>
-            <!-- *ngIf="login_data.designation_name != 'Dispatch Planning'" -->
-          <ng-container >
-        <button mat-button [ngClass]="active_tab == 'Dispatched' ? 'active' : ''"
-          (click)="active_tab = 'Dispatched';orderList('',OrderMonth,OrderYear);">
-          Dispatched ({{count.Dispatched}})</button>
-          </ng-container>
+          Complete Planned ({{count.completeDispatched}})</button>
+        <!-- *ngIf="login_data.designation_name != 'Dispatch Planning'" -->
+        <ng-container>
+          <button mat-button [ngClass]="active_tab == 'Dispatched' ? 'active' : ''"
+            (click)="active_tab = 'Dispatched';orderList('',OrderMonth,OrderYear);">
+            Dispatched ({{count.Dispatched}})</button>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -160,7 +160,8 @@
               <th class="w90 text-right">&nbsp; {{totalData.total_order_qty}}</th>
               <th class="w90 text-right" *ngIf="active_tab == 'partialDispatched'">&nbsp;</th>
               <th class="w90 text-right" *ngIf="active_tab == 'partialDispatched'">&nbsp;</th>
-              <th class="w90 text-right">₹ {{totalData.total_amount > 0 ? (totalData.total_amount.toLocaleString('en-IN', {style:'decimal',currency:'INR'})) : '0'}}</th>
+              <th class="w90 text-right">₹ {{totalData.total_amount > 0 ?
+                (totalData.total_amount.toLocaleString('en-IN', {style:'decimal',currency:'INR'})) : '0'}}</th>
               <th class="w120 text-right">&nbsp;</th>
               <th class="w200"></th>
               <th class="w200" *ngIf="active_tab == 'Reject' || active_tab == 'Hold'">&nbsp;</th>
@@ -291,10 +292,10 @@
         <mat-icon>download</mat-icon>
         <span>Download in excel</span>
       </button>
-      <!-- <button mat-menu-item routerLink="add-order/primary" *ngIf="login_data.add_primary_order=='1'">
+      <button mat-menu-item routerLink="add-order/primary" *ngIf="login_data.add_primary_order=='1'">
         <mat-icon>add</mat-icon>
         <span>Add Order</span>
-      </button> -->
+      </button>
     </mat-menu>
   </div>
 

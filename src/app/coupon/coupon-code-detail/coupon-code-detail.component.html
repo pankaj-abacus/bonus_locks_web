@@ -9,7 +9,8 @@
   <div class="container pt10 pl10 pr10 pb50">
 
 
-    <div id="print_card" style="width: 50%;margin-left: 250px;" hidden>
+    <div id="print_card" style="width: 50%;margin-left: 250px;">
+      <!-- hidden -->
       <div id='qr_code_container'>
         <ng-container *ngIf="getData.coupon_type == 'Item Box'">
           <div style="width: 377.95275591px; height:207.87401575px;position: relative;"
@@ -94,8 +95,8 @@
                 <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass qr_img_card"
                   errorCorrectionLevel="L"> </ngx-qrcode>
                 <span class='fix-text'>Box {{i+1}}</span>
+                <span class='fix-text-right'>{{getData.product_code}}</span>
                 <span class='fix-code' style="text-align: left; margin-left: 5px;">{{row.coupon_code}}</span>
-
               </div>
 
               <ng-container *ngFor="let subRow of row.itembox">
@@ -114,16 +115,74 @@
 
           <!-- ***** CASE 2 ONLY BOX START ***** -->
           <ng-container *ngIf="getData.box_type == 2">
-            <div
-              style="width: 396.8503937px; position: relative; display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;">
-              <div class="qr_img"
-                style="width: 94.488188976px; margin: 0 auto;  height: 94.488188976px;  position: relative;"
-                *ngFor="let row of qrCode; let i = index;">
-                <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass qr_img_card"
-                  errorCorrectionLevel="L"> </ngx-qrcode>
-                <span class='fix-text'>BOX {{i+1}}</span>
-                <span class='fix-code' style="text-align: center; margin-left: -5px;">{{row.coupon_code}}</span>
-                <span class='fix-text-right' style="text-align:left"> {{getData.product_code}}</span>
+            <div style="width: 377.95275591px; height:207.87401575px;position: relative;"
+              *ngFor="let row of qrCode; let i = index;">
+              <div style="width:100%; height:10px;">&nbsp;</div>
+              <div style="border: 1.5px dashed #000;">
+                <div style="display: flex;">
+                  <div style="min-width: 94px; width: 94px;" class="single_qr">
+                    <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass qr_img_card"
+                      errorCorrectionLevel="L"> </ngx-qrcode>
+                  </div>
+
+                  <div style="width: 100%; border-left: 1px dashed #000;">
+                    <p
+                      style="text-align: center; font-weight: 500; border-bottom: 1px dashed #000; padding: 2px; line-height: 18px; margin:0px ">
+                      {{getData.product_name}}</p>
+                    <div
+                      style="display: grid;  grid-template-columns: 1fr 1fr 1fr;     height: 60px;     align-items: center; ">
+                      <div
+                        style="border-right: 1px dashed #000; height: 100%;  align-items: center;  justify-content: center;  display: flex;">
+                        <p style="line-height: 16px; font-size: 14px; margin:0px; text-align:center;">{{getData.category
+                          ?
+                          getData.category : ''}}</p>
+                      </div>
+                      <div
+                        style="border-right: 1px dashed #000; height: 100%;  align-items: center;  justify-content: center;  display: flex;">
+                        <p
+                          style="line-height: 20px;  font-weight: 500; text-align: center; padding: 0px 18px; font-size: 18px; margin:0px;">
+                          Qty: 1 PC</p>
+                      </div>
+                      <div style="height: 100%;  align-items: center;  justify-content: center;  display: flex;">
+                        <p
+                          style="line-height: 20px;  font-weight: 500; text-align: center; padding: 0px 18px; font-size: 18px; margin:0px;">
+                          Ref.Id: {{getData.product_code}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div style="border-top: 1px dashed #000; padding: 3px; font-size: 12px; font-weight: 500;">
+                  {{getData.product_detail}}
+                </div>
+                <div style="display: grid;  grid-template-columns: 1fr 1fr; border-top: 1px dashed #000;">
+                  <div style="border-right: 1px dashed #000; padding-left: 4px;">
+                    <p
+                      style="border-right: 1px dashed #000; padding: 0px 2px; font-size:14px; line-height: 16px; margin:0px;">
+                      MRP : {{getData.product_mrp ? getData.product_mrp : ''}}</p>
+                    <span style="font-size:9px; line-height:12px;  margin:0px; ">(Incl of all taxes)</span>
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;  justify-content: center; font-size: 11px; font-weight: 500;">
+                    Date Of Packaging: {{getData.date_created | date:'d MMM y'}}
+                  </div>
+                </div>
+                <div style="display: grid;  grid-template-columns: 1fr 1fr; border-top: 1px dashed #000;">
+                  <div style="border-right: 1px dashed #000; padding-left: 4px;">
+                    <p
+                      style="border-right: 1px dashed #000; font-size: 11px; font-weight: 600; line-height:18px; margin:0px; ">
+                      CUSTOMER CARE</p>
+                    <span style="font-size:9px; ">Manager: TEL: +91-8881750126</span>
+                    <span style="font-size:9px; ">email:sales.imi@gmail.com</span>
+                  </div>
+                  <div style="padding-left: 4px;">
+                    <p
+                      style="border-right: 1px dashed #000; font-size: 11px; font-weight: 600; line-height:18px; margin:0px; ">
+                      Lockmaster India Pvt.Ltd</p>
+                    <span style="font-size:9px; ">C-20 Industrial Estate</span>
+                    <span style="font-size:9px; ">Aligarh-202001(U.P) India</span>
+                  </div>
+                </div>
               </div>
             </div>
           </ng-container>

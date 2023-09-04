@@ -57,7 +57,7 @@ export class AddOrderComponent implements OnInit {
   product_name: any;
   product_category: any;
   product_code: any;
-  user_data: any={};
+  user_data: any = {};
   disableSelectFromCheckin: boolean;
   drtype: any;
   type: any;
@@ -74,7 +74,7 @@ export class AddOrderComponent implements OnInit {
     public navparams: ActivatedRoute,
     public alert: DialogComponent,
     public toast: ToastrManager, public route: ActivatedRoute, public rout: Router, public dialog: DialogComponent, public session: sessionStorage) {
-   
+
   }
 
   ngOnInit() {
@@ -130,7 +130,7 @@ export class AddOrderComponent implements OnInit {
         if (resp['statusCode'] == 200) {
           this.item_list = resp['result'];
           for (let index = 0; index < this.item_list.length; index++) {
-            this.item_list[index].display_name = this.item_list[index].product_code + " " + this.item_list[index].display_name
+            this.item_list[index].display_name = this.item_list[index].display_name
           }
         } else {
           this.toast.errorToastr(resp['statusMsg']);
@@ -366,7 +366,7 @@ export class AddOrderComponent implements OnInit {
     this.addTolistDisabled = true;
   }
 
- 
+
 
   DeleteItem(i) {
     let alert = this.alert.confirm({
@@ -436,7 +436,7 @@ export class AddOrderComponent implements OnInit {
 
   save_orderalert(type) {
     var str
-    
+
     if (this.grand_total > 20000000) {
       this.dialog.error("Maximum order value is 2 Cr. !");
       return;
@@ -460,7 +460,7 @@ export class AddOrderComponent implements OnInit {
   }
 
 
-  
+
 
   submitOrder(type) {
     this.savingFlag = true;
@@ -505,7 +505,7 @@ export class AddOrderComponent implements OnInit {
     this.user_data.product_code = this.data.product_code
     if (this.data.distributor_id && this.data.delivery_from) this.user_data.distributor_id = this.data.delivery_from
 
-    this.serve.post_rqst({ "cart_data": this.add_list, "user_data": this.user_data}, "Order/primaryOrdersAdd").subscribe(resp => {
+    this.serve.post_rqst({ "cart_data": this.add_list, "user_data": this.user_data }, "Order/primaryOrdersAdd").subscribe(resp => {
       this.savingFlag = true;
 
       if (resp['statusCode'] == 200) {
