@@ -32,7 +32,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
   masterboxData:any=[];
   masterdispatchboxitemdetail:any=[];
   masterboxDataforsearch:any=[];
-
+  mainmasterboxDisable:boolean = false;
   dispatch_coupon:any=[];
   dispatch_detail:any ={};
   skLoading:boolean = false;
@@ -522,12 +522,14 @@ export class CompanyDispatchDetailComponent implements OnInit {
         updateGrandMasterCoupon(){
           this.apiHit.post_rqst({'data':{ 'dr_id':this.invoice_detail.dr_id,'dr_code':this.invoice_detail.dr_code,'bill_dispatch_type':this.invoice_detail.bill_dispatch_type,'filter': this.filter,'id': this.search.couponGrandMasterId,'created_by_name':this.data.created_by_name, 'created_by_id':this.data.created_by_id, 'company_name':this.invoice_detail.company_name, 'invoice_id':this.id,'invoice_no':this.invoice_detail.order_no, }},"Dispatch/updateMasterGrandCouponNew").subscribe((result=>{
             if(result['statusCode']==200){
+              this.mainmasterboxDisable = true;
               this.masterboxData = result['master_grand_coupon']
               this.toast.successToastr('Success');              
               this.billDatadetail()
             }
             else{
               this.toast.errorToastr(result['statusMsg'])
+              this.mainmasterboxDisable = false;
             }
           } 
           ))

@@ -107,7 +107,7 @@
                                         <mat-form-field class="cs-input select-input">
                                             <mat-select (selectionChange)="billData('')" placeholder="Organization Name" name="organisation_name"  #organisation_name="ngModel" [(ngModel)]="filter.organisation_name">
                                                 <mat-option value="">All</mat-option>
-                                                <mat-option *ngFor="let row of organisationData" value="{{row.company_name}}">{{row.company_name}}</mat-option>
+                                                <mat-option *ngFor="let row of organisationData" value="{{row.id}}">{{row.company_name}}</mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </div>

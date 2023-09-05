@@ -54,6 +54,7 @@ export class CompanyDispatchListComponent implements OnInit {
   pendingGatepassCount: any;
   organisationData:any =[];
   organizationFlag:boolean = false;
+  organisation_id: any;
 
   constructor(public serve: DatabaseService, public route: Router, public ActivatedRoute: ActivatedRoute,
     public dialog: DialogComponent, public session: sessionStorage, public alrt: MatDialog,public toast :ToastrManager) {
@@ -198,7 +199,7 @@ export class CompanyDispatchListComponent implements OnInit {
       
       this.filter.active_tab = this.active_tab;
       this.organizationFlag = false;
-      this.serve.post_rqst({'branch_code':this.loginData.branch_code, 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit}, "Dispatch/tallyInvoiceCreditBillingListing")
+      this.serve.post_rqst({'branch_code':this.loginData.branch_code,'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit}, "Dispatch/tallyInvoiceCreditBillingListing")
       .subscribe((result => {
         if(result['statusCode']==200){
           this.distributor_list = (result['credit_billing_list']);
