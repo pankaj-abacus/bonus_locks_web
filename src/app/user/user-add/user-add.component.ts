@@ -15,10 +15,11 @@ import { DesignationComponent } from '../designation/designation.component';
   selector: 'app-user-add',
   templateUrl: './user-add.component.html',
   animations: [slideToTop()]
-  
+
 })
 export class UserAddComponent implements OnInit {
   states: any = [];
+  myDate: Date;
   report_manager:any =[];
   data: any = {};
   district_list: any = [];
@@ -37,8 +38,8 @@ export class UserAddComponent implements OnInit {
   maxDate:any;
   brandList:any =[];
   organisationData:any =[];
-  
-  constructor(public serve: DatabaseService, 
+
+  constructor(public serve: DatabaseService,
     public dialog1: MatDialog,
     private route: ActivatedRoute,
     public toast:ToastrManager, public location: Location, public session: sessionStorage, public rout: Router,public dialog: DialogComponent) {
@@ -51,9 +52,11 @@ export class UserAddComponent implements OnInit {
       this.get_sales_user_type(this.data.user_type, '');
       this.assign_login_data = this.session.getSession();
       this.logined_user_data = this.assign_login_data.value.data;
+      this.myDate = new Date();
+
     }
-    
-    
+
+
     ngOnInit() {
       this.route.params.subscribe(params => {
         this.userId = params['id'];
@@ -63,20 +66,20 @@ export class UserAddComponent implements OnInit {
         }
       });
     }
-    
-   
-    
+
+
+
     MobileNumber(event: any) {
       const pattern = /[0-9\+\-\ ]/;
       let inputChar = String.fromCharCode(event.charCode);
       if (event.keyCode != 8 && !pattern.test(inputChar)) { event.preventDefault(); }
-      
+
     }
-    
-    
 
 
-       
+
+
+
     getBrand() {
       this.serve.post_rqst({}, "Master/brandList").subscribe((result => {
         if(result['statusCode'] ==  200){
@@ -107,7 +110,7 @@ export class UserAddComponent implements OnInit {
         }))
       }
     }
-    
+
     getCompanyData() {
       this.serve.post_rqst({}, "Order/organizationName").subscribe((response => {
         if (response['statusCode'] == 200) {
@@ -115,11 +118,11 @@ export class UserAddComponent implements OnInit {
         } else {
           this.toast.errorToastr(response['statusMsg']);
         }
-  
+
       }));
     }
-    
-    
+
+
     getStateList() {
       this.serve.post_rqst(0, "Master/getAllState").subscribe((result => {
         if (result['statusCode'] == 200) {
@@ -130,7 +133,7 @@ export class UserAddComponent implements OnInit {
         }
       }));
     }
-    
+
     getDistrict(val) {
       let st_name;
       if(val == 1)
@@ -145,11 +148,11 @@ export class UserAddComponent implements OnInit {
           this.toast.errorToastr(result['statusMsg'])
         }
       }));
-      
+
     }
 
-    
-    
+
+
     get_sales_user_type(type, event) {
       let Usertype
       if(type != ''){
@@ -162,7 +165,7 @@ export class UserAddComponent implements OnInit {
         this.sales_type = response['all_designation'];
       }));
     }
-    
+
     getReportManager(searcValue) {
       setTimeout(() => {
         this.serve.post_rqst({'search':searcValue}, "Master/getSalesUserForReporting").subscribe((result => {
@@ -175,8 +178,8 @@ export class UserAddComponent implements OnInit {
         }));
       }, 500);
     }
-    
-    
+
+
     submitDetail() {
       this.loader = true;
       if(this.data.date_of_joining){
@@ -214,14 +217,14 @@ export class UserAddComponent implements OnInit {
         }
       }));
     }
-    
+
     get_module_data() {
       this.serve.post_rqst(0, "Master/moduleMasterList").subscribe((response => {
         this.assign_module_data = response['result'];
       }));
-      
+
     }
-    
+
     assign_module(module_name, event , index) {
       if (event.checked) {
         this.assign_module_data[index][module_name] = 'true';
@@ -230,29 +233,28 @@ export class UserAddComponent implements OnInit {
         this.assign_module_data[index][module_name] = 'false';
       }
     }
-    
-    
+
+
     back(): void {
       this.location.back()
     }
-    
-    openDialog(): void {  
+
+    openDialog(): void {
       const dialogRef = this.dialog1.open(DesignationComponent, {
         width: '500px',
         panelClass:'cs-modal',
         data:{
           'type':'designation'
         }
-        
+
       });
-      
+
       dialogRef.afterClosed().subscribe(result => {
-        
+
         if(result == true){
           this.get_sales_user_type(this.data.user_type, '')
         }
-        
+
       });
     }
   }
-  
