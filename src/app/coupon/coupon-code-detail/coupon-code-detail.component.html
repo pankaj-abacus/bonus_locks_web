@@ -9,9 +9,9 @@
   <div class="container pt10 pl10 pr10 pb50">
 
 
-    <div id="print_card" style="width: 50%;margin-left: 250px;">
+    <div id="print_card" style="width: 50%;margin-left: 250px;" hidden>
       <!-- hidden -->
-      <div id='qr_code_container'>
+      <div id='qr_code_container' >
         <ng-container *ngIf="getData.coupon_type == 'Item Box'">
           <div style="width: 377.95275591px; height:207.87401575px;position: relative;"
             *ngFor="let row of qrCode; let i = index;">

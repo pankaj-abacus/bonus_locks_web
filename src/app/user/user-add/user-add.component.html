@@ -45,9 +45,9 @@
                       <mat-form-field appearance="outline">
                         <mat-label>Select Designation</mat-label>
                         <mat-select name="user_role" placeholder="Role" [(ngModel)]="data.user_role"
-                          #user_role="ngModel"
-                          (selectionChange)="data.user_role == '52' ? getCompanyData(): data.user_role == '53' ? getCompanyData():  data.user_role == '54' ? getCompanyData(): '' "
-                          required>
+
+                          #user_role="ngModel" (selectionChange)="data.user_role == '52' ? getCompanyData(): data.user_role == '53' ? getCompanyData():  data.user_role == '54' ? getCompanyData(): data.user_role == '63' ? getCompanyData(): '' " required>
+
                           <mat-option value="" disabled>Select Role</mat-option>
                           <mat-option *ngFor="let row of sales_type" value="{{row.id}}">{{row.role_name}}</mat-option>
                         </mat-select>
@@ -194,12 +194,12 @@
                     <p *ngIf="assign_system_user.errors?.required">This field is required</p>
                   </div>
                 </div>
-                <div class="col s12 m l3"
-                  *ngIf="data.user_role == '52' || data.user_role == '53' || data.user_role == '54' ">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Assign Company</mat-label>
-                    <mat-select name="assign_company" #assign_company="ngModel" [(ngModel)]="data.assign_company"
-                      required>
+
+                <div class="col s12 m l3"  *ngIf="data.user_role == '52' || data.user_role == '53' || data.user_role == '54'|| data.user_role == '63' "  >
+                  <mat-form-field  appearance="outline">
+                    <mat-label>Assign  Company</mat-label>
+                    <mat-select name="assign_company"  #assign_company="ngModel" [(ngModel)]="data.assign_company" required>
+
                       <mat-option *ngFor="let row of organisationData"
                         value="{{row.id}}">{{row.company_name}}</mat-option>
                     </mat-select>

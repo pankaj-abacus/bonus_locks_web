@@ -880,6 +880,25 @@ export class LoginComponent implements OnInit {
               data['data']['download_dispatch_guard'] = 1
             }
           }
+          else if (data['assignModule'][i]['module_name'] == 'Master Box' && data['assignModule'][i]['view'] == 'true') {
+            data['data']['view_master_box'] = 1
+            if (data['assignModule'][i]['edit'] == 'true') {
+              data['data']['edit_master_box'] = 1
+            }
+            if (data['assignModule'][i]['delete'] == 'true') {
+              data['data']['delete_master_box'] = 1
+            }
+            if (data['assignModule'][i]['add'] == 'true') {
+              data['data']['add_master_box'] = 1
+            }
+            if (data['assignModule'][i]['export'] == 'true') {
+              data['data']['download_master_box'] = 1
+            }
+            if (data['assignModule'][i]['import'] == 'true') {
+              data['data']['upload_master_box'] = 1
+            }
+          }
+
         }
       }
       
@@ -1225,7 +1244,12 @@ export class LoginComponent implements OnInit {
         data['data']['add_dispatch_guard'] = 1
         data['data']['download_dispatch_guard'] = 1
         
-        
+        data['data']['view_master_box'] = 1
+        data['data']['edit_master_box'] = 1
+        data['data']['delete_master_box'] = 1
+        data['data']['add_master_box'] = 1
+        data['data']['download_master_box'] = 1
+        data['data']['upload_master_box'] = 1
       }
       
       if (data.data.type == '1' && data.data.lead_type == 'Drtest') {
@@ -1397,6 +1421,10 @@ export class LoginComponent implements OnInit {
             }
             else if (this.st_user.data.view_dispatch_billing == '1' || this.st_user.data.view_dispatch_packing == '1' || this.st_user.data.view_dispatch_guard == '1') {
               this.nexturl = this.route.snapshot.queryParams['returnUrl'] || '/company-dispatch';
+              this.router.navigate([this.nexturl]);
+            }
+            else if (this.st_user.data.view_master_box == '1') {
+              this.nexturl = this.route.snapshot.queryParams['returnUrl'] || '/generate-master-box';
               this.router.navigate([this.nexturl]);
             }
             else if (this.st_user.data.view_attendence == '1') {
