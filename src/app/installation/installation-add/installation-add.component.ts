@@ -314,6 +314,27 @@ export class InstallationAddComponent implements OnInit {
           ));
           
         }
+
+        findId(id) {
+          let index = this.productList.findIndex(row => row.id == id)
+          if (index != -1) {
+            this.data.id = this.productList[index].id;
+            this.data.product_name = this.productList[index].product_name;
+          }
+      console.log(this.data)
+        }
+        getProductName(id) {
+        this.filter.product_name= id;
+      console.log(this.filter)
+          this.service
+            .post_rqst({ 'filter' : this.filter }, "Master/productList")
+            .subscribe((output) => {
+              console.log(output);
+              if (output["statusCode"] == 200) {
+                this.productList = output["product_list"];
+              }
+            });
+        }
       }
       
       
