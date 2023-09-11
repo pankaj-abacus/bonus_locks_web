@@ -299,7 +299,7 @@ this.currentDate = new Date();
 console.log(this.data)
   }
   getProductName(id) {
-  this.filter.product_name= id;
+  this.filter.product_detail= id;
 console.log(this.filter)
     this.service
       .post_rqst({ 'filter' : this.filter }, "Master/productList")
