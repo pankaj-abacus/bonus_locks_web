@@ -18,7 +18,7 @@
                 <!-- product data start -->
                 <div class="card" *ngIf="!skLoading">
                     <div class="card-head">
-                        <h2>Basic Details</h2>
+                        <h2>Customer Details</h2>
                         <!-- <div class="left-auto">
                             <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
                                 [routerLink]="[ 'add-installation/', this.id ]">
@@ -52,6 +52,11 @@
                             <div class="block-feilds">
                                 <span>Customer Mobile No.</span>
                                 <p>{{getData.customer_mobile ? getData.customer_mobile :'---'}}</p>
+                            </div>
+
+                            <div class="block-feilds">
+                                <span>Alternate Mobile No.</span>
+                                <p>{{getData.alternate_mobile_no ? getData.alternate_mobile_no :'---'}}</p>
                             </div>
 
                             <div class="block-feilds">

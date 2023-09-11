@@ -40,10 +40,6 @@
               <th class="w150">Created By</th>
               <th class="w150">Customer Name</th>
               <th class="w150">Customer Mobile No.</th>
-              <th class="w150">State</th>
-              <th class="w150">District</th>
-              <th class="w150">City</th>
-              <th class="w100">Pincode</th>
               <th class="w250">Address</th>
             </tr>
           </table>
@@ -89,41 +85,8 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="state"
-                      (keyup.enter)="getCumtomerList('')" #state="ngModel" [(ngModel)]="filter_data.state">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w150">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="district"
-                      (keyup.enter)="getCumtomerList('')" #district="ngModel" [(ngModel)]="filter_data.district">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w150">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="city" (keyup.enter)="getCumtomerList('')"
-                      #city="ngModel" [(ngModel)]="filter_data.city">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w100">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="pincode"
-                      (keyup.enter)="getCumtomerList('')" #pincode="ngModel" [(ngModel)]="filter_data.pincode">
-                  </mat-form-field>
-                </div>
-              </th>
               <th class="w250 "></th>
             </tr>
-
           </table>
         </div>
       </div>
@@ -141,10 +104,10 @@
                     routerLink="customer-detail/{{(row.id)}}" routerLinkActive="active"> {{row.name | titlecase}}</a>
                 </td>
                 <td class="w150">{{row.mobile_no}}</td>
-                <td class="w150">{{row.state}}</td>
+                <!-- <td class="w150">{{row.state}}</td>
                 <td class="w150">{{row.district}}</td>
                 <td class="w150">{{row.city}}</td>
-                <td class="w100">{{row.pincode}}</td>
+                <td class="w100">{{row.pincode}}</td> -->
                 <td class="w250 ">{{row.address}}</td>
               </tr>
             </ng-container>

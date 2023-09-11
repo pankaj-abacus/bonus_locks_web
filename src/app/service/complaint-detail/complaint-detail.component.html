@@ -7,7 +7,7 @@
 
         <div class="left-auto">
             <button mat-button class="ouline-btns status" mat-raised-button color="accent"
-                (click)="openDialog(getData.id)" *ngIf="getData.complaint_status!='Closed'">Assign Carpenter</button>
+                (click)="openDialog(getData.id)" *ngIf="getData.complaint_status!='Closed'">Assign Technician</button>
         </div>
     </div>
 
@@ -103,7 +103,7 @@
                     <!-- product data start -->
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
-                            <h2>Basic Details</h2>
+                            <h2>Customer Details</h2>
                             <div class="left-auto">
                                 <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
                                     [routerLink]="[ 'add-complaint/', this.id ]">
@@ -142,6 +142,13 @@
                                     <span>Customer Mobile No.</span>
                                     <p>{{getData.customer_mobile ? getData.customer_mobile :'---'}}</p>
                                 </div>
+
+                                <div class="block-feilds">
+                                    <span>Alternate Mobile No.</span>
+                                    <p>{{getData.alternate_mobile_no ? getData.alternate_mobile_no :'---'}}</p>
+                                </div>
+
+
                                 <div class="block-feilds">
                                     <span>Carpenter Name</span>
                                     <p>{{getData.carpenter_name ? getData.carpenter_name :'---'}}</p>
