@@ -83,13 +83,14 @@ export class ComplaintDetailComponent implements OnInit {
     back(): void {
       this.location.back()
     }
-    openDialog(row): void {
+    openDialog(row,state): void {
       console.log(row);
       const dialogRef = this.dialog.open(EngineerAssignModelComponentComponent, {
         width: '400px',
         panelClass: 'cs-model',
         data: {
           id: row,
+          state: state,
         }
       });
       

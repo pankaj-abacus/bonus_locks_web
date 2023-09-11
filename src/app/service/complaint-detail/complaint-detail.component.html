@@ -7,7 +7,7 @@
 
         <div class="left-auto">
             <button mat-button class="ouline-btns status" mat-raised-button color="accent"
-                (click)="openDialog(getData.id)" *ngIf="getData.complaint_status!='Closed'">Assign Technician</button>
+                (click)="openDialog(getData.id,getData.state)" *ngIf="getData.complaint_status!='Closed'">Assign Technician</button>
         </div>
     </div>
 
@@ -147,20 +147,20 @@
                                     <span>Alternate Mobile No.</span>
                                     <p>{{getData.alternate_mobile_no ? getData.alternate_mobile_no :'---'}}</p>
                                 </div>
-
-
-                                <div class="block-feilds">
-                                    <span>Carpenter Name</span>
-                                    <p>{{getData.carpenter_name ? getData.carpenter_name :'---'}}</p>
-                                </div>
                                 <div class="block-feilds">
                                     <span>Customer Address</span>
                                     <p>{{getData.address ? getData.address :'---'}} {{getData.district ?
                                         getData.district :'---'}} {{getData.pincode ? getData.pincode :'---'}}
                                         {{getData.state ? getData.state :'---'}}</p>
                                 </div>
+
                                 <div class="block-feilds">
-                                    <span>Carpenter Mobile No.</span>
+                                    <span>Technician Name</span>
+                                    <p>{{getData.carpenter_name ? getData.carpenter_name :'---'}}</p>
+                                </div>
+                                
+                                <div class="block-feilds">
+                                    <span>Technician Mobile No.</span>
                                     <p>{{getData.carpenter_mobile ? getData.carpenter_mobile :'---'}}</p>
                                 </div>
                                 <div class="block-feilds">

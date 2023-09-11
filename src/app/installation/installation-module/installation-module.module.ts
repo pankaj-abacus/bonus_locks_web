@@ -14,6 +14,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
 import { EngineerAssignModelComponent } from '../engineer-assign-model/engineer-assign-model.component';
 import { AddInstallationRemarkComponent } from '../add-installation-remark/add-installation-remark.component';
+import { ProductDetailModelComponent } from '../product-detail-model/product-detail-model.component';
 
 const inspectionRoutes = [
   { path: "", children:[
@@ -28,7 +29,7 @@ const inspectionRoutes = [
 ]
 
 @NgModule({
-  declarations: [InstallationListComponent,InstallationAddComponent,InstallationDetailComponent,EngineerAssignModelComponent,AddInstallationRemarkComponent],
+  declarations: [InstallationListComponent,InstallationAddComponent,InstallationDetailComponent,EngineerAssignModelComponent,AddInstallationRemarkComponent,ProductDetailModelComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(inspectionRoutes),
