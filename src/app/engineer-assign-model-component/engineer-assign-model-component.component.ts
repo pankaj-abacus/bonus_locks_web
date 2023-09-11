@@ -31,7 +31,8 @@ export class EngineerAssignModelComponentComponent implements OnInit {
   
   filter: any = {};
   assign_engineerget(searcValue) {
-    this.filter.engineer_name = searcValue;
+    this.filter.technician_detail = searcValue;
+    this.filter.state = this.data.state;
     this.service.post_rqst({ 'filter': this.filter, }, 'ServiceTask/plumberList').subscribe((resp) => {
       if (resp['statusCode'] == 200) {
         this.engineerList = resp.data;

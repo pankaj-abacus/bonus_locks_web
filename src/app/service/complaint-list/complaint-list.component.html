@@ -110,7 +110,7 @@
               <th class="w130">Customer Name</th>
               <th class="w130">Customer Mobile No.</th>
               <th class="w120">Complaint No.</th>
-              <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Carpenter Details</th>
+              <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Technician Details</th>
               <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Serial No.</th> -->
               <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Product Name</th> -->
               <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Product Code</th> -->
@@ -125,7 +125,7 @@
               <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Date</th>
               <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Status</th>
               <th class="w130">Complaint Status</th>
-              <!-- <th class="w70 text-center">Action</th> -->
+              <th class="w70 text-center">TAT</th>
             </tr>
           </table>
         </div>
@@ -290,7 +290,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <!-- <th class="w70 text-center"></th> -->
+              <th class="w70 text-center"></th>
             </tr>
           </table>
         </div>
@@ -335,6 +335,7 @@
                 <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">{{row.return_status ?
                   row.return_status : '--'}}</td>
                 <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
+                <td class="w70">{{row.pending_at}}</td>
                 <!-- <td class="w70 text-center">
                           <div class="action-button">
                             <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
@@ -398,9 +399,9 @@
                 <td class="w130">
                   <div>&nbsp;</div>
                 </td>
-                <!-- <td class="w70 text-center">
+                <td class="w70 text-center">
                           <div>&nbsp;</div>
-                        </td> -->
+                        </td>
               </tr>
             </ng-container>
           </table>

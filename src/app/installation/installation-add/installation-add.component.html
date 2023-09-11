@@ -194,10 +194,10 @@
                         <table>
                           <tr>
                             <th class="w50 text-center">Sr.No</th>
-                            <th class="w130 text-center">Category</th>
-                            <th class="w130 text-center" *ngIf="SubcategoryList.length > 0">Sub Category</th>
-                            <th class="w130 text-center">Product</th>
-                            <th class="w80 text-center">Qty</th>
+                            <th class="w130 ">Category</th>
+                            <th class="w130 " *ngIf="SubcategoryList.length > 0">Sub Category</th>
+                            <th class="w130 ">Product Name And Code </th>
+                            <th class="w80 ">Qty</th>
                             <th class="w50 text-center">Action</th>
                           </tr>
                         </table>
@@ -209,10 +209,10 @@
                         <table>
                           <tr *ngFor="let row of add_list;let i=index;">
                             <td class="w50 text-center">{{i+1}}</td>
-                            <td class="w130 text-center">{{row.category_name}}</td>
-                            <td class="w130 text-center" *ngIf="SubcategoryList.length > 0">{{row.subcat_name}}</td>
-                            <td class="w130 text-center">{{row.product_name}}</td>
-                            <td class="w80 text-center">{{row.qty}}</td>
+                            <td class="w130">{{row.category_name}}</td>
+                            <td class="w130" *ngIf="SubcategoryList.length > 0">{{row.subcat_name}}</td>
+                            <td class="w130">{{row.product_name}}-{{row.product_code}}</td>
+                            <td class="w80">{{row.qty}}</td>
                             <td class="w50 text-center" >
                               <div class="action-button">
                                 <button mat-icon-button matTooltip="Delete" (click)="delete(i)">

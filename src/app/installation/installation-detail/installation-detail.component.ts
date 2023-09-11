@@ -87,7 +87,7 @@ export class InstallationDetailComponent implements OnInit {
       this.location.back()
     }
 
-    openDialog(id): void {
+    openDialog(id,state): void {
       console.log(id);
 
       const dialogRef = this.dialog.open(EngineerAssignModelComponent, {
@@ -95,6 +95,7 @@ export class InstallationDetailComponent implements OnInit {
         panelClass: 'cs-model',
         data: {
           id:id,
+          state:state,
         }
       });
 

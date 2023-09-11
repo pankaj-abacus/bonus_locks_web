@@ -7,7 +7,7 @@
 
     <div class="left-auto">
       <div class="left-auto">
-        <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id)"
+        <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id,getData.state)"
           *ngIf="
             getData.complaint_status != 'Done' &&
             getData.complaint_status != 'Reject'
@@ -24,7 +24,7 @@
         <!-- product data start -->
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
-            <h2>Basic Details</h2>
+            <h2>Customer Details</h2>
             <div class="left-auto">
               <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
                 [routerLink]="['add-installation/', this.id]">
@@ -98,14 +98,14 @@
               </div>
 
               <div class="block-feilds">
-                <span>Carpenter Name</span>
+                <span>Technician Name</span>
                 <p>
                   {{ getData.carpenter_name ? getData.carpenter_name : "N/A" }}
                 </p>
               </div>
 
               <div class="block-feilds">
-                <span>Carpenter Mobile No.</span>
+                <span>Technician Mobile No.</span>
                 <p>
                   {{
                   getData.carpenter_mobile ? getData.carpenter_mobile : "N/A"
@@ -232,7 +232,7 @@
                       <th class="w50 text-center">Sr.No</th>
                       <th class="w130 text-center">Category</th>
                       <th class="w130 text-center">Sub Category</th>
-                      <th class="w130 text-center">Product</th>
+                      <th class="w130 text-center">Product Name And Code</th>
                       <th class="w80 text-center">Qty</th>
                       <!-- <th class="w50 text-center">Action</th> -->
                     </tr>
@@ -247,15 +247,8 @@
                       <td class="w50 text-center">{{ i + 1 }}</td>
                       <td class="w130 text-center">{{ row.category_name }}</td>
                       <td class="w130 text-center">{{ row.subcat_name }}</td>
-                      <td class="w130 text-center">{{ row.product_name }}</td>
+                      <td class="w130 text-center">{{ row.product_name }}-{{ row.product_code }}</td>
                       <td class="w80 text-center">{{ row.qty }}</td>
-                      <!-- <td class="w50 text-center" >
-                                                <div class="action-button">
-                                                    <button mat-icon-button matTooltip="Delete" (click)="delete(i)">
-                                                        <i class="material-icons del">delete</i>
-                                                    </button>
-                                                </div>
-                                            </td> -->
                     </tr>
                   </table>
                 </div>

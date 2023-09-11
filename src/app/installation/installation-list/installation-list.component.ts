@@ -6,6 +6,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
 import { DialogComponent } from 'src/app/dialog.component';
 import { sessionStorage } from 'src/app/localstorage.service';
+import { ProductDetailModelComponent } from '../product-detail-model/product-detail-model.component';
 
 @Component({
   selector: 'app-installation-list',
@@ -37,7 +38,7 @@ export class InstallationListComponent implements OnInit {
   datanotofound: boolean = false;
   downurl: any = ''
 
-  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) {
+  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage,public dialog2: MatDialog) {
     this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
     this.getinspectionList('');
@@ -116,6 +117,7 @@ export class InstallationListComponent implements OnInit {
 
         this.installationList = result['result'];
         console.log(this.installationList);
+        console.log(this.installationList['add_list']);
 
         this.pageCount = result['count'];
         this.tab_count = result['tab_count'];
@@ -170,5 +172,23 @@ export class InstallationListComponent implements OnInit {
       } else {
       }
     }));
+  }
+
+  attendancDetail(row) {
+    console.log(row.add_list);
+    
+    const dialogRef = this.dialog2.open(ProductDetailModelComponent, {
+      width: '800px',
+        panelClass: 'cs-model',
+        data: {
+          row:row.add_list,
+        }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != false) {
+        this.getinspectionList('');
+      }
+
+    });
   }
 }
