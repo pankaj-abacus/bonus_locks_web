@@ -70,7 +70,7 @@
               <div class="block-feilds">
                 <span>Alternate Mobile No.</span>
                 <p>{{getData.alternate_mobile_no ? getData.alternate_mobile_no :'---'}}</p>
-            </div>
+              </div>
 
               <div class="block-feilds">
                 <span>State</span>
@@ -134,7 +134,7 @@
           </div>
         </div>
 
-        <div class="col s12 mt16 m12 l12">
+        <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Done'">
           <div class="card" *ngIf="!skLoading">
             <div class="card-head">
               <h2>Closing Details</h2>

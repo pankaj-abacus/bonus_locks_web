@@ -36,8 +36,8 @@
           <table>
             <tr>
               <th class="w50">Sr.No</th>
-              <th class="w150">Date Created</th>
-              <th class="w150">Created By</th>
+              <th class="w100">Date Created</th>
+              <th class="w80">Created By</th>
               <th class="w150">Customer Name</th>
               <th class="w100">Customer Mobile No.</th>
               <th class="w250">Address</th>
@@ -51,7 +51,7 @@
           <table>
             <tr>
               <th class="w50"></th>
-              <th class="w150">
+              <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
@@ -62,7 +62,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w80">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="created_name"
@@ -102,8 +102,8 @@
               <tr *ngFor="let row of customerList; let i = index "
                 [ngClass]="{'Current': service.currentUserID == row.id}">
                 <td class="w50">{{i + 1 + sr_no}}</td>
-                <td class="w150">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
-                <td class="w150">{{row.created_name}}</td>
+                <td class="w100">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
+                <td class="w80">{{row.created_name}}</td>
                 <td class="w150"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                     routerLink="customer-detail/{{(row.id)}}" routerLinkActive="active"> {{row.name | titlecase}}</a>
                 </td>
@@ -118,10 +118,10 @@
                 <td class="w50">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w100">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w80">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w100">
@@ -139,7 +139,7 @@
                 <td class="w150">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100 ">
+                <td class="w80">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w250 ">

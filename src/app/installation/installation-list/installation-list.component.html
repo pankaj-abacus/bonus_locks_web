@@ -153,8 +153,9 @@
               <th class="w100" *ngIf="active_tab == 'All'">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="cmp_status" #cmp_status="ngModel"
-                      [(ngModel)]="filter_data.cmp_status">
+                    <input type="text" matInput placeholder="Search ..." name="complaint_status"
+                      (keyup.enter)="getinspectionList('')" #complaint_status="ngModel"
+                      [(ngModel)]="filter_data.complaint_status">
                   </mat-form-field>
                 </div>
               </th>
