@@ -49,7 +49,7 @@ export class WarrantyAddComponent implements OnInit {
   selected_image2: any = [];
   state: any = [];
   pointCategories_data: any = []
-  getData:any ={};  
+  getData:any ={};
   params_network:any;
   params_type:any;
   billBase64:boolean = false;
@@ -64,6 +64,7 @@ export class WarrantyAddComponent implements OnInit {
   selectedWarrantyDate: string;
   warrantyEndDate: string;
   filter:any={};
+  currentDate:Date;
 
   constructor(private renderer: Renderer2,
     public location: Location,
@@ -85,18 +86,20 @@ export class WarrantyAddComponent implements OnInit {
         if (this.id) {
           this.getWarrantyDetail(this.id);
         }
-        
+
+this.currentDate = new Date();
+
         this.getSegment();
-        
-        
+
+
       });
     }
-    
+
     ngOnInit() {
     }
 
-    
-    
+
+
     submitDetail()
     {
       this.data.billBase64 = this.billBase64;
@@ -113,17 +116,17 @@ export class WarrantyAddComponent implements OnInit {
       this.savingFlag = true;
       let header
       if(this.id){
-        header =this.service.post_rqst({"data":this.data,'type': 'Edit','id':this.id},"ServiceTask/serviceWarrantyAdd") 
+        header =this.service.post_rqst({"data":this.data,'type': 'Edit','id':this.id},"ServiceTask/serviceWarrantyAdd")
       }
       else
       {
-        header =this.service.post_rqst({"data":this.data,'type': 'Add',},"ServiceTask/serviceWarrantyAdd") 
+        header =this.service.post_rqst({"data":this.data,'type': 'Add',},"ServiceTask/serviceWarrantyAdd")
       }
       header.subscribe((result=>
         {
           if (result['statusCode'] == 200) {
             this.rout.navigate(['/warranty-list']);
-            
+
             this.toast.successToastr(result['statusMsg']);
             this.savingFlag = false;
           }
@@ -131,20 +134,20 @@ export class WarrantyAddComponent implements OnInit {
             this.toast.errorToastr(result['statusMsg']);
             this.savingFlag = false;
           }
-          
+
         }));
       }
       back(): void {
         this.location.back()
       }
-      
+
       bill_Upload(data: any)
       {
         for(let i=0;i<data.target.files.length;i++)
         {
-          
+
           let files = data.target.files[i];
-          if (files) 
+          if (files)
           {
             this.bill_img_id = '';
             this.billBase64 = true;
@@ -160,14 +163,14 @@ export class WarrantyAddComponent implements OnInit {
           this.image.append(""+i,data.target.files[i],data.target.files[i].name);
         }
       }
-      
+
       warrannty_Upload(data: any)
       {
         for(let i=0;i<data.target.files.length;i++)
         {
-          
+
           let files = data.target.files[i];
-          if (files) 
+          if (files)
           {
             this.warranty_img_id = '';
             this.warrantyBase64 = true;
@@ -183,7 +186,7 @@ export class WarrantyAddComponent implements OnInit {
           this.image.append(""+i,data.target.files[i],data.target.files[i].name);
         }
       }
-      
+
       getWarrantyDetail(id)
       {
         this.service.post_rqst({'warranty_id':id},"ServiceTask/serviceWarrantyDetail").subscribe((result=>
@@ -195,28 +198,28 @@ export class WarrantyAddComponent implements OnInit {
             this.data.segment_id=this.getData.segment_id.toString()
             // console.log(typeof this.data.segment_id);
             this.getSegment();
-            
-            setTimeout(() => { 
-              
+
+            setTimeout(() => {
+
               this.data.sub_segment_id=this.getData.sub_segment_id.toString()
               // console.log(typeof this.data.sub_segment_id);
               this.getSubCatgory(this.data.segment_id);
             }, 200);
 
-            setTimeout(() => { 
-              
+            setTimeout(() => {
+
               this.data.product_id=this.getData.product_id.toString()
               // console.log(typeof this.data.product_id);
               this.getProduct('',this.data.product_id);
             }, 200);
-            
-            
-            
+
+
+
           }
           ));
-          
+
         }
-        
+
         getSegment() {
           this.service.post_rqst({}, "Master/getProductCategoryList").subscribe((result => {
             if (result['category_list']['statusCode'] == 200) {
@@ -224,7 +227,7 @@ export class WarrantyAddComponent implements OnInit {
             }
           }))
         }
-        
+
         getSubCatgory(id) {
           this.service.post_rqst({ 'id': id }, "Master/subCategoryList").subscribe((result => {
             if (result['statusCode'] == 200) {
@@ -236,7 +239,7 @@ export class WarrantyAddComponent implements OnInit {
             }
           }))
         }
-        
+
         getProduct(segment_id,sub_segment_id) {
           this.filter.segment=segment_id
           this.filter.sub_category_name=sub_segment_id
@@ -245,15 +248,15 @@ export class WarrantyAddComponent implements OnInit {
             if (result['statusCode'] == 200) {
               this.productList = result['product_list'];
               console.log(this.productList);
-              
+
             }
           }))
         }
-        
+
         getProductInfo(product_id)
         {
           console.log(product_id);
-          
+
           if(product_id){
             let index= this.productList.findIndex(d=> d.id==product_id);
             if(index!=-1){
@@ -274,8 +277,38 @@ export class WarrantyAddComponent implements OnInit {
           this.data.warranty_end_date=warrantyEnd;
         }
 
-        
-        
-        
+
+        checkMobile() {
+      if (this.data.customer_mobile.length == 10) {
+        this.service.post_rqst({ 'customer_mobile':this.data.customer_mobile },"ServiceTask/customerCheck").subscribe((d) => {
+          console.log(d);
+          if (d.statusMsg == "Exist") {
+            this.data=d.data
+            // this.getDistrict(1)
+          }
+        });
       }
-      
+    }
+
+    findId(id) {
+    let index = this.productList.findIndex(row => row.id == id)
+    if (index != -1) {
+      this.data.id = this.productList[index].id;
+      this.data.product_name = this.productList[index].product_name;
+    }
+console.log(this.data)
+  }
+  getProductName(id) {
+  this.filter.product_name= id;
+console.log(this.filter)
+    this.service
+      .post_rqst({ 'filter' : this.filter }, "Master/productList")
+      .subscribe((output) => {
+        console.log(output);
+        if (output["statusCode"] == 200) {
+          this.productList = output["product_list"];
+        }
+      });
+  }
+
+      }

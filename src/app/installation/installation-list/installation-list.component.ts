@@ -41,7 +41,7 @@ export class InstallationListComponent implements OnInit {
     this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
     this.getinspectionList('');
-   }
+  }
 
   ngOnInit() {
     this.filter_data = this.service.getData()
@@ -49,27 +49,27 @@ export class InstallationListComponent implements OnInit {
       this.active_tab = this.filter_data.status
     }
   }
-  
+
   pervious() {
     this.start = this.start - this.page_limit;
     this.getinspectionList('');
   }
-  
+
   nextPage() {
     this.start = this.start + this.page_limit;
     this.getinspectionList('');
   }
-  
+
   refresh() {
     this.start = 0;
     this.filter_data = {};
     this.getinspectionList('');
   }
-  
+
   clear() {
     this.refresh();
   }
-  
+
   goToDetailHandler(id) {
     window.open(`/installation-detail/` + id);
   }
@@ -77,7 +77,7 @@ export class InstallationListComponent implements OnInit {
     this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
     this.getinspectionList('');
   }
-  
+
   getinspectionList(data) {
     if (this.pagenumber > this.total_page) {
       this.pagenumber = this.total_page;
@@ -89,31 +89,34 @@ export class InstallationListComponent implements OnInit {
 
     if (this.active_tab == 'All') {
       this.filter_data.status = this.active_tab;
-      }
-      if (this.active_tab == 'Pending') {
-        this.filter_data.status = this.active_tab;
-      }
-  
-      if (this.active_tab == 'Reject') {
-        this.filter_data.status = this.active_tab;
-      }
-  
-      if (this.active_tab == 'Done') {
-        this.filter_data.status = this.active_tab;
-      }
+    }
+    if (this.active_tab == 'Pending') {
+      this.filter_data.status = this.active_tab;
+    }
+    if (this.active_tab == 'Assigned') {
+      this.filter_data.status = this.active_tab;
+    }
+
+    if (this.active_tab == 'Reject') {
+      this.filter_data.status = this.active_tab;
+    }
+
+    if (this.active_tab == 'Done') {
+      this.filter_data.status = this.active_tab;
+    }
 
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceInstallationList")
-    
+
     this.loader = true;
     header.subscribe((result) => {
       if (result['statusCode'] == 200) {
-        
+
         console.log('result',result);
-        
-        
+
+
         this.installationList = result['result'];
         console.log(this.installationList);
-        
+
         this.pageCount = result['count'];
         this.tab_count = result['tab_count'];
         this.scheme_active_count = result['scheme_active_count'];
@@ -124,7 +127,7 @@ export class InstallationListComponent implements OnInit {
           this.datanotofound = true;
           this.loader = false;
         }
-        
+
         if (this.pagenumber > this.total_page) {
           this.pagenumber = this.total_page;
           this.start = this.pageCount - this.page_limit;
@@ -135,8 +138,8 @@ export class InstallationListComponent implements OnInit {
         this.total_page = Math.ceil(this.pageCount / this.page_limit);
         this.sr_no = this.pagenumber - 1;
         this.sr_no = this.sr_no * this.page_limit
-        
-        
+
+
         for (let i = 0; i < this.installationList.length; i++) {
           if (this.installationList[i].status == '1') {
             this.installationList[i].newStatus = true
@@ -151,7 +154,7 @@ export class InstallationListComponent implements OnInit {
         this.datanotofound = true;
         this.loader = false;
       }
-      
+
     })
   }
   lastBtnValue(value) {
