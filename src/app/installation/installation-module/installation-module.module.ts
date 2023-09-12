@@ -19,17 +19,17 @@ import { ProductDetailModelComponent } from '../product-detail-model/product-det
 const inspectionRoutes = [
   { path: "", children:[
     { path: "", component: InstallationListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: 'add-installation', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: 'add-installation/:type', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     { path: "installation-detail/:id", children:[
       {path:"", component:InstallationDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-      {path:'add-installation/:id', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
+      {path:'add-installation/:type/:id', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
 
     ] }
   ]},
 ]
 
 @NgModule({
-  declarations: [InstallationListComponent,InstallationAddComponent,InstallationDetailComponent,EngineerAssignModelComponent,AddInstallationRemarkComponent,ProductDetailModelComponent],
+  declarations: [InstallationListComponent,InstallationDetailComponent,EngineerAssignModelComponent,AddInstallationRemarkComponent,ProductDetailModelComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(inspectionRoutes),

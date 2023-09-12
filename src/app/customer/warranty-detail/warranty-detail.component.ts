@@ -9,6 +9,7 @@ import { Location } from '@angular/common'
 import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
+import { WarrantyUpdateModelComponent } from 'src/app/warranty/warranty-update-model/warranty-update-model.component';
 
 @Component({
   selector: 'app-warranty-detail',
@@ -30,10 +31,10 @@ export class WarrantyDetailComponent implements OnInit {
   warrantyImg:any =[];
   
   constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) { 
-
-
+    
+    
     this.url = this.service.uploadUrl + 'service_task/'
-
+    
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.service.currentUserID = params.id
@@ -64,7 +65,7 @@ export class WarrantyDetailComponent implements OnInit {
     back(): void {
       this.location.back()
     }
-
+    
     imageModel(image){
       const dialogRef = this.dialog.open( ImageModuleComponent, {
         panelClass:'Image-modal',
@@ -77,5 +78,22 @@ export class WarrantyDetailComponent implements OnInit {
       });
     }
     
+    
+    updateWarrantyStataus(row)
+    {
+      const dialogRef = this.dialog.open(WarrantyUpdateModelComponent, {
+        width: '400px',
+        panelClass: 'cs-model',
+        data: {
+          id: row,
+        }
+      });
+      
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != false) {
+          this.getWarrantyDetail();
+        }
+      });
+    }
   }
   

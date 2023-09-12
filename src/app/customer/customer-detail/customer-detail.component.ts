@@ -135,6 +135,28 @@ export class CustomerDetailComponent implements OnInit {
     this.filter_data.warranty_end_date = moment(this.filter_data.warranty_end_date).format('YYYY-MM-DD');
     this.getWarrantyDetail();
   }
+  date_format4(): void {
+    this.filter_data.verification_on = moment(this.filter_data.verification_on).format('YYYY-MM-DD');
+    this.getWarrantyDetail();
+  }
+
+  date_format5(): void {
+    this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
+    this.getComplaintDetail();
+  }
+  date_format6(): void {
+    this.filter_data.closed_date = moment(this.filter_data.closed_date).format('YYYY-MM-DD');
+    this.getComplaintDetail();
+  }
+  date_format7(): void {
+    this.filter_data.return_on = moment(this.filter_data.return_on).format('YYYY-MM-DD');
+    this.getComplaintDetail();
+  }
+
+  date_forma8(): void {
+    this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
+    this.getInstallationDetail();
+  }
 
     getWarrantyDetail() {
       this.filter.status = this.tabType;

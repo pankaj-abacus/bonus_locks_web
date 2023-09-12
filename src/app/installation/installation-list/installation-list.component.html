@@ -69,16 +69,16 @@
             <tr>
               <th class="w60">Sr.No</th>
               <th class="w150">Date Created</th>
-              <th class="w100">Created By</th>
-              <th class="w120">Installation No.</th>
-              <th class="w120">Customer Name</th>
-              <th class="w100">Customer Mobile No.</th>
-              <th class="w130">Technician Details</th>
+              <th class="w150">Created By</th>
+              <th class="w100">Installation No.</th>
+              <th class="w150">Customer Name</th>
+              <th class="w120">Customer Mobile No.</th>
+              <th class="w180">Technician Details</th>
               <th class="w50">Total Item</th>
               <th class="w100" *ngIf="active_tab == 'All'">Status</th>
               <th class="w70 text-center">TAT</th>
-              <th class="w150">Remark</th>
-              <th class="w150" *ngIf="active_tab == 'Reject' || active_tab =='All'">Reject Reason</th>
+              <th class="w180">Remark</th>
+              <th class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">Reject Reason</th>
             </tr>
           </table>
         </div>
@@ -98,7 +98,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
+              <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="created_name"
@@ -107,7 +107,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w120">
+              <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="complain_no"
@@ -116,7 +116,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w120">
+              <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="customer_name"
@@ -125,7 +125,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
+              <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="customer_mobile"
@@ -134,7 +134,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w130">
+              <th class="w180">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
@@ -160,8 +160,8 @@
                 </div>
               </th>
               <th class="w70 text-center"></th>
-              <th class="w150"></th>
-              <th class="w150" *ngIf="active_tab == 'Reject' || active_tab =='All'"></th>
+              <th class="w180"></th>
+              <th class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'"></th>
             </tr>
           </table>
         </div>
@@ -181,22 +181,22 @@
                   : "--"
                   }}
                 </td>
-                <td class="w100">
+                <td class="w150">
                   {{ row.created_name ? row.created_name : "--" }}
                 </td>
-                <td class="w120">
+                <td class="w100">
                   <a class="link-btn" mat-button (click)="service.setData(filter_data)"
                     routerLink="installation-detail/{{ row.id }}" routerLinkActive="active">{{ row.complain_no }}</a>
                 </td>
-                <td class="w120">{{ row.customer_name | titlecase }}</td>
-                <td class="w100">{{ row.customer_mobile }}</td>
-                <td class="w130">{{row.carpenter_name ? row.carpenter_name : '--'}}-{{row.carpenter_mobile ?
+                <td class="w150">{{ row.customer_name | titlecase }}</td>
+                <td class="w120">{{ row.customer_mobile }}</td>
+                <td class="w180">{{row.carpenter_name ? row.carpenter_name : '--'}}-{{row.carpenter_mobile ?
                   row.carpenter_mobile : '--'}}</td>
                 <td class="w50"><a class="link-btn flat" (click)="attendancDetail(row)">{{row.total_items}}</a></td>
-                <td class="w100" *ngIf="active_tab == 'All'">{{ row.status }}</td>
+                <td class="w100" *ngIf="active_tab == 'All'">{{ row.complaint_status }}</td>
                 <td class="w70 text-center">{{row.pending_at}}</td>
-                <td class="w150">{{row.remark}}</td>
-                <td class="w150" *ngIf="active_tab == 'Reject' || active_tab =='All'">{{row.closing_remark}}</td>
+                <td class="w180">{{row.remark}}</td>
+                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">{{row.closing_remark}}</td>
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">
@@ -207,19 +207,19 @@
                 <td class="w150">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w120">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w120">
+                <td class="w150">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w100">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w130">
+                <td class="w150">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w120">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w180">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w50">
@@ -231,10 +231,10 @@
                 <td class="w70">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w180">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150" *ngIf="active_tab == 'Reject'">
+                <td class="w180" *ngIf="active_tab == 'Reject'">
                   <div>&nbsp;</div>
                 </td>
               </tr>
@@ -261,7 +261,7 @@
       <mat-icon>download</mat-icon>
       <span>Download excel</span>
     </button>
-    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-installation"
+    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-installation/installation"
       routerLinkActive="router-link-active">
       <mat-icon>add</mat-icon>
       <span>Add New</span>

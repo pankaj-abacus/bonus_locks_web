@@ -87,7 +87,14 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w250 "></th>
+              <th class="w250 ">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="address"
+                      (keyup.enter)="getCumtomerList('')" #address="ngModel" [(ngModel)]="filter_data.address">
+                  </mat-form-field>
+                </div>
+              </th>
               <th class="w70"></th>
               <th class="w70"></th>
             </tr>
