@@ -27,7 +27,7 @@
             <h2>Customer Details</h2>
             <div class="left-auto">
               <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
-                [routerLink]="['add-installation/', this.id]">
+                [routerLink]="['add-installation/', 'installation',this.id]">
                 <i class="material-icons">edit</i>
               </a>
             </div>
@@ -229,12 +229,11 @@
                 <div class="table-head">
                   <table>
                     <tr>
-                      <th class="w50 text-center">Sr.No</th>
-                      <th class="w130 text-center">Category</th>
-                      <th class="w130 text-center">Sub Category</th>
-                      <th class="w130 text-center">Product Name And Code</th>
-                      <th class="w80 text-center">Qty</th>
-                      <!-- <th class="w50 text-center">Action</th> -->
+                      <th class="w50">Sr.No</th>
+                      <th class="w100">Category</th>
+                      <th class="w100">Sub Category</th>
+                      <th class="w180">Product Name And Code</th>
+                      <th class="w50">Qty</th>
                     </tr>
                   </table>
                 </div>
@@ -244,11 +243,11 @@
                 <div class="table-content none-shadow">
                   <table>
                     <tr *ngFor="let row of add_list; let i = index">
-                      <td class="w50 text-center">{{ i + 1 }}</td>
-                      <td class="w130 text-center">{{ row.category_name }}</td>
-                      <td class="w130 text-center">{{ row.subcat_name }}</td>
-                      <td class="w130 text-center">{{ row.product_name }}-{{ row.product_code }}</td>
-                      <td class="w80 text-center">{{ row.qty }}</td>
+                      <td class="w50">{{ i + 1 }}</td>
+                      <td class="w100">{{ row.category_name }}</td>
+                      <td class="w100">{{ row.subcat_name }}</td>
+                      <td class="w180">{{ row.product_name }}-{{ row.product_code }}</td>
+                      <td class="w50">{{ row.qty }}</td>
                     </tr>
                   </table>
                 </div>

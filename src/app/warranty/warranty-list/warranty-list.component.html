@@ -62,16 +62,16 @@
           <table>
             <tr>
               <th class="w50">Sr.No</th>
-              <th class="w180">Date Created</th>
+              <th class="w150">Date Created</th>
               <th class="w150">Created By</th>
               <th class="w150">Customer Name</th>
-              <th class="w150">Customer Mobile No.</th>
-              <th class="w150">Product Serial No.</th>
+              <th class="w120">Customer Mobile No.</th>
+              <th class="w120">Product Serial No.</th>
               <th class="w150">Product Detail</th>
-              <th class="w150">Warranty Start Date</th>
-              <th class="w150">Warranty End Date</th>
-              <th class="w150">Verification Status</th>
-              <th class="w180" *ngIf="active_tab != 'Pending'">
+              <th class="w120">Warranty Start Date</th>
+              <th class="w120">Warranty End Date</th>
+              <th class="w120">Verification Status</th>
+              <th class="w120" *ngIf="active_tab != 'Pending'">
                 Verification Date
               </th>
               <th class="w100" *ngIf="active_tab != 'Pending'">
@@ -86,7 +86,7 @@
           <table>
             <tr>
               <th class="w50"></th>
-              <th class="w180">
+              <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
@@ -115,7 +115,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="customer_mobile"
@@ -124,7 +124,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="serial_no"
@@ -141,7 +141,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker2" placeholder="Date" name="date_of_purchase"
@@ -152,7 +152,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker3" placeholder="Date" name="warranty_end_date"
@@ -163,7 +163,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="company_verification_status"
@@ -172,7 +172,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w180" *ngIf="active_tab != 'Pending'">
+              <th class="w120" *ngIf="active_tab != 'Pending'">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker4" placeholder="Date" name="verification_on"
@@ -205,7 +205,7 @@
               <tr *ngFor="let row of warrantyList; let i = index"
                 [ngClass]="{ Current: service.currentUserID == row.id }">
                 <td class="w50">{{ i + 1 + sr_no }}</td>
-                <td class="w180">
+                <td class="w150">
                   {{ row.date_created | date : "dd MMM yyy ,h:mm a" }}
                 </td>
                 <td class="w150">{{ row.created_by_name }}</td>
@@ -214,15 +214,15 @@
                     routerLink="warranty-detail/{{ row.id }}" routerLinkActive="active">
                     {{ row.customer_name | titlecase }}</a>
                 </td>
-                <td class="w150">{{ row.customer_mobile }}</td>
-                <td class="w150">{{ row.serial_no }}</td>
+                <td class="w120">{{ row.customer_mobile }}</td>
+                <td class="w120">{{ row.serial_no }}</td>
                 <td class="w150">
                   {{ row.product_name }}-{{ row.product_code }}
                 </td>
-                <td class="w150">{{ row.date_of_purchase }}</td>
-                <td class="w150">{{ row.warranty_end_date }}</td>
-                <td class="w150">{{ row.company_verification_status }}</td>
-                <td class="w180" *ngIf="active_tab != 'Pending'">
+                <td class="w120">{{ row.date_of_purchase }}</td>
+                <td class="w120">{{ row.warranty_end_date }}</td>
+                <td class="w120">{{ row.company_verification_status }}</td>
+                <td class="w120" *ngIf="active_tab != 'Pending'">
                   {{
                   row.verification_on != "0000-00-00 00:00:00"
                   ? (row.verification_on | date : "dd MMM yyy ,h:mm a")
@@ -250,9 +250,6 @@
                 <td class="w50">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w180">
-                  <div>&nbsp;</div>
-                </td>
                 <td class="w150">
                   <div>&nbsp;</div>
                 </td>
@@ -262,22 +259,28 @@
                 <td class="w150">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w120">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w120">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w150">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w120">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w120">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w250">
+                <td class="w120">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w70 text-center">
+                <td class="w120">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w100">
                   <div>&nbsp;</div>
                 </td>
               </tr>

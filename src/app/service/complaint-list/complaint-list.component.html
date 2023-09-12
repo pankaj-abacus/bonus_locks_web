@@ -109,7 +109,7 @@
               <th class="w100">Created By</th>
               <th class="w130">Customer Name</th>
               <th class="w130">Customer Mobile No.</th>
-              <th class="w120">Complaint No.</th>
+              <th class="w100">Complaint No.</th>
               <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Technician Details</th>
               <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Serial No.</th> -->
               <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Product Name</th> -->
@@ -172,7 +172,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w120">
+              <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="complain_no"
@@ -307,7 +307,7 @@
                 <td class="w100">{{row.created_name ? row.created_name : '--'}}</td>
                 <td class="w130">{{row.customer_name | titlecase}}</td>
                 <td class="w130">{{row.customer_mobile}}</td>
-                <td class="w120"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
+                <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                     routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
                 <td class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.carpenter_name ?
                   row.carpenter_name : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
@@ -363,7 +363,7 @@
                 <td class="w130">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w120">
+                <td class="w100">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w180">
@@ -427,7 +427,7 @@
       <mat-icon>download</mat-icon>
       <span>Download excel</span>
     </button>
-    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-complaint"
+    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-complaint/complaint"
       routerLinkActive="router-link-active">
       <mat-icon>add</mat-icon>
       <span>Add New</span>

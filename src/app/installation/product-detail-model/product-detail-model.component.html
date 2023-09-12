@@ -1,85 +1,42 @@
 
-<div mat-dialog-title>
-  <!-- <a mat-icon-button class="fix-btn" (click)="close()">
-    <i class="material-icons edit">clear</i>
-  </a> -->
-</div>
-<div mat-dialog-content>
-  <div class="dialog-content">
-    <div class="row" *ngIf="skLoading">
-      <div class="col s12">
-        <div class="card">
-          <div class="sk-head">
-            <h2>&nbsp;</h2>
-          </div>
-          <div class="card-body">
-            <div class="grid-box">
-              <div class="sk-box" *ngFor="let row of [].constructor(10)">
-                &nbsp;
-              </div>
-            </div>
-          </div>
+
+
+<div class="edit-modal">
+  <p class="heading">Product List</p>
+  <div mat-dialog-content>
+    <div class="cs-table left-right-10">
+      <div class=" border-top">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w50">Sr.No</th>
+              <th class="w100">Category</th>
+              <th class="w100">Sub Category</th>
+              <th class="w180">Product Name And Code</th>
+              <th class="w50">Qty</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-container pb0">
+        <div class="table-content none-shadow">
+          <table>
+            <ng-container *ngFor="let row of add_list; let i = index">
+              <tr>
+                <td class="w50">{{ i + 1 }}</td>
+                <td class="w100">{{ row.category_name }}</td>
+                <td class="w100">{{ row.subcat_name }}</td>
+                <td class="w180">{{ row.product_name }}-{{row.product_code}}</td>
+                <td class="w50">{{ row.qty }}</td>
+              </tr>
+            </ng-container>
+          </table>
         </div>
       </div>
     </div>
-
-    <div class="row" >
-      
-      <div class="col s12 m12 l12">
-        <div class="card">
-          <div class="card-head btn">
-            <h2>Product List</h2>
-            <a mat-icon-button (click)="close()">
-              <i class="material-icons edit">clear</i>
-            </a>
-          </div>
-          <div class="card-body">
-            <div class="cs-table left-right-10">
-              <div class="border-top">
-                <div class="table-head">
-                  <table>
-                    <tr>
-                      <th class="w50 text-center">Sr.No</th>
-                      <th class="w130 text-center">Category</th>
-                      <th class="w130 text-center">Sub Category</th>
-                      <th class="w130 text-center">Product Name And Code</th>
-                      <th class="w80 text-center">Qty</th>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-
-              <div class="table-container pb0">
-                <div class="table-content none-shadow">
-                  <table>
-                    <tr *ngFor="let row of add_list; let i = index">
-                      <td class="w50 text-center">{{ i + 1 }}</td>
-                      <td class="w130 text-center">{{ row.category_name }}</td>
-                      <td class="w130 text-center">{{ row.subcat_name }}</td>
-                      <td class="w130 text-center">{{ row.product_name }}-{{row.product_code}}</td>
-                      <td class="w80 text-center">{{ row.qty }}</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="row" *ngIf="!skLoading">
-      <div class="col s12 m18 l12">
-        <div class="card">
-          <div class="card-head">
-            <h2>Basic Details</h2>
-          
-          </div>
-
-          
-        </div>
-      </div>
-    </div> -->
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
   </div>
 </div>
-
-
