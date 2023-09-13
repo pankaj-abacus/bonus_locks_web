@@ -107,9 +107,9 @@
               <th class="w60">Sr.No</th>
               <th class="w160">Date Created</th>
               <th class="w100">Created By</th>
+              <th class="w100">Complaint No.</th>
               <th class="w130">Customer Name</th>
               <th class="w130">Customer Mobile No.</th>
-              <th class="w100">Complaint No.</th>
               <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Technician Details</th>
               <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Serial No.</th> -->
               <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Product Name</th> -->
@@ -154,6 +154,14 @@
                   </mat-form-field>
                 </div>
               </th>
+              <th class="w100">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="complain_no"
+                      (keyup.enter)="getComplantList('')" #complain_no="ngModel" [(ngModel)]="filter_data.complain_no">
+                  </mat-form-field>
+                </div>
+              </th>
               <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field>
@@ -172,14 +180,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="complain_no"
-                      (keyup.enter)="getComplantList('')" #complain_no="ngModel" [(ngModel)]="filter_data.complain_no">
-                  </mat-form-field>
-                </div>
-              </th>
+              
               <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
                 <div class="th-search-acmt">
                   <mat-form-field>
@@ -305,10 +306,10 @@
                 <td class="w60">{{i + 1 + sr_no}}</td>
                 <td class="w160">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
                 <td class="w100">{{row.created_name ? row.created_name : '--'}}</td>
-                <td class="w130">{{row.customer_name | titlecase}}</td>
-                <td class="w130">{{row.customer_mobile}}</td>
                 <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                     routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
+                <td class="w130">{{row.customer_name | titlecase}}</td>
+                <td class="w130">{{row.customer_mobile}}</td>
                 <td class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.carpenter_name ?
                   row.carpenter_name : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
 
@@ -357,15 +358,16 @@
                 <td class="w100">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w130">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w130">
-                  <div>&nbsp;</div>
-                </td>
                 <td class="w100">
                   <div>&nbsp;</div>
                 </td>
+                <td class="w130">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w130">
+                  <div>&nbsp;</div>
+                </td>
+                
                 <td class="w180">
                   <div>&nbsp;</div>
                 </td>

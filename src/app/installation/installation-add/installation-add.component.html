@@ -18,6 +18,21 @@
             </div>
             <div class="card-body cs-form">
               <div class="row">
+                
+                <div class="col s12 m3 l3">
+                  <mat-form-field appearance="outline" [ngClass]="{'has-error' : customer_mobile.invalid } ">
+                    <mat-label>Mobile Number</mat-label>
+                    <input type="text" name="customer_mobile" minlength="10" maxlength="10" matInput placeholder=""
+                      #customer_mobile="ngModel" [(ngModel)]="data.customer_mobile" (ngModelChange)="checkMobile()"
+                      [readonly]="id">
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="customer_mobile.touched || f.submitted">
+                    <p *ngIf="customer_mobile.errors?.required">This field is required</p>
+                  </div>
+                  <div class="alert alert-danger" *ngIf="exist">
+                    Mobile no. already Exists.
+                  </div>
+                </div>
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline">
                     <mat-label>Complaint Type</mat-label>
@@ -37,20 +52,6 @@
                     <p *ngIf="service.errors?.required">This field is required</p>
                   </div>
 
-                </div>
-                <div class="col s12 m3 l3">
-                  <mat-form-field appearance="outline" [ngClass]="{'has-error' : customer_mobile.invalid } ">
-                    <mat-label>Mobile Number</mat-label>
-                    <input type="text" name="customer_mobile" minlength="10" maxlength="10" matInput placeholder=""
-                      #customer_mobile="ngModel" [(ngModel)]="data.customer_mobile" (ngModelChange)="checkMobile()"
-                      [readonly]="id">
-                  </mat-form-field>
-                  <div class="alert alert-danger" *ngIf="customer_mobile.touched || f.submitted">
-                    <p *ngIf="customer_mobile.errors?.required">This field is required</p>
-                  </div>
-                  <div class="alert alert-danger" *ngIf="exist">
-                    Mobile no. already Exists.
-                  </div>
                 </div>
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : customer_name?.invalid } ">

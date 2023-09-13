@@ -53,11 +53,14 @@ export class ComplaintListComponent implements OnInit {
     
     if (this.filter_data.status) {
       this.active_tab = this.filter_data.status
+      if ( this.active_tab=='Pending') {
+        this.sub_active_tab='Not_Assigned'
+      }else{
+        this.sub_active_tab='Closed_By_Service'
+      }
     }
     
-    if (this.filter_data.status) {
-      this.sub_active_tab = this.filter_data.status
-    }
+   
   }
   
   pervious() {
