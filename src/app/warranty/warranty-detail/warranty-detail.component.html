@@ -81,23 +81,23 @@
                   <p>{{getData.company_verification_status ? getData.company_verification_status :'---'}}</p>
                 </div>
 
-                <div class="left-auto">
+                <div class="left-auto" *ngIf="getData.company_verification_status=='Pending'">
                   <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
                     (click)="updateWarrantyStataus(getData.id)">
                     <i class="material-icons">edit</i>
                   </a>
                 </div>
               </div>
-              
-              <!-- <div class="block-feilds">
-                <span>Inspection Status</span>
-                <p>{{getData.inspection_status ? getData.inspection_status : '--'}}</p>
+              <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
+                <span>Verification By</span>
+                <p>{{getData.verification_by_name ? getData.verification_by_name : '--'}}</p>
+              </div>
+              <div class="block-feilds" *ngIf="getData.company_verification_status=='Reject'">
+                <span>Reject Reason</span>
+                <p>{{getData.reject_reason ? getData.reject_reason : '--'}}</p>
               </div>
               
-              <div class="block-feilds">
-                <span>Complaint Status</span>
-                <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
-              </div> -->
+              
               
             </div>
           </div>

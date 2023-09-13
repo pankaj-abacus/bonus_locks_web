@@ -28,12 +28,11 @@ export class WarrantyUpdateModelComponent implements OnInit {
       if (result['statusCode'] == 200) {
 
         this.dialogRef.close(true);
-        this.savingFlag = false;
         this.toast.successToastr(result['statusMsg']);
       }
       else {
-        this.savingFlag = false;
         this.toast.errorToastr(result['statusMsg'])
+        this.savingFlag = false;
       }
     }))
   }

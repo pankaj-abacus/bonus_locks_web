@@ -247,7 +247,7 @@ export class InstallationAddComponent implements OnInit {
   addProduct() {
 
     if (this.product_data.qty==0 || this.product_data.qty==undefined || this.product_data.qty==null || !this.product_data.qty) {
-      this.toast.errorToastr("Enter A Valid QTY.");
+      this.toast.errorToastr("QTY Should Be More Then Zero");
       return;
     }
     console.log(this.product_data.product_id);

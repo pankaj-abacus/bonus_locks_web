@@ -11,6 +11,7 @@ import { Location } from '@angular/common'
 import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
+import { ProductDetailModelComponent } from 'src/app/installation/product-detail-model/product-detail-model.component';
 // import { type } from 'os';
 
 @Component({
@@ -55,7 +56,7 @@ export class CustomerDetailComponent implements OnInit {
   today_date:any;
 
 
-  constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
+  constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent,public dialog2: MatDialog) {
     this.page_limit = service.pageLimit;
     // this.page_limit = 1;
     this.route.params.subscribe(params => {
@@ -68,6 +69,19 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  refresh() {
+    this.start = 0;
+    this.filter_data = {};
+    this.getComplaintDetail();
+    this.getCustomerDetail();
+    this.getInstallationDetail();
+    this.getWarrantyDetail();
+  }
+  
+  clear() {
+    this.refresh();
   }
 
   getCustomerDetail()
@@ -160,7 +174,7 @@ export class CustomerDetailComponent implements OnInit {
 
     getWarrantyDetail() {
       this.filter.status = this.tabType;
-      this.loader = true;
+      
       if (this.pagenumber > this.total_page) {
         this.pagenumber = this.total_page;
         this.start = this.pageCount - this.page_limit;
@@ -170,7 +184,7 @@ export class CustomerDetailComponent implements OnInit {
       }
 
       this.service.post_rqst({'customer_id':this.id,'pagelimit': this.page_limit,'start': this.start,'filter': this.filter_data}, 'ServiceTask/serviceWarrantyList').subscribe((result) => {
-
+        this.loader = true;
         if (result['statusCode'] == 200) {
           this.warrantyList = result['result'];
           this.loader = false;
@@ -181,6 +195,7 @@ export class CustomerDetailComponent implements OnInit {
           }
           else {
             this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
+            this.loader = false;
           }
           this.total_page = Math.ceil(this.pageCount / this.page_limit);
           this.sr_no = this.pagenumber - 1;
@@ -211,7 +226,6 @@ export class CustomerDetailComponent implements OnInit {
 
     getInstallationDetail() {
       this.filter.status = this.tabType;
-      this.loader = true;
       if (this.pagenumber > this.total_page) {
         this.pagenumber = this.total_page;
         this.start = this.pageCount - this.page_limit;
@@ -221,6 +235,7 @@ export class CustomerDetailComponent implements OnInit {
       }
 
       this.service.post_rqst({'customer_id':this.id,'pagelimit': this.page_limit,'start': this.start,'filter': this.filter_data}, 'ServiceTask/serviceInstallationList').subscribe((result) => {
+        this.loader = true;
 
         if (result['statusCode'] == 200) {
           this.installationList = result['result'];
@@ -245,21 +260,9 @@ export class CustomerDetailComponent implements OnInit {
       })
     }
 
-    // getInstallationDetail(){
-    //   console.log(this.tabType);
-    //   this.skLoading = true;
-    //   this.filter.status = this.tabType
-    //   this.service.post_rqst({'customer_id':this.id},"ServiceTask/serviceInstallationList").subscribe((result=>
-    //     {
-    //       this.installationList = result['result'];
-    //       this.skLoading = false;
-    //     }
-    //     ));
-    //   }
-
     getComplaintDetail() {
       this.filter.status = this.tabType;
-      this.loader = true;
+      
       if (this.pagenumber > this.total_page) {
         this.pagenumber = this.total_page;
         this.start = this.pageCount - this.page_limit;
@@ -269,6 +272,7 @@ export class CustomerDetailComponent implements OnInit {
       }
 
       this.service.post_rqst({'customer_id':this.id,'pagelimit': this.page_limit,'start': this.start,'filter': this.filter_data}, 'ServiceTask/serviceComplaintList').subscribe((result) => {
+        this.loader = true;
 
         if (result['statusCode'] == 200) {
           this.complaintList = result['result'];
@@ -314,4 +318,21 @@ export class CustomerDetailComponent implements OnInit {
 
 
 
+        attendancDetail(row) {
+          console.log(row.add_list);
+          
+          const dialogRef = this.dialog2.open(ProductDetailModelComponent, {
+            width: '800px',
+              panelClass: 'cs-model',
+              data: {
+                row:row.add_list,
+              }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result != false) {
+              // this.getinspectionList('');
+            }
+      
+          });
+        }
       }

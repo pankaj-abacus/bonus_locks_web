@@ -7,6 +7,9 @@
 
 
     <div class="left-auto df ac flex-gap-10">
+      <a mat-icon-button matTooltip="Refresh" (click)="refresh()">
+        <i class="material-icons">refresh</i>
+      </a>
       <div class="pagination" *ngIf="(tabType!= 'Profile')">
         <div class="pagination-content">
           Pages
@@ -105,20 +108,13 @@
                 <th class="w50">Sr.No</th>
                 <th class="w150">Date Created</th>
                 <th class="w150">Created By</th>
-                <th class="w150">Customer Name</th>
-                <th class="w120">Customer Mobile No.</th>
                 <th class="w120">Product Serial No.</th>
                 <th class="w150">Product Detail</th>
                 <th class="w120">Warranty Start Date</th>
                 <th class="w120">Warranty End Date</th>
                 <th class="w120">Verification Status</th>
-                <th class="w120">
-                  Verification Date
-                </th>
-                <th class="w100">
-                  Verification By
-                </th>
-                <!-- <th class="w70 text-center">Action</th> -->
+                <th class="w120">Verification Date</th>
+                <th class="w100">Verification By</th>
               </tr>
             </table>
           </div>
@@ -130,7 +126,7 @@
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
+                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format('warranty')"
                         [max]="today_date" readonly />
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
@@ -141,26 +137,8 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="created_by_name"
-                        (keyup.enter)="getWarrantyList('')" #created_by_name="ngModel"
+                        (keyup.enter)="getWarrantyDetail()" #created_by_name="ngModel"
                         [(ngModel)]="filter_data.created_by_name" />
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w150">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_name"
-                        (keyup.enter)="getWarrantyList('')" #customer_name="ngModel"
-                        [(ngModel)]="filter_data.customer_name" />
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w120">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                        (keyup.enter)="getWarrantyList('')" #customer_mobile="ngModel"
-                        [(ngModel)]="filter_data.customer_mobile" />
                     </mat-form-field>
                   </div>
                 </th>
@@ -168,7 +146,7 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="serial_no"
-                        (keyup.enter)="getWarrantyList('')" #serial_no="ngModel" [(ngModel)]="filter_data.serial_no" />
+                        (keyup.enter)="getWarrantyDetail()" #serial_no="ngModel" [(ngModel)]="filter_data.serial_no" />
                     </mat-form-field>
                   </div>
                 </th>
@@ -176,7 +154,7 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="product_detail"
-                        (keyup.enter)="getWarrantyList('')" #product_detail="ngModel"
+                        (keyup.enter)="getWarrantyDetail()" #product_detail="ngModel"
                         [(ngModel)]="filter_data.product_detail" />
                     </mat-form-field>
                   </div>
@@ -207,7 +185,7 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="company_verification_status"
-                        (keyup.enter)="getWarrantyList('')" #company_verification_status="ngModel"
+                        (keyup.enter)="getWarrantyDetail()" #company_verification_status="ngModel"
                         [(ngModel)]="filter_data.company_verification_status" />
                     </mat-form-field>
                   </div>
@@ -227,12 +205,11 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="verification_by_name"
-                        (keyup.enter)="getWarrantyList('')" #verification_by_name="ngModel"
+                        (keyup.enter)="getWarrantyDetail()" #verification_by_name="ngModel"
                         [(ngModel)]="filter_data.verification_by_name" />
                     </mat-form-field>
                   </div>
                 </th>
-                <!-- <th class="w70 text-center"></th> -->
               </tr>
 
             </table>
@@ -251,13 +228,10 @@
                     {{ row.date_created | date : "dd MMM yyy ,h:mm a" }}
                   </td>
                   <td class="w150">{{ row.created_by_name }}</td>
-                  <td class="w150">
+                  <td class="w120">
                     <a class="link-btn" mat-button (click)="service.setData(filter_data)"
-                      routerLink="warranty-detail/{{ row.id }}" routerLinkActive="active">
-                      {{ row.customer_name | titlecase }}</a>
+                      routerLink="warranty-detail/{{ row.id }}" routerLinkActive="active">{{ row.serial_no }}</a>
                   </td>
-                  <td class="w120">{{ row.customer_mobile }}</td>
-                  <td class="w120">{{ row.serial_no }}</td>
                   <td class="w150">
                     {{ row.product_name }}-{{ row.product_code }}
                   </td>
@@ -276,15 +250,6 @@
                     row.verification_by_name ? row.verification_by_name : "--"
                     }}
                   </td>
-                  <!-- <td class="w70 text-center">
-                  <div class="action-button">
-                    <button mat-icon-button matTooltip="Edit" (click)="updateWarrantyStataus(row.id)">
-                      <i class="material-icons edit">edit</i>
-                    </button>
-
-                  </div>
-
-                </td> -->
                 </tr>
               </ng-container>
               <ng-container *ngIf="loader">
@@ -338,16 +303,12 @@
                 <th class="w60">Sr.No</th>
                 <th class="w160">Date Created</th>
                 <th class="w100">Created By</th>
-                <th class="w130">Customer Name</th>
-                <th class="w130">Customer Mobile No.</th>
                 <th class="w100">Complaint No.</th>
                 <th class="w180">Technician Details</th>
                 <th class="w130">Inspection Status</th>
-                <th class="w160">Closing Date</th>
-                <th class="w130">Closing remark</th>
-                <th class="w160">Return Date</th>
-                <th class="w130">Return Status</th>
-                <th class="w130">Complaint Status</th>
+                <th class="w130">Status</th>
+                <th class="w160">Status Update Date</th>
+                <th class="w130">Remark</th>
                 <th class="w70 text-center">TAT</th>
               </tr>
             </table>
@@ -359,10 +320,10 @@
                 <th class="w160">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
-                      <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format5()"
+                      <input matInput [matDatepicker]="picker5" placeholder="Date" name="date_created"
+                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format('complaint')"
                         [max]="today_date" readonly>
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
                       <mat-datepicker #picker5></mat-datepicker>
                     </mat-form-field>
                   </div>
@@ -371,26 +332,8 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="created_by_type"
-                        (keyup.enter)="getComplantList('')" #created_by_type="ngModel"
+                        (keyup.enter)="getComplaintDetail()" #created_by_type="ngModel"
                         [(ngModel)]="filter_data.created_by_type">
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w130">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_name"
-                        (keyup.enter)="getComplantList('')" #customer_name="ngModel"
-                        [(ngModel)]="filter_data.customer_name">
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w130">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                        (keyup.enter)="getComplantList('')" #customer_mobile="ngModel"
-                        [(ngModel)]="filter_data.customer_mobile">
                     </mat-form-field>
                   </div>
                 </th>
@@ -398,7 +341,8 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="complain_no"
-                        (keyup.enter)="getComplantList('')" #complain_no="ngModel" [(ngModel)]="filter_data.complain_no">
+                        (keyup.enter)="getComplaintDetail()" #complain_no="ngModel"
+                        [(ngModel)]="filter_data.complain_no">
                     </mat-form-field>
                   </div>
                 </th>
@@ -406,21 +350,34 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
-                        (keyup.enter)="getComplantList('')" #carpenter_detail="ngModel"
+                        (keyup.enter)="getComplaintDetail()" #carpenter_detail="ngModel"
                         [(ngModel)]="filter_data.carpenter_detail">
                     </mat-form-field>
                   </div>
                 </th>
-                
+
                 <th class="w130">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input select-input">
                       <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.inspection_status"
-                        (selectionChange)="getComplantList('')">
+                        (selectionChange)="getComplaintDetail()">
                         <mat-option value="All">All</mat-option>
                         <mat-option value="Pending">Pending</mat-option>
                         <mat-option value="Done">Done </mat-option>
-  
+
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w130">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="cs-input select-input">
+                      <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.complaint_status"
+                        (selectionChange)="getComplaintDetail()">
+                        <mat-option value="">All</mat-option>
+                        <mat-option value="Pending">Pending</mat-option>
+                        <mat-option value="Closed">Closed </mat-option>
+                        <mat-option value="Cancel">Cancel </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -438,41 +395,6 @@
                 </th>
                 <th class="w130">
                 </th>
-                <th class="w160">
-                  <div class="th-search-acmt">
-                    <mat-form-field class="cs-input date-column infix-bodr">
-                      <input matInput [matDatepicker]="picker" placeholder="Date" name="return_on" #return_on="ngModel"
-                        [(ngModel)]="filter_data.return_on" (ngModelChange)="date_format7()" [max]="today_date" readonly>
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker7></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w130">
-                  <div class="th-search-acmt">
-                    <mat-form-field class="cs-input select-input">
-                      <mat-select name="return_status" #return_status="ngModel" [(ngModel)]="filter_data.return_status"
-                        (selectionChange)="getComplantList('')">
-                        <mat-option value="">All</mat-option>
-                        <mat-option value="Pending">Pending</mat-option>
-                        <mat-option value="Done">Done </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w130">
-                  <div class="th-search-acmt">
-                    <mat-form-field class="cs-input select-input">
-                      <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.complaint_status"
-                        (selectionChange)="getComplantList('')">
-                        <mat-option value="">All</mat-option>
-                        <mat-option value="Pending">Pending</mat-option>
-                        <mat-option value="Closed">Closed </mat-option>
-                        <mat-option value="Reject">Reject </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
                 <th class="w70 text-center"></th>
               </tr>
             </table>
@@ -484,31 +406,25 @@
             <table>
               <ng-container *ngIf="!loader">
                 <tr *ngFor="let row of complaintList; let i = index "
-                [ngClass]="{'Current': service.currentUserID == row.id}">
-                <td class="w60">{{i + 1 + sr_no}}</td>
-                <td class="w160">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                <td class="w100">{{row.created_name ? row.created_name : '--'}}</td>
-                <td class="w130">{{row.customer_name | titlecase}}</td>
-                <td class="w130">{{row.customer_mobile}}</td>
-                <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
-                    routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
-                <td class="w180">{{row.carpenter_name ?
-                  row.carpenter_name : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
+                  [ngClass]="{'Current': service.currentUserID == row.id}">
+                  <td class="w60">{{i + 1 + sr_no}}</td>
+                  <td class="w160">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+                  <td class="w100">{{row.created_name ? row.created_name : '--'}}</td>
+                  <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
+                      routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
+                  <td class="w180">{{row.carpenter_name ?
+                    row.carpenter_name : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
 
-                <td class="w130">{{row.inspection_status
-                  ? row.inspection_status : '--'}}</td>
-                <td class="w160">
-                  {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
-                </td>
-                <td class="w130">
-                  {{row.closing_remark ? row.closing_remark : '--'}}</td>
-                <td class="w160">{{row.return_on
-                  !='0000-00-00 00:00:00' ? (row.return_on | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                <td class="w130">{{row.return_status ?
-                  row.return_status : '--'}}</td>
-                <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
-                <td class="w70">{{row.pending_at}}</td>
-              </tr>
+                  <td class="w130">{{row.inspection_status
+                    ? row.inspection_status : '--'}}</td>
+                  <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
+                  <td class="w160">
+                    {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
+                  </td>
+                  <td class="w130">
+                    {{row.closing_remark ? row.closing_remark : '--'}}</td>
+                  <td class="w70">{{row.pending_at}}</td>
+                </tr>
               </ng-container>
               <ng-container *ngIf="loader">
                 <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
@@ -576,10 +492,10 @@
                 <th class="w150">Date Created</th>
                 <th class="w150">Created By</th>
                 <th class="w100">Installation No.</th>
-                <th class="w150">Customer Name</th>
-                <th class="w120">Customer Mobile No.</th>
+                <!-- <th class="w150">Customer Name</th> -->
+                <!-- <th class="w120">Customer Mobile No.</th> -->
                 <th class="w180">Technician Details</th>
-                <!-- <th class="w50">Total Item</th> -->
+                <th class="w50">Total Item</th>
                 <th class="w100">Status</th>
                 <th class="w70 text-center">TAT</th>
                 <th class="w180">Remark</th>
@@ -594,10 +510,10 @@
                 <th class="w150">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
-                      <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format8()"
+                      <input matInput [matDatepicker]="picker8" placeholder="Date" name="date_created"
+                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format('installation')"
                         [max]="today_date" readonly />
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
                       <mat-datepicker #picker8></mat-datepicker>
                     </mat-form-field>
                   </div>
@@ -606,7 +522,7 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="created_name"
-                        (keyup.enter)="getinspectionList('')" #created_name="ngModel"
+                        (keyup.enter)="getInstallationDetail()" #created_name="ngModel"
                         [(ngModel)]="filter_data.created_name" />
                     </mat-form-field>
                   </div>
@@ -615,29 +531,29 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="complain_no"
-                        (keyup.enter)="getinspectionList('')" #complain_no="ngModel"
+                        (keyup.enter)="getInstallationDetail()" #complain_no="ngModel"
                         [(ngModel)]="filter_data.complain_no" />
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w150">
+                <!-- <th class="w150">
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="customer_name"
-                        (keyup.enter)="getinspectionList('')" #customer_name="ngModel"
+                        (keyup.enter)="getInstallationDetail()" #customer_name="ngModel"
                         [(ngModel)]="filter_data.customer_name" />
                     </mat-form-field>
                   </div>
-                </th>
-                <th class="w120">
+                </th> -->
+                <!-- <th class="w120">
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                        (keyup.enter)="getinspectionList('')" #customer_mobile="ngModel"
+                        (keyup.enter)="getInstallationDetail()" #customer_mobile="ngModel"
                         [(ngModel)]="filter_data.customer_mobile" />
                     </mat-form-field>
                   </div>
-                </th>
+                </th> -->
                 <th class="w180">
                   <div class="th-search-acmt">
                     <mat-form-field>
@@ -646,19 +562,19 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <!-- <th class="w50">
+                <th class="w50">
                   <div class="th-search-acmt">
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
                         #carpenter_detail="ngModel" [(ngModel)]="filter_data.carpenter_detail">
-                    </mat-form-field>
+                    </mat-form-field> -->
                   </div>
-                </th> -->
+                </th>
                 <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="complaint_status"
-                        (keyup.enter)="getinspectionList('')" #complaint_status="ngModel"
+                        (keyup.enter)="getInstallationDetail()" #complaint_status="ngModel"
                         [(ngModel)]="filter_data.complaint_status">
                     </mat-form-field>
                   </div>
@@ -676,32 +592,32 @@
             <table>
               <ng-container *ngIf="!loader">
                 <tr *ngFor="let row of installationList; let i = index"
-                [ngClass]="{ Current: service.currentUserID == row.id }">
-                <td class="w60">{{ i + 1 + sr_no }}</td>
-                <td class="w150">
-                  {{
-                  row.date_created
-                  ? (row.date_created | date : "dd MMM yyy ,h:mm a")
-                  : "--"
-                  }}
-                </td>
-                <td class="w150">
-                  {{ row.created_name ? row.created_name : "--" }}
-                </td>
-                <td class="w100">
-                  <a class="link-btn" mat-button (click)="service.setData(filter_data)"
-                    routerLink="installation-detail/{{ row.id }}" routerLinkActive="active">{{ row.complain_no }}</a>
-                </td>
-                <td class="w150">{{ row.customer_name | titlecase }}</td>
-                <td class="w120">{{ row.customer_mobile }}</td>
-                <td class="w180">{{row.carpenter_name ? row.carpenter_name : '--'}}-{{row.carpenter_mobile ?
-                  row.carpenter_mobile : '--'}}</td>
-                <!-- <td class="w50"><a class="link-btn flat" (click)="attendancDetail(row)">{{row.total_items}}</a></td> -->
-                <td class="w100">{{ row.complaint_status }}</td>
-                <td class="w70 text-center">{{row.pending_at}}</td>
-                <td class="w180">{{row.remark}}</td>
-                <td class="w180" >{{row.closing_remark}}</td>
-              </tr>
+                  [ngClass]="{ Current: service.currentUserID == row.id }">
+                  <td class="w60">{{ i + 1 + sr_no }}</td>
+                  <td class="w150">
+                    {{
+                    row.date_created
+                    ? (row.date_created | date : "dd MMM yyy ,h:mm a")
+                    : "--"
+                    }}
+                  </td>
+                  <td class="w150">
+                    {{ row.created_name ? row.created_name : "--" }}
+                  </td>
+                  <td class="w100">
+                    <a class="link-btn" mat-button (click)="service.setData(filter_data)"
+                      routerLink="installation-detail/{{ row.id }}" routerLinkActive="active">{{ row.complain_no }}</a>
+                  </td>
+                  <!-- <td class="w150">{{ row.customer_name | titlecase }}</td> -->
+                  <!-- <td class="w120">{{ row.customer_mobile }}</td> -->
+                  <td class="w180">{{row.carpenter_name ? row.carpenter_name : '--'}}-{{row.carpenter_mobile ?
+                    row.carpenter_mobile : '--'}}</td>
+                  <td class="w50"><a class="link-btn flat" (click)="attendancDetail(row)">{{row.total_items}}</a></td>
+                  <td class="w100">{{ row.complaint_status }}</td>
+                  <td class="w70 text-center">{{row.pending_at}}</td>
+                  <td class="w180">{{row.remark}}</td>
+                  <td class="w180">{{row.closing_remark}}</td>
+                </tr>
               </ng-container>
               <ng-container *ngIf="loader">
                 <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
