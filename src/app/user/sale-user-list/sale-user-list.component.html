@@ -10,7 +10,8 @@
             <button mat-button [ngClass]="userType == 'Service Engineer' ? 'active' : ''"
                 (click)="getUserList('Service Engineer'); userType = 'Service Engineer'"><i
                     class="material-icons">computer</i>Service Engineer
-                ({{service_engineer_count}})</button>
+                    ({{service_engineer_count}})
+                </button>
         </div>
         <div class="left-auto df ac flex-gap-10">
             <button mat-icon-button matTooltip="Refresh" (click)="refresh()">
