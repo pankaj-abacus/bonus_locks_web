@@ -55,6 +55,7 @@ export class InstallationDetailComponent implements OnInit {
 
   getInstallationDetail()
   {
+    this.loader=true
     this.skLoading = true;
     this.service.post_rqst({'complaint_id':this.id},"ServiceTask/serviceInstallationDetail").subscribe((result=>
       {
@@ -65,6 +66,7 @@ export class InstallationDetailComponent implements OnInit {
         this.inspectionImg = this.getData['inspection_image'];
         this.closeImg = this.getData['image'];
         this.skLoading = false;
+        this.loader=false;
       }
       ));
 
