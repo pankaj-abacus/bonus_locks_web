@@ -165,10 +165,14 @@
               </th>
               <th class="w120">
                 <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="company_verification_status"
-                      (keyup.enter)="getWarrantyList('')" #company_verification_status="ngModel"
-                      [(ngModel)]="filter_data.company_verification_status" />
+                  <mat-form-field class="cs-input select-input">
+                    <mat-select name="company_verification_status" #company_verification_status="ngModel" [(ngModel)]="filter_data.company_verification_status"
+                      (selectionChange)="getWarrantyList('')">
+                      <mat-option value="">All</mat-option>
+                      <mat-option value="Pending">Pending</mat-option>
+                      <mat-option value="Verified">Verified </mat-option>
+                      <mat-option value="Reject">Reject </mat-option>
+                    </mat-select>
                   </mat-form-field>
                 </div>
               </th>
@@ -221,7 +225,11 @@
                 </td>
                 <td class="w120">{{ row.date_of_purchase }}</td>
                 <td class="w120">{{ row.warranty_end_date }}</td>
-                <td class="w120">{{ row.company_verification_status }}</td>
+                <td class="w120">
+                  <strong class="yellow-clr" *ngIf="row.company_verification_status=='Pending'">{{row.company_verification_status}}</strong>
+                  <strong class="green-clr" *ngIf="row.company_verification_status=='Verified'">{{row.company_verification_status}}</strong>
+                  <strong class="red-clr" *ngIf="row.company_verification_status=='Reject'">{{row.company_verification_status}}</strong>
+                </td>
                 <td class="w120" *ngIf="active_tab != 'Pending'">
                   {{
                   row.verification_on != "0000-00-00 00:00:00"
@@ -277,10 +285,10 @@
                 <td class="w120">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w120">
+                <td class="w120" *ngIf="active_tab != 'Pending'">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100">
+                <td class="w100" *ngIf="active_tab != 'Pending'">
                   <div>&nbsp;</div>
                 </td>
               </tr>

@@ -49,7 +49,7 @@
 
               <div class="block-feilds">
                 <span>Product Name</span>
-                <p>{{getData.product_name ? getData.product_name :'---'}}</p>
+                <p>{{getData.product_name  ? getData.product_name :'---'}}</p>
               </div>
 
 
@@ -57,6 +57,11 @@
               <div class="block-feilds">
                 <span>Product Code</span>
                 <p>{{getData.product_code ? getData.product_code :'---'}}</p>
+              </div>
+
+              <div class="block-feilds">
+                <span>Warranty Months</span>
+                <p>{{getData.warranty_period ? getData.warranty_period :'---'}}</p>
               </div>
 
               <div class="block-feilds">
@@ -90,6 +95,10 @@
                 </div>
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
+                <span>Verification Date</span>
+                <p>{{getData.verification_on ? (getData.verification_on | date : 'dd MMM yyy ,h:mm a') :'---'}}</p>
+              </div>
+              <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
                 <span>Verification By</span>
                 <p>{{getData.verification_by_name ? getData.verification_by_name : '--'}}</p>
               </div>
@@ -105,7 +114,7 @@
         </div>
 
       </div>
-      <div class="col s12 m12 l4">
+      <div class="col s12 m12 l8 pt10">
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
             <h2>Images</h2>
@@ -115,12 +124,15 @@
               <div class="image-block" *ngIf="getData.warranty_card_copy_img.length">
                 <img [src]="url+getData.warranty_card_copy_img" (click)="imageModel(url+getData.warranty_card_copy_img)"
                   style="cursor: zoom-in;">
-              </div>
+                  <div>
+                    <p>Warranty Card Image</p>
+                  </div>
+                </div>
               <div class="image-block" *ngIf="getData.bill_copy_img.length">
                 <img [src]="url+getData.bill_copy_img" (click)="imageModel(url+getData.bill_copy_img)"
                   style="cursor: zoom-in;">
-
-              </div>
+                  <p>Bill Card Image</p>
+                </div>
             </div>
           </div>
         </div>

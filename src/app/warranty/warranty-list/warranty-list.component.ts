@@ -111,20 +111,20 @@ export class WarrantyListComponent implements OnInit {
     
     
 
-    if (this.active_tab == 'All') {
-    this.filter_data.status = this.active_tab;
-    }
-    if (this.active_tab == 'Pending') {
-      this.filter_data.status = this.active_tab;
-    }
+    // if (this.active_tab == 'All') {
+    // this.filter_data.status = this.active_tab;
+    // }
+    // if (this.active_tab == 'Pending') {
+    //   this.filter_data.status = this.active_tab;
+    // }
 
-    if (this.active_tab == 'Verified') {
-      this.filter_data.status = this.active_tab;
-    }
+    // if (this.active_tab == 'Verified') {
+    //   this.filter_data.status = this.active_tab;
+    // }
 
-    if (this.active_tab == 'Reject') {
-      this.filter_data.status = this.active_tab;
-    }
+    // if (this.active_tab == 'Reject') {
+    //   this.filter_data.status = this.active_tab;
+    // }
     console.log(this.page_limit);
     
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceWarrantyList")
