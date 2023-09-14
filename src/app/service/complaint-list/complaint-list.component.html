@@ -1,7 +1,7 @@
 <div class="main-container">
   <app-loader *ngIf="excelLoader"></app-loader>
   <div class="tools-container">
-    <h2>Complaint</h2>
+    <h2>Complaint List</h2>
 
 
     <div class="left-auto df ac flex-gap-10">
@@ -111,11 +111,8 @@
               <th class="w130">Customer Name</th>
               <th class="w130">Customer Mobile No.</th>
               <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Technician Details</th>
-              <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Serial No.</th> -->
-              <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Product Name</th> -->
-              <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Product Code</th> -->
-              <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Warranty Status</th> -->
               <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Inspection Status</th>
+              <th class="w130">Complaint Status</th>
               <th class="w160"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                 Closing Date</th>
@@ -124,7 +121,7 @@
                 Closing remark</th>
               <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Date</th>
               <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Status</th>
-              <th class="w130">Complaint Status</th>
+              
               <th class="w70 text-center">TAT</th>
             </tr>
           </table>
@@ -180,7 +177,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              
+
               <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
                 <div class="th-search-acmt">
                   <mat-form-field>
@@ -190,44 +187,6 @@
                   </mat-form-field>
                 </div>
               </th>
-              <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="serial_no"
-                      (keyup.enter)="getComplantList('')" #serial_no="ngModel" [(ngModel)]="filter_data.serial_no">
-                  </mat-form-field>
-                </div>
-              </th> -->
-              <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                      (keyup.enter)="getComplantList('')" #product_name="ngModel"
-                      [(ngModel)]="filter_data.product_name">
-                  </mat-form-field>
-                </div>
-              </th> -->
-              <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_code"
-                      (keyup.enter)="getComplantList('')" #product_code="ngModel"
-                      [(ngModel)]="filter_data.product_code">
-                  </mat-form-field>
-                </div>
-              </th> -->
-              <!-- <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
-                <div class="th-search-acmt">
-                  <mat-form-field class="cs-input select-input">
-                    <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.warranty_status"
-                      (selectionChange)="getComplantList('')">
-                      <mat-option value="">All</mat-option>
-                      <mat-option value="In Warranty">In Warranty</mat-option>
-                      <mat-option value="Out Of Warranty">Out Of Warranty </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </th> -->
               <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input select-input">
@@ -237,6 +196,19 @@
                       <mat-option value="Pending">Pending</mat-option>
                       <mat-option value="Done">Done </mat-option>
 
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w130">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input select-input">
+                    <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.complaint_status"
+                      (selectionChange)="getComplantList('')">
+                      <mat-option value="">All</mat-option>
+                      <mat-option value="Pending">Pending</mat-option>
+                      <mat-option value="Closed">Closed </mat-option>
+                      <mat-option value="Cancel">Cancel </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -278,19 +250,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w130">
-                <div class="th-search-acmt">
-                  <mat-form-field class="cs-input select-input">
-                    <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.complaint_status"
-                      (selectionChange)="getComplantList('')">
-                      <mat-option value="">All</mat-option>
-                      <mat-option value="Pending">Pending</mat-option>
-                      <mat-option value="Closed">Closed </mat-option>
-                      <mat-option value="Reject">Reject </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </th>
+              
               <th class="w70 text-center"></th>
             </tr>
           </table>
@@ -312,18 +272,17 @@
                 <td class="w130">{{row.customer_mobile}}</td>
                 <td class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.carpenter_name ?
                   row.carpenter_name : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
-
-                <!-- <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.serial_no ?
-              row.serial_no : '--'}}</td> -->
-                <!-- <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.product_name ?
-                row.product_name : '--'}}</td> -->
-                <!-- <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.product_code ?
-                  row.product_code : '--'}}</td> -->
-                <!-- <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.warranty_status ?
-                    row.warranty_status : '--'}}</td> -->
-
-                <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.inspection_status
-                  ? row.inspection_status : '--'}}</td>
+                <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
+                  <strong class="yellow-clr" *ngIf="row.inspection_status=='Pending'">{{row.inspection_status
+                  ? row.inspection_status : '--'}}</strong>
+                  <strong class="green-clr" *ngIf="row.inspection_status=='Done'">{{row.inspection_status
+                  ? row.inspection_status : '--'}}</strong>
+                </td>
+                <td class="w130">
+                  <strong class="yellow-clr" *ngIf="row.complaint_status=='Pending'">{{row.complaint_status ? row.complaint_status : '--'}}</strong>
+                  <strong class="green-clr" *ngIf="row.complaint_status=='Closed'">{{row.complaint_status ? row.complaint_status : '--'}}</strong>
+                  <strong class="red-clr" *ngIf="row.complaint_status=='Cancel'">{{row.complaint_status ? row.complaint_status : '--'}}</strong>
+                </td>
                 <td class="w160"
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
@@ -333,18 +292,12 @@
                   {{row.closing_remark ? row.closing_remark : '--'}}</td>
                 <td class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">{{row.return_on
                   !='0000-00-00 00:00:00' ? (row.return_on | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">{{row.return_status ?
-                  row.return_status : '--'}}</td>
-                <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
+                <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
+                  <strong class="yellow-clr" *ngIf="row.return_status=='Pending'">{{row.return_status ? row.return_status : '--'}}</strong>
+                  <strong class="green-clr" *ngIf="row.return_status=='Done'">{{row.return_status ? row.return_status : '--'}}</strong>
+                </td>
+                
                 <td class="w70">{{row.pending_at}}</td>
-                <!-- <td class="w70 text-center">
-                          <div class="action-button">
-                            <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
-                              <i class="material-icons edit">edit</i>
-                            </button>
-
-                          </div>
-                        </td> -->
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">
@@ -367,43 +320,32 @@
                 <td class="w130">
                   <div>&nbsp;</div>
                 </td>
+
+                <td class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w130">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w130 " *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w160 " *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w130 " *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
+                  <div>&nbsp;</div>
+                </td>
                 
-                <td class="w180">
-                  <div>&nbsp;</div>
-                </td>
-                <!-- <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td> -->
-                <td class="w130">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w160">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w130 ">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w160 ">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w130 ">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w130">
-                  <div>&nbsp;</div>
-                </td>
                 <td class="w70 text-center">
-                          <div>&nbsp;</div>
-                        </td>
+                  <div>&nbsp;</div>
+                </td>
               </tr>
             </ng-container>
           </table>

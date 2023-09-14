@@ -30,6 +30,7 @@ export class UserAddComponent implements OnInit {
   exist:boolean=false;
   assign_module_data:any=[];
   userData: any;
+  warehouse:any =[];
   userId: any;
   userName: any;
   savingFlag:boolean = false;
@@ -111,6 +112,16 @@ export class UserAddComponent implements OnInit {
       }
     }
 
+    getWarehouse(){
+      this.serve.post_rqst({}, "Dispatch/fetchWarehouse").subscribe((result => {
+        if(result['statusCode'] == 200){
+          this.warehouse = result['result'];
+        }
+        else{
+          this.toast.errorToastr(result['statusMsg']);
+        }
+      }));
+    }
     getCompanyData() {
       this.serve.post_rqst({}, "Order/organizationName").subscribe((response => {
         if (response['statusCode'] == 200) {

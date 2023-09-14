@@ -24,19 +24,19 @@ export class CustomerDetailComponent implements OnInit {
   id;
   tabType: any = 'Profile';
   filter: any = {}
-  getData:any ={};
-  skLoading:boolean = false;
-  url:any;
-  assign_login_data:any={};
-  logined_user_data:any={};
-  stateDetail:any =[];
-  warrantyList:any =[];
-  complaintList:any =[];
-  installationList:any =[];
-  product_size:any =[];
-  featureFlag :boolean = false;
-  allMrpFlag :boolean = false;
-  productImg:any =[];
+  getData: any = {};
+  skLoading: boolean = false;
+  url: any;
+  assign_login_data: any = {};
+  logined_user_data: any = {};
+  stateDetail: any = [];
+  warrantyList: any = [];
+  complaintList: any = [];
+  installationList: any = [];
+  product_size: any = [];
+  featureFlag: boolean = false;
+  allMrpFlag: boolean = false;
+  productImg: any = [];
   total_page: any;
   pagenumber: any = 0;
   Influencer_Detail: any = {};
@@ -53,16 +53,16 @@ export class CustomerDetailComponent implements OnInit {
   savingFlag: boolean = false;
   filter_data: any = {};
   fabBtnValue: any = 'excel';
-  today_date:any;
+  today_date: any;
 
 
-  constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent,public dialog2: MatDialog) {
+  constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent, public dialog2: MatDialog) {
     this.page_limit = service.pageLimit;
     // this.page_limit = 1;
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.service.currentUserID = params.id
-      if(this.id){
+      if (this.id) {
         this.getCustomerDetail();
       }
     });
@@ -79,68 +79,66 @@ export class CustomerDetailComponent implements OnInit {
     this.getInstallationDetail();
     this.getWarrantyDetail();
   }
-  
+
   clear() {
     this.refresh();
   }
 
-  getCustomerDetail()
-  {
+  getCustomerDetail() {
     this.skLoading = true;
     this.filter.status = this.tabType
-    this.service.post_rqst({'customer_id':this.id,},"ServiceCustomer/serviceCustomerDetail").subscribe((result=>
-      {
-        this.getData = result['result'];
-        console.log('getData',this.getData);
+    this.service.post_rqst({ 'customer_id': this.id, }, "ServiceCustomer/serviceCustomerDetail").subscribe((result => {
+      this.getData = result['result'];
+      console.log('getData', this.getData);
 
-        this.productImg = this.getData['img'];
+      this.productImg = this.getData['img'];
 
-        this.skLoading = false;
-      }
-      ));
-
+      this.skLoading = false;
     }
+    ));
+
+  }
 
 
-    pervious(type) {
-      this.start = this.start - this.page_limit;
-      if (type == 'warranty') {
-        this.getWarrantyDetail();
-      }
-      else if  (type == 'installation') {
-        this.getInstallationDetail();
-      }
-      else{
-        this.getComplaintDetail();
-      }
+  pervious(type) {
+    this.start = this.start - this.page_limit;
+    if (type == 'warranty') {
+      this.getWarrantyDetail();
     }
-    nextPage(type) {
-      this.start = this.start + this.page_limit;
-      if (type == 'warranty') {
-        this.getWarrantyDetail();
-      }
-      else if  (type == 'installation') {
-        this.getInstallationDetail();
-      }
-      else{
-        this.getComplaintDetail();
-      }
+    else if (type == 'installation') {
+      this.getInstallationDetail();
     }
-
-    date_format(type): void {
-      this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
-      if (type == 'warranty') {
-        this.getWarrantyDetail();
-      }
-      else if  (type == 'installation') {
-        this.getInstallationDetail();
-      }
-      else{
-        this.getComplaintDetail();
-      }
+    else {
+      this.getComplaintDetail();
     }
+  }
+  nextPage(type) {
+    this.start = this.start + this.page_limit;
+    if (type == 'warranty') {
+      this.getWarrantyDetail();
+    }
+    else if (type == 'installation') {
+      this.getInstallationDetail();
+    }
+    else {
+      this.getComplaintDetail();
+    }
+  }
 
-    date_format2(): void {
+  date_format(type): void {
+    this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
+    if (type == 'warranty') {
+      this.getWarrantyDetail();
+    }
+    else if (type == 'installation') {
+      this.getInstallationDetail();
+    }
+    else {
+      this.getComplaintDetail();
+    }
+  }
+
+  date_format2(): void {
     this.filter_data.date_of_purchase = moment(this.filter_data.date_of_purchase).format('YYYY-MM-DD');
     this.getWarrantyDetail();
   }
@@ -172,167 +170,144 @@ export class CustomerDetailComponent implements OnInit {
     this.getInstallationDetail();
   }
 
-    getWarrantyDetail() {
-      this.filter.status = this.tabType;
-      
-      if (this.pagenumber > this.total_page) {
-        this.pagenumber = this.total_page;
-        this.start = this.pageCount - this.page_limit;
-      }
-      if (this.start < 0) {
-        this.start = 0;
-      }
+  getWarrantyDetail() {
+    this.filter.status = this.tabType;
 
-      this.service.post_rqst({'customer_id':this.id,'pagelimit': this.page_limit,'start': this.start,'filter': this.filter_data}, 'ServiceTask/serviceWarrantyList').subscribe((result) => {
-        this.loader = true;
-        if (result['statusCode'] == 200) {
-          this.warrantyList = result['result'];
-          this.loader = false;
-          this.pageCount = result['count'];
-          if (this.pagenumber > this.total_page) {
-            this.pagenumber = this.total_page;
-            this.start = this.pageCount - this.page_limit;
-          }
-          else {
-            this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
-            this.loader = false;
-          }
-          this.total_page = Math.ceil(this.pageCount / this.page_limit);
-          this.sr_no = this.pagenumber - 1;
-          this.sr_no = this.sr_no * this.page_limit;
-          setTimeout(() => {
-          }, 700)
-        }
-        else {
-          this.toast.errorToastr(result['statusMsg']);
-        }
-      })
+    if (this.pagenumber > this.total_page) {
+      this.pagenumber = this.total_page;
+      this.start = this.pageCount - this.page_limit;
+    }
+    if (this.start < 0) {
+      this.start = 0;
     }
 
-    // getWarrantyDetail(){
-    //   console.log(this.tabType);
-
-    //   this.skLoading = true;
-    //   this.filter.status = this.tabType
-    //   this.service.post_rqst({'customer_id':this.id},"ServiceTask/serviceWarrantyList").subscribe((result=>
-    //     {
-    //       this.warrantyList = result['result'];
-    //       console.log('warrantyList',this.warrantyList);
-    //       this.skLoading = false;
-    //     }
-    //     ));
-    //   }
-
-
-    getInstallationDetail() {
-      this.filter.status = this.tabType;
-      if (this.pagenumber > this.total_page) {
-        this.pagenumber = this.total_page;
-        this.start = this.pageCount - this.page_limit;
-      }
-      if (this.start < 0) {
-        this.start = 0;
-      }
-
-      this.service.post_rqst({'customer_id':this.id,'pagelimit': this.page_limit,'start': this.start,'filter': this.filter_data}, 'ServiceTask/serviceInstallationList').subscribe((result) => {
-        this.loader = true;
-
-        if (result['statusCode'] == 200) {
-          this.installationList = result['result'];
-          this.loader = false;
-          this.pageCount = result['count'];
-          if (this.pagenumber > this.total_page) {
-            this.pagenumber = this.total_page;
-            this.start = this.pageCount - this.page_limit;
-          }
-          else {
-            this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
-          }
-          this.total_page = Math.ceil(this.pageCount / this.page_limit);
-          this.sr_no = this.pagenumber - 1;
-          this.sr_no = this.sr_no * this.page_limit;
-          setTimeout(() => {
-          }, 700)
+    this.service.post_rqst({ 'customer_id': this.id, 'pagelimit': this.page_limit, 'start': this.start, 'filter': this.filter_data }, 'ServiceTask/serviceWarrantyList').subscribe((result) => {
+      this.loader = true;
+      if (result['statusCode'] == 200) {
+        this.warrantyList = result['result'];
+        this.loader = false;
+        this.pageCount = result['count'];
+        if (this.pagenumber > this.total_page) {
+          this.pagenumber = this.total_page;
+          this.start = this.pageCount - this.page_limit;
         }
         else {
-          this.toast.errorToastr(result['statusMsg']);
+          this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
+          this.loader = false;
         }
-      })
+        this.total_page = Math.ceil(this.pageCount / this.page_limit);
+        this.sr_no = this.pagenumber - 1;
+        this.sr_no = this.sr_no * this.page_limit;
+        setTimeout(() => {
+        }, 700)
+      }
+      else {
+        this.toast.errorToastr(result['statusMsg']);
+        this.loader = false;
+      }
+    })
+  }
+
+
+
+  getInstallationDetail() {
+    this.filter.status = this.tabType;
+    if (this.pagenumber > this.total_page) {
+      this.pagenumber = this.total_page;
+      this.start = this.pageCount - this.page_limit;
+    }
+    if (this.start < 0) {
+      this.start = 0;
     }
 
-    getComplaintDetail() {
-      this.filter.status = this.tabType;
-      
-      if (this.pagenumber > this.total_page) {
-        this.pagenumber = this.total_page;
-        this.start = this.pageCount - this.page_limit;
-      }
-      if (this.start < 0) {
-        this.start = 0;
-      }
+    this.service.post_rqst({ 'customer_id': this.id, 'pagelimit': this.page_limit, 'start': this.start, 'filter': this.filter_data }, 'ServiceTask/serviceInstallationList').subscribe((result) => {
+      this.loader = true;
 
-      this.service.post_rqst({'customer_id':this.id,'pagelimit': this.page_limit,'start': this.start,'filter': this.filter_data}, 'ServiceTask/serviceComplaintList').subscribe((result) => {
-        this.loader = true;
-
-        if (result['statusCode'] == 200) {
-          this.complaintList = result['result'];
-          this.loader = false;
-          this.pageCount = result['count'];
-          if (this.pagenumber > this.total_page) {
-            this.pagenumber = this.total_page;
-            this.start = this.pageCount - this.page_limit;
-          }
-          else {
-            this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
-          }
-          this.total_page = Math.ceil(this.pageCount / this.page_limit);
-          this.sr_no = this.pagenumber - 1;
-          this.sr_no = this.sr_no * this.page_limit;
-          setTimeout(() => {
-          }, 700)
+      if (result['statusCode'] == 200) {
+        this.installationList = result['result'];
+        this.loader = false;
+        this.pageCount = result['count'];
+        if (this.pagenumber > this.total_page) {
+          this.pagenumber = this.total_page;
+          this.start = this.pageCount - this.page_limit;
         }
         else {
-          this.toast.errorToastr(result['statusMsg']);
+          this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
         }
-      })
+        this.total_page = Math.ceil(this.pageCount / this.page_limit);
+        this.sr_no = this.pagenumber - 1;
+        this.sr_no = this.sr_no * this.page_limit;
+        setTimeout(() => {
+        }, 700)
+      }
+      else {
+        this.toast.errorToastr(result['statusMsg']);
+        this.loader = false;
+      }
+    })
+  }
+
+  getComplaintDetail() {
+    this.filter.status = this.tabType;
+
+    if (this.pagenumber > this.total_page) {
+      this.pagenumber = this.total_page;
+      this.start = this.pageCount - this.page_limit;
+    }
+    if (this.start < 0) {
+      this.start = 0;
     }
 
-      // getComplaintDetail(){
-      //   console.log(this.tabType);
-      //   this.skLoading = true;
-      //   this.filter.status = this.tabType
-      //   this.service.post_rqst({'customer_id':this.id},"ServiceTask/serviceComplaintList").subscribe((result=>
-      //     {
-      //       this.complaintList = result['result'];
-      //       console.log('complaintList',this.complaintList);
-      //       this.skLoading = false;
-      //     }
-      //     ));
-      //   }
-        back(): void {
-          this.location.back()
-        }
-        editCustomer(){
-          this.router.navigate(['add-customer/' +this.id]);
-        }
+    this.service.post_rqst({ 'customer_id': this.id, 'pagelimit': this.page_limit, 'start': this.start, 'filter': this.filter_data }, 'ServiceTask/serviceComplaintList').subscribe((result) => {
+      this.loader = true;
 
-
-
-        attendancDetail(row) {
-          console.log(row.add_list);
-          
-          const dialogRef = this.dialog2.open(ProductDetailModelComponent, {
-            width: '800px',
-              panelClass: 'cs-model',
-              data: {
-                row:row.add_list,
-              }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            if (result != false) {
-              // this.getinspectionList('');
-            }
-      
-          });
+      if (result['statusCode'] == 200) {
+        this.complaintList = result['result'];
+        this.loader = false;
+        this.pageCount = result['count'];
+        if (this.pagenumber > this.total_page) {
+          this.pagenumber = this.total_page;
+          this.start = this.pageCount - this.page_limit;
         }
+        else {
+          this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
+        }
+        this.total_page = Math.ceil(this.pageCount / this.page_limit);
+        this.sr_no = this.pagenumber - 1;
+        this.sr_no = this.sr_no * this.page_limit;
+        setTimeout(() => {
+        }, 700)
       }
+      else {
+        this.toast.errorToastr(result['statusMsg']);
+        this.loader = false;
+      }
+    })
+  }
+  back(): void {
+    this.location.back()
+  }
+  editCustomer() {
+    this.router.navigate(['add-customer/' + this.id]);
+  }
+
+
+
+  attendancDetail(row) {
+    console.log(row.add_list);
+
+    const dialogRef = this.dialog2.open(ProductDetailModelComponent, {
+      width: '800px',
+      panelClass: 'cs-model',
+      data: {
+        row: row.add_list,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != false) {
+        // this.getinspectionList('');
+      }
+
+    });
+  }
+}

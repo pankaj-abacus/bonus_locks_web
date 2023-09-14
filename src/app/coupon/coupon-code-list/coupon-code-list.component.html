@@ -28,7 +28,7 @@
       <div class="mat-tabbar">
         <button mat-button [ngClass]="active_tab == 'master_box' ? 'active' : ''" (click)="active_tab = 'master_box'; couponCodeList()"><i class="material-icons">all_inbox</i>Box Coupon</button>
         <button mat-button [ngClass]="active_tab == 'item_box' ? 'active' : ''" (click)="active_tab = 'item_box'; couponCodeList()"><i class="material-icons">category</i>Product Coupon</button>
-        <button mat-button [ngClass]="active_tab == 'scan_item' ? 'active' : ''" (click)="active_tab = 'scan_item'; scanCouponList()"><i class="material-icons">qr_code_scanner</i>Scanned Coupon</button>
+        <button mat-button [ngClass]="active_tab == 'scan_item' ? 'active' : ''"*ngIf="assign_login_data2.id =='1'" (click)="active_tab = 'scan_item'; scanCouponList()"><i class="material-icons">qr_code_scanner</i>Scanned Coupon</button>
         <!-- <button mat-button [ngClass]="active_tab == 'scan_item_by_sales' ? 'active' : ''" (click)="active_tab = 'scan_item_by_sales'; scanCouponList()"><i class="material-icons">qr_code_scanner</i>Sales Boy Scanned Coupon </button> -->
 
       </div>
@@ -356,7 +356,7 @@
       </div>
     </div>
     
-    <div class="cs-table horizontal-scroll" *ngIf="active_tab == 'scan_item_by_sales'">
+    <div class="cs-table horizontal-scroll" *ngIf="active_tab == 'scan_item_by_sales' && assign_login_data2.id =='1'">
       <div class="sticky-head">
         <div class="table-head">
           <table>
@@ -528,8 +528,7 @@
         <mat-icon>qr_code</mat-icon>
         <span>Generate Coupon {{data.scan_item}}</span>
       </a>
-
-      <a mat-menu-item *ngIf="assign_login_data2.add_coupon_code=='1'" [ngClass]="{'pulse': fabBtnValue=='add'}"  color="primary" (click)="openScanLimitModal()">
+      <a mat-menu-item *ngIf="assign_login_data2.add_coupon_code==1 && assign_login_data2.id =='1'" [ngClass]="{'pulse': fabBtnValue=='add'}"  color="primary" (click)="openScanLimitModal()">
         <mat-icon>code_off</mat-icon>
         <span>Scan Limit
           <strong style="

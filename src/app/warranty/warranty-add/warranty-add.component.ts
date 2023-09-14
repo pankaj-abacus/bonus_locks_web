@@ -257,6 +257,11 @@ export class WarrantyAddComponent implements OnInit {
         console.log(this.data.product_code);
         console.log(this.warranty_period);
       }
+      typeof(this.warranty_period)
+      console.log(this.data);
+      this.data.warranty_period = parseInt(this.warranty_period);
+      console.log(this.data.warranty_period);
+      
     }
     calculateWarrantyEnd() {
       const warrantyStartDate = new Date(this.data.date_of_purchase);

@@ -42,7 +42,7 @@
         <button mat-button [ngClass]="active_tab == 'Assigned' ? 'active' : ''"
           (click)="active_tab = 'Assigned'; getinspectionList('')">
           <i class="material-icons">pending_actions</i>Assigned({{
-          tab_count.pending_count
+          tab_count.assigned_count
           }})
         </button>
       </ng-container>
@@ -152,12 +152,18 @@
               </th>
               <th class="w100" *ngIf="active_tab == 'All'">
                 <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="complaint_status"
-                      (keyup.enter)="getinspectionList('')" #complaint_status="ngModel"
-                      [(ngModel)]="filter_data.complaint_status">
+                  <mat-form-field class="cs-input select-input">
+                    <mat-select name="complaint_status" #complaint_status="ngModel" [(ngModel)]="filter_data.complaint_status"
+                      (selectionChange)="getinspectionList('')">
+                      <mat-option value="">All</mat-option>
+                      <mat-option value="Pending">Pending</mat-option>
+                      <mat-option value="Done">Done </mat-option>
+                      <mat-option value="Reject">Reject </mat-option>
+                    </mat-select>
                   </mat-form-field>
                 </div>
+
+
               </th>
               <th class="w70 text-center"></th>
               <th class="w180"></th>
@@ -193,7 +199,14 @@
                 <td class="w180">{{row.carpenter_name ? row.carpenter_name : '--'}}-{{row.carpenter_mobile ?
                   row.carpenter_mobile : '--'}}</td>
                 <td class="w50"><a class="link-btn flat" (click)="attendancDetail(row)">{{row.total_items}}</a></td>
-                <td class="w100" *ngIf="active_tab == 'All'">{{ row.complaint_status }}</td>
+                <td class="w100" *ngIf="active_tab == 'All'">
+                  <strong class="yellow-clr" *ngIf="row.complaint_status=='Pending'">{{row.complaint_status}}</strong>
+                  <strong class="green-clr" *ngIf="row.complaint_status=='Done'">{{row.complaint_status}}</strong>
+                  <strong class="red-clr" *ngIf="row.complaint_status=='Reject'">{{row.complaint_status}}</strong>
+                </td>
+
+
+
                 <td class="w70 text-center">{{row.pending_at}}</td>
                 <td class="w180">{{row.remark}}</td>
                 <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">{{row.closing_remark}}</td>
@@ -234,7 +247,7 @@
                 <td class="w180">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w180" *ngIf="active_tab == 'Reject'">
+                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">
                   <div>&nbsp;</div>
                 </td>
               </tr>
