@@ -60,6 +60,15 @@
                 <span>Weekly off</span>
                 <p>{{detail.weekly_off ? detail.weekly_off :'---'}}</p>
               </div>
+              <div class="block-feilds"  *ngIf="detail.user_type != detail.assign_company > 0">
+                <span>Assigned Billing Company</span>
+                <p>{{detail.actualCompanyName ? detail.actualCompanyName :'---'}}</p>
+              </div>
+              <div class="block-feilds"  *ngIf="detail.user_type != detail.assign_company > 0">
+                <span>Assigned Warehouse Name</span>
+                <p>{{detail.company_warehouse_name ? detail.company_warehouse_name :'---'}}</p>
+              </div>
+
 
               <div class="block-feilds" *ngIf="detail.user_type == 'Sales User' ">
                 <span>Order Type</span>

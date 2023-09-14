@@ -29,7 +29,7 @@ export class CouponCodeListComponent implements OnInit {
   loader: boolean = false;
   noResult: boolean = false;
   assign_login_data: any = [];
-  assign_login_data2: any = [];
+  assign_login_data2: any = {};
   today_date: any;
   tabCount: any = {}
   downurl: any;
@@ -48,6 +48,8 @@ export class CouponCodeListComponent implements OnInit {
     // this.page_limit = service.pageLimit;
     this.couponCodeList();
     this.getScanLimitCount();
+    console.log(this.assign_login_data2);
+    
   }
 
   ngOnInit() {
@@ -82,6 +84,8 @@ export class CouponCodeListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
+    console.log(this.assign_login_data2);
+    
 
     if (this.filter.date_created) {
       this.filter.date_created = moment(this.filter.date_created).format('YYYY-MM-DD');
