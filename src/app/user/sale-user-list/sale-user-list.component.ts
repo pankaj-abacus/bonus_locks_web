@@ -44,7 +44,7 @@ export class SaleUserListComponent implements OnInit {
   page_limit: any;
   downurl: any = ''
   today_date: Date;
-
+  service_engineer_count = 0;
 
   constructor(public alert: DialogComponent, public toast:ToastrManager, public service: DatabaseService, public rout: Router, public dialog2: MatDialog,public session: sessionStorage,private bottomSheet:MatBottomSheet) {
     this.page_limit = this.service.pageLimit;
@@ -108,7 +108,7 @@ export class SaleUserListComponent implements OnInit {
         this.userlist = result['all_sales_user'];
         this.sales_count = result['type_count']['Sales User'];
         this.system_count = result['type_count']['System User'];
-        // this.service_engineer_count = result['type_count']['System User'];
+        this.service_engineer_count = result['type_count']['Engineer User'];
         if(this.userlist.length==0){
           this.nodatafound=false;
         }else{
