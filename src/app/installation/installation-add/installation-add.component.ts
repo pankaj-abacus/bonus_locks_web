@@ -326,6 +326,7 @@ export class InstallationAddComponent implements OnInit {
       this.getData = result['result'];
       console.log('getData', this.getData);
       this.data = this.getData;
+      this.data2.complaint_type=this.getData.complaint_type
       this.add_list = this.getData['add_list'];
       // console.log(this.product_data);
       this.getDistrict(1)

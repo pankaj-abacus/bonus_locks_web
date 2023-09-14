@@ -12,7 +12,7 @@
                 <mat-option >
                   <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.." (keyup)="assign_engineerget($event.target.value)"></ngx-mat-select-search>
                 </mat-option>
-                <mat-option *ngFor="let row of engineerList" [value]="row.id">{{row.name}}-{{row.mobile_no}}</mat-option>
+                <mat-option *ngFor="let row of engineerList" [value]="row.id">{{row.name | titlecase}}-{{row.mobile_no}}-({{row.district | titlecase}},{{row.state | titlecase}})</mat-option>
               </mat-select>
             </mat-form-field>
             <div class="alert alert-danger" *ngIf="id.touched">

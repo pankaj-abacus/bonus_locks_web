@@ -176,7 +176,7 @@
                     <mat-select name="segment_id" #segment_id="ngModel" [(ngModel)]="product_data.segment_id"
                       (selectionChange)="getSubCatgory(product_data.segment_id)">
                       <mat-option *ngFor="let row of segmentList" [value]="row.id"
-                        color="accent">{{row.category}}</mat-option>
+                        color="accent">{{row.category | titlecase}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="f.submitted && segment_id?.invalid ">
@@ -191,7 +191,7 @@
                       [(ngModel)]="product_data.sub_segment_id"
                       (selectionChange)="getProduct(product_data.segment_id,product_data.sub_segment_id)">
                       <mat-option *ngFor="let row of SubcategoryList" [value]="row.id"
-                        color="accent">{{row.sub_category_name}}</mat-option>
+                        color="accent">{{row.sub_category_name | titlecase}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="f.submitted && sub_segment_id?.invalid ">
@@ -208,7 +208,7 @@
                         <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
                           (keyup)="getProductName($event.target.value)"></ngx-mat-select-search>
                       </mat-option>
-                      <mat-option *ngFor="let row of productList" [value]="row.id" color="accent">{{row.product_name}} -
+                      <mat-option *ngFor="let row of productList" [value]="row.id" color="accent">{{row.product_name | titlecase}} -
                         {{row.product_code}}</mat-option>
                     </mat-select>
                   </mat-form-field>

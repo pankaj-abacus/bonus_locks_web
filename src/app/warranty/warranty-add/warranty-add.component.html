@@ -50,7 +50,7 @@
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : serial_no?.invalid } ">
                     <mat-label>Serial No.</mat-label>
                     <input matInput placeholder="Type Here ..." name="serial_no" #serial_no="ngModel"
-                      [(ngModel)]="data.serial_no" required>
+                      [(ngModel)]="data.serial_no" >
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="f.submitted && serial_no?.invalid">
                     This field is required
@@ -62,7 +62,7 @@
                     <mat-select name="segment_id" #segment_id="ngModel" [(ngModel)]="data.segment_id"
                       (selectionChange)="getSubCatgory(data.segment_id)" required>
                       <mat-option *ngFor="let row of segmentList" value="{{row.id}}"
-                        color="accent">{{row.category}}</mat-option>
+                        color="accent">{{row.category | titlecase}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="f.submitted && segment_id?.invalid ">
@@ -78,7 +78,7 @@
                     <mat-select name="sub_segment_id" #sub_segment_id="ngModel" [(ngModel)]="data.sub_segment_id"
                       (selectionChange)="getProduct(data.segment_id,data.sub_segment_id)" required>
                       <mat-option *ngFor="let row of SubcategoryList" value="{{row.id}}"
-                        color="accent">{{row.sub_category_name}}</mat-option>
+                        color="accent">{{row.sub_category_name | titlecase}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="f.submitted && sub_segment_id?.invalid ">
@@ -95,7 +95,7 @@
                         <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
                           (keyup)="getProductName($event.target.value)"></ngx-mat-select-search>
                       </mat-option>
-                      <mat-option *ngFor="let row of productList" value="{{row.id}}" color="accent">{{row.product_name}}
+                      <mat-option *ngFor="let row of productList" value="{{row.id}}" color="accent">{{row.product_name | titlecase}}
                         - {{row.product_code}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -103,6 +103,16 @@
                     This field is required
                   </div>
                 </div>
+                <div class="col s12 m3 l3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Warranty In Months</mat-label>
+                    <input matInput type="text" name="warranty_period" placeholder="Type Here ..." #warranty_period="ngModel" [(ngModel)]="data.warranty_period" readonly>
+                  </mat-form-field>
+                  <!-- <div class="alert alert-danger" *ngIf="warranty_period.touched || f.submitted">
+                    <p *ngIf="warranty_period.errors?.required">This field is required</p>
+                  </div> -->
+                </div>
+
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline">
                     <mat-label>Date Of Purchase</mat-label>

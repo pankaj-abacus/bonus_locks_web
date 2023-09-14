@@ -7,8 +7,8 @@
 
     <div class="left-auto">
       <div class="left-auto">
-        <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id,getData.state)"
-          *ngIf="
+        <button mat-button class="ouline-btns status" mat-raised-button color="accent"
+          (click)="openDialog(getData.id,getData.state)" *ngIf="
             getData.complaint_status != 'Done' &&
             getData.complaint_status != 'Reject'
           ">
@@ -34,22 +34,6 @@
           </div>
           <div class="card-body">
             <div class="grid-box">
-              <div class="block-feilds">
-                <span>Date Created</span>
-                <p>{{ getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a'): "---" }}</p>
-              </div>
-
-              <div class="block-feilds">
-                <span>Created By</span>
-                <p>
-                  {{ getData.created_name ? getData.created_name : "---" }}
-                </p>
-              </div>
-
-              <div class="block-feilds">
-                <span>Installation No.</span>
-                <p>{{ getData.complain_no ? getData.complain_no : "---" }}</p>
-              </div>
 
               <div class="block-feilds">
                 <span>Customer Name</span>
@@ -97,27 +81,8 @@
                 <p>{{ getData.address ? getData.address : "N/A" }}</p>
               </div>
 
-              <div class="block-feilds">
-                <span>Technician Name</span>
-                <p>
-                  {{ getData.carpenter_name ? getData.carpenter_name : "N/A" }}
-                </p>
-              </div>
 
-              <div class="block-feilds">
-                <span>Technician Mobile No.</span>
-                <p>
-                  {{
-                  getData.carpenter_mobile ? getData.carpenter_mobile : "N/A"
-                  }}
-                </p>
-              </div>
-              <div class="block-feilds">
-                <span>Installation Status</span>
-                <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
-              </div>
-            </div>
-            <!-- <div class="card-head mt15" >
+              <!-- <div class="card-head mt15" >
                             <h2>Installation Images</h2>
                         </div>
                         <div class="card-body" >
@@ -131,6 +96,54 @@
                                 </div>
                             </div>
                         </div> -->
+            </div>
+          </div>
+
+        </div>
+        <div class="col s12 mt16 m12 l12">
+          <div class="card" *ngIf="!skLoading">
+            <div class="card-head">
+              <h2>Installation Details</h2>
+            </div>
+            <div class="card-body">
+              <div class="grid-box">
+                <div class="block-feilds">
+                  <span>Date Created</span>
+                  <p>{{ getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a'): "---" }}</p>
+                </div>
+
+                <div class="block-feilds">
+                  <span>Created By</span>
+                  <p>
+                    {{ getData.created_name ? getData.created_name : "---" }}
+                  </p>
+                </div>
+
+                <div class="block-feilds">
+                  <span>Installation No.</span>
+                  <p>{{ getData.complain_no ? getData.complain_no : "---" }}</p>
+                </div>
+                <div class="block-feilds">
+                  <span>Technician Name</span>
+                  <p>
+                    {{ getData.carpenter_name ? getData.carpenter_name : "N/A" }}
+                  </p>
+                </div>
+
+                <div class="block-feilds">
+                  <span>Technician Mobile No.</span>
+                  <p>
+                    {{
+                    getData.carpenter_mobile ? getData.carpenter_mobile : "N/A"
+                    }}
+                  </p>
+                </div>
+                <div class="block-feilds">
+                  <span>Installation Status</span>
+                  <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
