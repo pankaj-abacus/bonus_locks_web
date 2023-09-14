@@ -32,6 +32,8 @@ export class CouponCodeAddComponent implements OnInit {
   assign_login_data2: any = [];
   uploadurl: any;
   today_date: Date;
+  warehouse_id:any
+  warehouse:any =[];
 
 
   constructor(public location: Location, public service: DatabaseService, public route: ActivatedRoute, public rout: Router, public toast: ToastrManager, public dialog: DialogComponent, public session: sessionStorage) {
@@ -44,6 +46,16 @@ export class CouponCodeAddComponent implements OnInit {
     this.userId = this.userData['data']['id'];
     this.userName = this.userData['data']['name'];
     this.today_date = new Date();
+    this.getWarehouse();
+    console.log(this.assign_login_data);
+    console.log(this.session.getSession());
+    console.log(this.assign_login_data2);
+    console.log(this.assign_login_data2.warehouse_id);
+    this.warehouse_id=this.assign_login_data2.warehouse_id
+
+    
+    
+
     // this.data.coupon_type = 'Master Box';
   }
 
@@ -93,6 +105,16 @@ export class CouponCodeAddComponent implements OnInit {
 
 
 
+  getWarehouse(){
+    this.service.post_rqst({}, "Dispatch/fetchWarehouse").subscribe((result => {
+      if(result['statusCode'] == 200){
+        this.warehouse = result['result'];
+      }
+      else{
+        this.toast.errorToastr(result['statusMsg']);
+      }
+    }));
+  }
   date_format(): void {
     this.filter.date_created = moment(this.filter.date_created).format('YYYY-MM-DD');
     this.generated_coupon_listing();
@@ -174,10 +196,13 @@ export class CouponCodeAddComponent implements OnInit {
     }
 
     else {
+      this.data.warehouse=this.warehouse.id;
+      // this.warehouse = [];
       this.data.created_by_name = this.userName;
       this.data.created_by_id = this.userId;
+      this.data.warehouse_id=this.warehouse_id
       this.savingFlag = true;
-      this.service.post_rqst({ 'data': this.data }, 'CouponCode/genrateCoupon').subscribe((result) => {
+      this.service.post_rqst({ 'data': this.data}, 'CouponCode/genrateCoupon').subscribe((result) => {
         if (result['statusCode'] == 200) {
           this.toast.successToastr(result['statusMsg']);
           this.rout.navigate(['coupon-list/coupon-add/coupon-code-detail/' + result['offer_coupon_history_id']]);

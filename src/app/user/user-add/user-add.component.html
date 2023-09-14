@@ -195,7 +195,49 @@
                   </div>
                 </div>
 
-                <div class="col s12 m l3"  *ngIf="data.user_role == '52' || data.user_role == '53' || data.user_role == '54'|| data.user_role == '63' "  >
+                <div class="col s12 m3 pt10 l3" *ngIf="data.user_role == '65'">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Coupon Generation</mat-label>
+                    <mat-select name="company_coupon_generation" #company_coupon_generation="ngModel"
+                      [(ngModel)]="data.company_coupon_generation" required
+                      (selectionChange)="data.company_coupon_generation == 'Warehouse' ? getWarehouse(): 'Company' ? getCompanyData():''">
+                      <mat-option value="Company">Head Office</mat-option>
+                      <mat-option value="Warehouse">Warehouse</mat-option>
+
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="company_coupon_generation.touched || f.submitted">
+                    <p *ngIf="company_coupon_generation.errors?.required">This field is required</p>
+                  </div>
+                </div>
+
+                 <div class="col s12 m3 pt10 l3" *ngIf="data.company_coupon_generation == 'Company' || data.user_role == '52' || data.user_role == '53' || data.user_role == '54'|| data.user_role == '63'">
+                  <mat-form-field  appearance="outline">
+                    <mat-label>Assign Company</mat-label>
+                    <mat-select name="assign_company"  #assign_company="ngModel" [(ngModel)]="data.assign_company" required>
+                      <mat-option *ngFor="let row of organisationData"
+                        value="{{row.id}}">{{row.company_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="assign_company.touched || f.submitted">
+                    <p *ngIf="assign_company.errors?.required">This field is required</p>
+                  </div>
+                </div>
+                <!--  *ngIf="data.user_role == '54' && data.company_dispatch_type == 'Warehouse'" -->
+                <div class="col s12 m3 pt10 l3" *ngIf="data.company_coupon_generation == 'Warehouse'">
+                  <mat-form-field class="cs-input" appearance="outline">
+                    <mat-label>Warehouse</mat-label>
+                    <mat-select name="warehouse_id" placeholder="Warehouse" #warehouse_id="ngModel"
+                      [(ngModel)]="data.warehouse_id" required>
+                      <mat-option *ngFor="let row of warehouse" value="{{row.id}}">{{row.company_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="warehouse_id.touched || f.submitted">
+                    <p *ngIf="warehouse_id.errors?.required">This field is required</p>
+                  </div>
+                </div>
+
+                <!-- <div class="col s12 m3 l3"  *ngIf="data.user_role == '52' || data.user_role == '53' || data.user_role == '54'|| data.user_role == '63' "  >
                   <mat-form-field  appearance="outline">
                     <mat-label>Assign  Company</mat-label>
                     <mat-select name="assign_company"  #assign_company="ngModel" [(ngModel)]="data.assign_company" required>
@@ -207,7 +249,7 @@
                   <div class="alert alert-danger" *ngIf="assign_company.touched || f.submitted">
                     <p *ngIf="assign_company.errors?.required">This field is required</p>
                   </div>
-                </div>
+                </div> -->
               </div>
 
               <!-- <div class="row" *ngIf="data.user_type == 'Sales User'"> -->
@@ -264,19 +306,6 @@
                     <p *ngIf="pincode.errors?.required">This field is required</p>
                   </div>
                 </div>
-
-                <!-- <div class="col s12 m l3"  *ngIf="data.user_role == '59' || data.user_role == '60' || data.user_role == '61' "  >
-                  <mat-form-field  appearance="outline">
-                    <mat-label>Assign Billing Company</mat-label>
-                    <mat-select name="assign_company"  #assign_company="ngModel" [(ngModel)]="data.assign_company" required>
-                      <mat-option *ngFor="let row of organisationData"
-                        value="{{row.id}}">{{row.company_name}}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <div class="alert alert-danger" *ngIf="assign_company.touched || f.submitted">
-                    <p *ngIf="assign_company.errors?.required">This field is required</p>
-                  </div>
-                </div> -->
               </div>
               <div class="row">
                 <div class="col s12 m6 l6">
