@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material';
 export class InstallationAddComponent implements OnInit {
 
   data: any = {};
+  data2: any = {};
   product_data: any = {};
   states: any = [];
   dr_type: any;
@@ -93,7 +94,7 @@ export class InstallationAddComponent implements OnInit {
     this.savingFlag = true;
     let header
     if (this.id) {
-      if (this.data.complaint_type == 'Installation') {
+      if (this.data2.complaint_type == 'Installation') {
         header = this.service.post_rqst({ "data": this.data, 'type': 'Edit', 'id': this.id }, "ServiceTask/serviceInstallationAdd")
       } else {
         header = this.service.post_rqst({ "data": this.data, 'type': 'Edit', 'id': this.id }, "ServiceTask/serviceComplaintAdd")
@@ -101,7 +102,7 @@ export class InstallationAddComponent implements OnInit {
 
     }
     else {
-      if (this.data.complaint_type == 'Installation') {
+      if (this.data2.complaint_type == 'Installation') {
         header = this.service.post_rqst({ "data": this.data, 'type': 'Add', }, "ServiceTask/serviceInstallationAdd")
       }
       else {
@@ -111,7 +112,7 @@ export class InstallationAddComponent implements OnInit {
     header.subscribe((result => {
       if (result['statusCode'] == 200) {
 
-        if (this.data.complaint_type == 'Installation') {
+        if (this.data2.complaint_type == 'Installation') {
           this.rout.navigate(['/installation-list']);
         }
         else{
