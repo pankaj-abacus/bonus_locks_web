@@ -108,6 +108,7 @@
                 <th class="w50">Sr.No</th>
                 <th class="w150">Date Created</th>
                 <th class="w150">Created By</th>
+                <th class="w100">Warranty No.</th>
                 <th class="w120">Product Serial No.</th>
                 <th class="w150">Product Detail</th>
                 <th class="w120">Warranty Start Date</th>
@@ -139,6 +140,14 @@
                       <input type="text" matInput placeholder="Search ..." name="created_by_name"
                         (keyup.enter)="getWarrantyDetail()" #created_by_name="ngModel"
                         [(ngModel)]="filter_data.created_by_name" />
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field>
+                      <input type="text" matInput placeholder="Search ..." name="id"
+                        (keyup.enter)="getWarrantyDetail('')" #id="ngModel" [(ngModel)]="filter_data.id" />
                     </mat-form-field>
                   </div>
                 </th>
@@ -228,9 +237,11 @@
                     {{ row.date_created | date : "dd MMM yyy ,h:mm a" }}
                   </td>
                   <td class="w150">{{ row.created_by_name | titlecase}}</td>
+                  <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
+                      routerLink="warranty-detail/{{ row.id }}" routerLinkActive="active"> #War{{ row.id }}</a>
+                  </td>
                   <td class="w120">
-                    <a class="link-btn" mat-button (click)="service.setData(filter_data)"
-                      routerLink="warranty-detail/{{ row.id }}" routerLinkActive="active">{{ row.serial_no }}</a>
+                    {{ row.serial_no }}
                   </td>
                   <td class="w150">
                     {{ row.product_name| titlecase }}-{{ row.product_code | titlecase}}
@@ -260,6 +271,9 @@
                     <div>&nbsp;</div>
                   </td>
                   <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w150">
