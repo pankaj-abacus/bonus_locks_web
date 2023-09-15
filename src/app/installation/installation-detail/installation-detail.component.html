@@ -128,7 +128,18 @@
                 </div>
                 <div class="block-feilds">
                   <span>Installation Status</span>
-                  <p>{{getData.complaint_status ? (getData.complaint_status| titlecase) : '--'}}</p>
+                  <!-- <p>{{getData.complaint_status ? (getData.complaint_status| titlecase) : '--'}}</p> -->
+                  <p>
+                    <strong class="yellow-clr" *ngIf="getData.complaint_status=='Pending'">
+                      {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="green-clr" *ngIf="getData.complaint_status=='Done'">
+                      {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="red-clr" *ngIf="getData.complaint_status=='Reject'">
+                      {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                      '--'}}</strong>
+                  </p>
                 </div>
               </div>
             </div>
@@ -153,7 +164,7 @@
                           </table>
                         </div>
                       </div>
-        
+
                       <div class="table-container pb0">
                         <div class="table-content none-shadow">
                           <table>
@@ -258,65 +269,25 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="add_list.length > 0">
-      <div class="col s12 m12 l12">
-        <div class="card">
-          <div class="card-head">
-            <h2>Product List</h2>
-          </div>
-          <div class="card-body">
-            <div class="cs-table left-right-10">
-              <div class="border-top">
-                <div class="table-head">
-                  <table>
-                    <tr>
-                      <th class="w30 text-center">Sr.No</th>
-                      <th class="w100">Category</th>
-                      <th class="w100">Sub Category</th>
-                      <th class="w180">Product Name And Code</th>
-                      <th class="w30 text-center">Qty</th>
-                    </tr>
-                  </table>
-                </div>
-              </div>
 
-              <div class="table-container pb0">
-                <div class="table-content none-shadow">
-                  <table>
-                    <tr *ngFor="let row of add_list; let i = index">
-                      <td class="w30 text-center">{{ i + 1 }}</td>
-                      <td class="w100">{{ row.category_name | titlecase }}</td>
-                      <td class="w100">{{ row.subcat_name| titlecase }}</td>
-                      <td class="w180">{{ row.product_name }}-{{ row.product_code }}</td>
-                      <td class="w30 text-center">{{ row.qty }}</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
   </div>
   <div class="fab-btns">
     <button class="pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
-        <i class="material-icons">apps</i>
-        Action
+      <i class="material-icons">apps</i>
+      Action
     </button>
     <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openDialog(getData.id,getData.state)"
-            [ngClass]="{'pulse': fabBtnValue=='activity'}">
-            <mat-icon>assignment</mat-icon>
-            <span>Assign Technician</span>
-        </button>
+      <button mat-menu-item (click)="openDialog(getData.id,getData.state)"
+        [ngClass]="{'pulse': fabBtnValue=='activity'}">
+        <mat-icon>assignment</mat-icon>
+        <span>Assign Technician</span>
+      </button>
 
-        <button mat-menu-item (click)="openDialog2(getData.id)"
-            [ngClass]="{'pulse': fabBtnValue=='activity'}">
-            <mat-icon>add</mat-icon>
-            <span>Add Remark</span>
-        </button>
+      <button mat-menu-item (click)="openDialog2(getData.id)" [ngClass]="{'pulse': fabBtnValue=='activity'}">
+        <mat-icon>add</mat-icon>
+        <span>Add Remark</span>
+      </button>
     </mat-menu>
-</div>
+  </div>
 </div>
