@@ -30,12 +30,12 @@
 
               <div class="block-feilds">
                 <span>Created By</span>
-                <p>{{getData.created_by_type ? getData.created_by_type :'---'}}</p>
+                <p>{{getData.created_by_type ? (getData.created_by_type | titlecase) :'---'}}</p>
               </div>
 
               <div class="block-feilds">
                 <span>Customer Name</span>
-                <p>{{getData.customer_name ? getData.customer_name :'---'}}</p>
+                <p>{{getData.customer_name ? (getData.customer_name | titlecase) :'---'}}</p>
               </div>
 
 
@@ -49,14 +49,14 @@
 
               <div class="block-feilds">
                 <span>Product Name</span>
-                <p>{{getData.product_name  ? getData.product_name :'---'}}</p>
+                <p>{{getData.product_name ? (getData.product_name | titlecase) :'---'}}</p>
               </div>
 
 
 
               <div class="block-feilds">
                 <span>Product Code</span>
-                <p>{{getData.product_code ? getData.product_code :'---'}}</p>
+                <p>{{getData.product_code ? (getData.product_code | titlecase):'---'}}</p>
               </div>
 
               <div class="block-feilds">
@@ -66,17 +66,19 @@
 
               <div class="block-feilds">
                 <span>Serial No.</span>
-                <p>{{getData.serial_no ? getData.serial_no :'---'}}</p>
+                <p>{{getData.serial_no ? (getData.serial_no | titlecase) :'---'}}</p>
               </div>
 
               <div class="block-feilds">
                 <span>Date Of Purchase</span>
-                <p>{{getData.date_of_purchase ? (getData.date_of_purchase | date : 'dd MMM yyy') :'---'}}</p>
+                <p>{{getData.date_of_purchase != "0000-00-00" ? (getData.date_of_purchase | date :"dd MMM yyy "): "--"
+                  }}</p>
               </div>
 
               <div class="block-feilds">
                 <span>Warranty End Date</span>
-                <p>{{getData.warranty_end_date ? (getData.warranty_end_date | date : 'dd MMM yyy') :'---'}}</p>
+                <p>{{getData.warranty_end_date != "0000-00-00" ? (getData.warranty_end_date | date :"dd MMM yyy"): "--"
+                  }}</p>
               </div>
 
 
@@ -106,15 +108,15 @@
                 <span>Reject Reason</span>
                 <p>{{getData.reject_reason ? getData.reject_reason : '--'}}</p>
               </div>
-              
-              
-              
+
+
+
             </div>
           </div>
         </div>
 
       </div>
-      <div class="col s12 m12 l8 pt10">
+      <div class="col s12 m12 l4">
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
             <h2>Images</h2>
@@ -124,15 +126,15 @@
               <div class="image-block" *ngIf="getData.warranty_card_copy_img.length">
                 <img [src]="url+getData.warranty_card_copy_img" (click)="imageModel(url+getData.warranty_card_copy_img)"
                   style="cursor: zoom-in;">
-                  <div>
-                    <p>Warranty Card Image</p>
-                  </div>
-                </div>
+                <p>Warranty Card Image</p>
+
+              </div>
               <div class="image-block" *ngIf="getData.bill_copy_img.length">
                 <img [src]="url+getData.bill_copy_img" (click)="imageModel(url+getData.bill_copy_img)"
                   style="cursor: zoom-in;">
-                  <p>Bill Card Image</p>
-                </div>
+                <p>Bill Card Image</p>
+
+              </div>
             </div>
           </div>
         </div>
@@ -149,6 +151,41 @@
           </div>
         </div>
       </div>
+      <!-- <div class="col s12 m12 l8 pt10">
+    <div class="card" *ngIf="!skLoading">
+      <div class="card-head">
+        <h2>Images</h2>
+      </div>
+      <div class="card-body">
+        <div class="img-container">
+          <div class="image-block" *ngIf="getData.warranty_card_copy_img.length">
+            <img [src]="url+getData.warranty_card_copy_img" (click)="imageModel(url+getData.warranty_card_copy_img)"
+            style="cursor: zoom-in;">
+            <div>
+              <p>Warranty Card Image</p>
+            </div>
+          </div>
+          <div class="image-block" *ngIf="getData.bill_copy_img.length">
+            <img [src]="url+getData.bill_copy_img" (click)="imageModel(url+getData.bill_copy_img)"
+            style="cursor: zoom-in;">
+            <p>Bill Card Image</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="skLoading">
+      <div class="sk-head">
+        <h2>&nbsp;</h2>
+      </div>
+      <div class="card-body">
+        <div class="img-container">
+          <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
     </div>
   </div>
 </div>

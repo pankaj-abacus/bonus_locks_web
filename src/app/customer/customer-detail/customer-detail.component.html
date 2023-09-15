@@ -28,7 +28,7 @@
       </div>
       <div class="mat-tabbar">
         <button mat-button [ngClass]="{'active' :tabType== 'Profile'}"
-          (click)="tabType= 'Profile';getCustomerDetail()"><i class="material-icons">person</i>Basic Detail</button>
+          (click)="tabType= 'Profile';getCustomerDetail()"><i class="material-icons">person</i>Customer Detail</button>
         <button mat-button [ngClass]="{'active' :tabType== 'warranty'}"
           (click)="tabType= 'warranty';getWarrantyDetail()"><i class="material-icons">person</i>Warranty</button>
         <button mat-button [ngClass]="{'active' :tabType== 'complaint'}"
@@ -57,7 +57,7 @@
             <div class="grid-box">
               <div class="block-feilds">
                 <span>Name</span>
-                <p>{{getData.name ? getData.name :'---'}}</p>
+                <p>{{getData.name ? (getData.name | titlecase ):'---'}}</p>
               </div>
               <div class="block-feilds">
                 <span>Mobile No.</span>
@@ -76,15 +76,15 @@
 
               <div class="block-feilds">
                 <span>State</span>
-                <p>{{getData.state ? getData.state :'---'}}</p>
+                <p>{{getData.state ? (getData.state | titlecase ):'---'}}</p>
               </div>
               <div class="block-feilds">
                 <span>District</span>
-                <p>{{getData.district ? getData.district :'---'}}</p>
+                <p>{{getData.district ? (getData.district | titlecase) :'---'}}</p>
               </div>
               <div class="block-feilds">
                 <span>City</span>
-                <p>{{getData.city ? getData.city :'---'}}</p>
+                <p>{{getData.city ? (getData.city | titlecase) :'---'}}</p>
               </div>
               <div class="block-feilds">
                 <span>Pincode</span>
@@ -92,7 +92,7 @@
               </div>
               <div class="block-feilds">
                 <span>Address</span>
-                <p>{{getData.address ? getData.address :'---'}}</p>
+                <p>{{getData.address ? (getData.address | titlecase ):'---'}}</p>
               </div>
             </div>
           </div>
@@ -113,7 +113,7 @@
                 <th class="w120">Warranty Start Date</th>
                 <th class="w120">Warranty End Date</th>
                 <th class="w120">Verification Status</th>
-                <th class="w120">Verification Date</th>
+                <th class="w140">Verification Date</th>
                 <th class="w100">Verification By</th>
               </tr>
             </table>
@@ -126,8 +126,8 @@
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format('warranty')"
-                        [max]="today_date" readonly />
+                        #date_created="ngModel" [(ngModel)]="filter_data.date_created"
+                        (ngModelChange)="date_format('warranty')" [max]="today_date" readonly />
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -190,7 +190,7 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w120">
+                <th class="w140">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker4" placeholder="Date" name="verification_on"
@@ -227,23 +227,22 @@
                   <td class="w150">
                     {{ row.date_created | date : "dd MMM yyy ,h:mm a" }}
                   </td>
-                  <td class="w150">{{ row.created_by_name }}</td>
+                  <td class="w150">{{ row.created_by_name | titlecase}}</td>
                   <td class="w120">
                     <a class="link-btn" mat-button (click)="service.setData(filter_data)"
                       routerLink="warranty-detail/{{ row.id }}" routerLinkActive="active">{{ row.serial_no }}</a>
                   </td>
                   <td class="w150">
-                    {{ row.product_name }}-{{ row.product_code }}
+                    {{ row.product_name| titlecase }}-{{ row.product_code | titlecase}}
                   </td>
-                  <td class="w120">{{ row.date_of_purchase }}</td>
-                  <td class="w120">{{ row.warranty_end_date }}</td>
+                  <td class="w120">{{row.date_of_purchase != "0000-00-00" ? (row.date_of_purchase | date : "dd MMM yyy
+                    "): "--" }}</td>
+                  <td class="w120">{{row.warranty_end_date != "0000-00-00" ? (row.warranty_end_date | date : "dd MMM yyy
+                    "): "--" }}</td>
                   <td class="w120">{{ row.company_verification_status }}</td>
-                  <td class="w120">
-                    {{
-                    row.verification_on != "0000-00-00 00:00:00"
-                    ? (row.verification_on | date : "dd MMM yyy ,h:mm a")
-                    : "--"
-                    }}
+                  <td class="w140">
+                    {{row.verification_on != "0000-00-00 00:00:00" ? (row.verification_on | date : "dd MMM yyy ,h:mm
+                    a"): "--" }}
                   </td>
                   <td class="w100">
                     {{
@@ -272,13 +271,13 @@
                   <td class="w150">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w150">
+                  <td class="w120">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w150">
+                  <td class="w120">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w150 ">
+                  <td class="w140 ">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w250 ">
@@ -301,13 +300,13 @@
             <table>
               <tr>
                 <th class="w60">Sr.No</th>
-                <th class="w160">Date Created</th>
+                <th class="w150">Date Created</th>
                 <th class="w100">Created By</th>
                 <th class="w100">Complaint No.</th>
                 <th class="w180">Technician Details</th>
                 <th class="w130">Inspection Status</th>
                 <th class="w130">Status</th>
-                <th class="w160">Status Update Date</th>
+                <th class="w150">Status Update Date</th>
                 <th class="w130">Remark</th>
                 <th class="w70 text-center">TAT</th>
               </tr>
@@ -317,12 +316,12 @@
             <table>
               <tr>
                 <th class="w60"></th>
-                <th class="w160">
+                <th class="w150">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker5" placeholder="Date" name="date_created"
-                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format('complaint')"
-                        [max]="today_date" readonly>
+                        #date_created="ngModel" [(ngModel)]="filter_data.date_created"
+                        (ngModelChange)="date_format('complaint')" [max]="today_date" readonly>
                       <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
                       <mat-datepicker #picker5></mat-datepicker>
                     </mat-form-field>
@@ -382,7 +381,7 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w160">
+                <th class="w150">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker" placeholder="Date" name="closed_date"
@@ -408,7 +407,7 @@
                 <tr *ngFor="let row of complaintList; let i = index "
                   [ngClass]="{'Current': service.currentUserID == row.id}">
                   <td class="w60">{{i + 1 + sr_no}}</td>
-                  <td class="w160">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+                  <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
                   <td class="w100">{{row.created_name ? row.created_name : '--'}}</td>
                   <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                       routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
@@ -418,7 +417,7 @@
                   <td class="w130">{{row.inspection_status
                     ? row.inspection_status : '--'}}</td>
                   <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
-                  <td class="w160">
+                  <td class="w150">
                     {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
                   </td>
                   <td class="w130">
@@ -431,7 +430,7 @@
                   <td class="w60">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w100">
+                  <td class="w150">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w130">
@@ -464,7 +463,7 @@
                   <td class="w130 ">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w130 ">
+                  <td class="w150 ">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w130 ">
@@ -511,8 +510,8 @@
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker8" placeholder="Date" name="date_created"
-                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format('installation')"
-                        [max]="today_date" readonly />
+                        #date_created="ngModel" [(ngModel)]="filter_data.date_created"
+                        (ngModelChange)="date_format('installation')" [max]="today_date" readonly />
                       <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
                       <mat-datepicker #picker8></mat-datepicker>
                     </mat-form-field>
@@ -610,13 +609,14 @@
                   </td>
                   <!-- <td class="w150">{{ row.customer_name | titlecase }}</td> -->
                   <!-- <td class="w120">{{ row.customer_mobile }}</td> -->
-                  <td class="w180">{{row.carpenter_name ? row.carpenter_name : '--'}}-{{row.carpenter_mobile ?
+                  <td class="w180">{{row.carpenter_name ? (row.carpenter_name | titlecase ):
+                    '--'}}-{{row.carpenter_mobile ?
                     row.carpenter_mobile : '--'}}</td>
                   <td class="w50"><a class="link-btn flat" (click)="attendancDetail(row)">{{row.total_items}}</a></td>
                   <td class="w100">{{ row.complaint_status }}</td>
                   <td class="w70 text-center">{{row.pending_at}}</td>
-                  <td class="w180">{{row.remark}}</td>
-                  <td class="w180">{{row.closing_remark}}</td>
+                  <td class="w180">{{row.remark | titlecase}}</td>
+                  <td class="w180">{{row.closing_remark | titlecase}}</td>
                 </tr>
               </ng-container>
               <ng-container *ngIf="loader">

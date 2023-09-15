@@ -7,7 +7,8 @@
 
         <div class="left-auto">
             <button mat-button class="ouline-btns status" mat-raised-button color="accent"
-                (click)="openDialog(getData.id,getData.state)" *ngIf="getData.complaint_status!='Closed'">Assign Technician</button>
+                (click)="openDialog(getData.id,getData.state)" *ngIf="getData.complaint_status!='Closed'">Assign
+                Technician</button>
         </div>
     </div>
 
@@ -121,7 +122,7 @@
 
                                 <div class="block-feilds">
                                     <span>Created By</span>
-                                    <p>{{getData.created_by_type ? getData.created_by_type :'---'}}</p>
+                                    <p>{{getData.created_by_type ? (getData.created_by_type | titlecase ):'---'}}</p>
                                 </div>
 
                                 <div class="block-feilds">
@@ -136,7 +137,7 @@
 
                                 <div class="block-feilds">
                                     <span>Customer Name</span>
-                                    <p>{{getData.customer_name ? getData.customer_name :'---'}}</p>
+                                    <p>{{getData.customer_name ? (getData.customer_name | titlecase) :'---'}}</p>
                                 </div>
                                 <div class="block-feilds">
                                     <span>Customer Mobile No.</span>
@@ -149,28 +150,29 @@
                                 </div>
                                 <div class="block-feilds">
                                     <span>Customer Address</span>
-                                    <p>{{getData.address ? getData.address :'---'}} {{getData.district ?
-                                        getData.district :'---'}} {{getData.pincode ? getData.pincode :'---'}}
-                                        {{getData.state ? getData.state :'---'}}</p>
+                                    <p>{{getData.address ? (getData.address | titlecase):'---'}} ,{{getData.district ?
+                                        (getData.district | titlecase) :'---'}} ,{{getData.pincode ? getData.pincode
+                                        :'---'}},
+                                        {{getData.state ? (getData.state | titlecase):'---'}}</p>
                                 </div>
 
                                 <div class="block-feilds">
                                     <span>Technician Name</span>
-                                    <p>{{getData.carpenter_name ? getData.carpenter_name :'---'}}</p>
+                                    <p>{{getData.carpenter_name ? (getData.carpenter_name | titlecase ):'---'}}</p>
                                 </div>
-                                
+
                                 <div class="block-feilds">
                                     <span>Technician Mobile No.</span>
                                     <p>{{getData.carpenter_mobile ? getData.carpenter_mobile :'---'}}</p>
                                 </div>
                                 <div class="block-feilds">
                                     <span>Complaint Status</span>
-                                    <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
+                                    <p>{{getData.complaint_status ? (getData.complaint_status | titlecase) : '--'}}</p>
                                 </div>
 
                                 <div class="block-feilds">
                                     <span>Nature Of Problem</span>
-                                    <p>{{getData.nature_of_problem ? getData.nature_of_problem:'N/A'}}</p>
+                                    <p>{{getData.nature_of_problem ? (getData.nature_of_problem| titlecase):'N/A'}}</p>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +194,7 @@
                     </div>
 
                 </div>
-                
+
                 <div class="col s12 mt16 m12 l12" *ngIf="getData.inspection_status!='Pending'">
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
@@ -206,15 +208,15 @@
                                 </div>
                                 <div class="block-feilds">
                                     <span>Product Name</span>
-                                    <p>{{getData.product_name ? getData.product_name :'---'}}</p>
+                                    <p>{{getData.product_name ? (getData.product_name| titlecase) :'---'}}</p>
                                 </div>
                                 <div class="block-feilds">
                                     <span>Product Code</span>
-                                    <p>{{getData.product_code ? getData.product_code :'---'}}</p>
+                                    <p>{{getData.product_code ? (getData.product_code| titlecase) :'---'}}</p>
                                 </div>
                                 <div class="block-feilds">
                                     <span>Warranty Status</span>
-                                    <p>{{getData.warranty_status ? getData.warranty_status :'---'}}</p>
+                                    <p>{{getData.warranty_status ? (getData.warranty_status | titlecase):'---'}}</p>
                                 </div>
                                 <div class="block-feilds">
                                     <span>Closing Type</span>
@@ -222,7 +224,7 @@
                                 </div>
                                 <div class="block-feilds">
                                     <span>Inspection Remark</span>
-                                    <p>{{getData.inspection_remark ? getData.inspection_remark:'N/A'}}</p>
+                                    <p>{{getData.inspection_remark ? (getData.inspection_remark| titlecase):'N/A'}}</p>
                                 </div>
                             </div>
                             <div class="card-head mt15">
@@ -253,15 +255,15 @@
                             <div class="grid-box">
                                 <div class="block-feilds">
                                     <span>New Serial No.</span>
-                                    <p>{{getData.new_serial_no ? getData.new_serial_no:'N/A'}}</p>
+                                    <p>{{getData.new_serial_no ? (getData.new_serial_no| titlecase):'N/A'}}</p>
                                 </div>
                                 <div class="block-feilds">
                                     <span>Replaced By</span>
-                                    <p>{{getData.replaced_by_type ? getData.replaced_by_type:'N/A'}}</p>
+                                    <p>{{getData.replaced_by_type ? (getData.replaced_by_type| titlecase):'N/A'}}</p>
                                 </div>
                                 <div class="block-feilds" *ngIf="getData.replaced_by_type=='Dealer'">
                                     <span>Dealer Name</span>
-                                    <p>{{getData.replaced_by_name ? getData.replaced_by_name:'N/A'}}</p>
+                                    <p>{{getData.replaced_by_name ? (getData.replaced_by_name | titlecase):'N/A'}}</p>
                                 </div>
                                 <div class="block-feilds" *ngIf="getData.replaced_by_type=='Dealer'">
                                     <span>Dealer Mobile</span>
@@ -275,7 +277,7 @@
                                 </div>
                                 <div class="block-feilds">
                                     <span>{{getData.complaint_status}} Remark</span>
-                                    <p>{{getData.closing_remark ? getData.closing_remark:'N/A'}}</p>
+                                    <p>{{getData.closing_remark ? (getData.closing_remark| titlecase):'N/A'}}</p>
                                 </div>
                             </div>
                             <div class="card-head mt15">
@@ -310,7 +312,7 @@
                                 </div>
                                 <div class="block-feilds">
                                     <span>Feedback Remark</span>
-                                    <p>{{getData.feedback_remark ? getData.feedback_remark:'N/A'}}</p>
+                                    <p>{{getData.feedback_remark ? (getData.feedback_remark| titlecase):'N/A'}}</p>
                                 </div>
 
                             </div>
@@ -330,7 +332,7 @@
                             <div class="logshead ">{{row.created_by_name}} :- {{row.date_created | date:'dd MMM yyyy'}}
                             </div>
                             <div class="logscontent ">
-                                <span>Remark : </span> {{row.msg ? row.msg : row.remark}}
+                                <span>Remark : </span> {{row.msg ? (row.msg| titlecase) : (row.remark| titlecase)}}
                             </div>
                         </ng-container>
                     </div>
