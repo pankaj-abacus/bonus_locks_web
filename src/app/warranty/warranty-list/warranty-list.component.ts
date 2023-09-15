@@ -17,7 +17,7 @@ export class WarrantyListComponent implements OnInit {
 
   fabBtnValue: any = 'add';
   warrantyList: any = [];
-  active_tab: any = 'Pending';
+  active_tab: any = 'All';
   filter: any ={};
   data: any = [];
   page_limit: any;
@@ -28,7 +28,7 @@ export class WarrantyListComponent implements OnInit {
   total_page: any = 0;
   pagenumber: any = 0;
   loader: boolean = false;
-  tab_active = 'all';
+  // tab_active = 'all';
   scheme_active_count: any;
   filter_data: any = {};
   today_date: Date;
@@ -47,15 +47,20 @@ export class WarrantyListComponent implements OnInit {
 
 
 
-  }
-
   ngOnInit() {
     this.filter_data = this.service.getData()
+    console.log(this.filter_data);
+    
 
     if (this.filter_data.status) {
+      console.log('innginit',this.filter_data.status);
+      
       this.active_tab = this.filter_data.status
+      console.log(this.active_tab);
+      
     }
-
+    this.getWarrantyList('');
+    
   }
 
   pervious() {
@@ -112,22 +117,22 @@ export class WarrantyListComponent implements OnInit {
 
 
 
-    if (this.active_tab == 'All') {
-    this.filter_data.status = this.active_tab;
-    }
-    if (this.active_tab == 'Pending') {
-      this.filter_data.status = this.active_tab;
-    }
+    // if (this.active_tab == 'All') {
+    // this.filter_data.status = this.active_tab;
+    // }
+    // if (this.active_tab == 'Pending') {
+    //   this.filter_data.status = this.active_tab;
+    // }
 
-    if (this.active_tab == 'Verified') {
-      this.filter_data.status = this.active_tab;
-    }
+    // if (this.active_tab == 'Verified') {
+    //   this.filter_data.status = this.active_tab;
+    // }
 
-    if (this.active_tab == 'Reject') {
-      this.filter_data.status = this.active_tab;
-    }
-    console.log(this.page_limit);
-
+    // if (this.active_tab == 'Reject') {
+    //   this.filter_data.status = this.active_tab;
+    // }
+    console.log(this.active_tab);
+    this.filter_data.status = this.active_tab
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceWarrantyList")
 
     this.loader = true;
@@ -146,6 +151,8 @@ export class WarrantyListComponent implements OnInit {
         this.tab_count = result['tab_count'];
         this.all_count = result['tab_count']['all_count'];
         console.log(this.tab_count);
+        this.all_count=result['tab_count']['all_count'];
+console.log(this.all_count);
 
         this.loader = false;
         if (this.warrantyList.length == 0) {
