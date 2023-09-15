@@ -4,18 +4,6 @@
       <i class="material-icons">arrow_back</i>
     </a>
     <h2>Installation Details</h2>
-
-    <!-- <div class="left-auto">
-      <div class="left-auto">
-        <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id,getData.state)"
-          *ngIf="
-            getData.complaint_status != 'Done' &&
-            getData.complaint_status != 'Reject'
-          ">
-          Assign Technician
-        </button>
-      </div>
-    </div> -->
   </div>
 
   <div class="container pt10 pl10 pr10 pb50">
@@ -23,7 +11,7 @@
       <div class="col s12 m12 l8">
         <!-- product data start -->
         <div class="card" *ngIf="!skLoading">
-          <!-- <div class="card-head">
+          <div class="card-head">
             <h2>Customer Details</h2>
             <div class="left-auto">
               <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
@@ -31,30 +19,14 @@
                 <i class="material-icons">edit</i>
               </a>
             </div>
-          </div> -->
+          </div>
           <div class="card-body">
             <div class="grid-box">
-              <div class="block-feilds">
-                <span>Date Created</span>
-                <p>{{ getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a'): "---" }}</p>
-              </div>
-
-              <div class="block-feilds">
-                <span>Created By</span>
-                <p>
-                  {{ getData.created_name ? (getData.created_name| titlecase) : "---" }}
-                </p>
-              </div>
-
-              <div class="block-feilds">
-                <span>Installation No.</span>
-                <p>{{ getData.complain_no ? getData.complain_no : "---" }}</p>
-              </div>
 
               <div class="block-feilds">
                 <span>Customer Name</span>
                 <p>
-                  {{ getData.customer_name ? (getData.customer_name | titlecase): "---" }}
+                  {{ getData.customer_name ? (getData.customer_name| titlecase) : "---" }}
                 </p>
               </div>
 
@@ -97,27 +69,8 @@
                 <p>{{ getData.address ? (getData.address| titlecase) : "N/A" }}</p>
               </div>
 
-              <div class="block-feilds">
-                <span>Technician Name</span>
-                <p>
-                  {{ getData.carpenter_name ? (getData.carpenter_name| titlecase) : "N/A" }}
-                </p>
-              </div>
 
-              <div class="block-feilds">
-                <span>Technician Mobile No.</span>
-                <p>
-                  {{
-                  getData.carpenter_mobile ? getData.carpenter_mobile : "N/A"
-                  }}
-                </p>
-              </div>
-              <div class="block-feilds">
-                <span>Status</span>
-                <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
-              </div>
-            </div>
-            <!-- <div class="card-head mt15" >
+              <!-- <div class="card-head mt15" >
                             <h2>Installation Images</h2>
                         </div>
                         <div class="card-body" >
@@ -131,6 +84,105 @@
                                 </div>
                             </div>
                         </div> -->
+            </div>
+          </div>
+
+        </div>
+        <div class="col s12 mt16 m12 l12">
+          <div class="card" *ngIf="!skLoading">
+            <div class="card-head">
+              <h2>Installation Details</h2>
+            </div>
+            <div class="card-body">
+              <div class="grid-box">
+                <div class="block-feilds">
+                  <span>Date Created</span>
+                  <p>{{ getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a'): "---" }}</p>
+                </div>
+
+                <div class="block-feilds">
+                  <span>Created By</span>
+                  <p>
+                    {{ getData.created_name ? (getData.created_name | titlecase): "---" }}
+                  </p>
+                </div>
+
+                <div class="block-feilds">
+                  <span>Installation No.</span>
+                  <p>{{ getData.complain_no ? getData.complain_no : "---" }}</p>
+                </div>
+                <div class="block-feilds">
+                  <span>Technician Name</span>
+                  <p>
+                    {{ getData.carpenter_name ? (getData.carpenter_name | titlecase): "N/A" }}
+                  </p>
+                </div>
+
+                <div class="block-feilds">
+                  <span>Technician Mobile No.</span>
+                  <p>
+                    {{
+                    getData.carpenter_mobile ? getData.carpenter_mobile : "N/A"
+                    }}
+                  </p>
+                </div>
+                <div class="block-feilds">
+                  <span>Installation Status</span>
+                  <!-- <p>{{getData.complaint_status ? (getData.complaint_status| titlecase) : '--'}}</p> -->
+                  <p>
+                    <strong class="yellow-clr" *ngIf="getData.complaint_status=='Pending'">
+                      {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="green-clr" *ngIf="getData.complaint_status=='Done'">
+                      {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="red-clr" *ngIf="getData.complaint_status=='Reject'">
+                      {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                      '--'}}</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mt15" *ngIf="add_list.length > 0">
+              <div class="col s12 m12 l12">
+                <div class="card">
+                  <div class="card-head">
+                    <h2>Product List</h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="cs-table left-right-10">
+                      <div class="border-top">
+                        <div class="table-head">
+                          <table>
+                            <tr>
+                              <th class="w50">Sr.No</th>
+                              <th class="w100">Category</th>
+                              <th class="w100">Sub Category</th>
+                              <th class="w180">Product Name And Code</th>
+                              <th class="w50">Qty</th>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="table-container pb0">
+                        <div class="table-content none-shadow">
+                          <table>
+                            <tr *ngFor="let row of add_list; let i = index">
+                              <td class="w50">{{ i + 1 }}</td>
+                              <td class="w100">{{ row.category_name }}</td>
+                              <td class="w100">{{ row.subcat_name }}</td>
+                              <td class="w180">{{ row.product_name }}-{{ row.product_code }}</td>
+                              <td class="w50">{{ row.qty }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -195,7 +247,7 @@
           <div class="logs-box">
             <ng-container *ngFor="let row of getData.log">
               <div class="logshead">
-                {{ row.created_by_name }} :-
+                {{ row.created_by_name| titlecase }} :-
                 {{ row.date_created | date : 'dd MMM yyy ,h:mm a'}}
               </div>
               <div class="logscontent">
@@ -217,51 +269,25 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="add_list.length > 0">
-      <div class="col s12 m12 l12">
-        <div class="card">
-          <div class="card-head">
-            <h2>Product List</h2>
-          </div>
-          <div class="card-body">
-            <div class="cs-table left-right-10">
-              <div class="border-top">
-                <div class="table-head">
-                  <table>
-                    <tr>
-                      <th class="w30 text-center ">Sr.No</th>
-                      <th class="w100">Category</th>
-                      <th class="w100">Sub Category</th>
-                      <th class="w180">Product Name And Code</th>
-                      <th class="w30 text-center ">Qty</th>
-                    </tr>
-                  </table>
-                </div>
-              </div>
 
-              <div class="table-container pb0">
-                <div class="table-content none-shadow">
-                  <table>
-                    <tr *ngFor="let row of add_list; let i = index">
-                      <td class="w30 text-center ">{{ i + 1 }}</td>
-                      <td class="w100">{{ row.category_name }}</td>
-                      <td class="w100">{{ row.subcat_name }}</td>
-                      <td class="w180">{{ row.product_name }}-{{ row.product_code }}</td>
-                      <td class="w30 text-center ">{{ row.qty }}</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
   <!-- <div class="fab-btns">
-    <button (click)="openDialog2(getData.id)" mat-fab color="primary" [ngClass]="{ pulse: fabBtnValue == 'activity' }">
-      <i class="material-icons">add</i>
-      Add Remark
+    <button class="pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
+      <i class="material-icons">apps</i>
+      Action
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openDialog(getData.id,getData.state)"
+        [ngClass]="{'pulse': fabBtnValue=='activity'}">
+        <mat-icon>assignment</mat-icon>
+        <span>Assign Technician</span>
+      </button>
+
+      <button mat-menu-item (click)="openDialog2(getData.id)" [ngClass]="{'pulse': fabBtnValue=='activity'}">
+        <mat-icon>add</mat-icon>
+        <span>Add Remark</span>
+      </button>
+    </mat-menu>
   </div> -->
 </div>
