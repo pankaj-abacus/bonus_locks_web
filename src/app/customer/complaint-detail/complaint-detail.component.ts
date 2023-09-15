@@ -10,6 +10,8 @@ import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
 import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-model-component/engineer-assign-model-component.component';
+import { AddComplaintRemarkComponent } from 'src/app/add-complaint-remark/add-complaint-remark.component';
+import { EngineerAssignModelComponent } from 'src/app/installation/engineer-assign-model/engineer-assign-model.component';
 
 @Component({
   selector: 'app-complaint-detail',
@@ -17,6 +19,7 @@ import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-m
   styleUrls: ['./complaint-detail.component.scss']
 })
 export class ComplaintDetailComponent implements OnInit {
+  loader: boolean = false;
   id;
   getData:any ={};
   skLoading:boolean = false;
@@ -28,13 +31,12 @@ export class ComplaintDetailComponent implements OnInit {
   featureFlag :boolean = false;
   allMrpFlag :boolean = false;
   complaintImg:any =[];
+  inspectionImg:any =[];
+  closeImg:any =[];
   fabBtnValue: any = 'excel';
-  loader: boolean = false;
 
-
-  
-  
   constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
+
     
     this.url = this.service.uploadUrl + 'service_task/'
     this.route.params.subscribe(params => {
@@ -55,11 +57,10 @@ export class ComplaintDetailComponent implements OnInit {
     this.service.post_rqst({'complaint_id':this.id},"ServiceTask/serviceComplaintDetail").subscribe((result=>
       {
         this.getData = result['result'];
-        console.log('getData',this.getData);
-        
+        // console.log('getData',this.getData);        
         this.complaintImg = this.getData['image'];
-        console.log(this.complaintImg);
-        
+        this.inspectionImg = this.getData['inspection_image'];
+        this.closeImg = this.getData['closing_image'];
         this.skLoading = false;
       }
       ));
@@ -82,12 +83,14 @@ export class ComplaintDetailComponent implements OnInit {
     back(): void {
       this.location.back()
     }
-    openDialog(): void {
+    openDialog(row,state): void {
+      console.log(row);
       const dialogRef = this.dialog.open(EngineerAssignModelComponentComponent, {
         width: '400px',
         panelClass: 'cs-model',
         data: {
-          id: this.id,
+          id: row,
+          state: state,
         }
       });
       
@@ -95,6 +98,20 @@ export class ComplaintDetailComponent implements OnInit {
         if (result != false) {
           this.getComplaintDetail();
         }
+      });
+    }
+
+    openDialog2(id) {
+      const dialogRef = this.dialog.open(AddComplaintRemarkComponent, {
+        width: '500px',
+        panelClass:'cs-modal',
+        data: {
+          id: id,
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.getComplaintDetail();
+        
       });
     }
   }

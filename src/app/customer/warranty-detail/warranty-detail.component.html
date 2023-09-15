@@ -5,9 +5,8 @@
     </a>
     <h2>Warranty Details</h2>
 
-    <!-- <div class="left-auto">
-      <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
-        [routerLink]="[ 'add-warranty/', this.id ]">
+    <!-- <div class="left-auto" >
+      <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail" [routerLink]="[ 'add-warranty/', this.id ]">
         <i class="material-icons">edit</i>
       </a>
     </div> -->
@@ -25,12 +24,12 @@
             <div class="grid-box">
               <div class="block-feilds">
                 <span>Date Created</span>
-                <p>{{getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a'):'---'}}</p>
+                <p>{{getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a') :'---'}}</p>
               </div>
 
               <div class="block-feilds">
                 <span>Created By</span>
-                <p>{{getData.created_by_name ? getData.created_by_name :'---'}}</p>
+                <p>{{getData.created_by_type ? getData.created_by_type :'---'}}</p>
               </div>
 
               <div class="block-feilds">
@@ -66,29 +65,40 @@
 
               <div class="block-feilds">
                 <span>Date Of Purchase</span>
-                <p>{{getData.date_of_purchase ? (getData.date_of_purchase | date : 'dd MMM yyy') :'---'}}</p>
+                <p>{{getData.date_of_purchase != "0000-00-00" ? (getData.date_of_purchase | date : "dd MMM yyy
+                  "): "--" }}</p>
               </div>
 
               <div class="block-feilds">
-                <span>warranty End Date</span>
-                <p>{{getData.warranty_end_date ?(getData.warranty_end_date | date : 'dd MMM yyy') :'---'}}</p>
+                <span>Warranty End Date</span>
+                <p>{{getData.warranty_end_date != "0000-00-00" ? (getData.warranty_end_date | date : "dd MMM yyy
+                  "): "--" }}</p>
               </div>
 
 
-              <!-- <div class="block-feilds">
-                <span>Warranty Status</span>
-                <p>{{getData.warranty_status ? getData.warranty_status : '--'}}</p>
-              </div> -->
+              <div class="block-feilds flex-heading">
+                <div>
 
-              <!-- <div class="block-feilds">
-                <span>Inspection Status</span>
+                  <span>Warranty Status</span>
+                  <p>{{getData.company_verification_status ? getData.company_verification_status :'---'}}</p>
+                </div>
+
+                <!-- <div class="left-auto">
+                  <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
+                    (click)="updateWarrantyStataus(getData.id)">
+                    <i class="material-icons">edit</i>
+                  </a>
+                </div> -->
+              </div>
+
+              <div class="block-feilds">
+                <span>Verification By</span>
                 <p>{{getData.inspection_status ? getData.inspection_status : '--'}}</p>
               </div>
-
               <div class="block-feilds">
-                <span>Complaint Status</span>
-                <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
-              </div> -->
+                <span>Reject Reason</span>
+                <p>{{getData.inspection_status ? getData.inspection_status : '--'}}</p>
+              </div>
 
             </div>
           </div>
@@ -102,13 +112,15 @@
           </div>
           <div class="card-body">
             <div class="img-container">
-              <div class="image-block">
+              <div class="image-block" *ngIf="getData.warranty_card_copy_img.length">
                 <img [src]="url+getData.warranty_card_copy_img" (click)="imageModel(url+getData.warranty_card_copy_img)"
                   style="cursor: zoom-in;">
+                <p>Warranty Card Image</p>
               </div>
-              <div class="image-block">
+              <div class="image-block" *ngIf="getData.bill_copy_img.length">
                 <img [src]="url+getData.bill_copy_img" (click)="imageModel(url+getData.bill_copy_img)"
                   style="cursor: zoom-in;">
+                <p>Bill Card Image</p>
 
               </div>
             </div>

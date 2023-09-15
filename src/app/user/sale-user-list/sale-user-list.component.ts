@@ -14,7 +14,7 @@ import { BottomSheetComponent } from 'src/app/bottom-sheet/bottom-sheet.componen
   selector: 'app-sale-user-list',
   templateUrl: './sale-user-list.component.html',
   animations: [slideToTop()]
-  
+
 })
 export class SaleUserListComponent implements OnInit {
   userType:any = 'Sales User';
@@ -44,12 +44,12 @@ export class SaleUserListComponent implements OnInit {
   page_limit: any;
   downurl: any = ''
   today_date: Date;
-  
-  
+  service_engineer_count = 0;
+
   constructor(public alert: DialogComponent, public toast:ToastrManager, public service: DatabaseService, public rout: Router, public dialog2: MatDialog,public session: sessionStorage,private bottomSheet:MatBottomSheet) {
     this.page_limit = this.service.pageLimit;
-    
-    
+
+
     this.today_date = new Date();
     this.downurl = service.downloadUrl
     this.assign_login_data = this.session.getSession();
@@ -60,46 +60,46 @@ export class SaleUserListComponent implements OnInit {
     this.userId=this.userData['data']['id'];
     this.userName=this.userData['data']['name'];
   }
-  
+
   ngOnInit() {
     this.filter = this.service.getData()
-    
+
     this.getUserList(this.userType);
-    
+
   }
- 
+
   pervious(){
     this.start = this.start - this.page_limit;
     this.getUserList(this.userType);
   }
-  
+
   nextPage(){
     this.start = this.start + this.page_limit;
     this.getUserList(this.userType);
   }
-  
+
   lastBtnValue(value){
     this.fabBtnValue = value;
   }
-  
+
   date_format(): void
   {
-    this.filter.date_created=moment(this.filter.date_created).format('YYYY-MM-DD'); 
+    this.filter.date_created=moment(this.filter.date_created).format('YYYY-MM-DD');
     this.getUserList(this.userType);
   }
   date_format1(): void
   {
-    this.filter.date_of_joining=moment(this.filter.date_of_joining).format('YYYY-MM-DD'); 
+    this.filter.date_of_joining=moment(this.filter.date_of_joining).format('YYYY-MM-DD');
     this.getUserList(this.userType);
   }
-  
+
   getUserList(user_type) {
     this.loader = true;
     if(this.pagenumber > this.total_page){
       this.pagenumber = this.total_page;
       this.start = this.count - this.page_limit;
     }
-    
+
     if(this.start<0){
       this.start=0;
     }
@@ -108,6 +108,7 @@ export class SaleUserListComponent implements OnInit {
         this.userlist = result['all_sales_user'];
         this.sales_count = result['type_count']['Sales User'];
         this.system_count = result['type_count']['System User'];
+        this.service_engineer_count = result['type_count']['Engineer User'];
         if(this.userlist.length==0){
           this.nodatafound=false;
         }else{
@@ -121,13 +122,13 @@ export class SaleUserListComponent implements OnInit {
           this.pagenumber = this.total_page;
           this.start = this.count - this.page_limit;
         }
-        
+
         else{
           this.pagenumber = Math.ceil(this.start/this.page_limit)+1;
         }
         this.total_page = Math.ceil(this.count / this.page_limit);
         this.sr_no = this.pagenumber - 1;
-        this.sr_no = this.sr_no * this.page_limit; 
+        this.sr_no = this.sr_no * this.page_limit;
         for(let i=0;i<this.userlist.length;i++)
         {
           if(this.userlist[i].status == '1')
@@ -137,10 +138,10 @@ export class SaleUserListComponent implements OnInit {
           else if(this.userlist[i].status == '0')
           {
             this.userlist[i].user_status=false;
-            
+
           }
         }
-        
+
         if (this.userlist.length == 0) {
           this.datanotfound = true;
         }
@@ -152,11 +153,11 @@ export class SaleUserListComponent implements OnInit {
         this.toast.errorToastr(result['statusMsg']);
         this.loader = false;
       }
-      
+
     })
     this.service.count_list();
   }
-  
+
   Filename:any = ''
   getUserExcel(user_type) {
     this.loader = true;
@@ -167,8 +168,8 @@ export class SaleUserListComponent implements OnInit {
       }
     });
   }
-  
-  
+
+
   upload_excel(type)
   {
     const dialogRef = this.dialog2.open(UploadFileModalComponent,{
@@ -180,15 +181,15 @@ export class SaleUserListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      
+
       if(result != false){
         this.getUserList(this.userType);
       }
-      
+
     });
   }
-  
-  
+
+
   refresh() {
     this.start = 0;
     this.filter={};
@@ -196,16 +197,16 @@ export class SaleUserListComponent implements OnInit {
     this.service.currentUserID = ''
     this.getUserList(this.userType);
   }
-  
+
   userDetail(id) {
     let value = { "id": id }
     this.service.post_rqst(value, "User/user_detail").subscribe((result) => {
       this.rout.navigate(['/sale-user-detail/' + id]);
     })
   }
-  
-  
-  
+
+
+
   updateStatus(index,id,event)
   {
     if(event.checked == false)
@@ -254,9 +255,9 @@ export class SaleUserListComponent implements OnInit {
           })
         }
       })
-    }  
+    }
   }
-  
+
   resetDevice(index,id)
   {
     this.alert.confirm("You Want To  Reset Device !").then((result)=>{
@@ -273,7 +274,7 @@ export class SaleUserListComponent implements OnInit {
         })
       }
     })
-    
+
   }
 
   openBottomSheet(): void {
@@ -293,5 +294,5 @@ export class SaleUserListComponent implements OnInit {
   sortData(){
     this.userlist.reverse();
   }
-  
+
 }

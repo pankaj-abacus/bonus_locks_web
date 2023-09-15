@@ -5,110 +5,88 @@
         </a>
         <h2>Complaint Details</h2>
 
-        <div class="left-auto">
-            <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog()">Assign
-                Engineer</button>
-        </div>
+        <!-- <div class="left-auto">
+            <button mat-button class="ouline-btns status" mat-raised-button color="accent"
+                (click)="openDialog(getData.id,getData.state)" *ngIf="getData.complaint_status!='Closed'">Assign Technician</button>
+        </div> -->
     </div>
 
     <div class="container pt10 pl10 pr10 pb50">
+
         <div class="row">
-            <div class="col s12 m12 l8">
-                <!-- product data start -->
-                <div class="card" *ngIf="!skLoading">
+            <div class="col s12">
+                <div class="card">
                     <div class="card-head">
-                        <h2>Basic Details</h2>
-                        <!-- <div class="left-auto" >
-                            <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail" [routerLink]="[ 'add-complaint/', this.id ]">
-                                <i class="material-icons">edit</i>
-                            </a>
-                        </div> -->
+                        <h2></h2>
                     </div>
                     <div class="card-body">
-                        <div class="grid-box">
-                            <div class="block-feilds">
-                                <span>Date Created</span>
-                                <p>{{getData.date_created ? (getData.date_created | date:' MMM dd yyyy hh:mm a'):'---'}}
-                                </p>
+                        <div class="tracking">
+                            <div style="display: flex;width: 80%;justify-content: space-around;">
+                                <span
+                                    style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">{{getData.date_created_to_assign
+                                    ? getData.date_created_to_assign :''}}</span>
+                                <span
+                                    style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">{{getData.assign_to_inspection
+                                    ? getData.assign_to_inspection :''}}</span>
+                                <span
+                                    style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">{{getData.inspection_to_closed
+                                    ? getData.inspection_to_closed :''}}</span>
+                                <span
+                                    style="background-color: #E6E6FA ; box-shadow: 1px 4px 4px grey; ; padding: 9px; border-radius: 6px;">{{getData.closed_to_feedback
+                                    ? getData.closed_to_feedback :''}}</span>
                             </div>
-
-                            <div class="block-feilds">
-                                <span>Created By</span>
-                                <p>{{getData.created_name ? getData.created_name :'---'}}</p>
-                            </div>
-
-                            <div class="block-feilds">
-                                <span>Complaint No.</span>
-                                <p>{{getData.complain_no ? getData.complain_no :'---'}}</p>
-                            </div>
-
-                            <div class="block-feilds">
-                                <span>Serial No.</span>
-                                <p>{{getData.serial_no ? getData.serial_no :'---'}}</p>
-                            </div>
-
-                            <!-- <div class="block-feilds">
-                                <span>Product Name</span>
-                                <p>{{getData.product_name ? getData.product_name :'---'}}</p>
-                            </div> -->
-
-
-
-                            <!-- <div class="block-feilds">
-                                <span>Product Code</span>
-                                <p>{{getData.product_code ? getData.product_code :'---'}}</p>
-                            </div> -->
-
-                            <div class="block-feilds">
-                                <span>Customer Name</span>
-                                <p>{{getData.customer_name ? getData.customer_name :'---'}}</p>
-                            </div>
-
-
-
-                            <div class="block-feilds">
-                                <span>Customer Mobile No.</span>
-                                <p>{{getData.customer_mobile ? getData.customer_mobile :'---'}}</p>
-                            </div>
-
-                            <div class="block-feilds">
-                                <span>Carpenter Name</span>
-                                <p>{{getData.carpenter_name ? getData.carpenter_name :'---'}}</p>
-                            </div>
-
-
-
-                            <div class="block-feilds">
-                                <span>Carpenter Mobile No.</span>
-                                <p>{{getData.carpenter_mobile ? getData.carpenter_mobile :'---'}}</p>
-                            </div>
-                            <!-- <div class="block-feilds">
-                                <span>New Serial No.</span>
-                                <p>{{getData.new_serial_no ? getData.new_serial_no :'---'}}</p>
-                            </div> -->
-                            <!-- <div class="block-feilds">
-                                <span>Warranty Status</span>
-                                <p>{{getData.warranty_status ? getData.warranty_status : '--'}}</p>
-                            </div> -->
-
-                            <!-- <div class="block-feilds">
-                                <span>Inspection Status</span>
-                                <p>{{getData.inspection_status ? getData.inspection_status : '--'}}</p>
-                            </div> -->
-
-                            <div class="block-feilds">
-                                <span>Complaint Status</span>
-                                <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
-                            </div>
-
-                            <!-- <div class="block-feilds">
-                                <span>Return Status</span>
-                                <p>{{getData.return_status ? getData.return_status:'N/A'}}</p>
-                            </div> -->
-
-                            <div class="block-feilds">
-                                <span>Nature Of Problem</span>
-                                <p>{{getData.nature_of_problem ? getData.nature_of_problem:'N/A'}}</p>
+                            <div class="tracking-header">
+                                <ul>
+                                    <li class="check">
+                                        <span>1</span>
+                                        <div class="tracking-con">
+                                            <p>date_created</p>
+                                            <p>{{getData.date_created |date : 'dd MMM yyy ,h:mm a'}}</p>
+                                        </div>
+                                    </li>
+                                    <li [ngClass]="getData.carpenter_assign_status == 'Done' ?'check' :'reject'">
+                                        <span>2</span>
+                                        <div class="tracking-con">
+                                            <p>Assign Date</p>
+                                            <p>{{getData.carpenter_assign_date != '0000-00-00' ?
+                                                (getData.carpenter_assign_date |date : 'dd MMM yyy ,h:mm a') :'---'}}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li [ngClass]="getData.inspection_status == 'Done' ?'check' :'reject'">
+                                        <span>3</span>
+                                        <div class="tracking-con">
+                                            <p>Inspection Date</p>
+                                            <p>{{getData.inspection_date != '0000-00-00' ? (getData.inspection_date |
+                                                date : 'dd MMM yyy ,h:mm a') :'---'}}</p>
+                                        </div>
+                                    </li>
+                                    <li [ngClass]="getData.complaint_status == 'Closed' ?'check' :'reject'">
+                                        <span>4</span>
+                                        <div class="tracking-con">
+                                            <p>Closed Date</p>
+                                            <p>
+                                                {{getData.closed_date != '0000-00-00' ? (getData.closed_date |
+                                                date :'dd MMM yyy ,h:mm a'):'---'}}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li [ngClass]="getData.feedback_status == 'Done' ?'check' :'reject'">
+                                        <span>5</span>
+                                        <div class="tracking-con">
+                                            <p>Feedback Date</p>
+                                            <p>{{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date :
+                                                'dd MMM yyy ,h:mm a'):'---'}}</p>
+                                        </div>
+                                    </li>
+                                    <!-- <li [ngClass]="getData.feedback_status == 'Done' ?'check' :'reject'">
+                                        <span>5</span>
+                                        <div class="tracking-con">
+                                            <p>Feedback Date</p>
+                                            <p>{{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date) :'---'}}</p>
+                                        </div>
+                                    </li> -->
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -116,19 +94,244 @@
 
             </div>
 
-            <div class="col s12 m4 l4">
 
-                <div class="card" *ngIf="!loader">
+        </div>
+
+        <div class="row">
+            <div class="col s12 m8 l8">
+                <div class="col s12 mt16 m12 l12">
+                    <!-- product data start -->
+                    <div class="card" *ngIf="!skLoading">
+                        <!-- <div class="card-head">
+                            <h2>Customer Details</h2>
+                            <div class="left-auto">
+                                <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
+                                    [routerLink]="[ 'add-complaint/', 'complaint',this.id ]">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            </div>
+                        </div> -->
+                        <div class="card-body">
+                            <div class="grid-box">
+                                <div class="block-feilds">
+                                    <span>Date Created</span>
+                                    <p>{{getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a')
+                                        :'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Created By</span>
+                                    <p>{{getData.created_by_type ? (getData.created_by_type | titlecase) :'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Complaint No.</span>
+                                    <p>{{getData.complain_no ? getData.complain_no :'---'}}</p>
+                                </div>
+
+                                <!-- <div class="block-feilds">
+                                    <span>Serial No.</span>
+                                    <p>{{getData.serial_no ? getData.serial_no :'---'}}</p>
+                                </div> -->
+
+                                <div class="block-feilds">
+                                    <span>Customer Name</span>
+                                    <p>{{getData.customer_name ? (getData.customer_name| titlecase) :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Customer Mobile No.</span>
+                                    <p>{{getData.customer_mobile ? getData.customer_mobile :'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Alternate Mobile No.</span>
+                                    <p>{{getData.alternate_mobile_no ? getData.alternate_mobile_no :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Customer Address</span>
+                                    <p>{{getData.address ? (getData.address| titlecase) :'---'}}, {{getData.district ?
+                                        (getData.district| titlecase) :'---'}} ,{{getData.pincode ? getData.pincode
+                                        :'---'}},{{getData.state ? (getData.state | titlecase):'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Technician Name</span>
+                                    <p>{{getData.carpenter_name ? (getData.carpenter_name | titlecase):'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Technician Mobile No.</span>
+                                    <p>{{getData.carpenter_mobile ? getData.carpenter_mobile :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Complaint Status</span>
+                                    <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Nature Of Problem</span>
+                                    <p>{{getData.nature_of_problem ? ((getData.nature_of_problem| titlecase)):'N/A'}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-head mt15">
+                            <h2>Complaint Images</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid-box">
+                                <div class="block-feilds">
+                                    <div class="doc-img">
+                                        <div class="image-block" *ngFor="let row of complaintImg">
+                                            <img [src]="url+row.image" (click)="imageModel(url+row.image)"
+                                                style="cursor: zoom-in;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col s12 mt16 m12 l12" *ngIf="getData.inspection_status!='Pending'">
+                    <div class="card" *ngIf="!skLoading">
+                        <div class="card-head">
+                            <h2>Inspection Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid-box">
+                                <div class="block-feilds">
+                                    <span>Serial No.</span>
+                                    <p>{{getData.serial_no ? getData.serial_no :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Product Name</span>
+                                    <p>{{getData.product_name ? (getData.product_name| titlecase) :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Product Code</span>
+                                    <p>{{getData.product_code ? (getData.product_code| titlecase) :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Warranty Status</span>
+                                    <p>{{getData.warranty_status ? (getData.warranty_status| titlecase) :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Closing Type</span>
+                                    <p>{{getData.closing_type ? getData.closing_type:'N/A'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Inspection Remark</span>
+                                    <p>{{getData.inspection_remark ? (getData.inspection_remark| titlecase):'N/A'}}</p>
+                                </div>
+                            </div>
+                            <div class="card-head mt15">
+                                <h2>Inspection Images</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="grid-box">
+                                    <div class="block-feilds">
+                                        <div class="doc-img">
+                                            <div class="image-block" *ngFor="let row of inspectionImg">
+                                                <img [src]="url+row.image" (click)="imageModel(url+row.image)"
+                                                    style="cursor: zoom-in;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 mt16 m12 l12"
+                    *ngIf="getData.complaint_status=='Closed' || getData.complaint_status=='Cancel'">
+                    <div class="card" *ngIf="!skLoading">
+                        <div class="card-head">
+                            <h2>{{getData.complaint_status}} Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid-box">
+                                <div class="block-feilds">
+                                    <span>New Serial No.</span>
+                                    <p>{{getData.new_serial_no ? getData.new_serial_no:'N/A'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Replaced By</span>
+                                    <p>{{getData.replaced_by_type ? getData.replaced_by_type:'N/A'}}</p>
+                                </div>
+                                <div class="block-feilds" *ngIf="getData.replaced_by_type=='Dealer'">
+                                    <span>Dealer Name</span>
+                                    <p>{{getData.replaced_by_name ? (getData.replaced_by_name| titlecase):'N/A'}}</p>
+                                </div>
+                                <div class="block-feilds" *ngIf="getData.replaced_by_type=='Dealer'">
+                                    <span>Dealer Mobile</span>
+                                    <p>{{getData.replaced_by_mobile ? getData.replaced_by_mobile:'N/A'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>{{getData.complaint_status}} Date</span>
+                                    <p>{{getData.closed_date != '0000-00-00 00:00:00' ? (getData.closed_date |
+                                        date : 'dd MMM yyy ,h:mm a'):'N/A'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>{{getData.complaint_status}} Remark</span>
+                                    <p>{{getData.closing_remark ? (getData.closing_remark| titlecase):'N/A'}}</p>
+                                </div>
+                            </div>
+                            <div class="card-head mt15">
+                                <h2>{{getData.complaint_status}} Images</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="grid-box">
+                                    <div class="block-feilds">
+                                        <div class="doc-img">
+                                            <div class="image-block" *ngFor="let row of closeImg">
+                                                <img [src]="url+row.image" (click)="imageModel(url+row.image)"
+                                                    style="cursor: zoom-in;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Closed'">
+                    <div class="card" *ngIf="!skLoading">
+                        <div class="card-head">
+                            <h2>Feedback Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid-box">
+                                <div class="block-feilds">
+                                    <span>Feedback Date</span>
+                                    <p>{{getData.feedback_date !='0000-00-00 00:00:00' ? getData.feedback_date:'N/A'}}
+                                    </p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Feedback Remark</span>
+                                    <p>{{getData.feedback_remark ? (getData.feedback_remark| titlecase):'N/A'}}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m8  l4">
+
+                <div class="card mt16" *ngIf="!loader">
                     <div class="card-head">
                         <h2>Logs</h2>
                     </div>
 
                     <div class="logs-box">
-                        <ng-container *ngFor="let row of lead_logs">
-                            <div class="logshead ">{{row.changes_by_name}} :- {{row.date_created | date:'dd MMM yyyy'}}
+                        <ng-container *ngFor="let row of getData.log">
+                            <div class="logshead ">{{row.created_by_name| titlecase}} :- {{row.date_created | date:'dd
+                                MMM yyyy,,h:mm a'}}
                             </div>
                             <div class="logscontent ">
-                                <span>Remark : </span> {{row.msg ? row.msg : row.remark}}
+                                <span>Remark : </span> {{row.msg ? (row.msg | titlecase): (row.remark| titlecase)}}
                             </div>
                         </ng-container>
                     </div>
@@ -149,42 +352,14 @@
                 </div>
 
             </div>
-
-            <div class="container pt10 pl10 pr10 pb50">
-                <div class="row">
-                    <div class="col s12 m12 l8">
-
-                        <div class="card" *ngIf="!skLoading">
-                            <div class="card-head">
-                                <h2>Images</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="img-container">
-                                    <div class="image-block" *ngFor="let row of complaintImg">
-                                        <img [src]="url+row.image" (click)="imageModel(url+row.image)"
-                                            style="cursor: zoom-in;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Skeleton start -->
-                        <div class="card" *ngIf="skLoading">
-                            <div class="sk-head">
-                                <h2>&nbsp;</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="img-container">
-                                    <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
-                                        &nbsp;
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Skeleton end -->
-
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+    <!-- <div class="fab-btns">
+
+        <button (click)="openDialog2(getData.id)" mat-fab color="primary"
+            [ngClass]="{'pulse': fabBtnValue=='activity'}">
+            <i class="material-icons">add</i>
+            Add Remark
+        </button>
+    </div> -->
 </div>

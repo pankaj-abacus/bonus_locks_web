@@ -18,13 +18,17 @@
               <div class="row">
                 <div class="col s12 m6 l6">
                   <mat-radio-group class="example-section" id="user_type" name="user_type" [(ngModel)]="data.user_type">
-                    <mat-radio-button class="wp50" color="primary" (change)="get_sales_user_type('', $event)"
+                    <mat-radio-button class="wp30" color="primary" (change)="get_sales_user_type('', $event)"
                       value="Sales User">
                       Sales User
                     </mat-radio-button>
-                    <mat-radio-button class="wp50" color="primary" (change)="get_sales_user_type('', $event);"
+                    <mat-radio-button class="wp30" color="primary" (change)="get_sales_user_type('', $event);"
                       value="System User">
                       System User
+                    </mat-radio-button>
+                    <mat-radio-button class="wp30" color="primary" (change)="get_sales_user_type('', $event);"
+                      value="Service Engineer">
+                      Service Engineer
                     </mat-radio-button>
                   </mat-radio-group>
                 </div>
@@ -41,7 +45,9 @@
                       <mat-form-field appearance="outline">
                         <mat-label>Select Designation</mat-label>
                         <mat-select name="user_role" placeholder="Role" [(ngModel)]="data.user_role"
-                          #user_role="ngModel" (selectionChange)="data.user_role == '52' ? getCompanyData(): data.user_role == '53' ? getCompanyData():  data.user_role == '54' ? getCompanyData(): '' " required>
+
+                          #user_role="ngModel" (selectionChange)="data.user_role == '52' ? getCompanyData(): data.user_role == '53' ? getCompanyData():  data.user_role == '54' ? getCompanyData(): data.user_role == '63' ? getCompanyData(): '' " required>
+
                           <mat-option value="" disabled>Select Role</mat-option>
                           <mat-option *ngFor="let row of sales_type" value="{{row.id}}">{{row.role_name}}</mat-option>
                         </mat-select>
@@ -109,7 +115,7 @@
                     <p *ngIf="employee_id.errors?.required">This field is required</p>
                   </div>
                 </div>
-                <div class="col s12 m3 l3">
+                <div class="col s12 m3 l3" *ngIf="data.user_type!='Service Engineer'">
                   <mat-form-field appearance="outline">
                     <mat-label>Date of joining</mat-label>
                     <input name="D.O.J" matInput [matDatepicker]="pickers" placeholder="" [max]="maxDate"
@@ -118,8 +124,27 @@
                     <mat-datepicker #pickers></mat-datepicker>
                   </mat-form-field>
                 </div>
+                <div class="col s12 m3 l3" *ngIf="data.user_type=='Service Engineer'">
+                  <mat-form-field appearance="outline">
+                    <mat-label>D.O.B</mat-label>
+                    <input name="dob" matInput placeholder="" #dob="ngModel" [(ngModel)]="data.dob" [max]="myDate"
+                      [matDatepicker]="picker" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col s12 m3 l3" *ngIf="data.user_type=='Service Engineer'">
+                  <mat-form-field class="cs-input" appearance="outline">
+                    <mat-label>D.O.A</mat-label>
+                    <input name="D.O.A" matInput [matDatepicker]="pickers" placeholder="" #doa="ngModel" [max]="myDate"
+                      [(ngModel)]="data.doa" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+                    <mat-datepicker #pickers disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </div>
 
-                <div class="col s12 m3 l3">
+
+                <div class="col s12 m3 l3" *ngIf="data.user_type!='Service Engineer'">
                   <mat-form-field appearance="outline">
                     <mat-label>Weekly Off</mat-label>
                     <mat-select name="weekly_off" #weekly_off="ngModel" [(ngModel)]="data.weekly_off">
@@ -150,7 +175,7 @@
                   </mat-form-field>
                 </div>
 
-                <div class="col s12 m3 l3" *ngIf="data.user_type != 'Sales User'">
+                <div class="col s12 m3 l3" *ngIf="data.user_type != 'Sales User'&& data.user_type!='Service Engineer'">
                   <mat-form-field appearance="outline">
                     <mat-label>Assign Users</mat-label>
                     <mat-select name="assign_system_user" #assign_system_user="ngModel" multiple
@@ -169,9 +194,26 @@
                     <p *ngIf="assign_system_user.errors?.required">This field is required</p>
                   </div>
                 </div>
-                <div class="col s12 m l3"  *ngIf="data.user_role == '52' || data.user_role == '53' || data.user_role == '54' "  >
+
+                <div class="col s12 m3 pt10 l3" *ngIf="data.user_role == '65'">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Coupon Generation</mat-label>
+                    <mat-select name="company_coupon_generation" #company_coupon_generation="ngModel"
+                      [(ngModel)]="data.company_coupon_generation" required
+                      (selectionChange)="data.company_coupon_generation == 'Warehouse' ? getWarehouse(): 'Company' ? getCompanyData():''">
+                      <mat-option value="Company">Head Office</mat-option>
+                      <mat-option value="Warehouse">Warehouse</mat-option>
+
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="company_coupon_generation.touched || f.submitted">
+                    <p *ngIf="company_coupon_generation.errors?.required">This field is required</p>
+                  </div>
+                </div>
+
+                 <div class="col s12 m3 pt10 l3" *ngIf="data.company_coupon_generation == 'Company' || data.user_role == '52' || data.user_role == '53' || data.user_role == '54'|| data.user_role == '63'">
                   <mat-form-field  appearance="outline">
-                    <mat-label>Assign  Company</mat-label>
+                    <mat-label>Assign Company</mat-label>
                     <mat-select name="assign_company"  #assign_company="ngModel" [(ngModel)]="data.assign_company" required>
                       <mat-option *ngFor="let row of organisationData"
                         value="{{row.id}}">{{row.company_name}}</mat-option>
@@ -181,6 +223,33 @@
                     <p *ngIf="assign_company.errors?.required">This field is required</p>
                   </div>
                 </div>
+                <!--  *ngIf="data.user_role == '54' && data.company_dispatch_type == 'Warehouse'" -->
+                <div class="col s12 m3 pt10 l3" *ngIf="data.company_coupon_generation == 'Warehouse'">
+                  <mat-form-field class="cs-input" appearance="outline">
+                    <mat-label>Warehouse</mat-label>
+                    <mat-select name="warehouse_id" placeholder="Warehouse" #warehouse_id="ngModel"
+                      [(ngModel)]="data.warehouse_id" required>
+                      <mat-option *ngFor="let row of warehouse" value="{{row.id}}">{{row.company_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="warehouse_id.touched || f.submitted">
+                    <p *ngIf="warehouse_id.errors?.required">This field is required</p>
+                  </div>
+                </div>
+
+                <!-- <div class="col s12 m3 l3"  *ngIf="data.user_role == '52' || data.user_role == '53' || data.user_role == '54'|| data.user_role == '63' "  >
+                  <mat-form-field  appearance="outline">
+                    <mat-label>Assign  Company</mat-label>
+                    <mat-select name="assign_company"  #assign_company="ngModel" [(ngModel)]="data.assign_company" required>
+
+                      <mat-option *ngFor="let row of organisationData"
+                        value="{{row.id}}">{{row.company_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="assign_company.touched || f.submitted">
+                    <p *ngIf="assign_company.errors?.required">This field is required</p>
+                  </div>
+                </div> -->
               </div>
 
               <!-- <div class="row" *ngIf="data.user_type == 'Sales User'"> -->
@@ -237,19 +306,6 @@
                     <p *ngIf="pincode.errors?.required">This field is required</p>
                   </div>
                 </div>
-
-                <!-- <div class="col s12 m l3"  *ngIf="data.user_role == '59' || data.user_role == '60' || data.user_role == '61' "  >
-                  <mat-form-field  appearance="outline">
-                    <mat-label>Assign Billing Company</mat-label>
-                    <mat-select name="assign_company"  #assign_company="ngModel" [(ngModel)]="data.assign_company" required>
-                      <mat-option *ngFor="let row of organisationData"
-                        value="{{row.id}}">{{row.company_name}}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <div class="alert alert-danger" *ngIf="assign_company.touched || f.submitted">
-                    <p *ngIf="assign_company.errors?.required">This field is required</p>
-                  </div>
-                </div> -->
               </div>
               <div class="row">
                 <div class="col s12 m6 l6">

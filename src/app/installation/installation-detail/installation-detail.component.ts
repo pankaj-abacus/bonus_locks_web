@@ -35,8 +35,9 @@ export class InstallationDetailComponent implements OnInit {
   inspectionImg:any =[];
   closeImg:any =[];
 
-  
-  
+
+
+
   constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
 
     this.url = this.service.uploadUrl + 'service_task/'
@@ -48,12 +49,13 @@ export class InstallationDetailComponent implements OnInit {
       }
     });
   }
-  
+
   ngOnInit() {
   }
-  
+
   getInstallationDetail()
   {
+    this.loader=true
     this.skLoading = true;
     this.service.post_rqst({'complaint_id':this.id},"ServiceTask/serviceInstallationDetail").subscribe((result=>
       {
@@ -64,11 +66,12 @@ export class InstallationDetailComponent implements OnInit {
         this.inspectionImg = this.getData['inspection_image'];
         this.closeImg = this.getData['image'];
         this.skLoading = false;
+        this.loader=false;
       }
       ));
-      
+
     }
-    
+
     imageModel(image){
       const dialogRef = this.dialog.open( ImageModuleComponent, {
         panelClass:'Image-modal',
@@ -86,17 +89,18 @@ export class InstallationDetailComponent implements OnInit {
       this.location.back()
     }
 
-    openDialog(id): void {
+    openDialog(id,state): void {
       console.log(id);
-      
+
       const dialogRef = this.dialog.open(EngineerAssignModelComponent, {
         width: '400px',
         panelClass: 'cs-model',
         data: {
           id:id,
+          state:state,
         }
       });
-      
+
       dialogRef.afterClosed().subscribe(result => {
         if (result != false) {
           this.getInstallationDetail();
@@ -105,7 +109,7 @@ export class InstallationDetailComponent implements OnInit {
     }
     openDialog2(id): void {
       console.log(id);
-      
+
       const dialogRef = this.dialog.open(AddInstallationRemarkComponent, {
         width: '400px',
         panelClass: 'cs-model',
@@ -113,13 +117,13 @@ export class InstallationDetailComponent implements OnInit {
           id:id,
         }
       });
-      
+
       dialogRef.afterClosed().subscribe(result => {
         if (result != false) {
           this.getInstallationDetail();
         }
       });
     }
-    
+
   }
-  
+

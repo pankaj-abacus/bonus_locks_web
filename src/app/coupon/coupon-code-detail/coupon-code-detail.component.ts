@@ -171,6 +171,12 @@ export class CouponCodeDetailComponent implements OnInit {
           left:50%;
           transform:translateX(-50%);
         }
+
+        .qr_img_pr img {
+          width: 80px;
+          height: 80px;
+          margin-left: 7px;
+      }
         
         
         
