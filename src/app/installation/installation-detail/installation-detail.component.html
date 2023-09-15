@@ -4,18 +4,6 @@
       <i class="material-icons">arrow_back</i>
     </a>
     <h2>Installation Details</h2>
-
-    <div class="left-auto">
-      <div class="left-auto">
-        <button mat-button class="ouline-btns status" mat-raised-button color="accent"
-          (click)="openDialog(getData.id,getData.state)" *ngIf="
-            getData.complaint_status != 'Done' &&
-            getData.complaint_status != 'Reject'
-          ">
-          Assign Technician
-        </button>
-      </div>
-    </div>
   </div>
 
   <div class="container pt10 pl10 pr10 pb50">
@@ -144,6 +132,46 @@
                 </div>
               </div>
             </div>
+            <div class="row mt15" *ngIf="add_list.length > 0">
+              <div class="col s12 m12 l12">
+                <div class="card">
+                  <div class="card-head">
+                    <h2>Product List</h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="cs-table left-right-10">
+                      <div class="border-top">
+                        <div class="table-head">
+                          <table>
+                            <tr>
+                              <th class="w50">Sr.No</th>
+                              <th class="w100">Category</th>
+                              <th class="w100">Sub Category</th>
+                              <th class="w180">Product Name And Code</th>
+                              <th class="w50">Qty</th>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+        
+                      <div class="table-container pb0">
+                        <div class="table-content none-shadow">
+                          <table>
+                            <tr *ngFor="let row of add_list; let i = index">
+                              <td class="w50">{{ i + 1 }}</td>
+                              <td class="w100">{{ row.category_name }}</td>
+                              <td class="w100">{{ row.subcat_name }}</td>
+                              <td class="w180">{{ row.product_name }}-{{ row.product_code }}</td>
+                              <td class="w50">{{ row.qty }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -230,51 +258,25 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="add_list.length > 0">
-      <div class="col s12 m12 l12">
-        <div class="card">
-          <div class="card-head">
-            <h2>Product List</h2>
-          </div>
-          <div class="card-body">
-            <div class="cs-table left-right-10">
-              <div class="border-top">
-                <div class="table-head">
-                  <table>
-                    <tr>
-                      <th class="w50">Sr.No</th>
-                      <th class="w100">Category</th>
-                      <th class="w100">Sub Category</th>
-                      <th class="w180">Product Name And Code</th>
-                      <th class="w50">Qty</th>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-
-              <div class="table-container pb0">
-                <div class="table-content none-shadow">
-                  <table>
-                    <tr *ngFor="let row of add_list; let i = index">
-                      <td class="w50">{{ i + 1 }}</td>
-                      <td class="w100">{{ row.category_name }}</td>
-                      <td class="w100">{{ row.subcat_name }}</td>
-                      <td class="w180">{{ row.product_name }}-{{ row.product_code }}</td>
-                      <td class="w50">{{ row.qty }}</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
   </div>
   <div class="fab-btns">
-    <button (click)="openDialog2(getData.id)" mat-fab color="primary" [ngClass]="{ pulse: fabBtnValue == 'activity' }">
-      <i class="material-icons">add</i>
-      Add Remark
+    <button class="pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
+        <i class="material-icons">apps</i>
+        Action
     </button>
-  </div>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openDialog(getData.id,getData.state)"
+            [ngClass]="{'pulse': fabBtnValue=='activity'}">
+            <mat-icon>assignment</mat-icon>
+            <span>Assign Technician</span>
+        </button>
+
+        <button mat-menu-item (click)="openDialog2(getData.id)"
+            [ngClass]="{'pulse': fabBtnValue=='activity'}">
+            <mat-icon>add</mat-icon>
+            <span>Add Remark</span>
+        </button>
+    </mat-menu>
+</div>
 </div>

@@ -102,6 +102,17 @@ export class WarrantyAddComponent implements OnInit {
 
 
     submitDetail() {
+
+      if(!this.warrantyBase64){
+        this.toast.errorToastr('Warranty images required');
+        return;
+      }
+      if(!this.billBase64){
+        this.toast.errorToastr('Bill images required');
+        return;
+      }
+
+
       this.data.billBase64 = this.billBase64;
       this.data.warrantyBase64 = this.warrantyBase64;
 
@@ -228,7 +239,7 @@ export class WarrantyAddComponent implements OnInit {
     getProduct(segment_id, sub_segment_id) {
       this.filter.segment = segment_id
       this.filter.sub_category_name = sub_segment_id
-      this.filter.installation_responsibility = 'Company'
+      this.filter.product_warranty = 'not_zero';
       this.service.post_rqst({ 'filter': this.filter }, "Master/productList").subscribe((result => {
         if (result['statusCode'] == 200) {
           this.productList = result['product_list'];
@@ -263,12 +274,12 @@ export class WarrantyAddComponent implements OnInit {
       console.log(this.data.warranty_period);
       
     }
-    calculateWarrantyEnd() {
-      const warrantyStartDate = new Date(this.data.date_of_purchase);
-      const warrantyEnd = new Date(warrantyStartDate.getFullYear(), warrantyStartDate.getMonth() + parseInt(this.warranty_period), warrantyStartDate.getDate());
-      console.log(warrantyEnd);
-      this.data.warranty_end_date = warrantyEnd;
-    }
+    // calculateWarrantyEnd() {
+    //   const warrantyStartDate = new Date(this.data.date_of_purchase);
+    //   const warrantyEnd = new Date(warrantyStartDate.getFullYear(), warrantyStartDate.getMonth() + parseInt(this.warranty_period), warrantyStartDate.getDate());
+    //   console.log(warrantyEnd);
+    //   this.data.warranty_end_date = warrantyEnd;
+    // }
 
 
     checkMobile() {

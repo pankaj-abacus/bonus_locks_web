@@ -79,13 +79,15 @@ export class WarrantyDetailComponent implements OnInit {
     }
     
     
-    updateWarrantyStataus(row)
+    updateWarrantyStataus(row,warranty_period)
     {
       const dialogRef = this.dialog.open(WarrantyUpdateModelComponent, {
         width: '400px',
         panelClass: 'cs-model',
         data: {
           id: row,
+          period: warranty_period,
+          
         }
       });
       

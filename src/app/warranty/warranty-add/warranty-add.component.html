@@ -50,28 +50,39 @@
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : serial_no?.invalid } ">
                     <mat-label>Serial No.</mat-label>
                     <input matInput placeholder="Type Here ..." name="serial_no" #serial_no="ngModel"
-                      [(ngModel)]="data.serial_no" >
+                      [(ngModel)]="data.serial_no">
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="f.submitted && serial_no?.invalid">
                     This field is required
                   </div>
                 </div>
                 <div class="col s12 m3 l3">
+                  <mat-form-field appearance="outline" [ngClass]="{'has-error' : bill_no?.invalid } ">
+                    <mat-label>Bill No.</mat-label>
+                    <input matInput placeholder="Type Here ..." name="bill_no" #bill_no="ngModel"
+                      [(ngModel)]="data.bill_no" required>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="f.submitted && bill_no?.invalid">
+                    This field is required
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="row">
+                <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : segment_id.invalid } ">
                     <mat-label>Category</mat-label>
                     <mat-select name="segment_id" #segment_id="ngModel" [(ngModel)]="data.segment_id"
                       (selectionChange)="getSubCatgory(data.segment_id)" required>
-                      <mat-option *ngFor="let row of segmentList" value="{{row.id}}"
-                        color="accent">{{row.category | titlecase}}</mat-option>
+                      <mat-option *ngFor="let row of segmentList" value="{{row.id}}" color="accent">{{row.category |
+                        titlecase}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="f.submitted && segment_id?.invalid ">
                     This field is required
                   </div>
                 </div>
-
-              </div>
-              <div class="row">
                 <div class="col s12 m3 l3" *ngIf="SubcategoryList.length > 0">
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : sub_segment_id.invalid } ">
                     <mat-label>Sub Category </mat-label>
@@ -95,7 +106,8 @@
                         <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
                           (keyup)="getProductName($event.target.value)"></ngx-mat-select-search>
                       </mat-option>
-                      <mat-option *ngFor="let row of productList" value="{{row.id}}" color="accent">{{row.product_name | titlecase}}
+                      <mat-option *ngFor="let row of productList" value="{{row.id}}" color="accent">{{row.product_name |
+                        titlecase}}
                         - {{row.product_code}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -106,12 +118,15 @@
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline">
                     <mat-label>Warranty In Months</mat-label>
-                    <input matInput type="text" name="warranty_period" placeholder="Type Here ..." #warranty_period="ngModel" [(ngModel)]="data.warranty_period" readonly>
+                    <input matInput type="text" name="warranty_period" placeholder="Type Here ..."
+                      #warranty_period="ngModel" [(ngModel)]="data.warranty_period" readonly>
                   </mat-form-field>
                   <!-- <div class="alert alert-danger" *ngIf="warranty_period.touched || f.submitted">
                     <p *ngIf="warranty_period.errors?.required">This field is required</p>
                   </div> -->
                 </div>
+              </div>
+              <!-- <div class="row">
 
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline">
@@ -133,7 +148,8 @@
                     <mat-datepicker #picker2 disabled="true"></mat-datepicker>
                   </mat-form-field>
                 </div>
-              </div>
+              </div> -->
+
             </div>
 
             <div class="row">
@@ -146,7 +162,7 @@
                         *ngIf="data.warranty_card_copy_img">
                       <label class="fix-label">
                         <input type="file" (change)="warrannty_Upload($event)" style="display:none;"
-                          accept=".png, .jpg, .jpeg," multiple required />
+                          accept=".png, .jpg, .jpeg," required />
                         <div class="other" *ngIf="!data.warranty_card_copy_img">
                           <i class="material-icons">cloud_upload</i>
                           <p>Upload Warranty Copy</p>
@@ -164,7 +180,7 @@
                         *ngIf="data.bill_copy_img">
                       <label class="fix-label">
                         <input type="file" (change)="bill_Upload($event)" style="display:none;"
-                          accept=".png, .jpg, .jpeg," multiple required />
+                          accept=".png, .jpg, .jpeg," required />
                         <div class="other" *ngIf="!data.bill_copy_img">
                           <i class="material-icons">cloud_upload</i>
                           <p>Upload Bill Copy</p>
