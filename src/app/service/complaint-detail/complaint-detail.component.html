@@ -6,9 +6,7 @@
         <h2>Complaint Details</h2>
 
         <div class="left-auto">
-            <button mat-button class="ouline-btns status" mat-raised-button color="accent"
-                (click)="openDialog(getData.id,getData.state)" *ngIf="getData.complaint_status!='Closed'">Assign
-                Technician</button>
+
         </div>
     </div>
 
@@ -320,9 +318,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col s12 m8  l4">
+            <div class="col s12 m10 l4">
 
-                <div class="card mt16" *ngIf="!loader">
+                <div class="card mt16 " *ngIf="!loader">
                     <div class="card-head">
                         <h2>Logs</h2>
                     </div>
@@ -356,11 +354,21 @@
         </div>
     </div>
     <div class="fab-btns">
-
-        <button (click)="openDialog2(getData.id)" mat-fab color="primary"
-            [ngClass]="{'pulse': fabBtnValue=='activity'}">
-            <i class="material-icons">add</i>
-            Add Remark
+        <button class="pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
+            <i class="material-icons">apps</i>
+            Action
         </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openDialog(getData.id,getData.state)"
+                [ngClass]="{'pulse': fabBtnValue=='activity'}">
+                <mat-icon>assignment</mat-icon>
+                <span>Assign Technician</span>
+            </button>
+
+            <button mat-menu-item (click)="openDialog2(getData.id)" [ngClass]="{'pulse': fabBtnValue=='activity'}">
+                <mat-icon>add</mat-icon>
+                <span>Add Remark</span>
+            </button>
+        </mat-menu>
     </div>
 </div>

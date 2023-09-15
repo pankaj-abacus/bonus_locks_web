@@ -13,18 +13,42 @@ import * as moment from 'moment';
 })
 export class WarrantyUpdateModelComponent implements OnInit {
 
-  formData:any={}
+  formData: any = {}
   savingFlag: boolean = false;
+  currentDate: Date;
+  warranty_period: any;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data, public dialog: MatDialog, public serve: DatabaseService, public session: sessionStorage, public toast: ToastrManager, public dialogRef: MatDialogRef<WarrantyUpdateModelComponent>) { }
-
-  ngOnInit() {
+  constructor(@Inject(MAT_DIALOG_DATA) public data, public dialog: MatDialog, public serve: DatabaseService, public session: sessionStorage, public toast: ToastrManager, public dialogRef: MatDialogRef<WarrantyUpdateModelComponent>) {
+    console.log(data);
+    this.warranty_period = data.period
   }
 
+  ngOnInit() {
+    this.currentDate = new Date();
+  }
+
+
+  calculateWarrantyEnd() {
+    const warrantyStartDate = new Date(this.formData.date_of_purchase);
+    const warrantyEnd = new Date(warrantyStartDate.getFullYear(), warrantyStartDate.getMonth() + parseInt(this.warranty_period), warrantyStartDate.getDate());
+    console.log(warrantyEnd);
+    this.formData.warranty_end_date = warrantyEnd;
+  }
+
+
+
   update() {
-    this.formData.id=this.data.id
+    if (this.formData.date_of_purchase) {
+      this.formData.date_of_purchase = moment(this.formData.date_of_purchase).format('YYYY-MM-DD');
+      this.formData.date_of_purchase = this.formData.date_of_purchase;
+    }
+    if (this.formData.warranty_end_date) {
+      this.formData.warranty_end_date = moment(this.formData.warranty_end_date).format('YYYY-MM-DD');
+      this.formData.warranty_end_date = this.formData.warranty_end_date;
+    }
+    this.formData.id = this.data.id
     this.savingFlag = true;
-    this.serve.post_rqst({'data': this.formData }, "ServiceTask/change_warranty_status").subscribe((result => {
+    this.serve.post_rqst({ 'data': this.formData }, "ServiceTask/change_warranty_status").subscribe((result => {
       if (result['statusCode'] == 200) {
 
         this.dialogRef.close(true);

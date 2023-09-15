@@ -85,20 +85,20 @@
               <div class="block-feilds flex-heading">
                 <div>
 
-                  <span>Warranty Status</span>
+                  <span>Warranty Verification Status</span>
                   <p>{{getData.company_verification_status ? getData.company_verification_status :'---'}}</p>
                 </div>
 
                 <div class="left-auto" *ngIf="getData.company_verification_status=='Pending'">
                   <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
-                    (click)="updateWarrantyStataus(getData.id)">
+                    (click)="updateWarrantyStataus(getData.id,getData.warranty_period)">
                     <i class="material-icons">edit</i>
                   </a>
                 </div>
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
                 <span>Verification Date</span>
-                <p>{{getData.verification_on ? (getData.verification_on | date : 'dd MMM yyy ,h:mm a') :'---'}}</p>
+                <p>{{getData.verification_on != '0000-00-00 00:00:00' ? (getData.verification_on | date : 'dd MMM yyy ,h:mm a') :'---'}}</p>
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
                 <span>Verification By</span>

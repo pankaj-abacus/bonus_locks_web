@@ -17,8 +17,21 @@
             </div>
           </div>
 
-          <div class="col s12" *ngIf="formData.status=='Reject'" [ngClass]="{'has-error' : reject_reason?.invalid } ">
-            <mat-form-field class="cs-input" appearance="outline">
+          <div class="col s12" *ngIf="formData.status!='Reject'" >
+            <mat-form-field class="cs-input" appearance="outline" [ngClass]="{'has-error' : date_of_purchase?.invalid } ">
+              <mat-label>Date Of Purchase</mat-label>
+              <input name="date_of_purchase" matInput placeholder="" #date_of_purchase="ngModel"
+                [(ngModel)]="formData.date_of_purchase" (ngModelChange)="calculateWarrantyEnd()" [matDatepicker]="picker"  [max]="currentDate" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker disabled="false"></mat-datepicker>
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="date_of_purchase.touched || update_basic.submitted">
+              <p *ngIf="date_of_purchase.errors?.required">This field is required</p>
+            </div>
+          </div>
+
+          <div class="col s12" *ngIf="formData.status=='Reject'" >
+            <mat-form-field class="cs-input" appearance="outline" [ngClass]="{'has-error' : reject_reason?.invalid } ">
               <mat-label>Reject Reason</mat-label>
               <textarea matInput placeholder="Type here ..." name="reject_reason" #reject_reason="ngModel" [(ngModel)]="formData.reject_reason" required></textarea>
             </mat-form-field>
@@ -33,7 +46,7 @@
     <div mat-dialog-actions>
       <div class="text-right wp100">
         <button class="mr10" mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-        <button mat-raised-button color="accent" type="submit"  [ngClass]="{'loading': savingFlag == true}" [disabled]="savingFlag == true">
+        <button mat-raised-button color="accent" type="submit"  [ngClass]="{'loading': savingFlag == true}" [disabled]="savingFlag == true ">
           {{savingFlag == true ? 'Saving' : 'Save'}}
         </button>
       </div>
