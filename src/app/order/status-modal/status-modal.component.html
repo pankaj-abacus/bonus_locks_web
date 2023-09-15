@@ -32,7 +32,7 @@
             <mat-form-field class="cs-input" appearance="outline">
               <mat-label>Select Organization Name</mat-label>
               <mat-select name="organisation_id" placeholder="Select Organization Name" #organisation_id="ngModel"
-              [(ngModel)]="data.organisation_id" required>
+              [(ngModel)]="data.organisation_id" (ngModelChange)="getOrganizationCode(data.organisation_id)" required>
               <mat-option *ngFor="let row of organisationData" value="{{row.id}}">{{row.company_name}}</mat-option>
             </mat-select>
           </mat-form-field>
