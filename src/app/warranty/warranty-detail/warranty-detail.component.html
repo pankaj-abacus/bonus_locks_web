@@ -86,7 +86,18 @@
                 <div>
 
                   <span>Warranty Verification Status</span>
-                  <p>{{getData.company_verification_status ? getData.company_verification_status :'---'}}</p>
+                  <!-- <p>{{getData.company_verification_status ? getData.company_verification_status :'---'}}</p> -->
+                  <p>
+                    <strong class="yellow-clr" *ngIf="getData.company_verification_status=='Pending'">
+                      {{getData.company_verification_status ? (getData.company_verification_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="green-clr" *ngIf="getData.company_verification_status=='Verified'">
+                      {{getData.company_verification_status ? (getData.company_verification_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="red-clr" *ngIf="getData.company_verification_status=='Reject'">
+                      {{getData.company_verification_status ? (getData.company_verification_status | titlecase) :
+                      '--'}}</strong>
+                  </p>
                 </div>
 
                 <div class="left-auto" *ngIf="getData.company_verification_status=='Pending'">
@@ -98,7 +109,8 @@
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
                 <span>Verification Date</span>
-                <p>{{getData.verification_on != '0000-00-00 00:00:00' ? (getData.verification_on | date : 'dd MMM yyy ,h:mm a') :'---'}}</p>
+                <p>{{getData.verification_on != '0000-00-00 00:00:00' ? (getData.verification_on | date : 'dd MMM yyy
+                  ,h:mm a') :'---'}}</p>
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
                 <span>Verification By</span>
@@ -106,7 +118,7 @@
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status=='Reject'">
                 <span>Reject Reason</span>
-                <p>{{getData.reject_reason ? getData.reject_reason : '--'}}</p>
+                <p>{{getData.reject_reason ? (getData.reject_reason | titlecase) : '--'}}</p>
               </div>
 
 

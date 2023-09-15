@@ -165,7 +165,17 @@
                                 </div>
                                 <div class="block-feilds">
                                     <span>Complaint Status</span>
-                                    <p>{{getData.complaint_status ? (getData.complaint_status | titlecase) : '--'}}</p>
+                                    <p>
+                                        <strong class="yellow-clr" *ngIf="getData.complaint_status=='Pending'">
+                                            {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                                            '--'}}</strong>
+                                        <strong class="green-clr" *ngIf="getData.complaint_status=='Closed'">
+                                            {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                                            '--'}}</strong>
+                                        <strong class="red-clr" *ngIf="getData.complaint_status=='Cancel'">
+                                            {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                                            '--'}}</strong>
+                                    </p>
                                 </div>
 
                                 <div class="block-feilds">
@@ -327,7 +337,8 @@
 
                     <div class="logs-box">
                         <ng-container *ngFor="let row of getData.log">
-                            <div class="logshead ">{{row.created_by_name}} :- {{row.date_created | date:'dd MMM yyyy'}}
+                            <div class="logshead ">{{row.created_by_name}} :- {{row.date_created | date:'dd MMM yyyy
+                                ,h:mm a'}}
                             </div>
                             <div class="logscontent ">
                                 <span>Remark : </span> {{row.msg ? (row.msg| titlecase) : (row.remark| titlecase)}}
