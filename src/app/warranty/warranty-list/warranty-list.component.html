@@ -30,7 +30,7 @@
       <ng-container>
         <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
           (click)="active_tab = 'All'; getWarrantyList('')">
-          <i class="material-icons">all_inbox</i>All({{ tab_count.all_count }})
+          <i class="material-icons">all_inbox</i>All({{ all_count }})
         </button>
 
         <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
