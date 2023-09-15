@@ -115,7 +115,7 @@
                     routerLink="customer-detail/{{(row.id)}}" routerLinkActive="active"> {{row.name | titlecase}}</a>
                 </td>
                 <td class="w100">{{row.mobile_no}}</td>
-                <td class="w250 ">{{row.address}}</td>
+                <td class="w250 ">{{row.address? (row.address |titlecase) :'--'}}</td>
                 <td class="w70 ">{{row.total_complaint}}</td>
                 <td class="w70 ">{{row.pending_complaint}}</td>
               </tr>
