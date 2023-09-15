@@ -121,7 +121,7 @@
                 Closing remark</th>
               <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Date</th>
               <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Status</th>
-              
+
               <th class="w70 text-center">TAT</th>
             </tr>
           </table>
@@ -250,7 +250,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              
+
               <th class="w70 text-center"></th>
             </tr>
           </table>
@@ -265,23 +265,26 @@
                 [ngClass]="{'Current': service.currentUserID == row.id}">
                 <td class="w60">{{i + 1 + sr_no}}</td>
                 <td class="w160">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                <td class="w100">{{row.created_name ? row.created_name : '--'}}</td>
+                <td class="w100">{{row.created_name ? (row.created_name | titlecase): '--'}}</td>
                 <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                     routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
                 <td class="w130">{{row.customer_name | titlecase}}</td>
                 <td class="w130">{{row.customer_mobile}}</td>
                 <td class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.carpenter_name ?
-                  row.carpenter_name : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
+                  (row.carpenter_name | titlecase) : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
                 <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
                   <strong class="yellow-clr" *ngIf="row.inspection_status=='Pending'">{{row.inspection_status
-                  ? row.inspection_status : '--'}}</strong>
+                    ? row.inspection_status : '--'}}</strong>
                   <strong class="green-clr" *ngIf="row.inspection_status=='Done'">{{row.inspection_status
-                  ? row.inspection_status : '--'}}</strong>
+                    ? row.inspection_status : '--'}}</strong>
                 </td>
                 <td class="w130">
-                  <strong class="yellow-clr" *ngIf="row.complaint_status=='Pending'">{{row.complaint_status ? row.complaint_status : '--'}}</strong>
-                  <strong class="green-clr" *ngIf="row.complaint_status=='Closed'">{{row.complaint_status ? row.complaint_status : '--'}}</strong>
-                  <strong class="red-clr" *ngIf="row.complaint_status=='Cancel'">{{row.complaint_status ? row.complaint_status : '--'}}</strong>
+                  <strong class="yellow-clr" *ngIf="row.complaint_status=='Pending'">{{row.complaint_status ?
+                    row.complaint_status : '--'}}</strong>
+                  <strong class="green-clr" *ngIf="row.complaint_status=='Closed'">{{row.complaint_status ?
+                    row.complaint_status : '--'}}</strong>
+                  <strong class="red-clr" *ngIf="row.complaint_status=='Cancel'">{{row.complaint_status ?
+                    row.complaint_status : '--'}}</strong>
                 </td>
                 <td class="w160"
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
@@ -289,14 +292,16 @@
                 </td>
                 <td class="w130"
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                  {{row.closing_remark ? row.closing_remark : '--'}}</td>
+                  {{row.closing_remark ? (row.closing_remark | titlecase ): '--'}}</td>
                 <td class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">{{row.return_on
                   !='0000-00-00 00:00:00' ? (row.return_on | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
                 <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
-                  <strong class="yellow-clr" *ngIf="row.return_status=='Pending'">{{row.return_status ? row.return_status : '--'}}</strong>
-                  <strong class="green-clr" *ngIf="row.return_status=='Done'">{{row.return_status ? row.return_status : '--'}}</strong>
+                  <strong class="yellow-clr" *ngIf="row.return_status=='Pending'">{{row.return_status ?
+                    row.return_status : '--'}}</strong>
+                  <strong class="green-clr" *ngIf="row.return_status=='Done'">{{row.return_status ? row.return_status :
+                    '--'}}</strong>
                 </td>
-                
+
                 <td class="w70">{{row.pending_at}}</td>
               </tr>
             </ng-container>
@@ -330,10 +335,12 @@
                 <td class="w130">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                <td class="w160"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w130 " *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                <td class="w130 "
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w160 " *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
@@ -342,7 +349,7 @@
                 <td class="w130 " *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
                   <div>&nbsp;</div>
                 </td>
-                
+
                 <td class="w70 text-center">
                   <div>&nbsp;</div>
                 </td>

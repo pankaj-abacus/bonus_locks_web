@@ -153,8 +153,8 @@
               <th class="w100" *ngIf="active_tab == 'All'">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input select-input">
-                    <mat-select name="complaint_status" #complaint_status="ngModel" [(ngModel)]="filter_data.complaint_status"
-                      (selectionChange)="getinspectionList('')">
+                    <mat-select name="complaint_status" #complaint_status="ngModel"
+                      [(ngModel)]="filter_data.complaint_status" (selectionChange)="getinspectionList('')">
                       <mat-option value="">All</mat-option>
                       <mat-option value="Pending">Pending</mat-option>
                       <mat-option value="Done">Done </mat-option>
@@ -188,7 +188,7 @@
                   }}
                 </td>
                 <td class="w150">
-                  {{ row.created_name ? row.created_name : "--" }}
+                  {{ row.created_name ? (row.created_name | titlecase) : "--" }}
                 </td>
                 <td class="w100">
                   <a class="link-btn" mat-button (click)="service.setData(filter_data)"
@@ -196,20 +196,25 @@
                 </td>
                 <td class="w150">{{ row.customer_name | titlecase }}</td>
                 <td class="w120">{{ row.customer_mobile }}</td>
-                <td class="w180">{{row.carpenter_name ? row.carpenter_name : '--'}}-{{row.carpenter_mobile ?
+                <td class="w180">{{row.carpenter_name ? (row.carpenter_name| titlecase) : '--'}}-{{row.carpenter_mobile
+                  ?
                   row.carpenter_mobile : '--'}}</td>
                 <td class="w50"><a class="link-btn flat" (click)="attendancDetail(row)">{{row.total_items}}</a></td>
                 <td class="w100" *ngIf="active_tab == 'All'">
-                  <strong class="yellow-clr" *ngIf="row.complaint_status=='Pending'">{{row.complaint_status}}</strong>
-                  <strong class="green-clr" *ngIf="row.complaint_status=='Done'">{{row.complaint_status}}</strong>
-                  <strong class="red-clr" *ngIf="row.complaint_status=='Reject'">{{row.complaint_status}}</strong>
+                  <strong class="yellow-clr" *ngIf="row.complaint_status=='Pending'">{{row.complaint_status|
+                    titlecase}}</strong>
+                  <strong class="green-clr" *ngIf="row.complaint_status=='Done'">{{row.complaint_status|
+                    titlecase}}</strong>
+                  <strong class="red-clr" *ngIf="row.complaint_status=='Reject'">{{row.complaint_status|
+                    titlecase}}</strong>
                 </td>
 
 
 
                 <td class="w70 text-center">{{row.pending_at}}</td>
-                <td class="w180">{{row.remark}}</td>
-                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">{{row.closing_remark}}</td>
+                <td class="w180">{{row.remark| titlecase}}</td>
+                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">{{row.closing_remark| titlecase}}
+                </td>
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">

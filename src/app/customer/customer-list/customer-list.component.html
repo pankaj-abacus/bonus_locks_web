@@ -110,14 +110,14 @@
                 [ngClass]="{'Current': service.currentUserID == row.id}">
                 <td class="w50">{{i + 1 + sr_no}}</td>
                 <td class="w100">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
-                <td class="w80">{{row.created_name}}</td>
+                <td class="w80">{{row.created_name | titlecase}}</td>
                 <td class="w150"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                     routerLink="customer-detail/{{(row.id)}}" routerLinkActive="active"> {{row.name | titlecase}}</a>
                 </td>
                 <td class="w100">{{row.mobile_no}}</td>
-                <td class="w250 ">{{row.address? (row.address |titlecase) :'--'}}</td>
-                <td class="w70 ">{{row.total_complaint}}</td>
-                <td class="w70 ">{{row.pending_complaint}}</td>
+                <td class="w250 ">{{row.address | titlecase}}</td>
+                <td class="w70 text-center">{{row.total_complaint}}</td>
+                <td class="w70 text-center ">{{row.pending_complaint}}</td>
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">

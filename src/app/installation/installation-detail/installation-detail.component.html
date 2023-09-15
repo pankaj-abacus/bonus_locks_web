@@ -26,7 +26,7 @@
               <div class="block-feilds">
                 <span>Customer Name</span>
                 <p>
-                  {{ getData.customer_name ? getData.customer_name : "---" }}
+                  {{ getData.customer_name ? (getData.customer_name| titlecase) : "---" }}
                 </p>
               </div>
 
@@ -46,17 +46,17 @@
 
               <div class="block-feilds">
                 <span>State</span>
-                <p>{{ getData.state ? getData.state : "---" }}</p>
+                <p>{{ getData.state ? (getData.state| titlecase) : "---" }}</p>
               </div>
 
               <div class="block-feilds">
                 <span>District</span>
-                <p>{{ getData.district ? getData.district : "---" }}</p>
+                <p>{{ getData.district ? (getData.district| titlecase) : "---" }}</p>
               </div>
 
               <div class="block-feilds">
                 <span>City</span>
-                <p>{{ getData.city ? getData.city : "---" }}</p>
+                <p>{{ getData.city ? (getData.city| titlecase) : "---" }}</p>
               </div>
 
               <div class="block-feilds">
@@ -66,7 +66,7 @@
 
               <div class="block-feilds">
                 <span>Address</span>
-                <p>{{ getData.address ? getData.address : "N/A" }}</p>
+                <p>{{ getData.address ? (getData.address| titlecase) : "N/A" }}</p>
               </div>
 
 
@@ -103,7 +103,7 @@
                 <div class="block-feilds">
                   <span>Created By</span>
                   <p>
-                    {{ getData.created_name ? getData.created_name : "---" }}
+                    {{ getData.created_name ? (getData.created_name | titlecase): "---" }}
                   </p>
                 </div>
 
@@ -114,7 +114,7 @@
                 <div class="block-feilds">
                   <span>Technician Name</span>
                   <p>
-                    {{ getData.carpenter_name ? getData.carpenter_name : "N/A" }}
+                    {{ getData.carpenter_name ? (getData.carpenter_name | titlecase): "N/A" }}
                   </p>
                 </div>
 
@@ -128,7 +128,7 @@
                 </div>
                 <div class="block-feilds">
                   <span>Installation Status</span>
-                  <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
+                  <p>{{getData.complaint_status ? (getData.complaint_status| titlecase) : '--'}}</p>
                 </div>
               </div>
             </div>
@@ -204,7 +204,7 @@
                   <span>Closing Remark</span>
                   <p>
                     {{
-                    getData.closing_remark ? getData.closing_remark : "N/A"
+                    getData.closing_remark ? (getData.closing_remark | titlecase): "N/A"
                     }}
                   </p>
                 </div>
@@ -236,11 +236,11 @@
           <div class="logs-box">
             <ng-container *ngFor="let row of getData.log">
               <div class="logshead">
-                {{ row.created_by_name }} :-
+                {{ row.created_by_name| titlecase }} :-
                 {{ row.date_created | date : 'dd MMM yyy ,h:mm a'}}
               </div>
               <div class="logscontent">
-                <span>Remark : </span> {{ row.msg ? row.msg : row.remark }}
+                <span>Remark : </span> {{ row.msg ? (row.msg| titlecase) : (row.remark| titlecase) }}
               </div>
             </ng-container>
           </div>
@@ -258,7 +258,47 @@
         </div>
       </div>
     </div>
-    
+    <div class="row" *ngIf="add_list.length > 0">
+      <div class="col s12 m12 l12">
+        <div class="card">
+          <div class="card-head">
+            <h2>Product List</h2>
+          </div>
+          <div class="card-body">
+            <div class="cs-table left-right-10">
+              <div class="border-top">
+                <div class="table-head">
+                  <table>
+                    <tr>
+                      <th class="w30 text-center">Sr.No</th>
+                      <th class="w100">Category</th>
+                      <th class="w100">Sub Category</th>
+                      <th class="w180">Product Name And Code</th>
+                      <th class="w30 text-center">Qty</th>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+              <div class="table-container pb0">
+                <div class="table-content none-shadow">
+                  <table>
+                    <tr *ngFor="let row of add_list; let i = index">
+                      <td class="w30 text-center">{{ i + 1 }}</td>
+                      <td class="w100">{{ row.category_name | titlecase }}</td>
+                      <td class="w100">{{ row.subcat_name| titlecase }}</td>
+                      <td class="w180">{{ row.product_name }}-{{ row.product_code }}</td>
+                      <td class="w30 text-center">{{ row.qty }}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <div class="fab-btns">
     <button class="pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">

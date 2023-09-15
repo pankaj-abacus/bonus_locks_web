@@ -1,6 +1,3 @@
-
-
-
 <div class="edit-modal">
   <p class="heading">Product List</p>
   <div mat-dialog-content>
@@ -9,11 +6,11 @@
         <div class="table-head">
           <table>
             <tr>
-              <th class="w50">Sr.No</th>
+              <th class="w30 text-center ">Sr.No</th>
               <th class="w100">Category</th>
               <th class="w100">Sub Category</th>
               <th class="w180">Product Name And Code</th>
-              <th class="w50">Qty</th>
+              <th class="w30 text-center ">Qty</th>
             </tr>
           </table>
         </div>
@@ -24,11 +21,11 @@
           <table>
             <ng-container *ngFor="let row of add_list; let i = index">
               <tr>
-                <td class="w50">{{ i + 1 }}</td>
+                <td class="w30 text-center ">{{ i + 1 }}</td>
                 <td class="w100">{{ row.category_name }}</td>
                 <td class="w100">{{ row.subcat_name }}</td>
                 <td class="w180">{{ row.product_name }}-{{row.product_code}}</td>
-                <td class="w50">{{ row.qty }}</td>
+                <td class="w30 text-center ">{{ row.qty }}</td>
               </tr>
             </ng-container>
           </table>
