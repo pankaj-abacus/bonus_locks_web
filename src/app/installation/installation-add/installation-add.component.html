@@ -251,7 +251,7 @@
                               <th class="w30 text-center">Sr.No</th>
                               <th class="w100 ">Category</th>
                               <th class="w100 " *ngIf="SubcategoryList.length > 0">Sub Category</th>
-                              <th class="w180 ">Product Name And Code </th>
+                              <th class="w180 ">Product Details</th>
                               <th class="w30 text-center">Qty</th>
                               <th class="w30 text-center">Action</th>
                             </tr>
@@ -264,9 +264,9 @@
                           <table>
                             <tr *ngFor="let row of add_list;let i=index;">
                               <td class="w30 text-center">{{i+1}}</td>
-                              <td class="w100">{{row.category_name}}</td>
-                              <td class="w100" *ngIf="SubcategoryList.length > 0">{{row.subcat_name}}</td>
-                              <td class="w180">{{row.product_name}}-{{row.product_code}}</td>
+                              <td class="w100">{{row.category_name |titlecase}}</td>
+                              <td class="w100" *ngIf="SubcategoryList.length > 0">{{row.subcat_name |titlecase}}</td>
+                              <td class="w180">{{row.product_name |titlecase}}-{{row.product_code |titlecase}}</td>
                               <td class="w30 text-center">{{row.qty}}</td>
                               <td class="w30 text-center">
                                 <div class="action-button">

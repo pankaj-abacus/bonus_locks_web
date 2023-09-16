@@ -38,8 +38,8 @@
               <th class="w50">Sr.No</th>
               <th class="w100">Date Created</th>
               <th class="w80">Created By</th>
-              <th class="w150">Customer Name</th>
-              <th class="w100">Customer Mobile No.</th>
+              <th class="w130">Customer Name</th>
+              <th class="w80">Mobile No.</th>
               <th class="w250">Address</th>
               <th class="w70">Total Complaint</th>
               <th class="w70">Pending Complaint</th>
@@ -71,7 +71,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="name" (keyup.enter)="getCumtomerList('')"
@@ -79,7 +79,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
+              <th class="w80">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="mobile_no"
@@ -111,10 +111,10 @@
                 <td class="w50">{{i + 1 + sr_no}}</td>
                 <td class="w100">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
                 <td class="w80">{{row.created_name | titlecase}}</td>
-                <td class="w150"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
+                <td class="w130"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                     routerLink="customer-detail/{{(row.id)}}" routerLinkActive="active"> {{row.name | titlecase}}</a>
                 </td>
-                <td class="w100">{{row.mobile_no}}</td>
+                <td class="w80">{{row.mobile_no}}</td>
                 <td class="w250 ">{{row.address | titlecase}}</td>
                 <td class="w70 text-center">{{row.total_complaint}}</td>
                 <td class="w70 text-center ">{{row.pending_complaint}}</td>
@@ -131,10 +131,10 @@
                 <td class="w80">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100">
+                <td class="w130">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w80">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w150">

@@ -73,7 +73,8 @@
               <th class="w100">Installation No.</th>
               <th class="w150">Customer Name</th>
               <th class="w120">Customer Mobile No.</th>
-              <th class="w180">Technician Details</th>
+              <th class="w180">Customer Address</th>
+              <th class="w180" *ngIf=" active_tab !='Pending'">Technician Details</th>
               <th class="w50">Total Item</th>
               <th class="w100" *ngIf="active_tab == 'All'">Status</th>
               <th class="w70 text-center">TAT</th>
@@ -125,6 +126,7 @@
                   </mat-form-field>
                 </div>
               </th>
+
               <th class="w120">
                 <div class="th-search-acmt">
                   <mat-form-field>
@@ -135,6 +137,14 @@
                 </div>
               </th>
               <th class="w180">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="address"
+                      (keyup.enter)="getinspectionList('')" #address="ngModel" [(ngModel)]="filter_data.address" />
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w180" *ngIf=" active_tab !='Pending'">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
@@ -196,10 +206,14 @@
                 </td>
                 <td class="w150">{{ row.customer_name | titlecase }}</td>
                 <td class="w120">{{ row.customer_mobile }}</td>
-                <td class="w180">{{row.carpenter_name ? (row.carpenter_name| titlecase) : '--'}}-{{row.carpenter_mobile
+                <td class="w180">{{row.address?(row.address|titlecase):'--'}}</td>
+                <!-- <td class="180">{{row.address?(row.address|titlecase):'--'}}</td> -->
+                <td class="w180" *ngIf=" active_tab !='Pending'">{{row.carpenter_name ? (row.carpenter_name| titlecase)
+                  : '--'}}-{{row.carpenter_mobile
                   ?
                   row.carpenter_mobile : '--'}}</td>
-                <td class="w50"><a class="link-btn flat" (click)="attendancDetail(row)">{{row.total_items}}</a></td>
+                <td class="w50 text-center"><a class="link-btn flat"
+                    (click)="attendancDetail(row)">{{row.total_items}}</a></td>
                 <td class="w100" *ngIf="active_tab == 'All'">
                   <strong class="yellow-clr" *ngIf="row.complaint_status=='Pending'">{{row.complaint_status|
                     titlecase}}</strong>
@@ -238,6 +252,9 @@
                   <div>&nbsp;</div>
                 </td>
                 <td class="w180">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w180" *ngIf=" active_tab !='Pending'">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w50">
