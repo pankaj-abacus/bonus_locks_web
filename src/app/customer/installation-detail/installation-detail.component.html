@@ -155,11 +155,11 @@
                         <div class="table-head">
                           <table>
                             <tr>
-                              <th class="w50">Sr.No</th>
+                              <th class="w30 text-center">Sr.No</th>
                               <th class="w100">Category</th>
                               <th class="w100">Sub Category</th>
                               <th class="w180">Product Name And Code</th>
-                              <th class="w50">Qty</th>
+                              <th class="w30 text-center">Qty</th>
                             </tr>
                           </table>
                         </div>
@@ -169,11 +169,11 @@
                         <div class="table-content none-shadow">
                           <table>
                             <tr *ngFor="let row of add_list; let i = index">
-                              <td class="w50">{{ i + 1 }}</td>
+                              <td class="w30 text-center">{{ i + 1 }}</td>
                               <td class="w100">{{ row.category_name }}</td>
                               <td class="w100">{{ row.subcat_name }}</td>
                               <td class="w180">{{ row.product_name }}-{{ row.product_code }}</td>
-                              <td class="w50">{{ row.qty }}</td>
+                              <td class="w30 text-center">{{ row.qty }}</td>
                             </tr>
                           </table>
                         </div>
