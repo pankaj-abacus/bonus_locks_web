@@ -11,7 +11,8 @@ import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
 import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-model-component/engineer-assign-model-component.component';
 import { AddComplaintRemarkComponent } from 'src/app/add-complaint-remark/add-complaint-remark.component';
-import { EngineerAssignModelComponent } from 'src/app/installation/engineer-assign-model/engineer-assign-model.component';
+import { ComplaintUpdateModelComponent } from 'src/app/service/complaint-update-model/complaint-update-model.component';
+
 
 @Component({
   selector: 'app-complaint-detail',
@@ -19,100 +20,121 @@ import { EngineerAssignModelComponent } from 'src/app/installation/engineer-assi
   styleUrls: ['./complaint-detail.component.scss']
 })
 export class ComplaintDetailComponent implements OnInit {
-  loader: boolean = false;
   id;
-  getData:any ={};
-  skLoading:boolean = false;
-  url:any;
-  assign_login_data:any={};
-  logined_user_data:any={};
-  stateDetail:any =[];
-  product_size:any =[];
-  featureFlag :boolean = false;
-  allMrpFlag :boolean = false;
-  complaintImg:any =[];
-  inspectionImg:any =[];
-  closeImg:any =[];
+  getData: any = {};
+  loader: any;
+  skLoading: boolean = false;
+  url: any;
+  assign_login_data: any = {};
+  logined_user_data: any = {};
+  stateDetail: any = [];
+  product_size: any = [];
+  featureFlag: boolean = false;
+  allMrpFlag: boolean = false;
+  complaintImg: any = [];
+  inspectionImg: any = [];
+  closeImg: any = [];
   fabBtnValue: any = 'excel';
 
   constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
 
-    
+
     this.url = this.service.uploadUrl + 'service_task/'
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.service.currentUserID = params.id
-      if(this.id){
+      if (this.id) {
         this.getComplaintDetail();
       }
     });
   }
-  
+
   ngOnInit() {
   }
-  
-  getComplaintDetail()
-  {
+
+  getComplaintDetail() {
+    this.loader = 1;
     this.skLoading = true;
-    this.service.post_rqst({'complaint_id':this.id},"ServiceTask/serviceComplaintDetail").subscribe((result=>
-      {
+    this.service.post_rqst({ 'complaint_id': this.id }, "ServiceTask/serviceComplaintDetail").subscribe(result => {
+      if (result['statusCode'] == 200) {
+        this.skLoading = false;
         this.getData = result['result'];
         // console.log('getData',this.getData);        
         this.complaintImg = this.getData['image'];
         this.inspectionImg = this.getData['inspection_image'];
         this.closeImg = this.getData['closing_image'];
-        this.skLoading = false;
-      }
-      ));
-      
-    }
-    
-    imageModel(image){
-      const dialogRef = this.dialog.open( ImageModuleComponent, {
-        panelClass:'Image-modal',
-        data:{
-          image,
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-      });
-    }
-    
-    
-    back(): void {
-      this.location.back()
-    }
-    openDialog(row,state): void {
-      console.log(row);
-      const dialogRef = this.dialog.open(EngineerAssignModelComponentComponent, {
-        width: '400px',
-        panelClass: 'cs-model',
-        data: {
-          id: row,
-          state: state,
-        }
-      });
-      
-      dialogRef.afterClosed().subscribe(result => {
-        if (result != false) {
-          this.getComplaintDetail();
-        }
-      });
-    }
 
-    openDialog2(id) {
-      const dialogRef = this.dialog.open(AddComplaintRemarkComponent, {
-        width: '500px',
-        panelClass:'cs-modal',
-        data: {
-          id: id,
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        this.getComplaintDetail();
-        
-      });
-    }
+      } else {
+        this.skLoading = false;
+        this.toast.errorToastr(result['statusMsg']);
+      }
+    }, err => {
+      this.skLoading = false;
+      this.toast.errorToastr('Something went wrong');
+    })
   }
-  
+
+
+  imageModel(image) {
+    const dialogRef = this.dialog.open(ImageModuleComponent, {
+      panelClass: 'Image-modal',
+      data: {
+        image,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
+
+  back(): void {
+    this.location.back()
+  }
+  openDialog(row, state): void {
+    console.log(row);
+    const dialogRef = this.dialog.open(EngineerAssignModelComponentComponent, {
+      width: '400px',
+      panelClass: 'cs-model',
+      data: {
+        id: row,
+        state: state,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != false) {
+        this.getComplaintDetail();
+      }
+    });
+  }
+
+  openDialog2(id) {
+    const dialogRef = this.dialog.open(AddComplaintRemarkComponent, {
+      width: '500px',
+      panelClass: 'cs-modal',
+      data: {
+        id: id,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getComplaintDetail();
+
+    });
+  }
+  updateComplaintStataus(id) {
+    const dialogRef = this.dialog.open(ComplaintUpdateModelComponent, {
+      width: '400px',
+      panelClass: 'cs-model',
+      data: {
+        id: id,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != false) {
+        this.getComplaintDetail();
+      }
+    });
+  }
+}

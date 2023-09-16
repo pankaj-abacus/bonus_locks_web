@@ -27,20 +27,13 @@ export class InstallationUpdateModelComponent implements OnInit {
 
     this.url = this.serve.uploadUrl + 'product_image/';
     console.log(data);
-    this.warranty_period = data.period
-    this.date_of_purchase = data.dop
-
-    const warrantyStartDate = new Date(this.date_of_purchase);
-    const warrantyEnd = new Date(warrantyStartDate.getFullYear(), warrantyStartDate.getMonth() + parseInt(this.warranty_period), warrantyStartDate.getDate());
-    console.log(warrantyEnd);
-    this.formData.warranty_end_date = warrantyEnd;
   }
 
   ngOnInit() {
     this.currentDate = new Date();
   }
 
-  deleteProductImage(arrayIndex, id, name) {
+  deleteImage(arrayIndex, id, name) {
 
     if (id) {
       this.serve.post_rqst({ 'image_id': id, 'image': name }, "Master/productImageDeleted").subscribe((result => {
@@ -78,9 +71,9 @@ export class InstallationUpdateModelComponent implements OnInit {
 
 
   update() {
-    this.formData.id = this.data.id
+    this.formData.complaint_id = this.data.id
     this.savingFlag = true;
-    this.serve.post_rqst({ 'data': this.formData }, "ServiceTask/change_warranty_status").subscribe((result => {
+    this.serve.post_rqst({ 'data': this.formData }, "ServiceTask/complaintStatus").subscribe((result => {
       if (result['statusCode'] == 200) {
 
         this.dialogRef.close(true);
