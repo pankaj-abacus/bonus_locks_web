@@ -133,13 +133,13 @@
                                         #transport="ngModel" [(ngModel)]="data.transport">
                                     </mat-form-field>
                                 </div>
-                                <div class="col s12 m3 l3" *ngIf="pageType=='edit'">
+                                <!-- <div class="col s12 m3 l3" *ngIf="pageType=='edit'">
                                     <mat-form-field appearance="outline" [ngClass]="{'has-error' : bank_name.invalid } ">
                                         <mat-label>Bank Name</mat-label>
                                         <input type="text" name="bank_name" bank_name="bank_name" matInput placeholder="Type Here ..."
                                         #bank_name="ngModel" [(ngModel)]="data.bank_name">
                                     </mat-form-field>
-                                </div>
+                                </div> -->
                                 <div class="col s12 m3 l3" *ngIf="pageType=='edit'">
                                     <mat-form-field appearance="outline" [ngClass]="{'has-error' : security_Cheque.invalid } ">
                                         <mat-label>Security Check</mat-label>
@@ -322,7 +322,7 @@
                                 </div>
                             </div>
                             
-                            <div class="row" *ngIf="dr_type ==3">
+                            <div class="row" *ngIf="dr_type ==3 || dr_type ==7">
                                 <ng-container>
                                     <div class="col s12 m6 l6">
                                         <div class="card pb0">
