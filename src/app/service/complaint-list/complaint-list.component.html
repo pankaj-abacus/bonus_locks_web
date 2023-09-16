@@ -117,6 +117,9 @@
               <th class="w160"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                 Status Update Date</th>
+              <th class="w120"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                Status Update By</th>
               <th class="w130"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                 Remark</th>
@@ -234,6 +237,16 @@
                   </mat-form-field>
                 </div>
               </th>
+              <th class="w120"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="status_updated_by_name"
+                      (keyup.enter)="getComplantList('')" #status_updated_by_name="ngModel"
+                      [(ngModel)]="filter_data.status_updated_by_name" />
+                  </mat-form-field>
+                </div>
+              </th>
               <th class="w130"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
               </th>
@@ -301,6 +314,10 @@
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
                 </td>
+                <td class="w120"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  {{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}
+                </td>
                 <td class="w130"
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   {{row.closing_remark ? (row.closing_remark | titlecase ): '--'}}</td>
@@ -351,6 +368,10 @@
                   <div>&nbsp;</div>
                 </td>
                 <td class="w160"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w120"
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   <div>&nbsp;</div>
                 </td>
