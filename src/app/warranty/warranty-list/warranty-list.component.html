@@ -69,15 +69,16 @@
               <th class="w120">Customer Mobile No.</th>
               <th class="w120">Product Serial No.</th>
               <th class="w150">Product Detail</th>
-              <th class="w150">Warranty Start Date</th>
-              <th class="w150">Warranty End Date</th>
-              <th class="w120">Verification Status</th>
+              <th class="w130">Start Date</th>
+              <th class="w130">End Date</th>
+              <th class="w120" *ngIf="active_tab == 'All'">Status</th>
               <th class="w150" *ngIf="active_tab != 'Pending'">
-                Verification Date
+                Status Update Date
               </th>
-              <th class="w100" *ngIf="active_tab != 'Pending'">
-                Verification By
+              <th class="w120" *ngIf="active_tab != 'Pending'">
+                Status Update By
               </th>
+              <th class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">Reason Of Reject</th>
               <!-- <th class="w70 text-center">Action</th> -->
             </tr>
           </table>
@@ -150,7 +151,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker2" placeholder="Date" name="date_of_purchase"
@@ -161,7 +162,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w130">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker3" placeholder="Date" name="warranty_end_date"
@@ -172,7 +173,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w120">
+              <th class="w120" *ngIf="active_tab == 'All'">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input select-input">
                     <mat-select name="company_verification_status" #company_verification_status="ngModel"
@@ -196,7 +197,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100" *ngIf="active_tab != 'Pending'">
+              <th class="w120" *ngIf="active_tab != 'Pending'">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="verification_by_name"
@@ -205,6 +206,7 @@
                   </mat-form-field>
                 </div>
               </th>
+              <th class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'"></th>
               <!-- <th class="w70 text-center"></th> -->
             </tr>
           </table>
@@ -229,15 +231,15 @@
                   {{ row.customer_name | titlecase }}
                 </td>
                 <td class="w120">{{ row.customer_mobile }}</td>
-                <td class="w120">{{ row.serial_no | titlecase }}</td>
+                <td class="w120">{{ row.serial_no ? (row.serial_no | titlecase):'--' }}</td>
                 <td class="w150">
                   {{ row.product_name | titlecase }}-{{ row.product_code | titlecase }}
                 </td>
-                <td class="w150">{{row.date_of_purchase != "0000-00-00" ? (row.date_of_purchase | date : "dd MMM yyy "):
+                <td class="w130">{{row.date_of_purchase != "0000-00-00" ? (row.date_of_purchase | date : "dd MMM yyy "):
                   "--" }}</td>
-                <td class="w150">{{row.warranty_end_date != "0000-00-00" ? (row.warranty_end_date | date : "dd MMM
+                <td class="w130">{{row.warranty_end_date != "0000-00-00" ? (row.warranty_end_date | date : "dd MMM
                   yyy"): "--" }}</td>
-                <td class="w120">
+                <td class="w120" *ngIf="active_tab == 'All'">
                   <strong class="yellow-clr"
                     *ngIf="row.company_verification_status=='Pending'">{{row.company_verification_status}}</strong>
                   <strong class="green-clr"
@@ -252,10 +254,12 @@
                   : "--"
                   }}
                 </td>
-                <td class="w100" *ngIf="active_tab != 'Pending'">
+                <td class="w120" *ngIf="active_tab != 'Pending'">
                   {{
                   row.verification_by_name ? (row.verification_by_name | titlecase) : "--"
                   }}
+                </td>
+                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">{{row.reject_reason| titlecase}}
                 </td>
                 <!-- <td class="w70 text-center">
             <div class="action-button">
@@ -291,10 +295,10 @@
                 <td class="w120">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w130">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w130">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w150">
@@ -306,7 +310,10 @@
                 <td class="w150" *ngIf="active_tab != 'Pending'">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100" *ngIf="active_tab != 'Pending'">
+                <td class="w120" *ngIf="active_tab != 'Pending'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">
                   <div>&nbsp;</div>
                 </td>
               </tr>

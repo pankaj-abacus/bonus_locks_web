@@ -110,20 +110,21 @@
               <th class="w100">Complaint No.</th>
               <th class="w130">Customer Name</th>
               <th class="w130">Customer Mobile No.</th>
-
+              <th class="w180">Customer Address</th>
               <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Technician Details</th>
               <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Inspection Status</th>
-              <th class="w130">Complaint Status</th>
+              <th class="w100" *ngIf="active_tab == 'All'">Status</th>
               <th class="w160"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                Closing Date</th>
+                Status Update Date</th>
               <th class="w130"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                Closing remark</th>
-              <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Date</th>
-              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Status</th>
+                Remark</th>
+              <!-- <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Date</th>
+              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Status</th> -->
 
               <th class="w70 text-center">TAT</th>
+              <th class="w180" *ngIf="active_tab == 'Cancel'">Reason Of Cancellation</th>
             </tr>
           </table>
         </div>
@@ -178,7 +179,14 @@
                   </mat-form-field>
                 </div>
               </th>
-
+              <th class="w180">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="address"
+                      (keyup.enter)="getComplantList('')" #address="ngModel" [(ngModel)]="filter_data.address" />
+                  </mat-form-field>
+                </div>
+              </th>
               <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
                 <div class="th-search-acmt">
                   <mat-form-field>
@@ -201,7 +209,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w130">
+              <th class="w100" *ngIf="active_tab == 'All'">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input select-input">
                     <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.complaint_status"
@@ -229,7 +237,7 @@
               <th class="w130"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
               </th>
-              <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
+              <!-- <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="return_on" #return_on="ngModel"
@@ -250,9 +258,10 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-              </th>
+              </th> -->
 
               <th class="w70 text-center"></th>
+              <th class="w180" *ngIf="active_tab == 'Cancel'"></th>
             </tr>
           </table>
         </div>
@@ -271,6 +280,7 @@
                     routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
                 <td class="w130">{{row.customer_name | titlecase}}</td>
                 <td class="w130">{{row.customer_mobile}}</td>
+                <td class="w180">{{row.address?(row.address|titlecase):'--'}}</td>
                 <td class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.carpenter_name ?
                   (row.carpenter_name | titlecase) : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
                 <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
@@ -279,7 +289,7 @@
                   <strong class="green-clr" *ngIf="row.inspection_status=='Done'">{{row.inspection_status
                     ? row.inspection_status : '--'}}</strong>
                 </td>
-                <td class="w130">
+                <td class="w100" *ngIf="active_tab == 'All'">
                   <strong class="yellow-clr" *ngIf="row.complaint_status=='Pending'">{{row.complaint_status ?
                     row.complaint_status : '--'}}</strong>
                   <strong class="green-clr" *ngIf="row.complaint_status=='Closed'">{{row.complaint_status ?
@@ -294,16 +304,18 @@
                 <td class="w130"
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   {{row.closing_remark ? (row.closing_remark | titlecase ): '--'}}</td>
-                <td class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">{{row.return_on
+                <!-- <td class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">{{row.return_on
                   !='0000-00-00 00:00:00' ? (row.return_on | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
                 <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
                   <strong class="yellow-clr" *ngIf="row.return_status=='Pending'">{{row.return_status ?
                     row.return_status : '--'}}</strong>
                   <strong class="green-clr" *ngIf="row.return_status=='Done'">{{row.return_status ? row.return_status :
                     '--'}}</strong>
-                </td>
+                </td> -->
 
                 <td class="w70">{{row.pending_at}}</td>
+                <td class="w180" *ngIf="active_tab == 'Cancel'">{{row.closing_remark| titlecase}}
+                </td>
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">
@@ -326,14 +338,16 @@
                 <td class="w130">
                   <div>&nbsp;</div>
                 </td>
-
+                <td class="w180">
+                  <div>&nbsp;</div>
+                </td>
                 <td class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w130">
+                <td class="w100" *ngIf="active_tab == 'All'">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w160"
@@ -344,14 +358,17 @@
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w160 " *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
+                <!-- <td class="w160 " *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w130 " *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
                   <div>&nbsp;</div>
-                </td>
+                </td> -->
 
                 <td class="w70 text-center">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w180" *ngIf="active_tab == 'Cancel'">
                   <div>&nbsp;</div>
                 </td>
               </tr>

@@ -111,11 +111,11 @@
                 <th class="w100">Warranty No.</th>
                 <th class="w120">Product Serial No.</th>
                 <th class="w150">Product Detail</th>
-                <th class="w120">Warranty Start Date</th>
-                <th class="w120">Warranty End Date</th>
-                <th class="w120">Verification Status</th>
-                <th class="w140">Verification Date</th>
-                <th class="w100">Verification By</th>
+                <th class="w100">Start Date</th>
+                <th class="w100">End Date</th>
+                <th class="w100">Status</th>
+                <th class="w140">Status Update Date</th>
+                <th class="w100">Status Update By</th>
               </tr>
             </table>
           </div>
@@ -168,7 +168,7 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w120">
+                <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker2" placeholder="Date" name="date_of_purchase"
@@ -179,7 +179,7 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w120">
+                <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker3" placeholder="Date" name="warranty_end_date"
@@ -190,7 +190,7 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w120">
+                <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="company_verification_status"
@@ -241,16 +241,26 @@
                       routerLink="warranty-detail/{{ row.id }}" routerLinkActive="active"> #War{{ row.id }}</a>
                   </td>
                   <td class="w120">
-                    {{ row.serial_no }}
+                    {{ row.serial_no ? (row.serial_no |titlecase):'--' }}
                   </td>
                   <td class="w150">
                     {{ row.product_name| titlecase }}-{{ row.product_code | titlecase}}
                   </td>
-                  <td class="w120">{{row.date_of_purchase != "0000-00-00" ? (row.date_of_purchase | date : "dd MMM yyy
+                  <td class="w100">{{row.date_of_purchase != "0000-00-00" ? (row.date_of_purchase | date : "dd MMM yyy
                     "): "--" }}</td>
-                  <td class="w120">{{row.warranty_end_date != "0000-00-00" ? (row.warranty_end_date | date : "dd MMM yyy
+                  <td class="w100">{{row.warranty_end_date != "0000-00-00" ? (row.warranty_end_date | date : "dd MMM yyy
                     "): "--" }}</td>
-                  <td class="w120">{{ row.company_verification_status }}</td>
+                  <td class="w100">
+                    <strong class="yellow-clr" *ngIf="row.company_verification_status=='Pending'">
+                      {{row.company_verification_status ? (row.company_verification_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="green-clr" *ngIf="row.company_verification_status=='Verified'">
+                      {{row.company_verification_status ? (row.company_verification_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="red-clr" *ngIf="row.company_verification_status=='Reject'">
+                      {{row.company_verification_status ? (row.company_verification_status | titlecase) :
+                      '--'}}</strong>
+                  </td>
                   <td class="w140">
                     {{row.verification_on != "0000-00-00 00:00:00" ? (row.verification_on | date : "dd MMM yyy ,h:mm
                     a"): "--" }}
@@ -282,13 +292,13 @@
                   <td class="w150">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w150">
+                  <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w120">
+                  <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w120">
+                  <td class="w100">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w140 ">
@@ -317,9 +327,9 @@
                 <th class="w150">Date Created</th>
                 <th class="w100">Created By</th>
                 <th class="w100">Complaint No.</th>
-                <th class="w180">Technician Details</th>
-                <th class="w130">Inspection Status</th>
-                <th class="w130">Status</th>
+                <th class="w140">Technician Details</th>
+                <th class="w100">Inspection Status</th>
+                <th class="w100">Status</th>
                 <th class="w150">Status Update Date</th>
                 <th class="w130">Remark</th>
                 <th class="w70 text-center">TAT</th>
@@ -359,7 +369,7 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w180">
+                <th class="w140">
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
@@ -369,7 +379,7 @@
                   </div>
                 </th>
 
-                <th class="w130">
+                <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input select-input">
                       <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.inspection_status"
@@ -382,7 +392,7 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w130">
+                <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input select-input">
                       <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.complaint_status"
@@ -422,21 +432,37 @@
                   [ngClass]="{'Current': service.currentUserID == row.id}">
                   <td class="w60">{{i + 1 + sr_no}}</td>
                   <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                  <td class="w100">{{row.created_name ? row.created_name : '--'}}</td>
+                  <td class="w100">{{row.created_name ? (row.created_name | titlecase): '--'}}</td>
                   <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                       routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
-                  <td class="w180">{{row.carpenter_name ?
-                    row.carpenter_name : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
+                  <td class="w140">{{row.carpenter_name ?(row.carpenter_name |titlecase) : ''}}-{{row.carpenter_mobile ?
+                    row.carpenter_mobile : ''}}</td>
 
-                  <td class="w130">{{row.inspection_status
-                    ? row.inspection_status : '--'}}</td>
-                  <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
+                  <td class="w100">
+                    <strong class="yellow-clr" *ngIf="row.inspection_status=='Pending'">
+                      {{row.inspection_status ? (row.inspection_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="green-clr" *ngIf="row.inspection_status=='done'">
+                      {{row.inspection_status ? (row.inspection_status | titlecase) :
+                      '--'}}</strong>
+                  </td>
+                  <td class="w100">
+                    <strong class="yellow-clr" *ngIf="row.complaint_status=='Pending'">
+                      {{row.complaint_status ? (row.complaint_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="green-clr" *ngIf="row.complaint_status=='closed'">
+                      {{row.complaint_status ? (row.complaint_status | titlecase) :
+                      '--'}}</strong>
+                    <strong class="red-clr" *ngIf="row.complaint_status=='cancel'">
+                      {{row.complaint_status ? (row.complaint_status | titlecase) :
+                      '--'}}</strong>
+                  </td>
                   <td class="w150">
                     {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
                   </td>
                   <td class="w130">
-                    {{row.closing_remark ? row.closing_remark : '--'}}</td>
-                  <td class="w70">{{row.pending_at}}</td>
+                    {{row.closing_remark ? (row.closing_remark|titlecase) : '--'}}</td>
+                  <td class="w70">{{row.pending_at |titlecase}}</td>
                 </tr>
               </ng-container>
               <ng-container *ngIf="loader">
@@ -453,13 +479,13 @@
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
+                  <td class="w140">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
+                    <div>&nbsp;</div>
+                  </td>
                   <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w130">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w130">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w100">
@@ -550,23 +576,23 @@
                   </div>
                 </th>
                 <!-- <th class="w150">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_name"
-                        (keyup.enter)="getInstallationDetail()" #customer_name="ngModel"
-                        [(ngModel)]="filter_data.customer_name" />
-                    </mat-form-field>
-                  </div>
-                </th> -->
+                              <div class="th-search-acmt">
+                                <mat-form-field>
+                                  <input type="text" matInput placeholder="Search ..." name="customer_name"
+                                  (keyup.enter)="getInstallationDetail()" #customer_name="ngModel"
+                                  [(ngModel)]="filter_data.customer_name" />
+                                </mat-form-field>
+                              </div>
+                            </th> -->
                 <!-- <th class="w120">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                        (keyup.enter)="getInstallationDetail()" #customer_mobile="ngModel"
-                        [(ngModel)]="filter_data.customer_mobile" />
-                    </mat-form-field>
-                  </div>
-                </th> -->
+                              <div class="th-search-acmt">
+                                <mat-form-field>
+                                  <input type="text" matInput placeholder="Search ..." name="customer_mobile"
+                                  (keyup.enter)="getInstallationDetail()" #customer_mobile="ngModel"
+                                  [(ngModel)]="filter_data.customer_mobile" />
+                                </mat-form-field>
+                              </div>
+                            </th> -->
                 <th class="w180">
                   <div class="th-search-acmt">
                     <mat-form-field>
@@ -578,9 +604,9 @@
                 <th class="w50">
                   <div class="th-search-acmt">
                     <!-- <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
-                        #carpenter_detail="ngModel" [(ngModel)]="filter_data.carpenter_detail">
-                    </mat-form-field> -->
+                                  <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
+                                  #carpenter_detail="ngModel" [(ngModel)]="filter_data.carpenter_detail">
+                                </mat-form-field> -->
                   </div>
                 </th>
                 <th class="w100">
@@ -627,7 +653,12 @@
                     '--'}}-{{row.carpenter_mobile ?
                     row.carpenter_mobile : '--'}}</td>
                   <td class="w50"><a class="link-btn flat" (click)="attendancDetail(row)">{{row.total_items}}</a></td>
-                  <td class="w100">{{ row.complaint_status }}</td>
+                  <td class="w100">
+                    <!-- {{ row.complaint_status }} -->
+                    <strong class="yellow-clr" *ngIf="getData.company_verification_status=='Pending'">
+                      {{getData.company_verification_status ? (getData.company_verification_status | titlecase) :
+                      '--'}}</strong>
+                  </td>
                   <td class="w70 text-center">{{row.pending_at}}</td>
                   <td class="w180">{{row.remark | titlecase}}</td>
                   <td class="w180">{{row.closing_remark | titlecase}}</td>
