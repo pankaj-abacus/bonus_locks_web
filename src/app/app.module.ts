@@ -63,6 +63,8 @@ import { WarrantyUpdateModelComponent } from './warranty/warranty-update-model/w
 import { AddComplaintRemarkComponent } from './add-complaint-remark/add-complaint-remark.component';
 import { AddInstallationRemarkComponent } from './installation/add-installation-remark/add-installation-remark.component';
 import { ProductDetailModelComponent } from './installation/product-detail-model/product-detail-model.component';
+import { InstallationUpdateModelComponent } from './installation/installation-update-model/installation-update-model.component';
+import { ComplaintUpdateModelComponent } from './service/complaint-update-model/complaint-update-model.component';
 
 
 @NgModule({
@@ -150,7 +152,9 @@ import { ProductDetailModelComponent } from './installation/product-detail-model
         WarrantyUpdateModelComponent,
         AddComplaintRemarkComponent,
         AddInstallationRemarkComponent,
-        ProductDetailModelComponent
+        ProductDetailModelComponent,
+        InstallationUpdateModelComponent,
+        ComplaintUpdateModelComponent
     ],
 
     exports: [RouterModule],

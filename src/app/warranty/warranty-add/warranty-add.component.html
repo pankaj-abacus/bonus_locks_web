@@ -126,20 +126,22 @@
                   </div> -->
                 </div>
               </div>
-              <!-- <div class="row">
+              <div class="row">
 
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline">
                     <mat-label>Date Of Purchase</mat-label>
                     <input name="date_of_purchase" matInput placeholder="" #date_of_purchase="ngModel"
-                      [(ngModel)]="data.date_of_purchase" [matDatepicker]="picker" disabled
-                      (ngModelChange)="calculateWarrantyEnd()" [max]="currentDate">
+                      [(ngModel)]="data.date_of_purchase" [matDatepicker]="picker" [max]="currentDate" required>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker disabled="false"></mat-datepicker>
                   </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="date_of_purchase.touched || f.submitted">
+                    <p *ngIf="date_of_purchase.errors?.required">This field is required</p>
+                  </div>
                 </div>
 
-                <div class="col s12 m3 l3">
+                <!-- <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline" aria-readonly="true">
                     <mat-label>Warranty End Date </mat-label>
                     <input name="warranty_end_date" matInput placeholder="" #warranty_end_date="ngModel"
@@ -147,8 +149,8 @@
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2 disabled="true"></mat-datepicker>
                   </mat-form-field>
-                </div>
-              </div> -->
+                </div> -->
+              </div>
 
             </div>
 

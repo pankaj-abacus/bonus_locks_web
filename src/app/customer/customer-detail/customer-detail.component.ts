@@ -25,7 +25,6 @@ export class CustomerDetailComponent implements OnInit {
   tabType: any = 'Profile';
   filter: any = {}
   getData: any = {};
-  skLoading: boolean = false;
   url: any;
   assign_login_data: any = {};
   logined_user_data: any = {};
@@ -45,7 +44,6 @@ export class CustomerDetailComponent implements OnInit {
   page_limit: any;
   sr_no: any;
   checkinLoader: boolean = false;
-  loader: boolean = false;
   type_id: any;
   login_data: any = {};
   login_data5: any = {};
@@ -54,6 +52,8 @@ export class CustomerDetailComponent implements OnInit {
   filter_data: any = {};
   fabBtnValue: any = 'excel';
   today_date: any;
+  loader: any;
+  skLoading: boolean = false;
 
 
   constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent, public dialog2: MatDialog) {
@@ -85,18 +85,26 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   getCustomerDetail() {
+    this.loader = 1;
     this.skLoading = true;
     this.filter.status = this.tabType
-    this.service.post_rqst({ 'customer_id': this.id, }, "ServiceCustomer/serviceCustomerDetail").subscribe((result => {
-      this.getData = result['result'];
+    this.service.post_rqst({ 'customer_id': this.id }, "ServiceCustomer/serviceCustomerDetail").subscribe(result => {
+      if (result['statusCode'] == 200) {
+        this.skLoading = false;
+        this.getData = result['result'];
       console.log('getData', this.getData);
 
       this.productImg = this.getData['img'];
 
-      this.skLoading = false;
-    }
-    ));
 
+      } else {
+        this.skLoading = false;
+        this.toast.errorToastr(result['statusMsg']);
+      }
+    }, err => {
+      this.skLoading = false;
+      this.toast.errorToastr('Something went wrong');
+    })
   }
 
 

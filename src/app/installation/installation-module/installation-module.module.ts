@@ -15,6 +15,7 @@ import { AppUtilityModule } from 'src/app/app-utility.module';
 import { EngineerAssignModelComponent } from '../engineer-assign-model/engineer-assign-model.component';
 import { AddInstallationRemarkComponent } from '../add-installation-remark/add-installation-remark.component';
 import { ProductDetailModelComponent } from '../product-detail-model/product-detail-model.component';
+import { InstallationUpdateModelComponent } from '../installation-update-model/installation-update-model.component';
 
 const inspectionRoutes = [
   { path: "", children:[
@@ -29,7 +30,7 @@ const inspectionRoutes = [
 ]
 
 @NgModule({
-  declarations: [InstallationListComponent,InstallationDetailComponent,EngineerAssignModelComponent,AddInstallationRemarkComponent,ProductDetailModelComponent],
+  declarations: [InstallationListComponent,InstallationDetailComponent,EngineerAssignModelComponent,AddInstallationRemarkComponent,ProductDetailModelComponent,InstallationUpdateModelComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(inspectionRoutes),

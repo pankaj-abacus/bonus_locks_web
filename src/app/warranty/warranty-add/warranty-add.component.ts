@@ -103,18 +103,20 @@ export class WarrantyAddComponent implements OnInit {
 
     submitDetail() {
 
-      if(!this.warrantyBase64){
+      console.log(this.data.warranty_card_copy_img);
+      if(!this.data.warranty_card_copy_img){
+        
         this.toast.errorToastr('Warranty images required');
         return;
       }
-      if(!this.billBase64){
+      if(!this.data.bill_copy_img){
         this.toast.errorToastr('Bill images required');
         return;
       }
 
 
-      this.data.billBase64 = this.billBase64;
-      this.data.warrantyBase64 = this.warrantyBase64;
+      // this.data.billBase64 = this.billBase64;
+      // this.data.warrantyBase64 = this.warrantyBase64;
 
       if (this.data.date_of_purchase) {
         this.data.date_of_purchase = moment(this.data.date_of_purchase).format('YYYY-MM-DD');
@@ -196,8 +198,6 @@ export class WarrantyAddComponent implements OnInit {
         this.data.segment_id = this.data.segment_id.toString();
         this.data.sub_segment_id = this.data.sub_segment_id.toString();
         this.data.product_id = this.data.product_id.toString();
-
-
 
         if(this.data.segment_id){
           this.getSubCatgory(this.data.segment_id)

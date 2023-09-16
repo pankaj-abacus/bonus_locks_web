@@ -17,6 +17,7 @@ import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.c
 import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-model-component/engineer-assign-model-component.component';
 import { AddComplaintRemarkComponent } from 'src/app/add-complaint-remark/add-complaint-remark.component';
 import { InstallationAddComponent } from 'src/app/installation/installation-add/installation-add.component';
+import { ComplaintUpdateModelComponent } from '../complaint-update-model/complaint-update-model.component';
 
 
 const serviceRoutes = [
@@ -32,7 +33,7 @@ const serviceRoutes = [
 ]
 
 @NgModule({
-  declarations: [ComplaintListComponent,ComplaintDetailComponent,EngineerAssignModelComponentComponent,AddComplaintRemarkComponent],
+  declarations: [ComplaintListComponent,ComplaintDetailComponent,EngineerAssignModelComponentComponent,AddComplaintRemarkComponent,ComplaintUpdateModelComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(serviceRoutes),
