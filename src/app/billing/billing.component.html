@@ -34,7 +34,7 @@
   </div>
 
   <div class="container pb100">
-    <div class="cs-table">
+    <div class="cs-table horizontal-scroll">
       <div class="sticky-head">
         <div class="table-head">
           <table>
@@ -42,6 +42,7 @@
               <th class="w40">S.no.</th>
               <th class="w100">Date Created </th>
               <th class="w100">Document Date</th>
+              <th class="w100">Organization</th>
               <th class="w100">Invoice Number</th>
               <th class="w200">Customer Details</th>
               <th class="w100">Account Code</th>
@@ -62,23 +63,33 @@
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input">
                     <input matInput [matDatepicker]="picker2" placeholder="Date" name="date_created"
-                      [(ngModel)]="filter.date_created" (ngModelChange)="date_format($event,OrderMonth,OrderYear)"
+                      [(ngModel)]="filter.date_created" (dateChange)="onDate($event,OrderMonth,OrderYear)"
                       readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                   </mat-form-field>
                 </div>
               </th>
+              
               <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input">
-                    <input matInput [matDatepicker]="picker3" placeholder="Date" name="billing_date"
-                      [(ngModel)]="filter.billing_date" (ngModelChange)="date_format($event,OrderMonth,OrderYear)"
+                    <input matInput [matDatepicker]="picker3" placeholder="Date" name="date"
+                      [(ngModel)]="filter.date" (dateChange)="onDate($event,OrderMonth,OrderYear)"
                       readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
                   </mat-form-field>
                 </div>
+              </th>
+              <th class="w100">
+                <div class="th-search-acmt" [ngClass]="{'error-block' :organizationFlag== true}">
+                  <mat-form-field class="cs-input select-input">
+                      <mat-select (selectionChange)="billData('',OrderMonth,OrderYear)" placeholder="Organization Name" name="org_code"  #org_code="ngModel" [(ngModel)]="filter.org_code">
+                          <mat-option *ngFor="let row of organisationData" value="{{row.organisation_code}}">{{row.company_name}}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
               </th>
               <th class="w100">
                 <div class="th-search-acmt">
@@ -122,8 +133,9 @@
               <tr *ngFor="let row of distributor_list;let i=index"
                 [ngClass]="{'Current': serve.currentUserID == row.id}">
                 <td class="w40">{{ i + 1 + sr_no }}</td>
-                <td class="w100">{{row.date_created | date:'dd MMM yyyy , h:mm a'}}</td>
+                <td class="w100">{{row.date_created | date:'dd MMM yyyy'}}</td>
                 <td class="w100">{{row.billing_date | date:'dd MMM yyyy'}}</td>
+                <td class="w100">{{row.org_name | titlecase}}</td>
                 <td class="w100"><a class="link-btn" (click)="serve.setData(filter)"
                     [routerLink]="[ 'billing-details/', row.id ]" [queryParams]="{'id':row.id}">{{row.bill_number}}</a>
                 </td>

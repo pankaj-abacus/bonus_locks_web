@@ -5,6 +5,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { sessionStorage } from 'src/app/localstorage.service';
 import { DialogComponent } from 'src/app/dialog.component';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Location } from "@angular/common";
 
 
 @Component({
@@ -25,7 +26,7 @@ export class BillingDetailComponent implements OnInit {
   dispatch_coupon:any=[];
   dispatch_detail:any ={};
   
-  constructor(public route:ActivatedRoute,public service:DatabaseService, public rout: Router,
+  constructor(public route:ActivatedRoute,public location: Location,public service:DatabaseService, public rout: Router,
     public dialog: MatDialog,public session:sessionStorage ,public dialogs:DialogComponent,public toast:ToastrManager) { 
       
       this.userData = JSON.parse(localStorage.getItem('st_user'));
@@ -42,11 +43,15 @@ export class BillingDetailComponent implements OnInit {
       this.billDatadetail()
     }
     
+    back(){
+      this.location.back()
+    }
+    
     
     billDatadetail()
     {
       this.skLoading = true;
-      this.service.post_rqst({'bill_id': this.id},"Dispatch/tallyInvoiceCreditBillingDetail")
+      this.service.post_rqst({'bill_id': this.id},"Account/tallyInvoiceCreditBillingDetail")
       .subscribe((result=>{
         if(result['statusCode']==200){
           this.invoice_detail=result['invoice_bill'];
