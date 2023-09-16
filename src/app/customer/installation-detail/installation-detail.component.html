@@ -13,12 +13,12 @@
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
             <h2>Customer Details</h2>
-            <div class="left-auto">
+            <!-- <div class="left-auto">
               <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
                 [routerLink]="['add-installation/', 'installation',this.id]">
                 <i class="material-icons">edit</i>
               </a>
-            </div>
+            </div> -->
           </div>
           <div class="card-body">
             <div class="grid-box">
@@ -68,25 +68,19 @@
                 <span>Address</span>
                 <p>{{ getData.address ? (getData.address| titlecase) : "N/A" }}</p>
               </div>
-
-
-              <!-- <div class="card-head mt15" >
-                            <h2>Installation Images</h2>
-                        </div>
-                        <div class="card-body" >
-                            <div class="grid-box">
-                                <div class="block-feilds">
-                                    <div class="doc-img">
-                                        <div class="image-block" *ngFor="let row of inspectionImg">
-                                            <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
             </div>
           </div>
 
+        </div>
+        <div class="card" *ngIf="skLoading">
+          <div class="sk-head">
+            <h2>&nbsp;</h2>
+          </div>
+          <div class="card-body">
+            <div class="grid-box single mt10" *ngFor="let row of [].constructor(5)">
+              <div class="sk-box">&nbsp;</div>
+            </div>
+          </div>
         </div>
         <div class="col s12 mt16 m12 l12">
           <div class="card" *ngIf="!skLoading">
@@ -118,7 +112,7 @@
                   </p>
                 </div>
 
-                <div class="block-feilds">
+                <div class="block-feilds ">
                   <span>Technician Mobile No.</span>
                   <p>
                     {{
@@ -126,7 +120,8 @@
                     }}
                   </p>
                 </div>
-                <div class="block-feilds">
+                <div class="block-feilds flex-heading">
+                  <div>
                   <span>Installation Status</span>
                   <!-- <p>{{getData.complaint_status ? (getData.complaint_status| titlecase) : '--'}}</p> -->
                   <p>
@@ -140,53 +135,66 @@
                       {{getData.complaint_status ? (getData.complaint_status | titlecase) :
                       '--'}}</strong>
                   </p>
+                  </div>
+                  <!-- <div class="left-auto">
+                    <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
+                      (click)="updateInstallationStataus(getData.id)">
+                      <i class="material-icons">edit</i>
+                    </a>
+                  </div> -->
                 </div>
               </div>
             </div>
-            <div class="row mt15" *ngIf="add_list.length > 0">
-              <div class="col s12 m12 l12">
-                <div class="card">
-                  <div class="card-head">
-                    <h2>Product List</h2>
+            <div class="edit-modal mt15">
+              <p class="heading">Product List</p>
+              <div mat-dialog-content>
+                <div class="cs-table left-right-10">
+                  <!-- <div class=" border-top"> -->
+                    <div class="table-head">
+                      <table>
+                        <tr>
+                          <th class="w30 text-center ">Sr.No</th>
+                          <th class="w100">Category</th>
+                          <th class="w100">Sub Category</th>
+                          <th class="w180">Product Detail</th>
+                          <th class="w30 text-center ">Qty</th>
+                        </tr>
+                      </table>
+                    <!-- </div> -->
                   </div>
-                  <div class="card-body">
-                    <div class="cs-table left-right-10">
-                      <div class="border-top">
-                        <div class="table-head">
-                          <table>
-                            <tr>
-                              <th class="w30 text-center">Sr.No</th>
-                              <th class="w100">Category</th>
-                              <th class="w100">Sub Category</th>
-                              <th class="w180">Product Name And Code</th>
-                              <th class="w30 text-center">Qty</th>
-                            </tr>
-                          </table>
-                        </div>
-                      </div>
-
-                      <div class="table-container pb0">
-                        <div class="table-content none-shadow">
-                          <table>
-                            <tr *ngFor="let row of add_list; let i = index">
-                              <td class="w30 text-center">{{ i + 1 }}</td>
-                              <td class="w100">{{ row.category_name }}</td>
-                              <td class="w100">{{ row.subcat_name }}</td>
-                              <td class="w180">{{ row.product_name }}-{{ row.product_code }}</td>
-                              <td class="w30 text-center">{{ row.qty }}</td>
-                            </tr>
-                          </table>
-                        </div>
-                      </div>
+            
+                  <div class="table-container pb0">
+                    <div class="table-content none-shadow">
+                      <table>
+                        <ng-container *ngFor="let row of add_list; let i = index">
+                          <tr>
+                            <td class="w30 text-center ">{{ i + 1 }}</td>
+                            <td class="w100">{{ row.category_name }}</td>
+                            <td class="w100">{{ row.subcat_name }}</td>
+                            <td class="w180">{{ row.product_name | titlecase}}-{{row.product_code | titlecase}}</td>
+                            <td class="w30 text-center ">{{ row.qty }}</td>
+                          </tr>
+                        </ng-container>
+                      </table>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="card" *ngIf="skLoading">
+            <div class="sk-head">
+              <h2>&nbsp;</h2>
+            </div>
+            <div class="card-body">
+              <div class="grid-box single mt10" *ngFor="let row of [].constructor(5)">
+                <div class="sk-box">&nbsp;</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Done'">
+        <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Done' || getData.complaint_status=='Reject'">
           <div class="card" *ngIf="!skLoading">
             <div class="card-head">
               <h2>Closing Details</h2>
@@ -221,7 +229,7 @@
                 </div>
               </div>
               <div class="card-head mt15">
-                <h2>Closing Images</h2>
+                <h2>Product Images</h2>
               </div>
               <div class="card-body">
                 <div class="grid-box">
@@ -239,13 +247,13 @@
         </div>
       </div>
       <div class="col s12 m4 l4">
-        <div class="card" *ngIf="!loader">
+        <div class="card" *ngIf="!skLoading">
           <div class="card-head">
             <h2>Logs</h2>
           </div>
 
           <div class="logs-box">
-            <ng-container *ngFor="let row of getData.log">
+            <ng-container *ngFor="let row of logs">
               <div class="logshead">
                 {{ row.created_by_name| titlecase }} :-
                 {{ row.date_created | date : 'dd MMM yyy ,h:mm a'}}
@@ -257,7 +265,7 @@
           </div>
         </div>
 
-        <div class="card" *ngIf="loader">
+        <div class="card" *ngIf="skLoading">
           <div class="sk-head">
             <h2>&nbsp;</h2>
           </div>

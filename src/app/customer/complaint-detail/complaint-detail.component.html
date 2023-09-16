@@ -103,12 +103,12 @@
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
                             <h2>Customer Details</h2>
-                            <div class="left-auto">
+                            <!-- <div class="left-auto">
                                 <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
                                     [routerLink]="[ 'add-complaint/', 'complaint',this.id ]">
                                     <i class="material-icons">edit</i>
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="card-body">
                             <div class="grid-box">
@@ -163,19 +163,28 @@
                                     <span>Technician Mobile No.</span>
                                     <p>{{getData.carpenter_mobile ? getData.carpenter_mobile :'---'}}</p>
                                 </div>
-                                <div class="block-feilds">
-                                    <span>Complaint Status</span>
-                                    <p>
-                                        <strong class="yellow-clr" *ngIf="getData.complaint_status=='Pending'">
-                                            {{getData.complaint_status ? (getData.complaint_status | titlecase) :
-                                            '--'}}</strong>
-                                        <strong class="green-clr" *ngIf="getData.complaint_status=='Closed'">
-                                            {{getData.complaint_status ? (getData.complaint_status | titlecase) :
-                                            '--'}}</strong>
-                                        <strong class="red-clr" *ngIf="getData.complaint_status=='Cancel'">
-                                            {{getData.complaint_status ? (getData.complaint_status | titlecase) :
-                                            '--'}}</strong>
-                                    </p>
+                                <div class="block-feilds flex-heading">
+                                    <div>
+
+                                        <span>Complaint Status</span>
+                                        <p>
+                                            <strong class="yellow-clr" *ngIf="getData.complaint_status=='Pending'">
+                                                {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                                                '--'}}</strong>
+                                            <strong class="green-clr" *ngIf="getData.complaint_status=='Closed'">
+                                                {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                                                '--'}}</strong>
+                                            <strong class="red-clr" *ngIf="getData.complaint_status=='Cancel'">
+                                                {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                                                '--'}}</strong>
+                                        </p>
+                                    </div>
+                                    <!-- <div class="left-auto">
+                                        <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
+                                            (click)="updateComplaintStataus(getData.id)">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                    </div> -->
                                 </div>
 
                                 <div class="block-feilds">
@@ -201,6 +210,16 @@
                         </div>
                     </div>
 
+                </div>
+                <div class="card" *ngIf="skLoading">
+                    <div class="sk-head">
+                        <h2>&nbsp;</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid-box single mt10" *ngFor="let row of [].constructor(5)">
+                            <div class="sk-box">&nbsp;</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col s12 mt16 m12 l12" *ngIf="getData.inspection_status!='Pending'">
@@ -249,6 +268,16 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" *ngIf="skLoading">
+                        <div class="sk-head">
+                            <h2>&nbsp;</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid-box single mt10" *ngFor="let row of [].constructor(5)">
+                                <div class="sk-box">&nbsp;</div>
                             </div>
                         </div>
                     </div>
@@ -330,7 +359,7 @@
             </div>
             <div class="col s12 m10 l4">
 
-                <div class="card mt16 " *ngIf="!loader">
+                <div class="card mt16 " *ngIf="!skLoading">
                     <div class="card-head">
                         <h2>Logs</h2>
                     </div>
@@ -348,7 +377,7 @@
 
                 </div>
 
-                <div class="card" *ngIf="loader">
+                <div class="card" *ngIf="skLoading">
                     <div class="sk-head">
                         <h2>&nbsp;</h2>
                     </div>

@@ -13,7 +13,7 @@
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
             <h2>Warranty Information</h2>
-            <div class="left-auto">
+            <div class="left-auto" *ngIf="getData.company_verification_status=='Pending'">
               <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
                 [routerLink]="[ 'add-warranty/', this.id ]">
                 <i class="material-icons">edit</i>
