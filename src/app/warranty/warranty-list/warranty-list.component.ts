@@ -17,7 +17,7 @@ export class WarrantyListComponent implements OnInit {
   
   fabBtnValue: any = 'add';
   warrantyList: any = [];
-  active_tab: any = 'All';
+  active_tab: any = 'Pending';
   filter: any ={};
   data: any = [];
   page_limit: any;
@@ -50,11 +50,7 @@ export class WarrantyListComponent implements OnInit {
     
 
     if (this.filter_data.status) {
-      console.log('innginit',this.filter_data.status);
-      
-      this.active_tab = this.filter_data.status
-      console.log(this.active_tab);
-      
+      this.active_tab = this.filter_data.status   
     }
 
     this.getWarrantyList('');

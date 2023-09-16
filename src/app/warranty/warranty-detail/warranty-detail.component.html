@@ -4,13 +4,6 @@
       <i class="material-icons">arrow_back</i>
     </a>
     <h2>Warranty Details</h2>
-
-    <div class="left-auto">
-      <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
-        [routerLink]="[ 'add-warranty/', this.id ]">
-        <i class="material-icons">edit</i>
-      </a>
-    </div>
   </div>
 
   <div class="container pt10 pl10 pr10 pb50">
@@ -20,6 +13,12 @@
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
             <h2>Warranty Information</h2>
+            <div class="left-auto">
+              <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
+                [routerLink]="[ 'add-warranty/', this.id ]">
+                <i class="material-icons">edit</i>
+              </a>
+            </div>
           </div>
           <div class="card-body">
             <div class="grid-box">
@@ -126,8 +125,20 @@
             </div>
           </div>
         </div>
-
+        <div class="card" *ngIf="skLoading">
+          <div class="sk-head">
+            <h2>&nbsp;</h2>
+          </div>
+          <div class="card-body">
+            <div class="img-container">
+              <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="col s12 m12 l4">
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
@@ -163,41 +174,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col s12 m12 l8 pt10">
-    <div class="card" *ngIf="!skLoading">
-      <div class="card-head">
-        <h2>Images</h2>
-      </div>
-      <div class="card-body">
-        <div class="img-container">
-          <div class="image-block" *ngIf="getData.warranty_card_copy_img.length">
-            <img [src]="url+getData.warranty_card_copy_img" (click)="imageModel(url+getData.warranty_card_copy_img)"
-            style="cursor: zoom-in;">
-            <div>
-              <p>Warranty Card Image</p>
-            </div>
-          </div>
-          <div class="image-block" *ngIf="getData.bill_copy_img.length">
-            <img [src]="url+getData.bill_copy_img" (click)="imageModel(url+getData.bill_copy_img)"
-            style="cursor: zoom-in;">
-            <p>Bill Card Image</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card" *ngIf="skLoading">
-      <div class="sk-head">
-        <h2>&nbsp;</h2>
-      </div>
-      <div class="card-body">
-        <div class="img-container">
-          <div class="image-block sk-loading" *ngFor="let row of [].constructor(3)">
-            &nbsp;
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
+      
     </div>
   </div>
 </div>

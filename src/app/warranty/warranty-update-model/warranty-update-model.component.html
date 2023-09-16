@@ -17,7 +17,7 @@
             </div>
           </div>
 
-          <div class="col s12" *ngIf="formData.status!='Reject'" >
+          <!-- <div class="col s12" *ngIf="formData.status!='Reject'" >
             <mat-form-field class="cs-input" appearance="outline" [ngClass]="{'has-error' : date_of_purchase?.invalid } ">
               <mat-label>Date Of Purchase</mat-label>
               <input name="date_of_purchase" matInput placeholder="" #date_of_purchase="ngModel"
@@ -28,7 +28,7 @@
             <div class="alert alert-danger" *ngIf="date_of_purchase.touched || update_basic.submitted">
               <p *ngIf="date_of_purchase.errors?.required">This field is required</p>
             </div>
-          </div>
+          </div> -->
 
           <div class="col s12" *ngIf="formData.status=='Reject'" >
             <mat-form-field class="cs-input" appearance="outline" [ngClass]="{'has-error' : reject_reason?.invalid } ">

@@ -41,7 +41,6 @@ export class InstallationListComponent implements OnInit {
   constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage,public dialog2: MatDialog) {
     this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
-    this.getinspectionList('');
   }
 
   ngOnInit() {
@@ -49,6 +48,7 @@ export class InstallationListComponent implements OnInit {
     if (this.filter_data.status) {
       this.active_tab = this.filter_data.status
     }
+    this.getinspectionList('');
   }
 
   pervious() {
@@ -87,24 +87,7 @@ export class InstallationListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
-
-    if (this.active_tab == 'All') {
-      this.filter_data.status = this.active_tab;
-    }
-    if (this.active_tab == 'Pending') {
-      this.filter_data.status = this.active_tab;
-    }
-    if (this.active_tab == 'Assigned') {
-      this.filter_data.status = this.active_tab;
-    }
-
-    if (this.active_tab == 'Reject') {
-      this.filter_data.status = this.active_tab;
-    }
-
-    if (this.active_tab == 'Done') {
-      this.filter_data.status = this.active_tab;
-    }
+    this.filter_data.status = this.active_tab;
 
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceInstallationList")
 

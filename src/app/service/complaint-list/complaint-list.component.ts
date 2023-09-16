@@ -42,9 +42,6 @@ export class ComplaintListComponent implements OnInit {
   constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { 
     this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
-    this.getComplantList('');
-    
-    
   }
   
   ngOnInit() {
