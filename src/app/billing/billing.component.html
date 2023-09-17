@@ -83,7 +83,7 @@
                 </div>
               </th>
               <th class="w100">
-                <div class="th-search-acmt" [ngClass]="{'error-block' :organizationFlag== true}">
+                <div class="th-search-acmt">
                   <mat-form-field class="cs-input select-input">
                       <mat-select (selectionChange)="billData('',OrderMonth,OrderYear)" placeholder="Organization Name" name="org_code"  #org_code="ngModel" [(ngModel)]="filter.org_code">
                           <mat-option *ngFor="let row of organisationData" value="{{row.organisation_code}}">{{row.company_name}}</mat-option>
