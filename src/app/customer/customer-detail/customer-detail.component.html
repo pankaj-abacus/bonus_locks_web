@@ -147,8 +147,8 @@
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
-                        [max]="today_date" readonly />
+                        #date_created="ngModel" [(ngModel)]="filter_data.date_created"
+                        (ngModelChange)="date_format('warranty')" [max]="today_date" readonly />
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -334,34 +334,43 @@
                   <td class="w50">
                     <div>&nbsp;</div>
                   </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
+                    <div>&nbsp;</div>
+                  </td>
                   <td class="w180">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w150">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w150">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w150">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w140 ">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w250 ">
                     <div>&nbsp;</div>
                   </td>
                 </tr>
@@ -409,8 +418,8 @@
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
-                        [max]="today_date" readonly>
+                        #date_created="ngModel" [(ngModel)]="filter_data.date_created"
+                        (ngModelChange)="date_format('complaint')" [max]="today_date" readonly>
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -499,7 +508,7 @@
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker" placeholder="Date" name="closed_date"
-                        #closed_date="ngModel" [(ngModel)]="filter_data.closed_date" (ngModelChange)="date_format2()"
+                        #closed_date="ngModel" [(ngModel)]="filter_data.closed_date" (ngModelChange)="date_format5()"
                         [max]="today_date" readonly>
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
@@ -572,7 +581,25 @@
                   <td class="w60">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w150">
+                  <td class="w160">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w180">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w130">
@@ -581,37 +608,19 @@
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w140">
+                  <td class="w160">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w120">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
                   <td class="w130 ">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w100 ">
+                  <td class="w70 text-center">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w130 ">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w130 ">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w150 ">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w130 ">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120 text-center">
+                  <td class="w180">
                     <div>&nbsp;</div>
                   </td>
                 </tr>
@@ -655,8 +664,8 @@
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                        #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
-                        [max]="today_date" readonly />
+                        #date_created="ngModel" [(ngModel)]="filter_data.date_created"
+                        (ngModelChange)="date_format('installation')" [max]="today_date" readonly />
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -739,7 +748,7 @@
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker" placeholder="Date" name="status_updated_date"
                         #status_updated_date="ngModel" [(ngModel)]="filter_data.status_updated_date"
-                        (ngModelChange)="date_format()" [max]="today_date" readonly />
+                        (ngModelChange)="date_format8()" [max]="today_date" readonly />
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -821,46 +830,46 @@
                   <td class="w60">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w100">
+                  <td class="w150">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w130">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w100">
+                  <td class="w150">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w130">
+                  <td class="w150">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w130">
+                  <td class="w120">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w50">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w130 ">
+                  <td class="w140">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w100 ">
+                  <td class="w120">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w130 ">
+                  <td class="w70">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w130 ">
+                  <td class="w180">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w130 ">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w130 ">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120 text-center">
+                  <td class="w180">
                     <div>&nbsp;</div>
                   </td>
                 </tr>
