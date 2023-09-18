@@ -186,11 +186,15 @@
                                         </a>
                                     </div>
                                 </div>
-
+                                <div class="block-feilds" *ngIf="getData.complaint_status=='Cancel'">
+                                    <span>Reason Of Cancellation</span>
+                                    <p>{{getData.closing_remark ? (getData.closing_remark| titlecase):'N/A'}}</p>
+                                </div>
                                 <div class="block-feilds">
                                     <span>Nature Of Problem</span>
                                     <p>{{getData.nature_of_problem ? (getData.nature_of_problem| titlecase):'N/A'}}</p>
                                 </div>
+
                             </div>
                         </div>
                         <div class="card-head mt15">

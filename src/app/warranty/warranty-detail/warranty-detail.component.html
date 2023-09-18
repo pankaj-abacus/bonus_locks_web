@@ -106,6 +106,10 @@
                   </a>
                 </div>
               </div>
+              <div class="block-feilds" *ngIf="getData.company_verification_status=='Reject'">
+                <span>Reason Of Reject</span>
+                <p>{{getData.reject_reason ? (getData.reject_reason | titlecase) : '--'}}</p>
+              </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
                 <span>Verification Date</span>
                 <p>{{getData.verification_on != '0000-00-00 00:00:00' ? (getData.verification_on | date : 'dd MMM yyy
@@ -115,10 +119,7 @@
                 <span>Verification By</span>
                 <p>{{getData.verification_by_name ? getData.verification_by_name : '--'}}</p>
               </div>
-              <div class="block-feilds" *ngIf="getData.company_verification_status=='Reject'">
-                <span>Reject Reason</span>
-                <p>{{getData.reject_reason ? (getData.reject_reason | titlecase) : '--'}}</p>
-              </div>
+
 
 
 
@@ -174,7 +175,7 @@
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>
 </div>

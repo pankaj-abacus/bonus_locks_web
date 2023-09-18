@@ -122,19 +122,19 @@
                 </div>
                 <div class="block-feilds flex-heading">
                   <div>
-                  <span>Installation Status</span>
-                  <!-- <p>{{getData.complaint_status ? (getData.complaint_status| titlecase) : '--'}}</p> -->
-                  <p>
-                    <strong class="yellow-clr" *ngIf="getData.complaint_status=='Pending'">
-                      {{getData.complaint_status ? (getData.complaint_status | titlecase) :
-                      '--'}}</strong>
-                    <strong class="green-clr" *ngIf="getData.complaint_status=='Done'">
-                      {{getData.complaint_status ? (getData.complaint_status | titlecase) :
-                      '--'}}</strong>
-                    <strong class="red-clr" *ngIf="getData.complaint_status=='Reject'">
-                      {{getData.complaint_status ? (getData.complaint_status | titlecase) :
-                      '--'}}</strong>
-                  </p>
+                    <span>Installation Status</span>
+                    <!-- <p>{{getData.complaint_status ? (getData.complaint_status| titlecase) : '--'}}</p> -->
+                    <p>
+                      <strong class="yellow-clr" *ngIf="getData.complaint_status=='Pending'">
+                        {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                        '--'}}</strong>
+                      <strong class="green-clr" *ngIf="getData.complaint_status=='Done'">
+                        {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                        '--'}}</strong>
+                      <strong class="red-clr" *ngIf="getData.complaint_status=='Reject'">
+                        {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                        '--'}}</strong>
+                    </p>
                   </div>
                   <div class="left-auto" *ngIf="getData.complaint_status == 'Pending'">
                     <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
@@ -143,6 +143,14 @@
                     </a>
                   </div>
                 </div>
+                <div class="block-feilds " *ngIf="getData.complaint_status=='Reject'">
+                  <span>Reason Of Reject</span>
+                  <p>
+                    {{
+                    getData.closing_remark ? (getData.closing_remark |titlecase) : "N/A"
+                    }}
+                  </p>
+                </div>
               </div>
             </div>
             <div class="edit-modal mt15">
@@ -150,19 +158,19 @@
               <div mat-dialog-content>
                 <div class="cs-table left-right-10">
                   <!-- <div class=" border-top"> -->
-                    <div class="table-head">
-                      <table>
-                        <tr>
-                          <th class="w30 text-center ">Sr.No</th>
-                          <th class="w100">Category</th>
-                          <th class="w100">Sub Category</th>
-                          <th class="w180">Product Detail</th>
-                          <th class="w30 text-center ">Qty</th>
-                        </tr>
-                      </table>
+                  <div class="table-head">
+                    <table>
+                      <tr>
+                        <th class="w30 text-center ">Sr.No</th>
+                        <th class="w100">Category</th>
+                        <th class="w100">Sub Category</th>
+                        <th class="w180">Product Detail</th>
+                        <th class="w30 text-center ">Qty</th>
+                      </tr>
+                    </table>
                     <!-- </div> -->
                   </div>
-            
+
                   <div class="table-container pb0">
                     <div class="table-content none-shadow">
                       <table>
@@ -194,7 +202,8 @@
           </div>
         </div>
 
-        <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Done' || getData.complaint_status=='Reject'">
+        <div class="col s12 mt16 m12 l12"
+          *ngIf="getData.complaint_status=='Done' || getData.complaint_status=='Reject'">
           <div class="card" *ngIf="!skLoading">
             <div class="card-head">
               <h2>Closing Details</h2>
