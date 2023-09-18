@@ -235,6 +235,22 @@
                     }}
                   </p>
                 </div>
+                <div class="block-feilds">
+                  <span>Status Update Date</span>
+                  <p>
+                    {{
+                    getData.status_updated_date != "0000-00-00 00:00:00"
+                    ? (getData.status_updated_date | date : 'dd MMM yyy ,h:mm a')
+                    : "N/A"
+                    }}
+                  </p>
+                </div>
+                <div class="block-feilds">
+                  <span>Status Update By</span>
+                  <p>
+                    {{ getData.status_updated_by_name ? (getData.status_updated_by_name | titlecase): "N/A" }}
+                  </p>
+                </div>
               </div>
               <div class="card-head mt15" *ngIf="closeImg.length">
                 <h2>Product Images</h2>

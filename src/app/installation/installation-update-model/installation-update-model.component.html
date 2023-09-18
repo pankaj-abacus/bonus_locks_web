@@ -22,7 +22,7 @@
               <textarea matInput placeholder="Type here ..." name="remarks" #remarks="ngModel" [(ngModel)]="formData.remarks" required></textarea>
             </mat-form-field>
             <div class="alert alert-danger" *ngIf="remarks?.invalid && update_basic.submitted">
-              Reason is required...
+              Remark is required...
             </div>
           </div>
         </div>
