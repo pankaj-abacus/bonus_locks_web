@@ -161,7 +161,7 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   date_format5(): void {
-    this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
+    this.filter_data.closed_date = moment(this.filter_data.closed_date).format('YYYY-MM-DD');
     this.getComplaintDetail();
   }
   date_format6(): void {
@@ -173,8 +173,8 @@ export class CustomerDetailComponent implements OnInit {
     this.getComplaintDetail();
   }
 
-  date_forma8(): void {
-    this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
+  date_format8(): void {
+    this.filter_data.status_updated_date = moment(this.filter_data.status_updated_date).format('YYYY-MM-DD');
     this.getInstallationDetail();
   }
 
