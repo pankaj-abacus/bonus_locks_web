@@ -65,6 +65,7 @@ import { AddInstallationRemarkComponent } from './installation/add-installation-
 import { ProductDetailModelComponent } from './installation/product-detail-model/product-detail-model.component';
 import { InstallationUpdateModelComponent } from './installation/installation-update-model/installation-update-model.component';
 import { ComplaintUpdateModelComponent } from './service/complaint-update-model/complaint-update-model.component';
+import { SapreModuleModule } from './spare/sapre-module/sapre-module.module';
 
 
 @NgModule({
@@ -125,12 +126,13 @@ import { ComplaintUpdateModelComponent } from './service/complaint-update-model/
         NgMultiSelectDropDownModule.forRoot(),
         AppUtilityModule,
         ServiceModuleModule,
+        SapreModuleModule,
         CustomerModuleModule,
         WarrantyModuleModule,
         InstallationModuleModule,
         // FusionChartsModule
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
     ],
     providers: [
         DatabaseService,

@@ -143,6 +143,14 @@
                     </a>
                   </div> -->
                 </div>
+                <div class="block-feilds " *ngIf="getData.complaint_status=='Reject'">
+                  <span>Reason Of Reject</span>
+                  <p>
+                    {{
+                    getData.closing_remark ? (getData.closing_remark |titlecase) : "N/A"
+                    }}
+                  </p>
+                </div>
               </div>
             </div>
             <div class="edit-modal mt15">
@@ -228,10 +236,10 @@
                   </p>
                 </div>
               </div>
-              <div class="card-head mt15">
+              <div class="card-head mt15" *ngIf="closeImg.length">
                 <h2>Product Images</h2>
               </div>
-              <div class="card-body">
+              <div class="card-body" *ngIf="closeImg.length">
                 <div class="grid-box">
                   <div class="block-feilds">
                     <div class="doc-img">

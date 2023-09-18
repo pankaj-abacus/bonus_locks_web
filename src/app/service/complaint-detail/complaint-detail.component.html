@@ -103,7 +103,7 @@
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
                             <h2>Customer Details</h2>
-                            <div class="left-auto">
+                            <div class="left-auto" *ngIf="getData.complaint_status=='Pending'">
                                 <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
                                     [routerLink]="[ 'add-complaint/', 'complaint',this.id ]">
                                     <i class="material-icons">edit</i>
@@ -179,7 +179,7 @@
                                                 '--'}}</strong>
                                         </p>
                                     </div>
-                                    <div class="left-auto">
+                                    <div class="left-auto" *ngIf="getData.complaint_status=='Pending'">
                                         <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
                                             (click)="updateComplaintStataus(getData.id)">
                                             <i class="material-icons">edit</i>
@@ -197,10 +197,10 @@
 
                             </div>
                         </div>
-                        <div class="card-head mt15">
+                        <div class="card-head mt15" *ngIf="complaintImg.length">
                             <h2>Complaint Images</h2>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" *ngIf="complaintImg.length">
                             <div class="grid-box">
                                 <div class="block-feilds">
                                     <div class="doc-img">
@@ -258,10 +258,10 @@
                                     <p>{{getData.inspection_remark ? (getData.inspection_remark| titlecase):'N/A'}}</p>
                                 </div>
                             </div>
-                            <div class="card-head mt15">
+                            <div class="card-head mt15" *ngIf="inspectionImg.length">
                                 <h2>Inspection Images</h2>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" *ngIf="inspectionImg.length">
                                 <div class="grid-box">
                                     <div class="block-feilds">
                                         <div class="doc-img">
@@ -321,10 +321,10 @@
                                     <p>{{getData.closing_remark ? (getData.closing_remark| titlecase):'N/A'}}</p>
                                 </div>
                             </div>
-                            <div class="card-head mt15">
+                            <div class="card-head mt15" *ngIf="closeImg.length">
                                 <h2>{{getData.complaint_status}} Images</h2>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" *ngIf="closeImg.length">
                                 <div class="grid-box">
                                     <div class="block-feilds">
                                         <div class="doc-img">
