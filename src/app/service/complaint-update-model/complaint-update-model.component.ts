@@ -20,25 +20,47 @@ export class ComplaintUpdateModelComponent implements OnInit {
   url: any;
   image = new FormData();
   image_id: any;
+  delaerId: any;
   errorMsg: boolean = false;
   selected_image: any = [];
+  dealerList: any = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data, public dialog: MatDialog, public serve: DatabaseService, public session: sessionStorage, public toast: ToastrManager, public dialogRef: MatDialogRef<ComplaintUpdateModelComponent>) {
 
     this.url = this.serve.uploadUrl + 'product_image/';
     console.log(data);
-    this.warranty_period = data.period
-    this.date_of_purchase = data.dop
-
-    const warrantyStartDate = new Date(this.date_of_purchase);
-    const warrantyEnd = new Date(warrantyStartDate.getFullYear(), warrantyStartDate.getMonth() + parseInt(this.warranty_period), warrantyStartDate.getDate());
-    console.log(warrantyEnd);
-    this.formData.warranty_end_date = warrantyEnd;
   }
 
   ngOnInit() {
     this.currentDate = new Date();
+    this.getDealerList('');
   }
+
+
+  getDealerList(search) {
+    console.log(search);
+    
+    this.serve.post_rqst({ 'search': search }, "ServiceTask/dealerList").subscribe((result => {
+      if (result['statusCode'] == 200) {
+        this.dealerList = result['dealer'];
+        console.log(this.dealerList);
+
+      }
+    }))
+
+  
+  }
+  get_dealer_detail(id){
+    if (id) {
+      let index = this.dealerList.findIndex(d => d.id == id);
+      if (index != -1) {
+        this.formData.dealer_name = this.dealerList[index].name;
+        this.formData.dealer_company_name = this.dealerList[index].company_name;
+        this.formData.dealer_mobile = this.dealerList[index].mobile;
+      }
+    }
+  }
+
 
   deleteProductImage(arrayIndex, id, name) {
 
@@ -81,9 +103,9 @@ export class ComplaintUpdateModelComponent implements OnInit {
 
 
   update() {
-    this.formData.id = this.data.id
+    this.formData.complaint_id = this.data.id
     this.savingFlag = true;
-    this.serve.post_rqst({ 'data': this.formData }, "ServiceTask/change_warranty_status").subscribe((result => {
+    this.serve.post_rqst({ 'data': this.formData }, "ServiceTask/complaintStatus").subscribe((result => {
       if (result['statusCode'] == 200) {
 
         this.dialogRef.close(true);
