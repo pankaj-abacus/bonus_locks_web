@@ -80,7 +80,7 @@
               <th class="w140" *ngIf="active_tab != 'Pending'">Status Update Date</th>
               <th class="w120" *ngIf="active_tab != 'Pending'">Status Update By</th>
               <th class="w70 text-center">TAT</th>
-              <th class="w180">Remark</th>
+              <th class="w180">Last Remark</th>
               <th class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">Reject Reason</th>
             </tr>
           </table>
@@ -255,8 +255,8 @@
                   {{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}</td>
 
                 <td class="w70 text-center">{{row.pending_at}}</td>
-                <td class="w180">{{row.remark| titlecase}}</td>
-                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">{{row.closing_remark| titlecase}}
+                <td class="w180">{{row.remark?(row.remark| titlecase):'--'}}</td>
+                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">{{row.closing_remark?(row.closing_remark| titlecase):'--'}}
                 </td>
               </tr>
             </ng-container>

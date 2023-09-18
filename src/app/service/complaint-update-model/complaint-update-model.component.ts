@@ -103,6 +103,8 @@ export class ComplaintUpdateModelComponent implements OnInit {
 
 
   update() {
+    this.formData.image = this.selected_image ? this.selected_image : [];
+
     this.formData.complaint_id = this.data.id
     this.savingFlag = true;
     this.serve.post_rqst({ 'data': this.formData }, "ServiceTask/complaintStatus").subscribe((result => {

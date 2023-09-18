@@ -112,21 +112,9 @@
                         </div>
                         <div class="card-body">
                             <div class="grid-box">
-                                <div class="block-feilds">
-                                    <span>Date Created</span>
-                                    <p>{{getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a')
-                                        :'---'}}</p>
-                                </div>
 
-                                <div class="block-feilds">
-                                    <span>Created By</span>
-                                    <p>{{getData.created_by_type ? (getData.created_by_type | titlecase ):'---'}}</p>
-                                </div>
 
-                                <div class="block-feilds">
-                                    <span>Complaint No.</span>
-                                    <p>{{getData.complain_no ? getData.complain_no :'---'}}</p>
-                                </div>
+
 
                                 <!-- <div class="block-feilds">
                                     <span>Serial No.</span>
@@ -154,15 +142,46 @@
                                         {{getData.state ? (getData.state | titlecase):'---'}}</p>
                                 </div>
 
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card" *ngIf="skLoading">
+                    <div class="sk-head">
+                        <h2>&nbsp;</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid-box single mt10" *ngFor="let row of [].constructor(5)">
+                            <div class="sk-box">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 mt16 m12 l12">
+                    <div class="card" *ngIf="!skLoading">
+                        <div class="card-head">
+                            <h2>Complaint Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid-box">
                                 <div class="block-feilds">
-                                    <span>Technician Name</span>
-                                    <p>{{getData.carpenter_name ? (getData.carpenter_name | titlecase ):'---'}}</p>
+                                    <span>Date Created</span>
+                                    <p>{{getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a')
+                                        :'---'}}</p>
                                 </div>
 
                                 <div class="block-feilds">
-                                    <span>Technician Mobile No.</span>
-                                    <p>{{getData.carpenter_mobile ? getData.carpenter_mobile :'---'}}</p>
+                                    <span>Created By</span>
+                                    <p>{{getData.created_by_type ? (getData.created_by_type | titlecase ):'---'}}</p>
                                 </div>
+                                <div class="block-feilds">
+                                    <span>Complaint No.</span>
+                                    <p>{{getData.complain_no ? getData.complain_no :'---'}}</p>
+                                </div>
+                                
                                 <div class="block-feilds flex-heading">
                                     <div>
 
@@ -194,7 +213,15 @@
                                     <span>Nature Of Problem</span>
                                     <p>{{getData.nature_of_problem ? (getData.nature_of_problem| titlecase):'N/A'}}</p>
                                 </div>
+                                <div class="block-feilds" *ngIf="getData.carpenter_assign_status=='Done'">
+                                    <span>Technician Name</span>
+                                    <p>{{getData.carpenter_name ? (getData.carpenter_name | titlecase ):'---'}}</p>
+                                </div>
 
+                                <div class="block-feilds" *ngIf="getData.carpenter_assign_status=='Done'">
+                                    <span>Technician Mobile No.</span>
+                                    <p>{{getData.carpenter_mobile ? getData.carpenter_mobile :'---'}}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="card-head mt15" *ngIf="complaintImg.length">
@@ -212,8 +239,18 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
+                    <div class="card" *ngIf="skLoading">
+                        <div class="sk-head">
+                            <h2>&nbsp;</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid-box single mt10" *ngFor="let row of [].constructor(5)">
+                                <div class="sk-box">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card" *ngIf="skLoading">
                     <div class="sk-head">
@@ -294,11 +331,11 @@
                         </div>
                         <div class="card-body">
                             <div class="grid-box">
-                                <div class="block-feilds">
+                                <div class="block-feilds" *ngIf="getData.replaced_status=='Done'">
                                     <span>New Serial No.</span>
                                     <p>{{getData.new_serial_no ? (getData.new_serial_no| titlecase):'N/A'}}</p>
                                 </div>
-                                <div class="block-feilds">
+                                <div class="block-feilds" *ngIf="getData.replaced_status=='Done'">
                                     <span>Replaced By</span>
                                     <p>{{getData.replaced_by_type ? (getData.replaced_by_type| titlecase):'N/A'}}</p>
                                 </div>
@@ -310,7 +347,10 @@
                                     <span>Dealer Mobile</span>
                                     <p>{{getData.replaced_by_mobile ? getData.replaced_by_mobile:'N/A'}}</p>
                                 </div>
-
+                                <div class="block-feilds" *ngIf="getData.replaced_status=='Done'">
+                                    <span>Product type</span>
+                                    <p>{{getData.product_type ? getData.product_type:'N/A'}}</p>
+                                </div>
                                 <div class="block-feilds">
                                     <span>{{getData.complaint_status}} Date</span>
                                     <p>{{getData.closed_date != '0000-00-00 00:00:00' ? (getData.closed_date |
@@ -319,6 +359,19 @@
                                 <div class="block-feilds">
                                     <span>{{getData.complaint_status}} Remark</span>
                                     <p>{{getData.closing_remark ? (getData.closing_remark| titlecase):'N/A'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Status Update Date</span>
+                                    <p>{{getData.status_updated_date != '0000-00-00 00:00:00' ?
+                                        (getData.status_updated_date |
+                                        date : 'dd MMM yyy ,h:mm a'):'N/A'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>Status Update By</span>
+                                    <p>
+                                        {{ getData.status_updated_by_name ? (getData.status_updated_by_name |
+                                        titlecase): "N/A" }}
+                                    </p>
                                 </div>
                             </div>
                             <div class="card-head mt15" *ngIf="closeImg.length">
@@ -339,7 +392,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 mt16 m12 l12" *ngIf="getData.complaint_status=='Closed'">
+                <div class="col s12 mt16 m12 l12" *ngIf="getData.feedback_status=='Done'">
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
                             <h2>Feedback Details</h2>

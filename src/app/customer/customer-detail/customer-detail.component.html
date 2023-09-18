@@ -121,8 +121,6 @@
                 <th class="w150">Date Created</th>
                 <th class="w150">Created By</th>
                 <th class="w100">Warranty No.</th>
-                <th class="w150">Customer Name</th>
-                <th class="w120">Customer Mobile No.</th>
                 <th class="w120">Product Serial No.</th>
                 <th class="w150">Product Detail</th>
                 <th class="w130">Start Date</th>
@@ -168,24 +166,6 @@
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="id" (keyup.enter)="getWarrantyDetail()"
                         #id="ngModel" [(ngModel)]="filter_data.id" />
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w150">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_name"
-                        (keyup.enter)="getWarrantyDetail()" #customer_name="ngModel"
-                        [(ngModel)]="filter_data.customer_name" />
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w120">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                        (keyup.enter)="getWarrantyDetail()" #customer_mobile="ngModel"
-                        [(ngModel)]="filter_data.customer_mobile" />
                     </mat-form-field>
                   </div>
                 </th>
@@ -283,10 +263,6 @@
                   <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                       routerLink="warranty-detail/{{ row.id }}" routerLinkActive="active"> #War{{ row.id }}</a>
                   </td>
-                  <td class="w150">
-                    {{ row.customer_name | titlecase }}
-                  </td>
-                  <td class="w120">{{ row.customer_mobile }}</td>
                   <td class="w120">{{ row.serial_no ? (row.serial_no | titlecase):'--' }}</td>
                   <td class="w150">
                     {{ row.product_name | titlecase }}-{{ row.product_code | titlecase }}
@@ -343,12 +319,6 @@
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w150">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120">
-                    <div>&nbsp;</div>
-                  </td>
                   <td class="w120">
                     <div>&nbsp;</div>
                   </td>
@@ -393,9 +363,6 @@
                 <th class="w160">Date Created</th>
                 <th class="w100">Created By</th>
                 <th class="w100">Complaint No.</th>
-                <th class="w130">Customer Name</th>
-                <th class="w130">Customer Mobile No.</th>
-                <th class="w180">Customer Address</th>
                 <th class="w180">Technician Details</th>
                 <th class="w130">Inspection Status</th>
                 <th class="w100">Status</th>
@@ -403,8 +370,7 @@
                   Status Update Date</th>
                 <th class="w120">
                   Status Update By</th>
-                <th class="w130">
-                  Remark</th>
+                <th class="w130">Last Remark</th>
                 <th class="w70 text-center">TAT</th>
                 <th class="w180">Reason Of Cancellation</th>
               </tr>
@@ -440,32 +406,6 @@
                       <input type="text" matInput placeholder="Search ..." name="complain_no"
                         (keyup.enter)="getComplaintDetail()" #complain_no="ngModel"
                         [(ngModel)]="filter_data.complain_no">
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w130">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_name"
-                        (keyup.enter)="getComplaintDetail()" #customer_name="ngModel"
-                        [(ngModel)]="filter_data.customer_name">
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w130">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                        (keyup.enter)="getComplaintDetail()" #customer_mobile="ngModel"
-                        [(ngModel)]="filter_data.customer_mobile">
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w180">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="address"
-                        (keyup.enter)="getComplaintDetail()" #address="ngModel" [(ngModel)]="filter_data.address" />
                     </mat-form-field>
                   </div>
                 </th>
@@ -544,9 +484,6 @@
                   <td class="w100">{{row.created_name ? (row.created_name | titlecase): '--'}}</td>
                   <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                       routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
-                  <td class="w130">{{row.customer_name | titlecase}}</td>
-                  <td class="w130">{{row.customer_mobile}}</td>
-                  <td class="w180">{{row.address?(row.address|titlecase):'--'}}</td>
                   <td class="w180">{{row.carpenter_name ?
                     (row.carpenter_name | titlecase) : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
                   <td class="w130">
@@ -588,15 +525,6 @@
                     <div>&nbsp;</div>
                   </td>
                   <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w130">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w130">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w180">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w180">
@@ -642,16 +570,13 @@
                 <th class="w150">Date Created</th>
                 <th class="w150">Created By</th>
                 <th class="w100">Installation No.</th>
-                <th class="w150">Customer Name</th>
-                <th class="w120">Customer Mobile No.</th>
-                <th class="w180">Customer Address</th>
                 <th class="w180">Technician Details</th>
                 <th class="w50">Total Item</th>
                 <th class="w100">Status</th>
                 <th class="w140">Status Update Date</th>
                 <th class="w120">Status Update By</th>
                 <th class="w70 text-center">TAT</th>
-                <th class="w180">Remark</th>
+                <th class="w180">Last Remark</th>
                 <th class="w180">Reject Reason</th>
               </tr>
             </table>
@@ -686,33 +611,6 @@
                       <input type="text" matInput placeholder="Search ..." name="complain_no"
                         (keyup.enter)="getInstallationDetail()" #complain_no="ngModel"
                         [(ngModel)]="filter_data.complain_no" />
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w150">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_name"
-                        (keyup.enter)="getInstallationDetail()" #customer_name="ngModel"
-                        [(ngModel)]="filter_data.customer_name" />
-                    </mat-form-field>
-                  </div>
-                </th>
-
-                <th class="w120">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                        (keyup.enter)="getInstallationDetail()" #customer_mobile="ngModel"
-                        [(ngModel)]="filter_data.customer_mobile" />
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w180">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="address"
-                        (keyup.enter)="getInstallationDetail()" #address="ngModel" [(ngModel)]="filter_data.address" />
                     </mat-form-field>
                   </div>
                 </th>
@@ -792,9 +690,6 @@
                     <a class="link-btn" mat-button (click)="service.setData(filter_data)"
                       routerLink="installation-detail/{{ row.id }}" routerLinkActive="active">{{ row.complain_no }}</a>
                   </td>
-                  <td class="w150">{{ row.customer_name | titlecase }}</td>
-                  <td class="w120">{{ row.customer_mobile }}</td>
-                  <td class="w180">{{row.address?(row.address|titlecase):'--'}}</td>
                   <td class="w180">{{row.carpenter_name ? (row.carpenter_name| titlecase)
                     : '--'}}-{{row.carpenter_mobile
                     ?
@@ -820,8 +715,8 @@
                     {{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}</td>
 
                   <td class="w70 text-center">{{row.pending_at}}</td>
-                  <td class="w180">{{row.remark| titlecase}}</td>
-                  <td class="w180">{{row.closing_remark| titlecase}}
+                  <td class="w180">{{row.remark?(row.remark| titlecase):'--'}}</td>
+                  <td class="w180">{{row.closing_remark?(row.closing_remark| titlecase):'--'}}
                   </td>
                 </tr>
               </ng-container>
@@ -838,16 +733,7 @@
                   </td>
                   <td class="w100">
                     <div>&nbsp;</div>
-                  </td>
-                  <td class="w150">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w180">
-                    <div>&nbsp;</div>
-                  </td>
+                  </td> 
                   <td class="w180">
                     <div>&nbsp;</div>
                   </td>
