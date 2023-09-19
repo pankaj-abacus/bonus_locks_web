@@ -110,16 +110,11 @@
               <th class="w100">Complaint No.</th>
               <th class="w130">Customer Name</th>
               <th class="w130">Customer Mobile No.</th>
-              <th class="w180">Customer Address</th>
+              <th class="w180">District & State</th>
               <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Technician Details</th>
               <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Inspection Status</th>
               <th class="w100" *ngIf="active_tab == 'All'">Status</th>
-              <th class="w160"
-                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                Status Update Date</th>
-              <th class="w120"
-                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                Status Update By</th>
+
               <th class="w130"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                 Last Remark</th>
@@ -128,6 +123,12 @@
 
               <th class="w70 text-center">TAT</th>
               <th class="w180" *ngIf="active_tab == 'Cancel'">Reason Of Cancellation</th>
+              <th class="w160"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                Status Update Date</th>
+              <th class="w120"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                Status Update By</th>
             </tr>
           </table>
         </div>
@@ -150,9 +151,9 @@
               <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="created_by_type"
-                      (keyup.enter)="getComplantList('')" #created_by_type="ngModel"
-                      [(ngModel)]="filter_data.created_by_type">
+                    <input type="text" matInput placeholder="Search ..." name="created_name"
+                      (keyup.enter)="getComplantList('')" #created_name="ngModel"
+                      [(ngModel)]="filter_data.created_name">
                   </mat-form-field>
                 </div>
               </th>
@@ -225,28 +226,8 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w160"
-                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                <div class="th-search-acmt">
-                  <mat-form-field class="cs-input date-column infix-bodr">
-                    <input matInput [matDatepicker]="picker" placeholder="Date" name="closed_date"
-                      #closed_date="ngModel" [(ngModel)]="filter_data.closed_date" (ngModelChange)="date_format2()"
-                      [max]="today_date" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w120"
-                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="status_updated_by_name"
-                      (keyup.enter)="getComplantList('')" #status_updated_by_name="ngModel"
-                      [(ngModel)]="filter_data.status_updated_by_name" />
-                  </mat-form-field>
-                </div>
-              </th>
+
+
               <th class="w130"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
               </th>
@@ -275,6 +256,28 @@
 
               <th class="w70 text-center"></th>
               <th class="w180" *ngIf="active_tab == 'Cancel'"></th>
+              <th class="w160"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="picker" placeholder="Date" name="closed_date"
+                      #closed_date="ngModel" [(ngModel)]="filter_data.closed_date" (ngModelChange)="date_format2()"
+                      [max]="today_date" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w120"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="status_updated_by_name"
+                      (keyup.enter)="getComplantList('')" #status_updated_by_name="ngModel"
+                      [(ngModel)]="filter_data.status_updated_by_name" />
+                  </mat-form-field>
+                </div>
+              </th>
             </tr>
           </table>
         </div>
@@ -310,14 +313,7 @@
                   <strong class="red-clr" *ngIf="row.complaint_status=='Cancel'">{{row.complaint_status ?
                     row.complaint_status : '--'}}</strong>
                 </td>
-                <td class="w160"
-                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                  {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
-                </td>
-                <td class="w120"
-                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                  {{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}
-                </td>
+
                 <td class="w130"
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   {{row.closing_remark ? (row.closing_remark | titlecase ): '--'}}</td>
@@ -332,6 +328,14 @@
 
                 <td class="w70">{{row.pending_at}}</td>
                 <td class="w180" *ngIf="active_tab == 'Cancel'">{{row.closing_remark| titlecase}}
+                </td>
+                <td class="w160"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
+                </td>
+                <td class="w120"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  {{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}
                 </td>
               </tr>
             </ng-container>
@@ -367,14 +371,7 @@
                 <td class="w100" *ngIf="active_tab == 'All'">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w160"
-                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w120"
-                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                  <div>&nbsp;</div>
-                </td>
+
                 <td class="w130 "
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   <div>&nbsp;</div>
@@ -390,6 +387,14 @@
                   <div>&nbsp;</div>
                 </td>
                 <td class="w180" *ngIf="active_tab == 'Cancel'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w160"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w120"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                   <div>&nbsp;</div>
                 </td>
               </tr>
@@ -413,7 +418,7 @@
     </button>
   </div>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="downloadExcel();">
+    <button mat-menu-item (click)="downloadExcel();" *ngIf="complaintList.length > 0 ">
       <mat-icon>download</mat-icon>
       <span>Download excel</span>
     </button>
