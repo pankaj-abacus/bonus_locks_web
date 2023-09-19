@@ -65,11 +65,13 @@ import { AddInstallationRemarkComponent } from './installation/add-installation-
 import { ProductDetailModelComponent } from './installation/product-detail-model/product-detail-model.component';
 import { InstallationUpdateModelComponent } from './installation/installation-update-model/installation-update-model.component';
 import { ComplaintUpdateModelComponent } from './service/complaint-update-model/complaint-update-model.component';
+import { GatepassAddComponent } from './company-dispatch/gatepass-add/gatepass-add.component';
 import { SapreModuleModule } from './spare/sapre-module/sapre-module.module';
 import { SpareAssignQtyComponent } from './spare/spare-assign-qty/spare-assign-qty.component';
 import { SpareIncomingComponent } from './spare/spare-incoming/spare-incoming.component';
 import { SpareOutgoingComponent } from './spare/spare-outgoing/spare-outgoing.component';
 import { AddSpareComponent } from './spare/add-spare/add-spare.component';
+
 
 
 @NgModule({
@@ -161,10 +163,12 @@ import { AddSpareComponent } from './spare/add-spare/add-spare.component';
         ProductDetailModelComponent,
         InstallationUpdateModelComponent,
         ComplaintUpdateModelComponent,
+        GatepassAddComponent
         SpareAssignQtyComponent,
         SpareIncomingComponent,
         SpareOutgoingComponent,
         AddSpareComponent
+
     ],
 
     exports: [RouterModule],

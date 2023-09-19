@@ -7,8 +7,8 @@
       <button mat-icon-button  matTooltip="Refresh" (click)="refresh(active_tab) ">
         <i class="material-icons">refresh</i>
       </button>
-      <!-- <div class="pagination" *ngIf="couponData.length > 0">
-        
+      <div class="pagination" *ngIf="mastercouponData.length > 0 && active_tab == 'master_grand_box'">
+
         <div class="pagination-content">
           Pages
           <span>{{pagenumber}}</span>
@@ -16,21 +16,26 @@
           <span>{{total_page}}</span>
         </div>
         <div class="page-nav">
-          
-          <button mat-icon-button  matTooltip="Older" (click)="pervious(active_tab)"  [disabled]="start == 0">
+
+          <button mat-icon-button matTooltip="Older" (click)="pervious(active_tab)" [disabled]="start == 0">
             <i class="material-icons">navigate_before</i>
           </button>
-          <button mat-icon-button  matTooltip="Newer" (click)="nextPage(active_tab)" [disabled]="pagenumber == total_page ">
+          <button mat-icon-button matTooltip="Newer" (click)="nextPage(active_tab)"
+            [disabled]="pagenumber == total_page ">
             <i class="material-icons">navigate_next</i>
           </button>
         </div>
-      </div> -->
+      </div>
       <div class="mat-tabbar">
         <button mat-button [ngClass]="active_tab == 'master_box' ? 'active' : ''" (click)="active_tab = 'master_box'; couponCodeList()"><i class="material-icons">all_inbox</i>Box Coupon</button>
         <button mat-button [ngClass]="active_tab == 'item_box' ? 'active' : ''" (click)="active_tab = 'item_box'; couponCodeList()"><i class="material-icons">category</i>Product Coupon</button>
         <button mat-button [ngClass]="active_tab == 'scan_item' ? 'active' : ''"*ngIf="assign_login_data2.id =='1'" (click)="active_tab = 'scan_item'; scanCouponList()"><i class="material-icons">qr_code_scanner</i>Scanned Coupon</button>
         <!-- <button mat-button [ngClass]="active_tab == 'scan_item_by_sales' ? 'active' : ''" (click)="active_tab = 'scan_item_by_sales'; scanCouponList()"><i class="material-icons">qr_code_scanner</i>Sales Boy Scanned Coupon </button> -->
-
+        <ng-container *ngIf="assign_login_data2.id =='1'">
+          <button mat-button [ngClass]="active_tab == 'master_grand_box' ? 'active' : ''"
+            (click)="active_tab = 'master_grand_box'; getGrandMaster()"><i class="material-icons">all_inbox</i>Master
+            Box</button>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -509,12 +514,131 @@
         </ng-container>
       </div>
     </div>
-    
+    <div class="cs-table" *ngIf="active_tab == 'master_grand_box'">
+      <div class="sticky-head">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w60">Sr.No</th>
+              <th class="w140">Date</th>
+              <th class="w200">Created by</th>
+              <th class="w150">Master Code</th>
+              <th>Order No.</th>
+              <th class="w100">Gate Pass No.</th>
+            </tr>
+          </table>
+        </div>
+
+        <div class="table-head border-top">
+          <table>
+            <tr>
+              <th class="w60">&nbsp;</th>
+              <th class="w140">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
+                      [(ngModel)]="filter.date_created" (dateChange)="getGrandMaster()" [max]="today_date" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+              </th>
+              <th class="w200">&nbsp;</th>
+
+              <th class="w150">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="coupon_code"
+                      [(ngModel)]="filter.coupon_code" (keyup.enter)="getGrandMaster()">
+                  </mat-form-field>
+                </div>
+              </th>
+
+              <th>
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="bill_number"
+                      [(ngModel)]="filter.bill_number" (keyup.enter)="getGrandMaster()">
+                  </mat-form-field>
+                </div>
+              </th>
+
+              <th class="w100">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="gate_pass_number"
+                      [(ngModel)]="filter.gate_pass_number" (keyup.enter)="getGrandMaster()">
+                  </mat-form-field>
+                </div>
+              </th>
+
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <ng-container *ngIf="!loader">
+              <tr *ngFor="let row of mastercouponData let i = index;">
+                <td class="w60">{{i+1+sr_no}}</td>
+                <td class="w140">{{(row.date_created?row.date_created:'---') | date:'d MMM y'}}</td>
+                <td class="w200">{{row.created_by_name?row.created_by_name:'---'}}</td>
+                <td class="w150">
+                  <a class="link-btn" (click)="row.coupon_code!='0'?viewmasterboxdetail(row.id,'items'):''">
+                    {{row.coupon_code ? row.coupon_code : '---'}}
+                  </a>
+                </td>
+                <td>{{row.bill_number ? row.bill_number : '---'}}</td>
+                <td class="w100">
+
+                  <a class="{{row.gate_pass_number > 0 ? 'link-btn' : ''}}"
+                    (click)="row.gate_pass_number > 0 ? getDetails(row.gate_pass_number, 'detail'): ''">
+                    {{row.gate_pass_number ? ('Gp ' + row.gate_pass_number) : '---'}}</a>
+                </td>
+              </tr>
+            </ng-container>
+
+
+            <ng-container *ngIf="loader">
+              <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                <td class="w60">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w140">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w200">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w150">
+                  <div>&nbsp;</div>
+                </td>
+                <td>
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w100">
+                  <div>&nbsp;</div>
+                </td>
+              </tr>
+            </ng-container>
+
+          </table>
+        </div>
+
+
+        <ng-container *ngIf="mastercouponData.length == 0 && noResult">
+          <app-not-result-found></app-not-result-found>
+        </ng-container>
+      </div>
+    </div>
   </div>
   
   
   
-  <div class="fab-btns">
+  <div class="fab-btns" *ngIf="active_tab != 'master_grand_box'">
     <button class="pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
       <i class="material-icons">apps</i>
       Action
@@ -549,7 +673,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 6px;" ></strong>
+          border-radius: 6px;" >{{scanLimit.limit}}</strong>
         </span>
       </a>
       
