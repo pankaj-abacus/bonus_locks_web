@@ -1,18 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
 import { DialogComponent } from 'src/app/dialog.component';
+import { DialogService } from 'src/app/dialog.service';
 import { sessionStorage } from 'src/app/localstorage.service';
-
+import { ExportexcelService } from 'src/app/service/exportexcel.service';
+import { SpareAssignQtyComponent } from '../spare-assign-qty/spare-assign-qty.component';
+import { SpareOutgoingComponent } from '../spare-outgoing/spare-outgoing.component';
+import { SpareIncomingComponent } from '../spare-incoming/spare-incoming.component';
+import { AddSpareComponent } from '../add-spare/add-spare.component';
 @Component({
-  selector: 'app-claim-dispatch-list',
-  templateUrl: './claim-dispatch-list.component.html',
-  styleUrls: ['./claim-dispatch-list.component.scss']
+  selector: 'app-spare-list',
+  templateUrl: './spare-list.component.html',
+  styleUrls: ['./spare-list.component.scss']
 })
-export class ClaimDispatchListComponent implements OnInit {
+
+export class SpareListComponent implements OnInit {
   fabBtnValue: any = 'add';
   customerList: any = [];
   filter: any = false;
@@ -34,7 +40,7 @@ export class ClaimDispatchListComponent implements OnInit {
   downurl: any = ''
   
   
-  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { 
+  constructor(public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) { 
     this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
   }
@@ -143,5 +149,60 @@ export class ClaimDispatchListComponent implements OnInit {
       }
     }));
   }
-  
+  deleteProduct(){
+
+  }
+  stockIncoming(){
+
+  }
+  stockOutgoing(){
+
+  }
+
+  addSpare() {
+    const dialogRef = this.dialog.open(AddSpareComponent, {
+      width: '500px',
+      panelClass: 'cs-modal',
+      data: {
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(SpareIncomingComponent, {
+      width: '500px',
+      panelClass: 'cs-modal',
+      data: {
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+  openDialog2() {
+    const dialogRef = this.dialog.open(SpareOutgoingComponent, {
+      width: '500px',
+      panelClass: 'cs-modal',
+      data: {
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+  openDialog3() {
+    const dialogRef = this.dialog.open(SpareAssignQtyComponent, {
+      width: '600px',
+      panelClass: 'cs-modal',
+      data: {
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 }
+

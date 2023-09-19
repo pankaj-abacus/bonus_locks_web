@@ -127,7 +127,7 @@ export class InstallationDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != false) {
-        this.getInstallationDetail();
+        // this.getInstallationDetail();
       }
     });
   }
@@ -144,7 +144,7 @@ export class InstallationDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != false) {
-        this.getInstallationDetail();
+        // this.getInstallationDetail();
       }
     });
   }
@@ -159,7 +159,7 @@ export class InstallationDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != false) {
-        this.getInstallationDetail();
+        // this.getInstallationDetail();
       }
     });
   }

@@ -1,7 +1,7 @@
 <div class="main-container">
   <app-loader *ngIf="excelLoader"></app-loader>
   <div class="tools-container">
-    <h2>Customer List</h2>
+    <h2>Spare Part List</h2>
 
 
     <div class="left-auto df ac flex-gap-10">
@@ -36,13 +36,17 @@
           <table>
             <tr>
               <th class="w50">Sr.No</th>
-              <th class="w100">Date Created</th>
-              <th class="w80">Created By</th>
-              <th class="w130">Customer Name</th>
-              <th class="w80">Mobile No.</th>
-              <th class="w250">Address</th>
-              <th class="w70">Total Complaint</th>
-              <th class="w70">Pending Complaint</th>
+              <th class="w100">Category</th>
+              <th class="w100">Part Name</th>
+              <th class="w100">Part No.</th>
+              <th class="w100 text-center">Min Stock Alert</th>
+              <th class="w50 text-center">Stock Qty</th>
+              <th class="w80 text-center">Assign Qty</th>
+              <th class="w100">MRP</th>
+              <th class="w150">Stock Incoming</th>
+              <th class="w150">Stock Outgoing</th>
+              <th class="w150">Image</th>
+              <th class="w100 text-center">Action</th>
             </tr>
           </table>
         </div>
@@ -62,7 +66,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w80">
+              <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="created_name"
@@ -71,32 +75,15 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w130">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="name" (keyup.enter)="getCumtomerList('')"
-                      #name="ngModel" [(ngModel)]="filter_data.name">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w80">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="mobile_no"
-                      (keyup.enter)="getCumtomerList('')" #mobile_no="ngModel" [(ngModel)]="filter_data.mobile_no">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w250 ">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="address"
-                      (keyup.enter)="getCumtomerList('')" #address="ngModel" [(ngModel)]="filter_data.address">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w70"></th>
-              <th class="w70"></th>
+              <th class="w100"></th>
+              <th class="w100 text-center"></th>
+              <th class="w50 text-center"></th>
+              <th class="w80 text-center"></th>
+              <th class="w100"></th>
+              <th class="w150"></th>
+              <th class="w150"></th>
+              <th class="w150"></th>
+              <th class="w100 text-center"></th>
             </tr>
           </table>
         </div>
@@ -105,9 +92,8 @@
       <div class="table-container">
         <div class="table-content">
           <table>
-            <ng-container *ngIf="!loader">
-              <tr *ngFor="let row of customerList; let i = index "
-                [ngClass]="{'Current': service.currentUserID == row.id}">
+            <!-- <ng-container *ngIf="!loader">
+              <tr *ngFor="let row of customerList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
                 <td class="w50">{{i + 1 + sr_no}}</td>
                 <td class="w100">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
                 <td class="w80">{{row.created_name | titlecase}}</td>
@@ -118,6 +104,46 @@
                 <td class="w250 ">{{row.address | titlecase}}</td>
                 <td class="w70 text-center">{{row.total_complaint}}</td>
                 <td class="w70 text-center ">{{row.pending_complaint}}</td>
+              </tr>
+            </ng-container> -->
+            <ng-container *ngIf="!loader">
+              <tr>
+                <td class="w50">Sr.No</td>
+                <td class="w100">Category</td>
+                <td class="w100">Part Name</td>
+                <td class="w100">Part No.</td>
+                <td class="w100 text-center">23</td>
+                <td class="w50 text-center">3</td>
+                <td class="w80 text-center">
+                  <a class="link-btn" mat-button (click)="openDialog3()" routerLinkActive="active">123</a>
+                  <!-- <button mat-menu-item (click)="openDialog3()" [ngClass]="{'pulse': fabBtnValue=='activity'}">1</button> -->
+                </td>
+                <td class="w100">RS. 1000</td>
+
+                <td class="w150">
+                  <button mat-raised-button color="accent" (click)="openDialog()" [ngClass]="{'pulse': fabBtnValue=='activity'}">Stock Incoming</button>
+                  <!-- <button mat-raised-button color="accent" (click)="stockIncoming()">Stock Incoming</button> -->
+                </td>
+
+
+                <td class="w150">
+                  <button mat-raised-button color="accent" (click)="openDialog2()" [ngClass]="{'pulse': fabBtnValue=='activity'}">Stock Outgoing</button>
+                  <!-- <button mat-raised-button color="accent" (click)="stockOutgoing()">Stock Outgoing</button> -->
+                </td>
+
+                <td class="w150">Image</td>
+                <td class="w100 text-center">
+                  <div class="action-button">
+                    <button mat-icon-button matTooltip="View" (click)="openDesignationModal2()">
+                      <i class="material-icons edit">edit</i>
+                    </button>
+                    <button mat-icon-button matTooltip="Delete" (click)="deleteProduct()">
+                      <i class="material-icons red-clr">delete</i>
+                    </button>
+
+                  </div>
+                </td>
+
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">
@@ -180,12 +206,28 @@
   </div>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="downloadExcel();">
+      <mat-icon>cloud_upload</mat-icon>
+      <span>upload</span>
+    </button>
+    <button mat-menu-item (click)="downloadExcel();">
       <mat-icon>download</mat-icon>
       <span>Download excel</span>
     </button>
+    <button mat-menu-item (click)="addSpare()" routerLinkActive="router-link-active">
+      <mat-icon>add</mat-icon>
+      <span>Add Spare Part</span>
+    </button>
     <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-customer" routerLinkActive="router-link-active">
       <mat-icon>add</mat-icon>
-      <span>Add New</span>
+      <span>Manage Stock</span>
+    </button>
+    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-customer" routerLinkActive="router-link-active">
+      <mat-icon>add</mat-icon>
+      <span>Assign Stock</span>
+    </button>
+    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-customer" routerLinkActive="router-link-active">
+      <mat-icon>add</mat-icon>
+      <span>Return Stock</span>
     </button>
   </mat-menu>
 </div>

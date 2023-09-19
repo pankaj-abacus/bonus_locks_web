@@ -121,20 +121,19 @@
                 <th class="w150">Date Created</th>
                 <th class="w150">Created By</th>
                 <th class="w100">Warranty No.</th>
-                <th class="w150">Customer Name</th>
-                <th class="w120">Customer Mobile No.</th>
                 <th class="w120">Product Serial No.</th>
                 <th class="w150">Product Detail</th>
                 <th class="w130">Start Date</th>
                 <th class="w130">End Date</th>
                 <th class="w120">Status</th>
+
+                <th class="w180">Reason Of Reject</th>
                 <th class="w150">
                   Status Update Date
                 </th>
                 <th class="w120">
                   Status Update By
                 </th>
-                <th class="w180">Reason Of Reject</th>
                 <!-- <th class="w70 text-center">Action</th> -->
               </tr>
             </table>
@@ -168,24 +167,6 @@
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="id" (keyup.enter)="getWarrantyDetail()"
                         #id="ngModel" [(ngModel)]="filter_data.id" />
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w150">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_name"
-                        (keyup.enter)="getWarrantyDetail()" #customer_name="ngModel"
-                        [(ngModel)]="filter_data.customer_name" />
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w120">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                        (keyup.enter)="getWarrantyDetail()" #customer_mobile="ngModel"
-                        [(ngModel)]="filter_data.customer_mobile" />
                     </mat-form-field>
                   </div>
                 </th>
@@ -241,6 +222,8 @@
                     </mat-form-field>
                   </div>
                 </th>
+
+                <th class="w180"></th>
                 <th class="w150">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
@@ -261,7 +244,6 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w180"></th>
                 <!-- <th class="w70 text-center"></th> -->
               </tr>
             </table>
@@ -283,10 +265,6 @@
                   <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                       routerLink="warranty-detail/{{ row.id }}" routerLinkActive="active"> #War{{ row.id }}</a>
                   </td>
-                  <td class="w150">
-                    {{ row.customer_name | titlecase }}
-                  </td>
-                  <td class="w120">{{ row.customer_mobile }}</td>
                   <td class="w120">{{ row.serial_no ? (row.serial_no | titlecase):'--' }}</td>
                   <td class="w150">
                     {{ row.product_name | titlecase }}-{{ row.product_code | titlecase }}
@@ -304,6 +282,9 @@
                     <strong class="red-clr"
                       *ngIf="row.company_verification_status=='Reject'">{{row.company_verification_status}}</strong>
                   </td>
+
+                  <td class="w180">{{row.reject_reason| titlecase}}
+                  </td>
                   <td class="w150">
                     {{
                     row.verification_on != "0000-00-00 00:00:00"
@@ -315,8 +296,6 @@
                     {{
                     row.verification_by_name ? (row.verification_by_name | titlecase) : "--"
                     }}
-                  </td>
-                  <td class="w180">{{row.reject_reason| titlecase}}
                   </td>
                   <!-- <td class="w70 text-center">
                             <div class="action-button">
@@ -343,12 +322,6 @@
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w150">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120">
-                    <div>&nbsp;</div>
-                  </td>
                   <td class="w120">
                     <div>&nbsp;</div>
                   </td>
@@ -364,13 +337,14 @@
                   <td class="w120">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w150">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120">
-                    <div>&nbsp;</div>
-                  </td>
+
                   <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w150">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
                     <div>&nbsp;</div>
                   </td>
                 </tr>
@@ -393,20 +367,17 @@
                 <th class="w160">Date Created</th>
                 <th class="w100">Created By</th>
                 <th class="w100">Complaint No.</th>
-                <th class="w130">Customer Name</th>
-                <th class="w130">Customer Mobile No.</th>
-                <th class="w180">Customer Address</th>
                 <th class="w180">Technician Details</th>
                 <th class="w130">Inspection Status</th>
                 <th class="w100">Status</th>
+
+                <th class="w130">Last Remark</th>
+                <th class="w70 text-center">TAT</th>
+                <th class="w180">Reason Of Cancellation</th>
                 <th class="w160">
                   Status Update Date</th>
                 <th class="w120">
                   Status Update By</th>
-                <th class="w130">
-                  Remark</th>
-                <th class="w70 text-center">TAT</th>
-                <th class="w180">Reason Of Cancellation</th>
               </tr>
             </table>
           </div>
@@ -417,11 +388,11 @@
                 <th class="w160">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
-                      <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
+                      <input matInput [matDatepicker]="picker5" placeholder="Date" name="date_created"
                         #date_created="ngModel" [(ngModel)]="filter_data.date_created"
                         (ngModelChange)="date_format('complaint')" [max]="today_date" readonly>
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                      <mat-datepicker #picker5></mat-datepicker>
                     </mat-form-field>
                   </div>
                 </th>
@@ -440,32 +411,6 @@
                       <input type="text" matInput placeholder="Search ..." name="complain_no"
                         (keyup.enter)="getComplaintDetail()" #complain_no="ngModel"
                         [(ngModel)]="filter_data.complain_no">
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w130">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_name"
-                        (keyup.enter)="getComplaintDetail()" #customer_name="ngModel"
-                        [(ngModel)]="filter_data.customer_name">
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w130">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                        (keyup.enter)="getComplaintDetail()" #customer_mobile="ngModel"
-                        [(ngModel)]="filter_data.customer_mobile">
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w180">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="address"
-                        (keyup.enter)="getComplaintDetail()" #address="ngModel" [(ngModel)]="filter_data.address" />
                     </mat-form-field>
                   </div>
                 </th>
@@ -504,14 +449,19 @@
                     </mat-form-field>
                   </div>
                 </th>
+
+                <th class="w130">
+                </th>
+                <th class="w70 text-center"></th>
+                <th class="w180"></th>
                 <th class="w160">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
-                      <input matInput [matDatepicker]="picker" placeholder="Date" name="closed_date"
+                      <input matInput [matDatepicker]="picker6" placeholder="Date" name="closed_date"
                         #closed_date="ngModel" [(ngModel)]="filter_data.closed_date" (ngModelChange)="date_format5()"
                         [max]="today_date" readonly>
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                      <mat-datepicker #picker6></mat-datepicker>
                     </mat-form-field>
                   </div>
                 </th>
@@ -524,10 +474,6 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w130">
-                </th>
-                <th class="w70 text-center"></th>
-                <th class="w180"></th>
               </tr>
             </table>
           </div>
@@ -544,9 +490,6 @@
                   <td class="w100">{{row.created_name ? (row.created_name | titlecase): '--'}}</td>
                   <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                       routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
-                  <td class="w130">{{row.customer_name | titlecase}}</td>
-                  <td class="w130">{{row.customer_mobile}}</td>
-                  <td class="w180">{{row.address?(row.address|titlecase):'--'}}</td>
                   <td class="w180">{{row.carpenter_name ?
                     (row.carpenter_name | titlecase) : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
                   <td class="w130">
@@ -563,16 +506,17 @@
                     <strong class="red-clr" *ngIf="row.complaint_status=='Cancel'">{{row.complaint_status ?
                       row.complaint_status : '--'}}</strong>
                   </td>
+
+                  <td class="w130">
+                    {{row.closing_remark ? (row.closing_remark | titlecase ): '--'}}</td>
+                  <td class="w70">{{row.pending_at}}</td>
+                  <td class="w180">{{row.closing_remark| titlecase}}
+                  </td>
                   <td class="w160">
                     {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
                   </td>
                   <td class="w120">
                     {{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}
-                  </td>
-                  <td class="w130">
-                    {{row.closing_remark ? (row.closing_remark | titlecase ): '--'}}</td>
-                  <td class="w70">{{row.pending_at}}</td>
-                  <td class="w180">{{row.closing_remark| titlecase}}
                   </td>
                 </tr>
               </ng-container>
@@ -590,15 +534,6 @@
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w130">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w130">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w180">
-                    <div>&nbsp;</div>
-                  </td>
                   <td class="w180">
                     <div>&nbsp;</div>
                   </td>
@@ -608,12 +543,7 @@
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w160">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120">
-                    <div>&nbsp;</div>
-                  </td>
+
                   <td class="w130 ">
                     <div>&nbsp;</div>
                   </td>
@@ -621,6 +551,12 @@
                     <div>&nbsp;</div>
                   </td>
                   <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w160">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
                     <div>&nbsp;</div>
                   </td>
                 </tr>
@@ -642,17 +578,15 @@
                 <th class="w150">Date Created</th>
                 <th class="w150">Created By</th>
                 <th class="w100">Installation No.</th>
-                <th class="w150">Customer Name</th>
-                <th class="w120">Customer Mobile No.</th>
-                <th class="w180">Customer Address</th>
                 <th class="w180">Technician Details</th>
                 <th class="w50">Total Item</th>
                 <th class="w100">Status</th>
+
+                <th class="w70 text-center">TAT</th>
+                <th class="w180">Last Remark</th>
+                <th class="w180">Reject Reason</th>
                 <th class="w140">Status Update Date</th>
                 <th class="w120">Status Update By</th>
-                <th class="w70 text-center">TAT</th>
-                <th class="w180">Remark</th>
-                <th class="w180">Reject Reason</th>
               </tr>
             </table>
           </div>
@@ -663,11 +597,11 @@
                 <th class="w150">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
-                      <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
+                      <input matInput [matDatepicker]="picker7" placeholder="Date" name="date_created"
                         #date_created="ngModel" [(ngModel)]="filter_data.date_created"
                         (ngModelChange)="date_format('installation')" [max]="today_date" readonly />
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
+                      <mat-datepicker #picker7></mat-datepicker>
                     </mat-form-field>
                   </div>
                 </th>
@@ -686,33 +620,6 @@
                       <input type="text" matInput placeholder="Search ..." name="complain_no"
                         (keyup.enter)="getInstallationDetail()" #complain_no="ngModel"
                         [(ngModel)]="filter_data.complain_no" />
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w150">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_name"
-                        (keyup.enter)="getInstallationDetail()" #customer_name="ngModel"
-                        [(ngModel)]="filter_data.customer_name" />
-                    </mat-form-field>
-                  </div>
-                </th>
-
-                <th class="w120">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                        (keyup.enter)="getInstallationDetail()" #customer_mobile="ngModel"
-                        [(ngModel)]="filter_data.customer_mobile" />
-                    </mat-form-field>
-                  </div>
-                </th>
-                <th class="w180">
-                  <div class="th-search-acmt">
-                    <mat-form-field>
-                      <input type="text" matInput placeholder="Search ..." name="address"
-                        (keyup.enter)="getInstallationDetail()" #address="ngModel" [(ngModel)]="filter_data.address" />
                     </mat-form-field>
                   </div>
                 </th>
@@ -743,14 +650,18 @@
 
 
                 </th>
+
+                <th class="w70 text-center"></th>
+                <th class="w180"></th>
+                <th class="w180"></th>
                 <th class="w140">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
-                      <input matInput [matDatepicker]="picker" placeholder="Date" name="status_updated_date"
+                      <input matInput [matDatepicker]="picker8" placeholder="Date" name="status_updated_date"
                         #status_updated_date="ngModel" [(ngModel)]="filter_data.status_updated_date"
-                        (ngModelChange)="date_format8()" [max]="today_date" readonly />
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
+                        (ngModelChange)="date_format6()" [max]="today_date" readonly />
+                      <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
+                      <mat-datepicker #picker8></mat-datepicker>
                     </mat-form-field>
                   </div>
                 </th>
@@ -763,9 +674,6 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w70 text-center"></th>
-                <th class="w180"></th>
-                <th class="w180"></th>
               </tr>
             </table>
           </div>
@@ -792,9 +700,6 @@
                     <a class="link-btn" mat-button (click)="service.setData(filter_data)"
                       routerLink="installation-detail/{{ row.id }}" routerLinkActive="active">{{ row.complain_no }}</a>
                   </td>
-                  <td class="w150">{{ row.customer_name | titlecase }}</td>
-                  <td class="w120">{{ row.customer_mobile }}</td>
-                  <td class="w180">{{row.address?(row.address|titlecase):'--'}}</td>
                   <td class="w180">{{row.carpenter_name ? (row.carpenter_name| titlecase)
                     : '--'}}-{{row.carpenter_mobile
                     ?
@@ -809,6 +714,11 @@
                     <strong class="red-clr" *ngIf="row.complaint_status=='Reject'">{{row.complaint_status|
                       titlecase}}</strong>
                   </td>
+
+
+                  <td class="w70 text-center">{{row.pending_at}}</td>
+                  <td class="w180">{{row.remark?(row.remark| titlecase):'--'}}</td>
+                  <td class="w180">{{row.closing_remark?(row.closing_remark|titlecase):'--'}}</td>
                   <td class="w140">
                     {{
                     row.status_updated_date != "0000-00-00 00:00:00"
@@ -816,13 +726,7 @@
                     : "--"
                     }}
                   </td>
-                  <td class="w120">
-                    {{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}</td>
-
-                  <td class="w70 text-center">{{row.pending_at}}</td>
-                  <td class="w180">{{row.remark| titlecase}}</td>
-                  <td class="w180">{{row.closing_remark| titlecase}}
-                  </td>
+                  <td class="w120">{{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}</td>
                 </tr>
               </ng-container>
               <ng-container *ngIf="loader">
@@ -839,15 +743,6 @@
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w150">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w180">
-                    <div>&nbsp;</div>
-                  </td>
                   <td class="w180">
                     <div>&nbsp;</div>
                   </td>
@@ -857,12 +752,7 @@
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w140">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120">
-                    <div>&nbsp;</div>
-                  </td>
+
                   <td class="w70">
                     <div>&nbsp;</div>
                   </td>
@@ -870,6 +760,12 @@
                     <div>&nbsp;</div>
                   </td>
                   <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w140">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
                     <div>&nbsp;</div>
                   </td>
                 </tr>

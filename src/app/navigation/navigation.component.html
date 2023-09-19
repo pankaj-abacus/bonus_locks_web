@@ -384,6 +384,12 @@
                                 *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.secondary_order}}</span>
                         </a>
                     </li>
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/spare-list" routerLinkActive="active">
+                            Spare Part
+                            <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.secondary_order}}</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
