@@ -75,7 +75,7 @@
               </div>
 
               <div class="block-feilds">
-                <span>Warranty End Date</span>
+                <span>End Date</span>
                 <p>{{getData.warranty_end_date != "0000-00-00" ? (getData.warranty_end_date | date :"dd MMM yyy"): "--"
                   }}</p>
               </div>
@@ -84,7 +84,7 @@
               <div class="block-feilds flex-heading">
                 <div>
 
-                  <span>Warranty Verification Status</span>
+                  <span>Verification Status</span>
                   <!-- <p>{{getData.company_verification_status ? getData.company_verification_status :'---'}}</p> -->
                   <p>
                     <strong class="yellow-clr" *ngIf="getData.company_verification_status=='Pending'">
@@ -111,12 +111,12 @@
                 <p>{{getData.reject_reason ? (getData.reject_reason | titlecase) : '--'}}</p>
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
-                <span>Verification Date</span>
+                <span>Status Update Date</span>
                 <p>{{getData.verification_on != '0000-00-00 00:00:00' ? (getData.verification_on | date : 'dd MMM yyy
                   ,h:mm a') :'---'}}</p>
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
-                <span>Verification By</span>
+                <span>Status Update By</span>
                 <p>{{getData.verification_by_name ? getData.verification_by_name : '--'}}</p>
               </div>
 

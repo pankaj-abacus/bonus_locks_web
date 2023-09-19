@@ -126,13 +126,14 @@
                 <th class="w130">Start Date</th>
                 <th class="w130">End Date</th>
                 <th class="w120">Status</th>
+
+                <th class="w180">Reason Of Reject</th>
                 <th class="w150">
                   Status Update Date
                 </th>
                 <th class="w120">
                   Status Update By
                 </th>
-                <th class="w180">Reason Of Reject</th>
                 <!-- <th class="w70 text-center">Action</th> -->
               </tr>
             </table>
@@ -221,6 +222,8 @@
                     </mat-form-field>
                   </div>
                 </th>
+
+                <th class="w180"></th>
                 <th class="w150">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
@@ -241,7 +244,6 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w180"></th>
                 <!-- <th class="w70 text-center"></th> -->
               </tr>
             </table>
@@ -280,6 +282,9 @@
                     <strong class="red-clr"
                       *ngIf="row.company_verification_status=='Reject'">{{row.company_verification_status}}</strong>
                   </td>
+
+                  <td class="w180">{{row.reject_reason| titlecase}}
+                  </td>
                   <td class="w150">
                     {{
                     row.verification_on != "0000-00-00 00:00:00"
@@ -291,8 +296,6 @@
                     {{
                     row.verification_by_name ? (row.verification_by_name | titlecase) : "--"
                     }}
-                  </td>
-                  <td class="w180">{{row.reject_reason| titlecase}}
                   </td>
                   <!-- <td class="w70 text-center">
                             <div class="action-button">
@@ -334,13 +337,14 @@
                   <td class="w120">
                     <div>&nbsp;</div>
                   </td>
+
+                  <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
                   <td class="w150">
                     <div>&nbsp;</div>
                   </td>
                   <td class="w120">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w180">
                     <div>&nbsp;</div>
                   </td>
                 </tr>
@@ -366,13 +370,14 @@
                 <th class="w180">Technician Details</th>
                 <th class="w130">Inspection Status</th>
                 <th class="w100">Status</th>
+
+                <th class="w130">Last Remark</th>
+                <th class="w70 text-center">TAT</th>
+                <th class="w180">Reason Of Cancellation</th>
                 <th class="w160">
                   Status Update Date</th>
                 <th class="w120">
                   Status Update By</th>
-                <th class="w130">Last Remark</th>
-                <th class="w70 text-center">TAT</th>
-                <th class="w180">Reason Of Cancellation</th>
               </tr>
             </table>
           </div>
@@ -444,6 +449,11 @@
                     </mat-form-field>
                   </div>
                 </th>
+
+                <th class="w130">
+                </th>
+                <th class="w70 text-center"></th>
+                <th class="w180"></th>
                 <th class="w160">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
@@ -464,10 +474,6 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w130">
-                </th>
-                <th class="w70 text-center"></th>
-                <th class="w180"></th>
               </tr>
             </table>
           </div>
@@ -500,16 +506,17 @@
                     <strong class="red-clr" *ngIf="row.complaint_status=='Cancel'">{{row.complaint_status ?
                       row.complaint_status : '--'}}</strong>
                   </td>
+
+                  <td class="w130">
+                    {{row.closing_remark ? (row.closing_remark | titlecase ): '--'}}</td>
+                  <td class="w70">{{row.pending_at}}</td>
+                  <td class="w180">{{row.closing_remark| titlecase}}
+                  </td>
                   <td class="w160">
                     {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
                   </td>
                   <td class="w120">
                     {{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}
-                  </td>
-                  <td class="w130">
-                    {{row.closing_remark ? (row.closing_remark | titlecase ): '--'}}</td>
-                  <td class="w70">{{row.pending_at}}</td>
-                  <td class="w180">{{row.closing_remark| titlecase}}
                   </td>
                 </tr>
               </ng-container>
@@ -536,12 +543,7 @@
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w160">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120">
-                    <div>&nbsp;</div>
-                  </td>
+
                   <td class="w130 ">
                     <div>&nbsp;</div>
                   </td>
@@ -549,6 +551,12 @@
                     <div>&nbsp;</div>
                   </td>
                   <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w160">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
                     <div>&nbsp;</div>
                   </td>
                 </tr>
@@ -573,11 +581,12 @@
                 <th class="w180">Technician Details</th>
                 <th class="w50">Total Item</th>
                 <th class="w100">Status</th>
-                <th class="w140">Status Update Date</th>
-                <th class="w120">Status Update By</th>
+
                 <th class="w70 text-center">TAT</th>
                 <th class="w180">Last Remark</th>
                 <th class="w180">Reject Reason</th>
+                <th class="w140">Status Update Date</th>
+                <th class="w120">Status Update By</th>
               </tr>
             </table>
           </div>
@@ -641,6 +650,10 @@
 
 
                 </th>
+
+                <th class="w70 text-center"></th>
+                <th class="w180"></th>
+                <th class="w180"></th>
                 <th class="w140">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
@@ -661,9 +674,6 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w70 text-center"></th>
-                <th class="w180"></th>
-                <th class="w180"></th>
               </tr>
             </table>
           </div>
@@ -704,6 +714,11 @@
                     <strong class="red-clr" *ngIf="row.complaint_status=='Reject'">{{row.complaint_status|
                       titlecase}}</strong>
                   </td>
+
+
+                  <td class="w70 text-center">{{row.pending_at}}</td>
+                  <td class="w180">{{row.remark?(row.remark| titlecase):'--'}}</td>
+                  <td class="w180">{{row.closing_remark?(row.closing_remark|titlecase):'--'}}</td>
                   <td class="w140">
                     {{
                     row.status_updated_date != "0000-00-00 00:00:00"
@@ -711,13 +726,7 @@
                     : "--"
                     }}
                   </td>
-                  <td class="w120">
-                    {{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}</td>
-
-                  <td class="w70 text-center">{{row.pending_at}}</td>
-                  <td class="w180">{{row.remark?(row.remark| titlecase):'--'}}</td>
-                  <td class="w180">{{row.closing_remark?(row.closing_remark| titlecase):'--'}}
-                  </td>
+                  <td class="w120">{{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}</td>
                 </tr>
               </ng-container>
               <ng-container *ngIf="loader">
@@ -733,7 +742,7 @@
                   </td>
                   <td class="w100">
                     <div>&nbsp;</div>
-                  </td> 
+                  </td>
                   <td class="w180">
                     <div>&nbsp;</div>
                   </td>
@@ -743,12 +752,7 @@
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <td class="w140">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w120">
-                    <div>&nbsp;</div>
-                  </td>
+
                   <td class="w70">
                     <div>&nbsp;</div>
                   </td>
@@ -756,6 +760,12 @@
                     <div>&nbsp;</div>
                   </td>
                   <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w140">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
                     <div>&nbsp;</div>
                   </td>
                 </tr>

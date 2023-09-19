@@ -8,7 +8,7 @@
         <i class="material-icons">refresh</i>
       </a>
 
-      <div class="pagination">
+      <div class="pagination" *ngIf="warrantyList.length > 0">
         <div class="pagination-content">
           Pages
           <span>{{ pagenumber }}</span>
@@ -72,13 +72,14 @@
               <th class="w130">Start Date</th>
               <th class="w130">End Date</th>
               <th class="w120" *ngIf="active_tab == 'All'">Status</th>
+
+              <th class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">Reason Of Reject</th>
               <th class="w150" *ngIf="active_tab != 'Pending'">
                 Status Update Date
               </th>
               <th class="w120" *ngIf="active_tab != 'Pending'">
                 Status Update By
               </th>
-              <th class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">Reason Of Reject</th>
               <!-- <th class="w70 text-center">Action</th> -->
             </tr>
           </table>
@@ -186,6 +187,8 @@
                   </mat-form-field>
                 </div>
               </th>
+
+              <th class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'"></th>
               <th class="w150" *ngIf="active_tab != 'Pending'">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
@@ -206,7 +209,6 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'"></th>
               <!-- <th class="w70 text-center"></th> -->
             </tr>
           </table>
@@ -247,6 +249,9 @@
                   <strong class="red-clr"
                     *ngIf="row.company_verification_status=='Reject'">{{row.company_verification_status}}</strong>
                 </td>
+
+                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">{{row.reject_reason| titlecase}}
+                </td>
                 <td class="w150" *ngIf="active_tab != 'Pending'">
                   {{
                   row.verification_on != "0000-00-00 00:00:00"
@@ -258,8 +263,6 @@
                   {{
                   row.verification_by_name ? (row.verification_by_name | titlecase) : "--"
                   }}
-                </td>
-                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">{{row.reject_reason| titlecase}}
                 </td>
                 <!-- <td class="w70 text-center">
             <div class="action-button">
@@ -307,13 +310,14 @@
                 <td class="w120">
                   <div>&nbsp;</div>
                 </td>
+
+                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">
+                  <div>&nbsp;</div>
+                </td>
                 <td class="w150" *ngIf="active_tab != 'Pending'">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w120" *ngIf="active_tab != 'Pending'">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w180" *ngIf="active_tab == 'Reject' || active_tab =='All'">
                   <div>&nbsp;</div>
                 </td>
               </tr>
@@ -336,7 +340,7 @@
     </button>
   </div>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="downloadExcel()">
+    <button mat-menu-item (click)="downloadExcel()" *ngIf="warrantyList.length > 0">
       <mat-icon>download</mat-icon>
       <span>Download excel</span>
     </button>

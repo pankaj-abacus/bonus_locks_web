@@ -181,7 +181,7 @@
                                     <span>Complaint No.</span>
                                     <p>{{getData.complain_no ? getData.complain_no :'---'}}</p>
                                 </div>
-                                
+
                                 <div class="block-feilds flex-heading">
                                     <div>
 
@@ -221,6 +221,10 @@
                                 <div class="block-feilds" *ngIf="getData.carpenter_assign_status=='Done'">
                                     <span>Technician Mobile No.</span>
                                     <p>{{getData.carpenter_mobile ? getData.carpenter_mobile :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>TAT</span>
+                                    <p>{{getData.pending_at ? (getData.pending_at | titlecase ):'---'}}</p>
                                 </div>
                             </div>
                         </div>
@@ -450,8 +454,8 @@
             </div>
         </div>
     </div>
-    <div class="fab-btns">
-        <button class="pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
+    <div class="fab-btns" *ngIf="getData.complaint_status=='Pending'">
+        <button class=" pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
             <i class="material-icons">apps</i>
             Action
         </button>
