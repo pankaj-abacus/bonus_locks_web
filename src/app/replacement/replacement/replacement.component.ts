@@ -20,6 +20,8 @@ export class ReplacementComponent implements OnInit {
   userData: any;
   qrCode:any =[];
   getData:any =[];
+  skLoading: boolean=false;
+
   
   
   
