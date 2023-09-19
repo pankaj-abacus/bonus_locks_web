@@ -1,3 +1,89 @@
-<p>
-  add-spare works!
-</p>
+<div class="edit-modal">
+  <form #update_basic="ngForm" (ngSubmit)="update_basic.valid && update()">
+    <div mat-dialog-content>
+      <p class="heading">Add Spare Part</p>
+      <div class="cs-form">
+        <div class="row">
+          <!-- <div class="col s6">
+            <mat-form-field appearance="outline" [ngClass]="{'has-error' : dealer_id.invalid } ">
+              <mat-label>Select Category</mat-label>
+              <mat-select name="dealer_id" #dealer_id="ngModel" [(ngModel)]="formData.dealer_id"
+                (selectionChange)="get_dealer_detail(formData.dealer_id)" required>
+                <mat-option>
+                  <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                    (keyup)="getDealerList($event.target.value)"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let row of dealerList" value="{{row.id}}" color="accent">{{row.company_name |
+                  titlecase}}-{{row.mobile}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="update_basic.submitted && dealer_id?.invalid ">
+              This field is required
+            </div>
+          </div> -->
+          <div class="col s6">
+            <mat-form-field appearance="outline" [ngClass]="{ 'has-error': part_name.invalid }">
+              <mat-label>Part Name</mat-label>
+              <input matInput placeholder="Type Here ..." name="part_name" #part_name="ngModel" [(ngModel)]="formData.part_name" required />
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="update_basic.submitted || part_name?.invalid">
+              This field is required
+            </div>
+          </div>
+          <div class="col s6" >
+            <mat-form-field appearance="outline" [ngClass]="{'has-error' : part_no?.invalid } ">
+              <mat-label>Part No.</mat-label>
+              <input matInput placeholder="Type Here ..." name="part_no" #part_no="ngModel"
+                [(ngModel)]="formData.part_no">
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="update_basic.submitted || part_no?.invalid">
+              This field is required
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s4" >
+            <mat-form-field appearance="outline" [ngClass]="{'has-error' : mrp?.invalid } ">
+              <mat-label>MRP</mat-label>
+              <input matInput placeholder="Type Here ..." name="mrp" #mrp="ngModel"
+                [(ngModel)]="formData.mrp">
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="update_basic.submitted || mrp?.invalid">
+              This field is required
+            </div>
+          </div>
+          <div class="col s4" >
+            <mat-form-field appearance="outline" [ngClass]="{'has-error' : minimum_stock_alert?.invalid } ">
+              <mat-label>Minimum Stock Alert</mat-label>
+              <input matInput placeholder="Type Here ..." name="minimum_stock_alert" #minimum_stock_alert="ngModel"
+                [(ngModel)]="formData.minimum_stock_alert">
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="update_basic.submitted || minimum_stock_alert?.invalid">
+              This field is required
+            </div>
+          </div>
+          <div class="col s4" >
+            <mat-form-field appearance="outline" [ngClass]="{'has-error' : current_stock?.invalid } ">
+              <mat-label>Current Stock </mat-label>
+              <input matInput placeholder="Type Here ..." name="current_stock" #current_stock="ngModel"
+                [(ngModel)]="formData.current_stock">
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="update_basic.submitted || current_stock?.invalid">
+              This field is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <div class="text-right wp100">
+        <button class="mr10" mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="accent" type="submit" [ngClass]="{'loading': savingFlag == true}"
+          [disabled]="savingFlag == true ">
+          {{savingFlag == true ? 'Saving' : 'Save'}}
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>

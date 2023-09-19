@@ -118,7 +118,6 @@ export class ComplaintDetailComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getComplaintDetail();
 
     });
   }
