@@ -147,6 +147,13 @@ export class ReplacementComponent implements OnInit {
       @page { 
         margin: 0.00in 0.00in  0.00in 0.00in;  
       }
+      #qr_code_container  {
+        page-break-inside: always;
+        margin-bottom: 0px
+      }
+      @page { 
+        margin: 0.00in 0.00in  0.00in 0.00in;  
+      }
       
       .qr_img{
         position: relative;
@@ -233,6 +240,11 @@ export class ReplacementComponent implements OnInit {
         left:50%;
         transform:translateX(-50%);
       }
+      .qr_img_pr img {
+        width: 80px;
+        height: 80px;
+        margin-left: 7px;
+    }
       
       
       

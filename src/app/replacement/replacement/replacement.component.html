@@ -6,8 +6,8 @@
     <h2>Reprint Coupon</h2>
   </div>
   <div class="container pt10 pl10 pr10 pb50" >
-
-
+    
+    
     <!-- ***** CASE 1 BOX WITH ITEM START***** -->
     <ng-container *ngIf="box1 == 1">
       <div id="print_card" style="width: 50%;margin-left: 250px;" hidden>
@@ -32,7 +32,7 @@
       </div>
     </ng-container>
     <!-- ***** CASE 1 BOX WITH ITEM END***** -->
-
+    
     
     <!-- ***** CASE 2 ONLY BOX START ***** -->
     <ng-container   *ngIf="box2 == 2">
@@ -50,11 +50,11 @@
       </div>
     </ng-container>
     <!-- ***** CASE 2 ONLY BOX END ***** -->
-
+    
     
     <!-- ***** CASE 3 ONLY ITEM START***** -->
     <ng-container  *ngIf="box3 == 3">
-      <div id="print_card" style="width: 50%;margin-left: 250px;" hidden>
+      <!-- <div id="print_card" style="width: 50%;margin-left: 250px;" hidden>
         <div id='qr_code_container'  >
           <div style="width: 396.8503937px; position: relative; display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;">
             <div class="qr_img" style="width: 94.488188976px; margin: 0 auto;  height: 94.488188976px;  position: relative;" *ngFor="let row of qrCode">
@@ -64,114 +64,202 @@
             </div>
           </div>
         </div>
-      </div>
-    </ng-container>
-    <!-- ***** CASE 3 ONLY ITEM END***** -->
+      </div> -->
+      <div id="print_card"style="width: 50%;margin-left: 250px;" *ngFor="let row of qrCode; let i = index;"  hidden>
+      <div style="width:100%; height:10px;">&nbsp;</div>
+      <div style="border: 1.5px dashed #000;width: 98%;">
+        <div style="display: flex;">
+
+          <div>
+
+            <div style="min-width: 94px; width: 94px;" class="single_qr">
+              <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="qr_img_pr"
+                errorCorrectionLevel="L"> </ngx-qrcode>
+            </div>
+            <div>
+              <p style="margin:0px;font-size: 8px;line-height: 12px;text-align:center;margin-top: -10px;">
+                {{row.coupon_code}}</p>
+            </div>
+
+          </div>
 
 
-
-
-
-    <div class="row ">
-      <div class="col s12">
-        <div class="card pb0">
-          <div class="card-body cs-form">
-            <div class="row">
-              <div class="col s12 m6 l6">
-                <mat-form-field  appearance="outline">
-                  <mat-label>Coupon Number</mat-label>
-                  <input matInput placeholder="Type Here ..."  name="coupon_number" #coupon_number="ngModel" [(ngModel)]="couponNumber.coupon_number"   minlength="16" maxlength="16" min="0" #focusInput  (ngModelChange)="checkCoupon(couponNumber.coupon_number)">
-                </mat-form-field>
+          <div style="width: 100%; border-left: 1px dashed #000;">
+            <p
+              style="text-align: center; font-weight: 500; border-bottom: 1px dashed #000; padding: 2px; line-height: 18px; margin:0px ">
+              {{getData.product_name}}</p>
+            <div
+              style="display: grid;  grid-template-columns: 1fr 1fr 1fr;     height: 60px;     align-items: center; ">
+              <div
+                style="border-right: 1px dashed #000; height: 100%;  align-items: center;  justify-content: center;  display: flex;">
+                <p style="line-height: 16px; font-size: 14px; margin:0px; text-align:center;">{{getData.category ?
+                  getData.category : ''}}</p>
+              </div>
+              <div
+                style="border-right: 1px dashed #000; height: 100%;  align-items: center;  justify-content: center;  display: flex;">
+                <p
+                  style="line-height: 20px;  font-weight: 500; text-align: center; padding: 0px 18px; font-size: 18px; margin:0px;">
+                  Qty: 1 PC</p>
+              </div>
+              <div style="height: 100%;  align-items: center;  justify-content: center;  display: flex;">
+                <p
+                  style="line-height: 20px;  font-weight: 500; text-align: center; padding: 0px 18px; font-size: 18px; margin:0px;">
+                  Ref.Id: {{getData.product_code}}</p>
               </div>
             </div>
+
+          </div>
+        </div>
+        <!-- <div style="border-top: 1px dashed #000; padding: 3px; font-size: 12px; font-weight: 500;">
+          {{getData.product_detail}}
+        </div> -->
+
+        <div style="border-top: 1px dashed #000; padding: 3px; font-size: 9px; font-weight: 500;height: 23px;line-height: 10px;">
+          {{getData.description}}
+        </div>
+
+        <div style="display: grid;  grid-template-columns: 1fr 1fr; border-top: 1px dashed #000;">
+          <div style="border-right: 1px dashed #000; padding-left: 4px;">
+            <p
+              style="border-right: 1px dashed #000; padding: 0px 2px; font-size:14px; line-height: 16px; margin:0px;">
+              MRP : {{getData.product_mrp ? getData.product_mrp : ''}}</p>
+            <span style="font-size:9px; line-height:12px;  margin:0px; ">(Incl of all taxes)</span>
+          </div>
+          <div
+            style="display: flex; align-items: center;  justify-content: center; font-size: 11px; font-weight: 500;">
+            Date Of Packaging: {{getData.date_created | date:'d MMM y'}}
+          </div>
+        </div>
+        <div style="display: grid;  grid-template-columns: 1fr 1fr; border-top: 1px dashed #000;">
+          <div style="border-right: 1px dashed #000; padding-left: 4px;">
+            <p
+              style="border-right: 1px dashed #000; font-size: 11px; font-weight: 600; line-height:18px; margin:0px; ">
+              CUSTOMER CARE</p>
+            <span style="font-size:9px;line-height: 10px;">Manager: TEL: +91-8881750126</span>
+            <span style="font-size:9px;line-height: 10px;">email:sales.imi@gmail.com</span>
+          </div>
+          <div style="padding-left: 4px;">
+            <p
+              style="border-right: 1px dashed #000; font-size: 11px; font-weight: 600; line-height:18px; margin:0px; ">
+              Lockmaster India Pvt.Ltd</p>
+            <span style="font-size:9px; line-height: 10px;">C-20 Industrial Estate</span>
+            <span style="font-size:9px; line-height: 10px;">Aligarh-202001(U.P) India</span>
           </div>
         </div>
       </div>
     </div>
-    
-    <div class="row mb100">
-      <div class="col s12 m12 l12 grid-two-box">
-        <div class="card" *ngFor="let row of qrCode; let i = index;">
-          <div class="card-head">
-            <div class="qr-head">
-              <h2 class="mb0">{{getData.product_detail}}</h2>
-              <h2 class="mb0" >{{getData.sku_code}}  {{getData.remarks ? '('+ getData.remarks + ')' : ''}}</h2>
-              <h2  class="mb0" *ngIf="getData.hardner_code">{{getData.hardner_code}} {{getData.hardner_qty}}</h2>
-            </div>
-          </div>
-          <div class="card-body">
-            <div  class="qr-box">
-              <div class="qr-content">
-                <ul>
-                  <li>
-                    <p>MRP &#8377; {{row.product_mrp == 0  ? '': row.product_mrp }} (Inclusive of all Taxes)</p>
-                  </li>
-                  <li>
-                    <p>Net Content {{row.product_qty | titlecase}}.</p>
-                  </li>
-                  <li>Pearl, Precision Products</li>
-                  <li>PEARL PRECISION PRODUCTS PVT. LTD.</li>
-                  <li>B-14, Block B, Sector 80, Noida, Uttar Pradesh 201305</li>
-                  <li>Customer Care No:0120-4219233, 0120-4219235</li>
-                  <li>Email- enquiry@pproducts.in</li>
-                </ul>
-              </div>
-              <div class="cs-barcode" *ngIf="getData.coupon_type == 'Master Box' ">
-                <ngx-qrcode [elementType]="elementType"  value="{{row.coupon_code}}" cssClass="aclass" errorCorrectionLevel="L"> </ngx-qrcode>
-                <span class="fix">{{i+1}} Box</span>
-                <span class="qr-code-number">{{row.coupon_code}}</span>
-              </div>
-              
-              <div class="cs-barcode" *ngIf="getData.coupon_type == 'Item Box' ">
-                <ngx-qrcode  [elementType]="elementType"  value="{{row.coupon_code}}"  cssClass="aclass"  errorCorrectionLevel="L"> </ngx-qrcode>
-                <span class="qr-code-number">{{row.coupon_code}}</span>
-              </div>
-              
-            </div>
-            <div class="qr-box" *ngFor="let subRow of row.itembox">
-              <div class="qr-content">
-                <ul>
-                  <li>
-                    <p>MRP &#8377; {{subRow.product_mrp == 0  ? '': subRow.product_mrp }} (Inclusive of all Taxes)</p>
-                  </li>
-                  <li>
-                    <p>Net Content {{subRow.product_qty | titlecase}}</p>
-                  </li>
-                  <ng-container *ngIf="getData.product_source == 'Imported'">
-                    <li>COUNTRY OF ORIGIN ITALY</li>
-                    <li>Imported Packed and Marketed by</li>
-                  </ng-container>
-                  <li>Pearl, Precision Products</li>
-                  <li>PEARL PRECISION PRODUCTS PVT. LTD.</li>
-                  <li>B-14, Block B, Sector 80, Noida, Uttar Pradesh 201305</li>
-                  <li>Customer Care No:0120-4219233, 0120-4219235</li>
-                  <li>Email- enquiry@pproducts.in</li>
-                </ul>
-              </div>
-              <div class="cs-barcode">
-                <ngx-qrcode 
-                [elementType]="elementType" 
-                value="{{subRow.coupon_code}}"
-                cssClass="aclass"
-                errorCorrectionLevel="L">
-              </ngx-qrcode>
-              <span class="qr-code-number">{{subRow.coupon_code}}</span> 
-            </div>
+</ng-container>
+<!-- ***** CASE 3 ONLY ITEM END***** -->
+
+
+
+
+
+<div class="row ">
+  <div class="col s12">
+    <div class="card pb0">
+      <div class="card-body cs-form">
+        <div class="row">
+          <div class="col s12 m6 l6">
+            <mat-form-field  appearance="outline">
+              <mat-label>Coupon Number</mat-label>
+              <input matInput placeholder="Type Here ..."  name="coupon_number" #coupon_number="ngModel" [(ngModel)]="couponNumber.coupon_number"   minlength="16" maxlength="16" min="0" #focusInput  (ngModelChange)="checkCoupon(couponNumber.coupon_number)">
+            </mat-form-field>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
-  
-  <div class="fab-btns" *ngIf="qrCode.length > 0">
-    <div class="fab-btns" >
-      <button class="pulse excel" mat-fab color="primary"  (click)="printData();">
-        <i class="material-icons">print</i>
-        Print Coupon
-      </button>
+</div>
+
+<div class="row mb100" *ngIf="!skLoading">
+  <div class="col s12 m12 l12 grid-two-box">
+    <div class="card" *ngFor="let row of qrCode; let i = index;">
+      <div class="card-head">
+        <div class="qr-head">
+          <h2 class="mb0">{{getData.product_detail}}</h2>
+          <h2 class="mb0">{{getData.sku_code}} {{getData.remarks ? '('+ getData.remarks + ')' : ''}}</h2>
+          <h2 class="mb0" *ngIf="getData.hardner_code">{{getData.hardner_code}} {{getData.hardner_qty}}</h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="qr-box">
+          <div class="qr-content">
+            <ul>
+              <li>
+                <p>MRP &#8377; {{row.product_mrp == 0 ? '': row.product_mrp }} (Inclusive of all Taxes)</p>
+              </li>
+              <li>
+                <p>Net Content {{row.product_qty | titlecase}}.</p>
+              </li>
+              <!-- <li>Pearl, Precision Products</li> -->
+              <li>Lock Master India Pvt Ltd.</li>
+              <li>C-20, Industrial Estate, Aligarh-202 001 (U.P.) INDIA</li>
+              <li>Customer Care No:0571-2406328, +91 8881750126</li>
+              <li>Email- sales@bonus.in</li>
+            </ul>
+          </div>
+          <div class="cs-barcode" *ngIf="getData.coupon_type == 'Master Box' ">
+            <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass"
+            errorCorrectionLevel="L">
+          </ngx-qrcode>
+          <span class="fix">{{i+1}} Box</span>
+          <span class="qr-code-number">{{row.coupon_code}}</span>
+        </div>
+        
+        <div class="cs-barcode" *ngIf="getData.coupon_type == 'Item Box' ">
+          <ngx-qrcode [elementType]="elementType" value="{{row.coupon_code}}" cssClass="aclass"
+          errorCorrectionLevel="L">
+        </ngx-qrcode>
+        <span class="qr-code-number">{{row.coupon_code}}</span>
+      </div>
+      
+    </div>
+    <div class="qr-box" *ngFor="let subRow of row.itembox">
+      <div class="qr-content">
+        <ul>
+          <li>
+            <p>MRP &#8377; {{subRow.product_mrp == 0 ? '': subRow.product_mrp }} (Inclusive of all Taxes)</p>
+          </li>
+          <li>
+            <p>Net Content {{subRow.product_qty | titlecase}}</p>
+          </li>
+          <ng-container *ngIf="getData.product_source == 'Imported'">
+            <li>COUNTRY OF ORIGIN ITALY</li>
+            <li>Imported Packed and Marketed by</li>
+          </ng-container>
+          <!-- <li>Pearl, Precision Products</li> -->
+          <li>Lock Master India Pvt Ltd.</li>
+          <li>C-20, Industrial Estate,Aligarh-202 001 (U.P.)INDIA</li>
+          <li>Customer Care No:0571-2406328, +91 8881750126</li>
+          <li>Email- sales@bonus.in</li>
+        </ul>
+      </div>
+      <div class="cs-barcode">
+        <ngx-qrcode [elementType]="elementType" value="{{subRow.coupon_code}}" cssClass="aclass"
+        errorCorrectionLevel="L">
+      </ngx-qrcode>
+      <span class="qr-code-number">{{subRow.coupon_code}}</span>
     </div>
   </div>
+</div>
+</div>
+
+
+
+
+</div>
+</div>
+
+
+<div class="fab-btns" *ngIf="qrCode.length > 0">
+  <div class="fab-btns" >
+    <button class="pulse excel" mat-fab color="primary"  (click)="printData();">
+      <i class="material-icons">print</i>
+      Print Coupon
+    </button>
+  </div>
+</div>
 </div>
 </div>
 

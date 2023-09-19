@@ -6,6 +6,8 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { DialogComponent } from 'src/app/dialog.component';
 import { MatDialog } from '@angular/material';
 import { CouponDetailModalComponent } from '../coupon-detail-modal/coupon-detail-modal.component';
+import { GatepassAddComponent } from 'src/app/company-dispatch/gatepass-add/gatepass-add.component';
+import { ViewMasterBoxDispatchDetailComponent } from 'src/app/company-dispatch/view-master-box-dispatch-detail/view-master-box-dispatch-detail.component';
 
 
 
@@ -34,6 +36,7 @@ export class CouponCodeListComponent implements OnInit {
   tabCount: any = {}
   downurl: any;
   data: any = {};
+  mastercouponData: any = [];
   scanLimit:any={};
 
 
@@ -60,6 +63,9 @@ export class CouponCodeListComponent implements OnInit {
     if (type == 'scan_item') {
       this.scanCouponList();
     }
+    if (type == 'master_grand_box') {
+      this.getGrandMaster();
+    }
     else {
       this.couponCodeList();
     }
@@ -69,6 +75,9 @@ export class CouponCodeListComponent implements OnInit {
     this.start = this.start + this.page_limit;
     if (type == 'scan_item') {
       this.scanCouponList();
+    }
+    if (type == 'master_grand_box') {
+      this.getGrandMaster();
     }
     else {
       this.couponCodeList();
@@ -251,11 +260,15 @@ export class CouponCodeListComponent implements OnInit {
     if (type == 'scan_item') {
       this.scanCouponList();
     }
+    if (type == 'master_grand_box') {
+      this.getGrandMaster();
+    }
     else if (type == 'scan_item_by_sales') {
       this.scanCouponSalesList();
     }
     else {
       this.couponCodeList();
+      this.getScanLimitCount();
 
     }
   }
@@ -325,6 +338,83 @@ export class CouponCodeListComponent implements OnInit {
       this.loader = false;
 
     })
+  }
+  getGrandMaster() {
+    this.loader = true;
+    if (this.pagenumber > this.total_page) {
+      this.pagenumber = this.total_page;
+      this.start = this.pageCount - this.page_limit;
+    }
+    if (this.start < 0) {
+      this.start = 0;
+    }
+
+    if (this.filter.date_created) {
+      this.filter.date_created = moment(this.filter.date_created).format('YYYY-MM-DD');
+    }
+    if (this.filter.dispatch_date) {
+      this.filter.dispatch_date = moment(this.filter.dispatch_date).format('YYYY-MM-DD');
+    }
+    if (this.filter.scanned_on) {
+      this.filter.scanned_on = moment(this.filter.scanned_on).format('YYYY-MM-DD');
+    }
+
+    this.filter.active_tab = this.active_tab;
+    this.service.post_rqst({ 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit }, 'Dispatch/fetchGrandMasterList').subscribe((resp) => {
+      if (resp['statusCode'] == 200) {
+        this.mastercouponData = resp['offer_coupon_grand_master']
+        this.pageCount = resp['count'];
+
+        this.loader = false;
+
+        if (this.pagenumber > this.total_page) {
+          this.pagenumber = this.total_page;
+          this.start = this.pageCount - this.page_limit;
+        }
+
+        else {
+          this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
+        }
+        this.total_page = Math.ceil(this.pageCount / this.page_limit);
+        this.sr_no = this.pagenumber - 1;
+        this.sr_no = this.sr_no * this.page_limit;
+
+        setTimeout(() => {
+          if (this.mastercouponData.length == 0) {
+            this.noResult = true;
+          }
+        }, 500);
+      }
+      else {
+        this.toast.errorToastr(resp['statusMsg']);
+      }
+
+    })
+  }
+  viewmasterboxdetail(id, type) {
+    let data = { 'main_data': { 'id': id }, 'type': type }
+    const dialogRef = this.dialog.open(ViewMasterBoxDispatchDetailComponent, {
+      width: '1000px',
+      data
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+  getDetails(id, type): void {
+    const dialogRef = this.dialog.open(GatepassAddComponent, {
+      width: '1024px',
+      panelClass: 'cs-modal',
+      disableClose: true,
+      data: {
+        'model_type': type,
+        'gatepass_id': id,
+      }
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 
 

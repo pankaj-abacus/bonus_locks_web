@@ -65,6 +65,7 @@ import { AddInstallationRemarkComponent } from './installation/add-installation-
 import { ProductDetailModelComponent } from './installation/product-detail-model/product-detail-model.component';
 import { InstallationUpdateModelComponent } from './installation/installation-update-model/installation-update-model.component';
 import { ComplaintUpdateModelComponent } from './service/complaint-update-model/complaint-update-model.component';
+import { GatepassAddComponent } from './company-dispatch/gatepass-add/gatepass-add.component';
 
 
 @NgModule({
@@ -154,7 +155,8 @@ import { ComplaintUpdateModelComponent } from './service/complaint-update-model/
         AddInstallationRemarkComponent,
         ProductDetailModelComponent,
         InstallationUpdateModelComponent,
-        ComplaintUpdateModelComponent
+        ComplaintUpdateModelComponent,
+        GatepassAddComponent
     ],
 
     exports: [RouterModule],
