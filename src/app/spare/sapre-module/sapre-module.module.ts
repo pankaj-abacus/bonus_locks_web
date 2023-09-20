@@ -14,6 +14,9 @@ import { AppUtilityModule } from 'src/app/app-utility.module';
 import { SpareAssignQtyComponent } from '../spare-assign-qty/spare-assign-qty.component';
 import { SpareIncomingComponent } from '../spare-incoming/spare-incoming.component';
 import { SpareOutgoingComponent } from '../spare-outgoing/spare-outgoing.component';
+import { AssignQtyComponent } from '../assign-qty/assign-qty.component';
+import { ManageStockComponent } from '../manage-stock/manage-stock.component';
+import { ReturnStockComponent } from '../return-stock/return-stock.component';
 
 const spareRoutes = [
   { path: "", children:[
@@ -28,7 +31,7 @@ const spareRoutes = [
 ]
 
 @NgModule({
-  declarations: [SpareListComponent,AddSpareComponent,SpareAssignQtyComponent,SpareIncomingComponent,SpareOutgoingComponent],
+  declarations: [SpareListComponent,AddSpareComponent,SpareAssignQtyComponent,SpareIncomingComponent,SpareOutgoingComponent,AssignQtyComponent,ManageStockComponent,ReturnStockComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(spareRoutes),
