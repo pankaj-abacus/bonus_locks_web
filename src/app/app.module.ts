@@ -65,6 +65,7 @@ import { AddInstallationRemarkComponent } from './installation/add-installation-
 import { ProductDetailModelComponent } from './installation/product-detail-model/product-detail-model.component';
 import { InstallationUpdateModelComponent } from './installation/installation-update-model/installation-update-model.component';
 import { ComplaintUpdateModelComponent } from './service/complaint-update-model/complaint-update-model.component';
+import { GatepassAddComponent } from './company-dispatch/gatepass-add/gatepass-add.component';
 import { SapreModuleModule } from './spare/sapre-module/sapre-module.module';
 import { SpareAssignQtyComponent } from './spare/spare-assign-qty/spare-assign-qty.component';
 import { SpareIncomingComponent } from './spare/spare-incoming/spare-incoming.component';
@@ -73,6 +74,7 @@ import { AddSpareComponent } from './spare/add-spare/add-spare.component';
 import { AssignQtyComponent } from './spare/assign-qty/assign-qty.component';
 import { ManageStockComponent } from './spare/manage-stock/manage-stock.component';
 import { ReturnStockComponent } from './spare/return-stock/return-stock.component';
+
 
 
 @NgModule({
@@ -164,6 +166,7 @@ import { ReturnStockComponent } from './spare/return-stock/return-stock.componen
         ProductDetailModelComponent,
         InstallationUpdateModelComponent,
         ComplaintUpdateModelComponent,
+        GatepassAddComponent
         SpareAssignQtyComponent,
         SpareIncomingComponent,
         SpareOutgoingComponent,
@@ -171,6 +174,7 @@ import { ReturnStockComponent } from './spare/return-stock/return-stock.componen
         AssignQtyComponent,
         ManageStockComponent,
         ReturnStockComponent
+
     ],
 
     exports: [RouterModule],
