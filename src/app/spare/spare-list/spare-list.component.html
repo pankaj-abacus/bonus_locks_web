@@ -9,7 +9,7 @@
         <i class="material-icons">refresh</i>
       </a>
 
-      <div class="pagination">
+      <div class="pagination" *ngIf="spareList.length > 0">
         <div class="pagination-content">
           Pages
           <span>{{pagenumber}}</span>
@@ -36,7 +36,7 @@
           <table>
             <tr>
               <th class="w50">Sr.No</th>
-              <th class="w100">Category</th>
+              <th class="w100">Date Created</th>
               <th class="w100">Part Name</th>
               <th class="w100">Part No.</th>
               <th class="w100 text-center">Min Stock Alert</th>
@@ -45,7 +45,7 @@
               <th class="w100">MRP</th>
               <th class="w150">Stock Incoming</th>
               <th class="w150">Stock Outgoing</th>
-              <th class="w150">Image</th>
+              <th class="w150 text-center">Image</th>
               <th class="w100 text-center">Action</th>
             </tr>
           </table>
@@ -70,7 +70,7 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="created_name"
-                      (keyup.enter)="getCumtomerList('')" #created_name="ngModel"
+                      (keyup.enter)="getSpareList('')" #created_name="ngModel"
                       [(ngModel)]="filter_data.created_name">
                   </mat-form-field>
                 </div>
@@ -82,7 +82,7 @@
               <th class="w100"></th>
               <th class="w150"></th>
               <th class="w150"></th>
-              <th class="w150"></th>
+              <th class="w150 text-center"></th>
               <th class="w100 text-center"></th>
             </tr>
           </table>
@@ -92,58 +92,43 @@
       <div class="table-container">
         <div class="table-content">
           <table>
-            <!-- <ng-container *ngIf="!loader">
-              <tr *ngFor="let row of customerList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
-                <td class="w50">{{i + 1 + sr_no}}</td>
-                <td class="w100">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
-                <td class="w80">{{row.created_name | titlecase}}</td>
-                <td class="w130"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
-                    routerLink="customer-detail/{{(row.id)}}" routerLinkActive="active"> {{row.name | titlecase}}</a>
-                </td>
-                <td class="w80">{{row.mobile_no}}</td>
-                <td class="w250 ">{{row.address | titlecase}}</td>
-                <td class="w70 text-center">{{row.total_complaint}}</td>
-                <td class="w70 text-center ">{{row.pending_complaint}}</td>
-              </tr>
-            </ng-container> -->
+            
             <ng-container *ngIf="!loader">
-              <tr>
-                <td class="w50">Sr.No</td>
-                <td class="w100">Category</td>
-                <td class="w100">Part Name</td>
-                <td class="w100">Part No.</td>
-                <td class="w100 text-center">23</td>
-                <td class="w50 text-center">3</td>
+              <tr *ngFor="let row of spareList; let i = index " [ngClass]="{'Current': service.currentUserID == row.id}">
+                <td class="w50">{{i + 1 + sr_no}}</td>
+                <td class="w100">{{row.date_created }}</td>
+                <td class="w100">{{row.part_name? row.part_name:'--'}}</td>
+                <td class="w100">{{row.part_no? row.part_no:'--'}}</td>
+                <td class="w100 text-center">{{row.min_stock? row.min_stock:'--'}}</td>
+                <td class="w50 text-center">{{row.current_stock? row.current_stock:'--'}}</td>
                 <td class="w80 text-center">
-                  <a class="link-btn" mat-button (click)="openDialog3()" routerLinkActive="active">123</a>
-                  <!-- <button mat-menu-item (click)="openDialog3()" [ngClass]="{'pulse': fabBtnValue=='activity'}">1</button> -->
+                  <a class="link-btn" mat-button (click)="spareQty()" routerLinkActive="active">{{row.assign_stock? row.assign_stock:'--'}}</a>
                 </td>
-                <td class="w100">RS. 1000</td>
-
+                <td class="w100">Rs.{{row.mrp? row.mrp:'--'}}</td>
                 <td class="w150">
-                  <button mat-raised-button color="accent" (click)="openDialog()" [ngClass]="{'pulse': fabBtnValue=='activity'}">Stock Incoming</button>
-                  <!-- <button mat-raised-button color="accent" (click)="stockIncoming()">Stock Incoming</button> -->
+                  <button mat-raised-button color="accent" (click)="spareIncomingDialog()" [ngClass]="{'pulse': fabBtnValue=='activity'}">Stock Incoming</button>
                 </td>
-
-
                 <td class="w150">
-                  <button mat-raised-button color="accent" (click)="openDialog2()" [ngClass]="{'pulse': fabBtnValue=='activity'}">Stock Outgoing</button>
-                  <!-- <button mat-raised-button color="accent" (click)="stockOutgoing()">Stock Outgoing</button> -->
+                  <button mat-raised-button color="accent" (click)="spareOutgoingDialog()" [ngClass]="{'pulse': fabBtnValue=='activity'}">Stock Outgoing</button>
                 </td>
-
-                <td class="w150">Image</td>
+                <td class="w150 text-center">
+                  <div *ngIf="row.image.length">
+                    <img [src]="url+row.image" (click)="imageModel(url+row.image)"
+                      style="cursor: zoom-in; width: 80px;">
+                  </div>
+                </td>
                 <td class="w100 text-center">
                   <div class="action-button">
-                    <button mat-icon-button matTooltip="View" (click)="openDesignationModal2()">
+                    <button mat-icon-button matTooltip="View" (click)="addSpareDialog('edit',row,row.id)">
                       <i class="material-icons edit">edit</i>
                     </button>
                     <button mat-icon-button matTooltip="Delete" (click)="deleteProduct()">
                       <i class="material-icons red-clr">delete</i>
                     </button>
-
+  
                   </div>
                 </td>
-
+  
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">
@@ -154,34 +139,34 @@
                 <td class="w100">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w80">
+                <td class="w100">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w130">
+                <td class="w100">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w80">
+                <td class="w100 text-center">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w50 text-center">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w80 text-center">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w100">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w150">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w150 ">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w150 text-center">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w80">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w250 ">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w70">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w70">
+                <td class="w100 text-center">
                   <div>&nbsp;</div>
                 </td>
               </tr>
@@ -190,7 +175,7 @@
         </div>
       </div>
     </div>
-    <ng-container *ngIf="datanotofound==true && customerList.length == 0;">
+    <ng-container *ngIf="datanotofound==true && spareList.length == 0;">
       <app-not-result-found></app-not-result-found>
     </ng-container>
   </div>
@@ -213,21 +198,21 @@
       <mat-icon>download</mat-icon>
       <span>Download excel</span>
     </button>
-    <button mat-menu-item (click)="addSpare()" routerLinkActive="router-link-active">
-      <mat-icon>add</mat-icon>
-      <span>Add Spare Part</span>
+    <button mat-menu-item (click)="returnStock()" routerLink="add-customer" routerLinkActive="router-link-active">
+      <mat-icon>assignment_returned</mat-icon>
+      <span>Return Stock</span>
     </button>
-    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-customer" routerLinkActive="router-link-active">
-      <mat-icon>add</mat-icon>
+    <button mat-menu-item (click)="manageStock()" routerLink="add-customer" routerLinkActive="router-link-active">
+      <mat-icon>inventory</mat-icon>
       <span>Manage Stock</span>
     </button>
-    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-customer" routerLinkActive="router-link-active">
-      <mat-icon>add</mat-icon>
+    <button mat-menu-item (click)="spareAssignQty()" routerLink="add-customer" routerLinkActive="router-link-active">
+      <mat-icon>assignment</mat-icon>
       <span>Assign Stock</span>
     </button>
-    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-customer" routerLinkActive="router-link-active">
+    <button mat-menu-item (click)="addSpareDialog('add','','')" routerLinkActive="router-link-active">
       <mat-icon>add</mat-icon>
-      <span>Return Stock</span>
+      <span>Add Spare Part</span>
     </button>
   </mat-menu>
 </div>

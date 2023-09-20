@@ -2,15 +2,19 @@ import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
+import { sessionStorage } from 'src/app/localstorage.service';
+import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 import { DialogComponent } from 'src/app/dialog.component';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import * as moment from 'moment';
 
 @Component({
-  selector: 'app-spare-assign-qty',
-  templateUrl: './spare-assign-qty.component.html',
-  styleUrls: ['./spare-assign-qty.component.scss']
+  selector: 'app-return-stock',
+  templateUrl: './return-stock.component.html',
+  styleUrls: ['./return-stock.component.scss']
 })
-export class SpareAssignQtyComponent implements OnInit {
+export class ReturnStockComponent implements OnInit {
 
   formData:any={}
   engineerList: any = [];
@@ -52,5 +56,6 @@ export class SpareAssignQtyComponent implements OnInit {
       console.log(this.formData.name);
     }
   }
+
 
 }

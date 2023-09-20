@@ -71,6 +71,9 @@ import { SpareAssignQtyComponent } from './spare/spare-assign-qty/spare-assign-q
 import { SpareIncomingComponent } from './spare/spare-incoming/spare-incoming.component';
 import { SpareOutgoingComponent } from './spare/spare-outgoing/spare-outgoing.component';
 import { AddSpareComponent } from './spare/add-spare/add-spare.component';
+import { AssignQtyComponent } from './spare/assign-qty/assign-qty.component';
+import { ManageStockComponent } from './spare/manage-stock/manage-stock.component';
+import { ReturnStockComponent } from './spare/return-stock/return-stock.component';
 
 
 
@@ -167,7 +170,10 @@ import { AddSpareComponent } from './spare/add-spare/add-spare.component';
         SpareAssignQtyComponent,
         SpareIncomingComponent,
         SpareOutgoingComponent,
-        AddSpareComponent
+        AddSpareComponent,
+        AssignQtyComponent,
+        ManageStockComponent,
+        ReturnStockComponent
 
     ],
 
