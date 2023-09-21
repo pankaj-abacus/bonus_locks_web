@@ -74,6 +74,7 @@ import { AddSpareComponent } from './spare/add-spare/add-spare.component';
 import { AssignQtyComponent } from './spare/assign-qty/assign-qty.component';
 import { ManageStockComponent } from './spare/manage-stock/manage-stock.component';
 import { ReturnStockComponent } from './spare/return-stock/return-stock.component';
+import { ProductUploadComponent } from './product-upload/product-upload.component';
 
 
 
@@ -95,7 +96,7 @@ import { ReturnStockComponent } from './spare/return-stock/return-stock.componen
         StrReplace,
         Crypto,
         NumericWords,
-        
+
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -173,7 +174,9 @@ import { ReturnStockComponent } from './spare/return-stock/return-stock.componen
         AddSpareComponent,
         AssignQtyComponent,
         ManageStockComponent,
-        ReturnStockComponent
+        ReturnStockComponent,
+        ProductUploadComponent
+
 
     ],
 

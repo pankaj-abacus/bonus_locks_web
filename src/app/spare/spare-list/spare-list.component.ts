@@ -16,6 +16,7 @@ import { ImageModuleComponent } from 'src/app/image-module/image-module.componen
 import { ManageStockComponent } from '../manage-stock/manage-stock.component';
 import { AssignQtyComponent } from '../assign-qty/assign-qty.component';
 import { ReturnStockComponent } from '../return-stock/return-stock.component';
+import { ProductUploadComponent } from 'src/app/product-upload/product-upload.component';
 @Component({
   selector: 'app-spare-list',
   templateUrl: './spare-list.component.html',
@@ -43,6 +44,7 @@ export class SpareListComponent implements OnInit {
   datanotofound: boolean = false;
   downurl: any = ''
   url: any;
+
 
 
 
@@ -108,7 +110,7 @@ export class SpareListComponent implements OnInit {
     this.loader = true;
     header.subscribe((result) => {
       if (result['statusCode'] == 200) {
-        // console.log('result', result);
+
         this.spareList = result['result'];
         this.pageCount = result['count'];
         this.scheme_active_count = result['scheme_active_count'];
@@ -152,6 +154,7 @@ export class SpareListComponent implements OnInit {
   }
 
   downloadExcel() {
+
     this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_spare_part_list").subscribe((result => {
       if (result['msg'] == true) {
         window.open(this.downurl + result['filename'])
@@ -256,6 +259,23 @@ export class SpareListComponent implements OnInit {
             this.toast.errorToastr(result['statusMsg']);
           }
         })
+      }
+    });
+  }
+
+
+   upload_excel(type) {
+    const dialogRef = this.dialog.open(ProductUploadComponent, {
+      width: '500px',
+      panelClass: 'cs-modal',
+      data: {
+        'from': 'beat',
+        'modal_type': type
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == true) {
+        this.getSpareList('');
       }
     });
   }
