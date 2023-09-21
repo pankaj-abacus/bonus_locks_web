@@ -36,7 +36,7 @@
           <table>
             <tr>
               <th class="w50">Sr.No</th>
-              <th class="w100">Date Created</th>
+              <th class="w150">Date Created</th>
               <th class="w100">Part Name</th>
               <th class="w100">Part No.</th>
               <th class="w100 text-center">Min Stock Alert</th>
@@ -55,7 +55,7 @@
           <table>
             <tr>
               <th class="w50"></th>
-              <th class="w100">
+              <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
@@ -96,9 +96,9 @@
               <tr *ngFor="let row of spareList; let i = index "
                 [ngClass]="{'Current': service.currentUserID == row.id}">
                 <td class="w50">{{i + 1 + sr_no}}</td>
-                <td class="w100">{{row.date_created }}</td>
-                <td class="w100">{{row.part_name? row.part_name:'--'}}</td>
-                <td class="w100">{{row.part_no? row.part_no:'--'}}</td>
+                <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+                <td class="w100">{{row.part_name? (row.part_name | titlecase):'--'}}</td>
+                <td class="w100">{{row.part_no? (row.part_no | titlecase):'--'}}</td>
                 <td class="w100 text-center">{{row.min_stock? row.min_stock:'--'}}</td>
                 <td class="w50 text-center">{{row.current_stock? row.current_stock:'--'}}</td>
                 <td class="w80 text-center">
@@ -125,7 +125,7 @@
                     <button mat-icon-button matTooltip="View" (click)="addSpareDialog('edit',row,row.id)">
                       <i class="material-icons edit">edit</i>
                     </button>
-                    <button mat-icon-button matTooltip="Delete" (click)="deleteProduct()">
+                    <button mat-icon-button matTooltip="Delete" (click)="delete(row.id)">
                       <i class="material-icons red-clr">delete</i>
                     </button>
 
@@ -139,7 +139,7 @@
                 <td class="w50">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100">
+                <td class="w150">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w100">
@@ -213,7 +213,7 @@
       <mat-icon>assignment</mat-icon>
       <span>Assign Stock</span>
     </button>
-    <button mat-menu-item (click)="addSpareDialog('add','','')" routerLinkActive="router-link-active">
+    <button mat-menu-item (click)="addSpareDialog('','','')" routerLinkActive="router-link-active">
       <mat-icon>add</mat-icon>
       <span>Add Spare Part</span>
     </button>

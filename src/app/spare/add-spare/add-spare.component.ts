@@ -36,7 +36,6 @@ export class AddSpareComponent implements OnInit {
 
 
       this.route.params.subscribe(params => {
-        console.log(data);
         this.type=data.type
         this.id = data.id;
         this.part_img_id = data.id;
@@ -50,31 +49,8 @@ export class AddSpareComponent implements OnInit {
    }
 
   ngOnInit() {
-    // this.getDealerList('');
-
   }
 
-  // getDealerList(search) {
-  //   console.log(search);
-    
-  //   this.service.post_rqst({ 'search': search }, "ServiceTask/dealerList").subscribe((result => {
-  //     if (result['statusCode'] == 200) {
-  //       this.dealerList = result['dealer'];
-  //       console.log(this.dealerList);
-
-  //     }
-  //   }))
-  // }
-  // get_dealer_detail(id){
-  //   if (id) {
-  //     let index = this.dealerList.findIndex(d => d.id == id);
-  //     if (index != -1) {
-  //       this.formData.dealer_name = this.dealerList[index].name;
-  //       this.formData.dealer_company_name = this.dealerList[index].company_name;
-  //       this.formData.dealer_mobile = this.dealerList[index].mobile;
-  //     }
-  //   }
-  // }
 
   part_image_Upload(data: any) {
     for (let i = 0; i < data.target.files.length; i++) {
@@ -97,11 +73,6 @@ export class AddSpareComponent implements OnInit {
   }
 
   submit() {
-    // console.log(this.formData.image);
-    // if(!this.formData.image){
-    //   this.toast.errorToastr('Warranty images required');
-    //   return;
-    // }
     this.formData.id=this.id
     this.savingFlag = true;
     let header

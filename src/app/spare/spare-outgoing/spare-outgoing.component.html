@@ -16,7 +16,7 @@
       </div>
     </div>
   </div>
-  <p class="heading mt-10">Product List</p>
+  <p class="heading mt-10 border-top">Product List</p>
   <div mat-dialog-content>
     <div class="cs-table left-right-10">
       <div class=" border-top">
@@ -34,13 +34,30 @@
       <div class="table-container pb0">
         <div class="table-content none-shadow">
           <table>
-            <ng-container *ngFor="let row of add_list; let i = index">
+            <ng-container>
+              <tr>
+                <td class="w30 text-center ">1</td>
+                <td class="w100">Test</td>
+                <td class="w30 text-center ">2</td>
+              </tr>
+              <tr>
+                <td class="w30 text-center ">1</td>
+                <td class="w100">Test</td>
+                <td class="w30 text-center ">2</td>
+              </tr>
               <tr>
                 <td class="w30 text-center ">1</td>
                 <td class="w100">Test</td>
                 <td class="w30 text-center ">2</td>
               </tr>
             </ng-container>
+            <!-- <ng-container *ngFor="let row of add_list; let i = index">
+              <tr>
+                <td class="w30 text-center ">1</td>
+                <td class="w100">Test</td>
+                <td class="w30 text-center ">2</td>
+              </tr>
+            </ng-container> -->
           </table>
         </div>
       </div>

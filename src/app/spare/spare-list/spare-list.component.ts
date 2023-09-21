@@ -43,11 +43,12 @@ export class SpareListComponent implements OnInit {
   sr_no: number;
   datanotofound: boolean = false;
   downurl: any = ''
-  url:any;
+  url: any;
 
 
 
-  constructor(public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent,public dialogs: MatDialog) {
+
+  constructor(public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
     this.url = this.service.uploadUrl + 'service_task/'
     this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
@@ -85,15 +86,14 @@ export class SpareListComponent implements OnInit {
     this.getSpareList('');
   }
 
-  imageModel(image){
-    const dialogRef = this.dialog.open( ImageModuleComponent, {
-      panelClass:'Image-modal',
-      data:{
+  imageModel(image) {
+    const dialogRef = this.dialog.open(ImageModuleComponent, {
+      panelClass: 'Image-modal',
+      data: {
         image,
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
     });
   }
 
@@ -110,7 +110,7 @@ export class SpareListComponent implements OnInit {
     this.loader = true;
     header.subscribe((result) => {
       if (result['statusCode'] == 200) {
-        console.log('result',result);
+
         this.spareList = result['result'];
         this.pageCount = result['count'];
         this.scheme_active_count = result['scheme_active_count'];
@@ -154,7 +154,8 @@ export class SpareListComponent implements OnInit {
   }
 
   downloadExcel() {
-    this.service.post_rqst({ 'filter': this.filter_data }, "Excel/sampleSparePart.csv").subscribe((result => {
+
+    this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_spare_part_list").subscribe((result => {
       if (result['msg'] == true) {
         window.open(this.downurl + result['filename'])
         this.getSpareList('');
@@ -162,29 +163,20 @@ export class SpareListComponent implements OnInit {
       }
     }));
   }
-  deleteProduct(){
 
-  }
-  stockIncoming(){
-
-  }
-  stockOutgoing(){
-
-  }
-
-  addSpareDialog(type,detail,id) {
+  addSpareDialog(type, detail, id) {
     const dialogRef = this.dialog.open(AddSpareComponent, {
       width: '500px',
       panelClass: 'cs-modal',
       data: {
-        type:type,
-        detail:detail,
-        id:id
+        type: type,
+        detail: detail,
+        id: id
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       // if (result != false) {
-        this.getSpareList('');
+      this.getSpareList('');
       // }
     });
   }
@@ -212,7 +204,7 @@ export class SpareListComponent implements OnInit {
   }
   spareAssignQty() {
     const dialogRef = this.dialog.open(SpareAssignQtyComponent, {
-      width: '550px',
+      width: '650px',
       panelClass: 'cs-modal',
       data: {
       }
@@ -234,7 +226,7 @@ export class SpareListComponent implements OnInit {
   }
   returnStock() {
     const dialogRef = this.dialog.open(ReturnStockComponent, {
-      width: '600px',
+      width: '650px',
       panelClass: 'cs-modal',
       data: {
       }
@@ -245,13 +237,29 @@ export class SpareListComponent implements OnInit {
   }
   manageStock() {
     const dialogRef = this.dialog.open(ManageStockComponent, {
-      width: '400px',
+      width: '500px',
       panelClass: 'cs-modal',
       data: {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.getSpareList('');
+    });
+  }
 
+  delete(id) {
+    this.dialog1.delete('Spare!').then((result) => {
+      if (result) {
+        this.service.post_rqst({ 'id': id }, "ServiceSparePart/deleteSparePart").subscribe((result) => {
+          if (result['statusCode'] == 200) {
+            this.toast.successToastr(result['statusMsg']);
+            this.getSpareList('')
+          }
+          else {
+            this.toast.errorToastr(result['statusMsg']);
+          }
+        })
+      }
     });
   }
 
