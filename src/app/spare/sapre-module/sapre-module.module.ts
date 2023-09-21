@@ -17,6 +17,7 @@ import { SpareOutgoingComponent } from '../spare-outgoing/spare-outgoing.compone
 import { AssignQtyComponent } from '../assign-qty/assign-qty.component';
 import { ManageStockComponent } from '../manage-stock/manage-stock.component';
 import { ReturnStockComponent } from '../return-stock/return-stock.component';
+import { ProductUploadComponent } from 'src/app/product-upload/product-upload.component';
 
 const spareRoutes = [
   { path: "", children:[
@@ -27,11 +28,11 @@ const spareRoutes = [
     //   {path:'add-complaint/:type/:id', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
     // ] }
   ]},
-  
+
 ]
 
 @NgModule({
-  declarations: [SpareListComponent,AddSpareComponent,SpareAssignQtyComponent,SpareIncomingComponent,SpareOutgoingComponent,AssignQtyComponent,ManageStockComponent,ReturnStockComponent],
+  declarations: [SpareListComponent,AddSpareComponent,SpareAssignQtyComponent,SpareIncomingComponent,SpareOutgoingComponent,AssignQtyComponent,ManageStockComponent,ReturnStockComponent,ProductUploadComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(spareRoutes),
