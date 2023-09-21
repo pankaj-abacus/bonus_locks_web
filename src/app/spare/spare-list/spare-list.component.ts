@@ -16,6 +16,7 @@ import { ImageModuleComponent } from 'src/app/image-module/image-module.componen
 import { ManageStockComponent } from '../manage-stock/manage-stock.component';
 import { AssignQtyComponent } from '../assign-qty/assign-qty.component';
 import { ReturnStockComponent } from '../return-stock/return-stock.component';
+import { ProductUploadComponent } from 'src/app/product-upload/product-upload.component';
 @Component({
   selector: 'app-spare-list',
   templateUrl: './spare-list.component.html',
@@ -44,9 +45,9 @@ export class SpareListComponent implements OnInit {
   downurl: any = ''
   url:any;
 
-  
-  
-  constructor(public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) { 
+
+
+  constructor(public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent,public dialogs: MatDialog) {
     this.url = this.service.uploadUrl + 'service_task/'
     this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
@@ -55,27 +56,27 @@ export class SpareListComponent implements OnInit {
     this.filter_data = this.service.getData()
     this.getSpareList('');
   }
-  
+
   pervious() {
     this.start = this.start - this.page_limit;
     this.getSpareList('');
   }
-  
+
   nextPage() {
     this.start = this.start + this.page_limit;
     this.getSpareList('');
   }
-  
+
   refresh() {
     this.start = 0;
     this.filter_data = {};
     this.getSpareList('');
   }
-  
+
   clear() {
     this.refresh();
   }
-  
+
   goToDetailHandler(id) {
     window.open(`/customer-detail/` + id);
   }
@@ -95,7 +96,7 @@ export class SpareListComponent implements OnInit {
       console.log(result);
     });
   }
-  
+
   getSpareList(data) {
     if (this.pagenumber > this.total_page) {
       this.pagenumber = this.total_page;
@@ -105,10 +106,10 @@ export class SpareListComponent implements OnInit {
       this.start = 0;
     }
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceSparePart/sparePartList")
-    
+
     this.loader = true;
     header.subscribe((result) => {
-      if (result['statusCode'] == 200) { 
+      if (result['statusCode'] == 200) {
         console.log('result',result);
         this.spareList = result['result'];
         this.pageCount = result['count'];
@@ -130,7 +131,7 @@ export class SpareListComponent implements OnInit {
         this.total_page = Math.ceil(this.pageCount / this.page_limit);
         this.sr_no = this.pagenumber - 1;
         this.sr_no = this.sr_no * this.page_limit
-      
+
         for (let i = 0; i < this.spareList.length; i++) {
           if (this.spareList[i].status == '1') {
             this.spareList[i].newStatus = true
@@ -145,7 +146,7 @@ export class SpareListComponent implements OnInit {
         this.datanotofound = true;
         this.loader = false;
       }
-      
+
     })
   }
   lastBtnValue(value) {
@@ -153,7 +154,7 @@ export class SpareListComponent implements OnInit {
   }
 
   downloadExcel() {
-    this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_customer_list").subscribe((result => {
+    this.service.post_rqst({ 'filter': this.filter_data }, "Excel/sampleSparePart.csv").subscribe((result => {
       if (result['msg'] == true) {
         window.open(this.downurl + result['filename'])
         this.getSpareList('');
@@ -251,6 +252,23 @@ export class SpareListComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
 
+    });
+  }
+
+
+   upload_excel(type) {
+    const dialogRef = this.dialog.open(ProductUploadComponent, {
+      width: '500px',
+      panelClass: 'cs-modal',
+      data: {
+        'from': 'beat',
+        'modal_type': type
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == true) {
+        this.getSpareList('');
+      }
     });
   }
 }
