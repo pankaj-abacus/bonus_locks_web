@@ -1,3 +1,69 @@
-<p>
-  assign-qty works!
-</p>
+<div class="edit-modal">
+  <p class="heading">Detail</p>
+  <div class="card-body">
+    <div class="grid-box">
+      <div class="block-feilds">
+        <span>Date Created</span>
+        <p>12-12-2023</p>
+      </div>
+      <div class="block-feilds">
+        <span>Date Created</span>
+        <p>TEST</p>
+      </div>
+      <div class="block-feilds">
+        <span>Date Created</span>
+        <p>TEST</p>
+      </div>
+    </div>
+  </div>
+  <p class="heading mt-10 border-top">Product List</p>
+  <div mat-dialog-content>
+    <div class="cs-table left-right-10">
+      <div class=" border-top">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w30 text-center ">Sr.No</th>
+              <th class="w100">Technician</th>
+              <th class="w30 text-center ">Qty</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-container pb0">
+        <div class="table-content none-shadow">
+          <table>
+            <ng-container>
+              <tr>
+                <td class="w30 text-center ">1</td>
+                <td class="w100">Test</td>
+                <td class="w30 text-center ">2</td>
+              </tr>
+              <tr>
+                <td class="w30 text-center ">1</td>
+                <td class="w100">Test</td>
+                <td class="w30 text-center ">2</td>
+              </tr>
+              <tr>
+                <td class="w30 text-center ">1</td>
+                <td class="w100">Test</td>
+                <td class="w30 text-center ">2</td>
+              </tr>
+            </ng-container>
+            <!-- <ng-container *ngFor="let row of add_list; let i = index">
+              <tr>
+                <td class="w30 text-center ">1</td>
+                <td class="w100">Test</td>
+                <td class="w30 text-center ">2</td>
+              </tr>
+            </ng-container> -->
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</div>

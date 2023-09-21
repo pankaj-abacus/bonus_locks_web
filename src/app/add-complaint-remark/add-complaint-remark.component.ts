@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/_services/DatabaseService';
-import * as moment from 'moment';
 import { DialogComponent } from 'src/app/dialog.component';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';

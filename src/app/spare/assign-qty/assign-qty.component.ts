@@ -11,5 +11,6 @@ export class AssignQtyComponent implements OnInit {
 
   ngOnInit() {
   }
+  
 
 }

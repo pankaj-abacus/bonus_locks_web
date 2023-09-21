@@ -1,67 +1,110 @@
 <div class="edit-modal">
-  <form #update_basic="ngForm" (ngSubmit)="update_basic.valid && submit()">
-    <div mat-dialog-content>
-      <p class="heading">Assign Stock</p>
-      <div class="cs-form">
-        <div class="row">
-          <div class="col s6">
-            <mat-form-field appearance="outline">
-              <mat-label>Assign Technician</mat-label>
-              <mat-select name="id" [(ngModel)]="formData.id" #id="ngModel"
-                (selectionChange)="getCarpenterInfo(formData.id)" required>
-                <mat-option>
-                  <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
-                    (keyup)="assign_engineerget($event.target.value)"></ngx-mat-select-search>
-                </mat-option>
-                <mat-option *ngFor="let row of engineerList" [value]="row.id">{{row.name |
-                  titlecase}}-{{row.mobile_no}}-({{row.district | titlecase}},{{row.state | titlecase}})</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="id.touched">
-              <p *ngIf="id.errors?.required">This field is required</p>
+  <div mat-dialog-content>
+    <p class="heading">Assign Stock</p>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s6">
+          <mat-form-field appearance="outline">
+            <mat-label>Assign Technician</mat-label>
+            <mat-select name="id" [(ngModel)]="technicianData.id" #id="ngModel"
+              (selectionChange)="getCarpenterInfo(technicianData.id)" required>
+              <mat-option>
+                <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                  (keyup)="assign_engineerget($event.target.value)"></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let row of engineerList" [value]="row.id">{{row.name | titlecase}}-{{row.mobile_no}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div mat-dialog-content *ngIf="technicianData.id">
+        <p class="heading border-top">Part Information</p>
+        <div class="cs-form">
+          <div class="row">
+
+            <div class="col s6">
+              <mat-form-field appearance="outline" [ngClass]="{'has-error' : id.invalid } ">
+                <mat-label>Select Part</mat-label>
+                <mat-select name="id" #id="ngModel" [(ngModel)]="formData.id"
+                  (selectionChange)="get_spare_detail(formData.id)">
+                  <mat-option>
+                    <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                      (keyup)="getSparePartList($event.target.value)"></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let row of spareList" value="{{row.id}}" color="accent">{{row.part_name |
+                    titlecase}}-{{row.part_no | titlecase}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col s6">
+              <mat-form-field appearance="outline" [ngClass]="{'has-error' : part_no?.invalid } ">
+                <mat-label>Part No.</mat-label>
+                <input matInput placeholder="Type Here ..." name="part_no" #part_no="ngModel"
+                  [(ngModel)]="formData.part_no" readonly />
+              </mat-form-field>
             </div>
           </div>
-        </div>
-        <div class="row" *ngIf="formData.id">
-          <div class="col s12">
-            <div class="edit-modal border-top">
-              <p class="heading mt-10">All Ready Part Assign</p>
-              <div mat-dialog-content>
-                <div class="cs-table left-right-10">
-
-                  <div class="table-head">
-                    <table>
-                      <tr>
-                        <th class="w40 text-center">Sr.No</th>
-                        <th class="w100">Part Name</th>
-                        <th class="w50 text-center">Part No</th>
-                        <th class="w50 text-center">Assign Qty</th>
-                        <th class="w50 text-center ">Qty</th>
-                      </tr>
-                    </table>
-                  </div>
-                  <div class="table-container pb0">
-                    <div class="table-content none-shadow">
-                      <table>
-                        <!-- <ng-container *ngFor="let row of add_list; let i = index">
+          <div class="row">
+            <div class="col s6">
+              <mat-form-field appearance="outline" [ngClass]="{'has-error' : current_stock?.invalid } ">
+                <mat-label>Current Stock </mat-label>
+                <input matInput placeholder="Type Here ..." name="current_stock" #current_stock="ngModel"
+                  [(ngModel)]="formData.current_stock" onkeypress="return event.charCode>=48 && event.charCode<=57"
+                  readonly>
+              </mat-form-field>
+            </div>
+            <div class="col s6">
+              <mat-form-field appearance="outline" [ngClass]="{'has-error' : qty?.invalid } ">
+                <mat-label>Stock Qty</mat-label>
+                <input matInput placeholder="Type Here ..." name="qty" #qty="ngModel" [(ngModel)]="formData.qty"
+                   onkeypress="return event.charCode>=48 && event.charCode<=57" (input)="max()">
+              </mat-form-field>
+            </div>
+            <div class="text-right">
+              <button style="margin: 7px;" mat-raised-button color="accent" type="text" [disabled]="!formData.qty"
+                (click)="addSpare()">Add To List</button>
+            </div>
+          </div>
+          <div class="row" *ngIf="add_list.length > 0 ">
+            <div class="col s12 m12 l12">
+              <div class="card">
+                <div class="card-head">
+                  <h2> Spare Part List</h2>
+                </div>
+                <div class="card-body">
+                  <div class="cs-table left-right-10">
+                    <div class=" border-top">
+                      <div class="table-head">
+                        <table>
                           <tr>
-                            <td class="w40 text-center">1</td>
-                            <td class="w100">Test</td>
-                            <td class="w50 text-center">Test</td>
-                            <td class="w50 text-center">Test</td>
-                            <td class="w50 text-center ">2</td>
+                            <th class="w30 text-center">Sr.No</th>
+                            <th class="w100 ">Part Name</th>
+                            <th class="w100 ">Part No.</th>
+                            <th class="w30 text-center">Qty</th>
+                            <th class="w30 text-center">Action</th>
                           </tr>
-                        </ng-container> -->
-                        <ng-container>
-                          <tr>
-                            <td class="w40 text-center">1</td>
-                            <td class="w100">Test</td>
-                            <td class="w50 text-center">Test</td>
-                            <td class="w50 text-center">Test</td>
-                            <td class="w50 text-center ">2</td>
+                        </table>
+                      </div>
+                    </div>
+    
+                    <div class="table-container pb0">
+                      <div class="table-content none-shadow">
+                        <table>
+                          <tr *ngFor="let row of add_list;let i=index;">
+                            <td class="w30 text-center">{{i+1}}</td>
+                            <td class="w100">{{row.part_name |titlecase}}</td>
+                            <td class="w100">{{row.part_no |titlecase}}</td>
+                            <td class="w30 text-center">{{row.qty}}</td>
+                            <td class="w30 text-center">
+                              <div class="action-button">
+                                <button mat-icon-button matTooltip="Delete" (click)="delete(i)">
+                                  <i class="material-icons del">delete</i>
+                                </button>
+                              </div>
+                            </td>
                           </tr>
-                        </ng-container>
-                      </table>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -69,79 +112,17 @@
             </div>
           </div>
         </div>
-
-        <div mat-dialog-content *ngIf="formData.id">
-          <p class="heading border-top">Part Information</p>
-          <div class="cs-form">
-            <div class="row">
-
-              <div class="col s6">
-                <mat-form-field appearance="outline" [ngClass]="{ 'has-error': part_name.invalid }">
-                  <mat-label>Part Name</mat-label>
-                  <input matInput placeholder="Type Here ..." name="part_name" #part_name="ngModel"
-                    [(ngModel)]="formData.part_name" required />
-                </mat-form-field>
-                <div class="alert alert-danger" *ngIf="part_name.touched || update_basic.submitted">
-                  <p *ngIf="part_name.errors?.required">
-                    This field is required
-                  </p>
-                </div>
-
-              </div>
-              <div class="col s6">
-                <mat-form-field appearance="outline" [ngClass]="{'has-error' : part_no?.invalid } ">
-                  <mat-label>Part No.</mat-label>
-                  <input matInput placeholder="Type Here ..." name="part_no" #part_no="ngModel"
-                    [(ngModel)]="formData.part_no" required />
-                </mat-form-field>
-                <div class="alert alert-danger" *ngIf="part_no.touched || update_basic.submitted">
-                  <p *ngIf="part_no.errors?.required">
-                    This field is required
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s6">
-                <mat-form-field appearance="outline" [ngClass]="{'has-error' : qty?.invalid } ">
-                  <mat-label>Stock Qty</mat-label>
-                  <input matInput placeholder="Type Here ..." name="qty" #qty="ngModel" [(ngModel)]="formData.qty"
-                    required>
-                </mat-form-field>
-                <div class="alert alert-danger" *ngIf="qty.touched || update_basic.submitted">
-                  <p *ngIf="qty.errors?.required">
-                    This field is required
-                  </p>
-                </div>
-              </div>
-              <div class="col s6">
-                <mat-form-field appearance="outline" [ngClass]="{'has-error' : current_stock?.invalid } ">
-                  <mat-label>Current Stock </mat-label>
-                  <input matInput placeholder="Type Here ..." name="current_stock" #current_stock="ngModel"
-                    [(ngModel)]="formData.current_stock" required>
-                </mat-form-field>
-                <div class="alert alert-danger" *ngIf="current_stock.touched || update_basic.submitted">
-                  <p *ngIf="current_stock.errors?.required">
-                    This field is required
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
       </div>
     </div>
-    <div mat-dialog-actions>
-      <div class="text-right wp100">
-        <button class="mr10" mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
-        <button mat-raised-button color="accent" type="submit" [ngClass]="{'loading': savingFlag == true}"
-          [disabled]="savingFlag == true ">
-          {{savingFlag == true ? 'Saving' : 'Save'}}
-        </button>
-      </div>
+  </div>
+  <div mat-dialog-actions>
+    <div class="text-right wp100">
+      <button class="mr10" mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit" [ngClass]="{'loading': savingFlag == true}"
+        [disabled]="savingFlag == true || add_list.length==0" (click)="submit()">
+        {{savingFlag == true ? 'Saving' : 'Save'}}
+      </button>
     </div>
-  </form>
+  </div>
 
 </div>

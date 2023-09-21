@@ -16,10 +16,14 @@ import * as moment from 'moment';
 })
 export class ReturnStockComponent implements OnInit {
 
-  formData:any={}
+  add_list: any = [];
+  formData: any = {}
+  row: any = {}
+  max_qty: any = [];
+  asgn_qty: any;
   engineerList: any = [];
-  savingFlag:boolean = false;
-  constructor(public service: DatabaseService,public rout: Router,public toast: ToastrManager,private route: ActivatedRoute,public dialog: DialogComponent,public dialog2: MatDialog) { }
+  savingFlag: boolean = false;
+  constructor(public service: DatabaseService, public rout: Router, public toast: ToastrManager, private route: ActivatedRoute, public dialog: DialogComponent, public dialog2: MatDialog) { }
 
   ngOnInit() {
     this.assign_engineerget('');
@@ -31,7 +35,6 @@ export class ReturnStockComponent implements OnInit {
     this.service.post_rqst({ 'filter': this.filter, }, 'ServiceTask/plumberList').subscribe((resp) => {
       if (resp['statusCode'] == 200) {
         this.engineerList = resp.data;
-        console.log(this.engineerList);
       }
       else {
         this.toast.errorToastr(resp['statusMsg'])
@@ -39,22 +42,48 @@ export class ReturnStockComponent implements OnInit {
     }, error => {
     })
   }
-  
-  getCarpenterInfo(id)
-  {
-    console.log(id);
-    
-    if(id){
-      let index= this.engineerList.findIndex(d=> d.id==id);
-      if(index!=-1){
-        this.formData.id= this.engineerList[index].id;
-        this.formData.name= this.engineerList[index].name;
-        this.formData.mobile_no= this.engineerList[index].mobile_no;
+
+  getCarpenterInfo(id) {
+    if (id) {
+      let index = this.engineerList.findIndex(d => d.id == id);
+      if (index != -1) {
+        this.formData.assign_to = this.engineerList[index].id;
+        this.getWarrantyDetail();
       }
-      console.log(this.formData.id);
-      console.log(this.formData.mobile_no);
-      console.log(this.formData.name);
     }
+  }
+
+  getWarrantyDetail() {
+    this.service.post_rqst({ "data": this.formData }, "ServiceSparePart/getAssignedParts").subscribe((result => {
+      this.add_list = result['assign_part']
+    }
+    ));
+
+  }
+  max(qty,index,assign_qty) {
+    if (parseInt(qty) > parseInt(assign_qty)) {
+      this.toast.errorToastr('Qty Should Be Less Then Assign Qty');
+      this.add_list[index].qty=0
+    }
+  }
+
+
+  submit() {
+    this.formData = this.formData
+    this.savingFlag = true;
+    this.service.post_rqst({ "add_list": this.add_list,"data":this.formData }, "ServiceSparePart/submitReturnStock").subscribe((result => {
+      if (result['statusCode'] == 200) {
+        this.toast.successToastr(result['statusMsg']);
+        this.dialog2.closeAll();
+        setTimeout(() => {
+          this.savingFlag = false;
+        }, 700);
+      }
+      else {
+        this.toast.errorToastr(result['statusMsg']);
+      }
+    }))
+
   }
 
 

@@ -166,7 +166,7 @@ import { ReturnStockComponent } from './spare/return-stock/return-stock.componen
         ProductDetailModelComponent,
         InstallationUpdateModelComponent,
         ComplaintUpdateModelComponent,
-        GatepassAddComponent
+        GatepassAddComponent,
         SpareAssignQtyComponent,
         SpareIncomingComponent,
         SpareOutgoingComponent,
