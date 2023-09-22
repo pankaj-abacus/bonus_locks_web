@@ -23,6 +23,8 @@ export class ReturnStockComponent implements OnInit {
   asgn_qty: any;
   engineerList: any = [];
   savingFlag: boolean = false;
+  showSavebtn: boolean = true;
+
   constructor(public service: DatabaseService, public rout: Router, public toast: ToastrManager, private route: ActivatedRoute, public dialog: DialogComponent, public dialog2: MatDialog) { }
 
   ngOnInit() {
@@ -64,26 +66,52 @@ export class ReturnStockComponent implements OnInit {
     if (parseInt(qty) > parseInt(assign_qty)) {
       this.toast.errorToastr('Qty Should Be Less Then Assign Qty');
       this.add_list[index].qty=0
+      this.showSavebtn=true
+      return
+
+    }
+
+
+    if (qty==0 || qty=='' ||  qty==null){
+      // console.log('in if');
+
+      this.showSavebtn=true
+    }
+    else{
+      // console.log('in else');
+
+      this.showSavebtn=false
+
     }
   }
 
 
   submit() {
-    this.formData = this.formData
-    this.savingFlag = true;
-    this.service.post_rqst({ "add_list": this.add_list,"data":this.formData }, "ServiceSparePart/submitReturnStock").subscribe((result => {
-      if (result['statusCode'] == 200) {
-        this.toast.successToastr(result['statusMsg']);
-        this.dialog2.closeAll();
-        setTimeout(() => {
-          this.savingFlag = false;
-        }, 700);
-      }
-      else {
-        this.toast.errorToastr(result['statusMsg']);
-      }
-    }))
+  //   for (let i = 0; i < this.add_list.length; i++) {
+  //    if (this.add_list[i].qty) {
 
+
+  //    }
+  //   else{
+  //     this.toast.errorToastr('Please Insert Qty!...');
+  //     return
+  //   }
+  // }
+
+  this.formData = this.formData
+  this.savingFlag = true;
+  this.service.post_rqst({ "add_list": this.add_list,"data":this.formData }, "ServiceSparePart/submitReturnStock").subscribe((result => {
+    if (result['statusCode'] == 200) {
+      this.toast.successToastr(result['statusMsg']);
+      this.dialog2.closeAll();
+      setTimeout(() => {
+        this.savingFlag = false;
+      }, 700);
+    }
+    else {
+      this.toast.errorToastr(result['statusMsg']);
+    }
+  }))
   }
 
 
