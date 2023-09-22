@@ -52,7 +52,7 @@
                               <mat-form-field appearance="outline" [ngClass]="{'has-error' : qty?.invalid } ">
                                 <mat-label>Stock Qty</mat-label>
                                 <input matInput placeholder="Type Here ..." name="qty{{i}}" #qty="ngModel"
-                                  [(ngModel)]="row.qty" (input)="max(row.qty,i,row.assigned_qty)">
+                                  [(ngModel)]="row.qty" (ngModelChange)="max(row.qty,i,row.assigned_qty)">
                               </mat-form-field>
                             </td>
                           </tr>
@@ -71,7 +71,7 @@
       <div class="text-right wp100">
         <button class="mr10" mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
         <button mat-raised-button color="accent" type="submit" [ngClass]="{'loading': savingFlag == true}"
-          [disabled]="savingFlag == true ">
+          [disabled]="savingFlag == true || showSavebtn==true">
           {{savingFlag == true ? 'Saving' : 'Save'}}
         </button>
       </div>
