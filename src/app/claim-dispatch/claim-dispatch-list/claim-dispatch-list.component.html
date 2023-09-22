@@ -1,7 +1,7 @@
 <div class="main-container">
   <app-loader *ngIf="excelLoader"></app-loader>
   <div class="tools-container">
-    <h2>Customer List</h2>
+    <h2>Claim Dispatch List</h2>
 
 
     <div class="left-auto df ac flex-gap-10">
@@ -35,14 +35,14 @@
         <div class="table-head">
           <table>
             <tr>
-              <th class="w50">Sr.No</th>
-              <th class="w100">Date Created</th>
-              <th class="w80">Created By</th>
-              <th class="w130">Customer Name</th>
-              <th class="w80">Mobile No.</th>
-              <th class="w250">Address</th>
-              <th class="w70">Total Complaint</th>
-              <th class="w70">Pending Complaint</th>
+              <th class="w30 text-center">Sr.No</th>
+              <th class="w80">Date Created</th>
+              <th class="w50">Created By</th>
+              <th class="w60">Complaint No.</th>
+              <th class="w70">Company Name</th>
+              <th class="w70">Dealer Name</th>
+              <th class="w80"> Dealer Mobile</th>
+              <th class="w150">Product Detail</th>
             </tr>
           </table>
         </div>
@@ -50,8 +50,8 @@
         <div class="table-head bdrt">
           <table>
             <tr>
-              <th class="w50"></th>
-              <th class="w100">
+              <th class="w30"></th>
+              <th class="w80">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
@@ -62,7 +62,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w80">
+              <th class="w50">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="created_name"
@@ -71,23 +71,42 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w130">
+              <th class="w60">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="name" (keyup.enter)="getCumtomerList('')"
-                      #name="ngModel" [(ngModel)]="filter_data.name">
+                    <input type="text" matInput placeholder="Search ..." name="complain_no"
+                      (keyup.enter)="getCumtomerList('')" #complain_no="ngModel" [(ngModel)]="filter_data.complain_no">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w70">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="replaced_by_company_name"
+                      (keyup.enter)="getCumtomerList('')" #replaced_by_company_name="ngModel"
+                      [(ngModel)]="filter_data.replaced_by_company_name">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w70">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="replaced_by_name"
+                      (keyup.enter)="getCumtomerList('')" #replaced_by_name="ngModel"
+                      [(ngModel)]="filter_data.replaced_by_name">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w80">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="mobile_no"
-                      (keyup.enter)="getCumtomerList('')" #mobile_no="ngModel" [(ngModel)]="filter_data.mobile_no">
+                    <input type="text" matInput placeholder="Search ..." name="replaced_by_mobile"
+                      (keyup.enter)="getCumtomerList('')" #replaced_by_mobile="ngModel"
+                      [(ngModel)]="filter_data.replaced_by_mobile">
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w250 ">
+              <th class="w150 ">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="address"
@@ -95,8 +114,6 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w70"></th>
-              <th class="w70"></th>
             </tr>
           </table>
         </div>
@@ -108,30 +125,28 @@
             <ng-container *ngIf="!loader">
               <tr *ngFor="let row of customerList; let i = index "
                 [ngClass]="{'Current': service.currentUserID == row.id}">
-                <td class="w50">{{i + 1 + sr_no}}</td>
-                <td class="w100">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
-                <td class="w80">{{row.created_name | titlecase}}</td>
-                <td class="w130"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
-                    routerLink="customer-detail/{{(row.id)}}" routerLinkActive="active"> {{row.name | titlecase}}</a>
-                </td>
-                <td class="w80">{{row.mobile_no}}</td>
-                <td class="w250 ">{{row.address | titlecase}}</td>
-                <td class="w70 text-center">{{row.total_complaint}}</td>
-                <td class="w70 text-center ">{{row.pending_complaint}}</td>
+                <td class="w30 text-center">{{i + 1 + sr_no}}</td>
+                <td class="w80">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
+                <td class="w50">{{row.created_name | titlecase}}</td>
+                <td class="w60"> {{row.complain_no | titlecase}}</td>
+                <td class="w70">{{row.replaced_by_company_name?(row.replaced_by_company_name | titlecase):'--'}}</td>
+                <td class="w70">{{row.replaced_by_name | titlecase}}</td>
+                <td class="w80">{{row.replaced_by_mobile}}</td>
+                <td class="w150 ">{{ row.product_name | titlecase }}-{{ row.product_code | titlecase }}</td>
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">
               <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                <td class="w30">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w80">
+                  <div>&nbsp;</div>
+                </td>
                 <td class="w50">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w80">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w130">
+                <td class="w60">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w80">
@@ -144,18 +159,18 @@
                   <div>&nbsp;</div>
                 </td>
                 <td class="w150">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w80">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w250 ">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w70">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w70">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w80">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w150 ">
                   <div>&nbsp;</div>
                 </td>
               </tr>
