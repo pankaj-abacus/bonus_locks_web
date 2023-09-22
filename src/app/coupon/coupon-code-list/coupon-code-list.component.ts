@@ -37,22 +37,22 @@ export class CouponCodeListComponent implements OnInit {
   downurl: any;
   data: any = {};
   mastercouponData: any = [];
-  scanLimit:any={};
+  scanLimit: any = {};
 
 
 
 
   constructor(public service: DatabaseService, public toast: ToastrManager, public session: sessionStorage, public alertDialog: DialogComponent, public dialog: MatDialog) {
+
     this.today_date = new Date();
     this.assign_login_data = this.session.getSession();
     this.assign_login_data = this.assign_login_data.value;
     this.assign_login_data2 = this.assign_login_data.data;
     this.downurl = service.downloadUrl;
-    // this.page_limit = service.pageLimit;
     this.couponCodeList();
     this.getScanLimitCount();
-    console.log(this.assign_login_data2);
-    
+
+
   }
 
   ngOnInit() {
@@ -93,8 +93,8 @@ export class CouponCodeListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
-    console.log(this.assign_login_data2);
-    
+
+
 
     if (this.filter.date_created) {
       this.filter.date_created = moment(this.filter.date_created).format('YYYY-MM-DD');
@@ -316,7 +316,7 @@ export class CouponCodeListComponent implements OnInit {
       panelClass: 'cs-modal',
       data: {
         'from': 'scan_limit_modal',
-        'scan_limit':this.scanLimit.limit
+        'scan_limit': this.scanLimit.limit
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -329,7 +329,7 @@ export class CouponCodeListComponent implements OnInit {
   getScanLimitCount() {
     this.service.post_rqst({}, 'CouponCode/scanLimit').subscribe((resp) => {
       if (resp['statusCode'] == 200) {
-        this.scanLimit=resp['result'];
+        this.scanLimit = resp['result'];
       }
       else {
         this.toast.errorToastr(resp['statusMsg']);
@@ -357,6 +357,10 @@ export class CouponCodeListComponent implements OnInit {
     }
     if (this.filter.scanned_on) {
       this.filter.scanned_on = moment(this.filter.scanned_on).format('YYYY-MM-DD');
+    }
+
+    if (this.active_tab == 'master_grand_box') {
+      this.page_limit = this.service.pageLimit;
     }
 
     this.filter.active_tab = this.active_tab;
