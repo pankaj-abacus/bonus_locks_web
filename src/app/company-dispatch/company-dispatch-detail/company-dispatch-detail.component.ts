@@ -33,7 +33,6 @@ export class CompanyDispatchDetailComponent implements OnInit {
   masterdispatchboxitemdetail: any = [];
   masterboxDataforsearch: any = [];
   mainmasterboxDisable: boolean = false;
-  dispatch_coupon: any = [];
   dispatch_detail: any = {};
   skLoading: boolean = false;
   filter: any = {};
@@ -84,14 +83,16 @@ export class CompanyDispatchDetailComponent implements OnInit {
           this.gatePassAssign.push(this.invoice_detail);
           this.dispatch_detail = result['dispatch_data'];
           this.billing_list = result['order_item'];
-          this.dispacthItemDetail();
+
+          if (this.invoice_detail.order_status == 'Dispatched') {
+            this.dispacthItemDetail();
+          }
           this.getdispatchMasterboxdetail();
           this.getmasterbox('', this.invoice_detail.order_no);
           // for (let i = 0; i < this.billing_list.length; i++) {
           //   this.dispatchItem.push({'item_code':this.billing_list[i]['product_code'], 'sale_qty':this.billing_list[i]['qty'], 'remaining_qty':this.billing_list[i]['qty'], 'item_name':this.billing_list[i]['product_name'], 'dispatch_qty':0, })
           // }
           this.payment_list = result['payment_list'];
-          this.dispatch_coupon = result['all_dispatch'];
           this.getdispatchDetail();
           this.skLoading = false;
           this.service.count_list();
