@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-spare-incoming',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpareIncomingComponent implements OnInit {
 
-  constructor() { }
+  spareIncomingList: any = [];
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data) {
+
+    this.spareIncomingList=data.data
+    console.log(this.spareIncomingList);
+   }
 
   ngOnInit() {
   }

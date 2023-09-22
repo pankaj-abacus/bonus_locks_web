@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-assign-qty',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssignQtyComponent implements OnInit {
 
-  constructor() { }
+  qtyList: any = [];
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data) {
+    this.qtyList=data.data
+   }
 
   ngOnInit() {
   }

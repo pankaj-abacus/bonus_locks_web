@@ -1,7 +1,7 @@
 <div class="main-container">
   <app-loader *ngIf="excelLoader"></app-loader>
   <div class="tools-container">
-    <h2>Spare Part List</h2>
+    <h2>Complaint Visits </h2>
 
 
     <div class="left-auto df ac flex-gap-10">
@@ -9,7 +9,7 @@
         <i class="material-icons">refresh</i>
       </a>
 
-      <div class="pagination" *ngIf="spareList.length > 0">
+      <div class="pagination" *ngIf="complaintVisitList.length > 0">
         <div class="pagination-content">
           Pages
           <span>{{pagenumber}}</span>
@@ -37,16 +37,15 @@
             <tr>
               <th class="w50">Sr.No</th>
               <th class="w150">Date Created</th>
-              <th class="w100">Part Name</th>
-              <th class="w100">Part No.</th>
-              <th class="w100 text-center">Min Stock Alert</th>
-              <th class="w50 text-center">Stock Qty</th>
-              <th class="w80 text-center">Assign Qty</th>
-              <th class="w100">MRP</th>
-              <th class="w150">Stock Incoming</th>
-              <th class="w150">Stock Outgoing</th>
-              <th class="w150 text-center">Image</th>
-              <th class="w100 text-center">Action</th>
+              <th class="w150">Created By</th>
+              <th class="w150">Compliant No.</th>
+              <th class="w150">Type</th>
+              <th class="w150">State</th>
+              <th class="w150">Start Time</th>
+              <th class="w150">Start Location</th>
+              <th class="w150">Stop Time</th>
+              <th class="w150">Stop Location</th>
+              <th class="w100 text-center">Total Time</th>
             </tr>
           </table>
         </div>
@@ -67,12 +66,12 @@
                 </div>
               </th>
               <th class="w100">
-                <div class="th-search-acmt">
+                <!-- <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="created_name"
-                      (keyup.enter)="getSpareList('')" #created_name="ngModel" [(ngModel)]="filter_data.created_name">
+                      (keyup.enter)="getComplaintVisitList('')" #created_name="ngModel" [(ngModel)]="filter_data.created_name">
                   </mat-form-field>
-                </div>
+                </div> -->
               </th>
               <th class="w100"></th>
               <th class="w100 text-center"></th>
@@ -91,9 +90,26 @@
       <div class="table-container">
         <div class="table-content">
           <table>
+            <ng-container>
+              <tr>
+                <td class="w50">1</td>
+                <td class="w150">12/12/21</td>
+                <td class="w150">Admin</td>
+                <td class="w150">#comp123</td>
+                <td class="w150">local</td>
+                <td class="w150">test</td>
+                <td class="w150">10:00</td>
+                <td class="w150">test start</td>
+                <td class="w150">12:00</td>
+                <td class="w150">test stop</td>
+                <td class="w100 text-center">
+                  <button mat-raised-button color="accent" (click)="endVisit()" [ngClass]="{'pulse': fabBtnValue=='activity'}">End Visit</button>
+                </td>
+              </tr>
+            </ng-container>
 
-            <ng-container *ngIf="!loader">
-              <tr *ngFor="let row of spareList; let i = index "
+            <!-- <ng-container *ngIf="!loader">
+              <tr *ngFor="let row of complaintVisitList; let i = index "
                 [ngClass]="{'Current': service.currentUserID == row.id}">
                 <td class="w50">{{i + 1 + sr_no}}</td>
                 <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
@@ -102,38 +118,25 @@
                 <td class="w100 text-center">{{row.min_stock? row.min_stock:'--'}}</td>
                 <td class="w50 text-center">{{row.current_stock? row.current_stock:'--'}}</td>
                 <td class="w80 text-center">
-                  <a class="link-btn" mat-button (click)="spareQty(row.part_name,row.part_no,row.assign_part)" routerLinkActive="active">{{row.assign_stock?
-                    row.assign_stock:'--'}}</a>
+                  
                 </td>
                 <td class="w100">Rs.{{row.mrp? row.mrp:'--'}}</td>
                 <td class="w150">
+                  
+                </td>
+                <td class="w150">
+                  
+                </td>
+                <td class="w150 text-center">
+
+                </td>
+                <td class="w100 text-center">
                   <button mat-raised-button color="accent" (click)="spareIncomingDialog(row.part_name,row.part_no,row.incoming_data)"
                     [ngClass]="{'pulse': fabBtnValue=='activity'}">Stock Incoming</button>
                 </td>
-                <td class="w150">
-                  <button mat-raised-button color="accent" (click)="spareOutgoingDialog(row.part_name,row.part_no,row.assign_part)"
-                    [ngClass]="{'pulse': fabBtnValue=='activity'}">Stock Outgoing</button>
-                </td>
-                <td class="w150 text-center">
-                  <div *ngIf="row.image.length">
-                    <img [src]="url+row.image" (click)="imageModel(url+row.image)"
-                      style="cursor: zoom-in; width: 80px;">
-                  </div>
-                </td>
-                <td class="w100 text-center">
-                  <div class="action-button">
-                    <button mat-icon-button matTooltip="View" (click)="addSpareDialog('edit',row,row.id)">
-                      <i class="material-icons edit">edit</i>
-                    </button>
-                    <button mat-icon-button matTooltip="Delete" (click)="delete(row.id)">
-                      <i class="material-icons red-clr">delete</i>
-                    </button>
-
-                  </div>
-                </td>
 
               </tr>
-            </ng-container>
+            </ng-container> -->
             <ng-container *ngIf="loader">
               <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
                 <td class="w50">
@@ -178,7 +181,7 @@
         </div>
       </div>
     </div>
-    <ng-container *ngIf="datanotofound==true && spareList.length == 0;">
+    <ng-container *ngIf="datanotofound==true && complaintVisitList.length == 0;">
       <app-not-result-found></app-not-result-found>
     </ng-container>
   </div>
@@ -186,36 +189,13 @@
   </div>
 
   <div class="fab-btns">
-    <button class="pulse excel" mat-fab color="primary" [ngClass]="{'pulse': fabBtnValue=='add'}"
-      [matMenuTriggerFor]="menu">
-      <i class="material-icons">apps</i>
-      Action
+    <button mat-fab class="excel pulse" (click)="downloadExcel()"
+      *ngIf="show_today && assign_login_data2.export_checkin=='1'">
+      <img src="assets/img/excel.svg">
+      Download Excel
     </button>
   </div>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="upload_excel('addSpare');">
-      <mat-icon>cloud_upload</mat-icon>
-      <span>upload</span>
-    </button>
-    <button mat-menu-item (click)="downloadExcel();">
-      <mat-icon>download</mat-icon>
-      <span>Download excel</span>
-    </button>
-    <button mat-menu-item (click)="returnStock()" routerLink="add-customer" routerLinkActive="router-link-active">
-      <mat-icon>assignment_returned</mat-icon>
-      <span>Return Stock</span>
-    </button>
-    <button mat-menu-item (click)="manageStock()" routerLink="add-customer" routerLinkActive="router-link-active">
-      <mat-icon>inventory</mat-icon>
-      <span>Manage Stock</span>
-    </button>
-    <button mat-menu-item (click)="spareAssignQty()" routerLink="add-customer" routerLinkActive="router-link-active">
-      <mat-icon>assignment</mat-icon>
-      <span>Assign Stock</span>
-    </button>
-    <button mat-menu-item (click)="addSpareDialog('','','')" routerLinkActive="router-link-active">
-      <mat-icon>add</mat-icon>
-      <span>Add Spare Part</span>
-    </button>
-  </mat-menu>
+
+  
+
 </div>

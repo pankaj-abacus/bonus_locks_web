@@ -169,7 +169,7 @@ export class ProductUploadComponent implements OnInit {
     let header:any;
 
      if (upload_type=='addSpare'){
-      header = this.service.FileData((this.formData), 'ServiceTask/import_product_warranty')
+      header = this.service.FileData((this.formData), 'ServiceTask/import_spare_parts')
     }
 
     header.subscribe(result => {
@@ -206,12 +206,12 @@ downloadExcel() {
 }
 
 downloadExcelForSpare() {
-  this.service.post_rqst({}, "Excel/sample_product_warranty").subscribe((result => {
-    if (result['msg'] == true) {
-      window.open(this.downloadUrl + result['filename'])
-    } else {
-    }
-  }));
+  // this.service.post_rqst({}, "Excel/sample_product_warranty").subscribe((result => {
+  //   if (result['msg'] == true) {
+      window.open(this.downloadUrl + 'sampleSparePart.csv')
+  //   } else {
+  //   }
+  // }));
 }
 
 

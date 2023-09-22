@@ -1,18 +1,14 @@
 <div class="edit-modal">
-  <p class="heading">Detail</p>
+  <p class="heading">INCOMING STOCK</p>
   <div class="card-body">
     <div class="grid-box">
       <div class="block-feilds">
-        <span>Date Created</span>
-        <p>12-12-2023</p>
+        <span>Part Name</span>
+        <p>{{data.part_name | titlecase}}</p>
       </div>
       <div class="block-feilds">
-        <span>Date Created</span>
-        <p>TEST</p>
-      </div>
-      <div class="block-feilds">
-        <span>Date Created</span>
-        <p>TEST</p>
+        <span>Part Number</span>
+        <p>{{data.part_no | titlecase}}</p>
       </div>
     </div>
   </div>
@@ -24,7 +20,8 @@
           <table>
             <tr>
               <th class="w30 text-center ">Sr.No</th>
-              <th class="w100">Technician</th>
+              <th class="w150">Date</th>
+              <th class="w100">Type</th>
               <th class="w30 text-center ">Qty</th>
             </tr>
           </table>
@@ -35,29 +32,13 @@
         <div class="table-content none-shadow">
           <table>
             <ng-container>
-              <tr>
-                <td class="w30 text-center ">1</td>
-                <td class="w100">Test</td>
-                <td class="w30 text-center ">2</td>
-              </tr>
-              <tr>
-                <td class="w30 text-center ">1</td>
-                <td class="w100">Test</td>
-                <td class="w30 text-center ">2</td>
-              </tr>
-              <tr>
-                <td class="w30 text-center ">1</td>
-                <td class="w100">Test</td>
-                <td class="w30 text-center ">2</td>
+              <tr *ngFor="let row of spareIncomingList; let i = index">
+                <td class="w30 text-center ">{{i+1}}</td>
+                <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+                <td class="w100 ">{{row.type? (row.type | titlecase):'--'}}</td>
+                <td class="w30 text-center ">{{row.qty? row.qty :'--'}}</td>
               </tr>
             </ng-container>
-            <!-- <ng-container *ngFor="let row of add_list; let i = index">
-              <tr>
-                <td class="w30 text-center ">1</td>
-                <td class="w100">Test</td>
-                <td class="w30 text-center ">2</td>
-              </tr>
-            </ng-container> -->
           </table>
         </div>
       </div>
