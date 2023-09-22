@@ -22,11 +22,6 @@ import { ProductUploadComponent } from 'src/app/product-upload/product-upload.co
 const spareRoutes = [
   { path: "", children:[
     { path: "", component: SpareListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    // { path: 'add-spare', component: AddSpareComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    // { path: "complaint-detail/:id", children:[
-    //   {path:"", component:ComplaintDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    //   {path:'add-complaint/:type/:id', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
-    // ] }
   ]},
 
 ]

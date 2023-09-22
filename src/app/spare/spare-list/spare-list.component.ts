@@ -181,21 +181,29 @@ export class SpareListComponent implements OnInit {
     });
   }
 
-  spareIncomingDialog() {
+  spareIncomingDialog(part_name,part_no,row) {
+    console.log(row);
     const dialogRef = this.dialog.open(SpareIncomingComponent, {
       width: '500px',
       panelClass: 'cs-modal',
       data: {
+        data: row,
+        part_name:part_name,
+        part_no:part_no
       }
     });
     dialogRef.afterClosed().subscribe(result => {
     });
   }
-  spareOutgoingDialog() {
+  spareOutgoingDialog(part_name,part_no,row) {
+    console.log(row);
     const dialogRef = this.dialog.open(SpareOutgoingComponent, {
       width: '500px',
       panelClass: 'cs-modal',
       data: {
+        data: row,
+        part_name:part_name,
+        part_no:part_no
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -210,18 +218,20 @@ export class SpareListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      this.getSpareList('');
     });
   }
-  spareQty() {
+  spareQty(part_name,part_no,row) {
     const dialogRef = this.dialog.open(AssignQtyComponent, {
       width: '550px',
       panelClass: 'cs-modal',
       data: {
+        data: row,
+        part_name:part_name,
+        part_no:part_no
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-
     });
   }
   returnStock() {
@@ -232,7 +242,7 @@ export class SpareListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      this.getSpareList('');
     });
   }
   manageStock() {

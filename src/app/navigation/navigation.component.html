@@ -381,12 +381,18 @@
                             routerLinkActive="active">
                             Claim Dispatch
                             <span class="nav-counter"
-                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.secondary_order}}</span>
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_claim_dispatch}}</span>
                         </a>
                     </li>
                     <li>
                         <a mat-button (click)="clearFilter()" routerLink="/spare-list" routerLinkActive="active">
                             Spare Part
+                            <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_spare_part}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/Complaint-visit-list" routerLinkActive="active">
+                            Complaint Visits
                             <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.secondary_order}}</span>
                         </a>
                     </li>

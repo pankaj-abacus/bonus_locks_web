@@ -75,6 +75,7 @@ import { AssignQtyComponent } from './spare/assign-qty/assign-qty.component';
 import { ManageStockComponent } from './spare/manage-stock/manage-stock.component';
 import { ReturnStockComponent } from './spare/return-stock/return-stock.component';
 import { ProductUploadComponent } from './product-upload/product-upload.component';
+import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-module/complanit-visit-module.module';
 
 
 
@@ -137,6 +138,7 @@ import { ProductUploadComponent } from './product-upload/product-upload.componen
         AppUtilityModule,
         ServiceModuleModule,
         SapreModuleModule,
+        ComplanitVisitModuleModule,
         CustomerModuleModule,
         WarrantyModuleModule,
         InstallationModuleModule,
