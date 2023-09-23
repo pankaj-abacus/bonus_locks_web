@@ -27,10 +27,20 @@ export class AddSpareComponent implements OnInit {
   type:any;
   addData:any={}
   url:any;
+  params_network:any;
+
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public data,public service: DatabaseService,public rout: Router,public toast: ToastrManager,private route: ActivatedRoute,public dialog: DialogComponent,public dialog2: MatDialog) {
 
+    this.route.params.subscribe(params => {
+      this.id =  params.id;
+      console.log(this.id);
+      
+      
+    });
+    console.log(data);
+    
     this.uploadurl = this.service.uploadUrl + 'service_task/'
     this.url = this.service.uploadUrl + 'service_task/'
 

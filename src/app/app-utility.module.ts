@@ -39,6 +39,7 @@ import { AddGrandMasterBoxComponent } from './company-dispatch/add-grand-master-
 import { ViewMasterBoxDispatchDetailComponent } from './company-dispatch/view-master-box-dispatch-detail/view-master-box-dispatch-detail.component';
 import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-add/dist-primary-order-add.component';
 import { InstallationAddComponent } from './installation/installation-add/installation-add.component';
+import { ProductUploadComponent } from './product-upload/product-upload.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { InstallationAddComponent } from './installation/installation-add/instal
     AddGrandMasterBoxComponent,
     ViewMasterBoxDispatchDetailComponent,
     ViewMasterBoxDispatchDetailComponent,
-    InstallationAddComponent
+    InstallationAddComponent,
+    ProductUploadComponent
 
 ],
   imports: [
