@@ -426,6 +426,27 @@ export class StatusModalComponent implements OnInit {
       }
     }, () => this.savingFlag = false)
   }
+  downloadLogReport() {
+    console.log('download log report')
+    this.savingFlag = true;
+    this.data.date_from ? (this.data.date_from = moment(this.data.date_from).format('YYYY-MM-DD')) : null;
+    this.data.date_to ? (this.data.date_to = moment(this.data.date_to).format('YYYY-MM-DD')) : null;
+    let apiName = '';
+    if (this.delivery_from == 'log_report') {
+      apiName = "Excel/IntegrationLogsCsv"
+    }
+    this.serve.post_rqst({ "date_from": this.data.date_from, "date_to": this.data.date_to }, apiName).subscribe((result: any) => {
+      if (result['statusCode'] == 200) {
+        this.savingFlag = false;
+        window.open(this.serve.downloadUrl + result['filename'])
+        // return true;
+      } else {
+        this.savingFlag = false;
+        this.toast.errorToastr(result['statusMsg']);
+
+      }
+    }, () => { this.savingFlag = false; this.toast.errorToastr('Something went wrong'); })
+  }
 
 
   downloadsecondarySaleReport() {
