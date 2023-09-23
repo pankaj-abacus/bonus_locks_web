@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="block-feilds" *ngIf="getData.complaint_status=='Cancel'">
                                     <span>Reason Of Cancellation</span>
-                                    <p>{{getData.closing_remark ? (getData.closing_remark| titlecase):'N/A'}}</p>
+                                    <p>{{getData.status_reason ? (getData.status_reason| titlecase):'N/A'}}</p>
                                 </div>
                                 <div class="block-feilds">
                                     <span>Nature Of Problem</span>
@@ -347,7 +347,11 @@
                                     <p>{{getData.closed_date != '0000-00-00 00:00:00' ? (getData.closed_date |
                                         date : 'dd MMM yyy ,h:mm a'):'N/A'}}</p>
                                 </div>
-                                <div class="block-feilds">
+                                <div class="block-feilds" *ngIf="getData.complaint_status=='Cancel'">
+                                    <span>{{getData.complaint_status}} Reason</span>
+                                    <p>{{getData.status_reason ? (getData.status_reason| titlecase):'N/A'}}</p>
+                                </div>
+                                <div class="block-feilds" *ngIf="getData.complaint_status=='Closed'">
                                     <span>{{getData.complaint_status}} Remark</span>
                                     <p>{{getData.closing_remark ? (getData.closing_remark| titlecase):'N/A'}}</p>
                                 </div>

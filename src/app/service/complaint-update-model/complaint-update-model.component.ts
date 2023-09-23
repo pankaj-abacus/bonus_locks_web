@@ -39,7 +39,7 @@ export class ComplaintUpdateModelComponent implements OnInit {
 
   getDealerList(search) {
     console.log(search);
-    
+
     this.serve.post_rqst({ 'search': search }, "ServiceTask/dealerList").subscribe((result => {
       if (result['statusCode'] == 200) {
         this.dealerList = result['dealer'];
@@ -48,7 +48,7 @@ export class ComplaintUpdateModelComponent implements OnInit {
       }
     }))
 
-  
+
   }
   get_dealer_detail(id){
     if (id) {
@@ -84,7 +84,7 @@ export class ComplaintUpdateModelComponent implements OnInit {
 
   }
 
-  // add image 
+  // add image
   onUploadChange(data: any) {
     this.errorMsg = false;
     this.image_id = '';

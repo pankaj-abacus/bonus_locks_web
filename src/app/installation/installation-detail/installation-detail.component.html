@@ -147,7 +147,7 @@
                   <span>Reason Of Reject</span>
                   <p>
                     {{
-                    getData.closing_remark ? (getData.closing_remark |titlecase) : "N/A"
+                    getData.status_reason ? (getData.status_reason |titlecase) : "N/A"
                     }}
                   </p>
                 </div>
@@ -241,11 +241,19 @@
                     {{ getData.status_updated_by_name ? (getData.status_updated_by_name | titlecase): "N/A" }}
                   </p>
                 </div>
-                <div class="block-feilds">
+                <div class="block-feilds" *ngIf="getData.complaint_status=='Done'">
                   <span>Closing Remark</span>
                   <p>
                     {{
                     getData.closing_remark ? (getData.closing_remark | titlecase): "N/A"
+                    }}
+                  </p>
+                </div>
+                <div class="block-feilds" *ngIf="getData.complaint_status=='Reject'">
+                  <span>Reason of Reject</span>
+                  <p>
+                    {{
+                    getData.status_reason ? (getData.status_reason | titlecase): "N/A"
                     }}
                   </p>
                 </div>

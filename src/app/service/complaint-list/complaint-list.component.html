@@ -122,7 +122,7 @@
               <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Status</th> -->
 
               <th class="w70 text-center">TAT</th>
-              <th class="w180" *ngIf="active_tab == 'Cancel'">Reason Of Cancellation</th>
+              <th class="w180" *ngIf="active_tab == 'Cancel' || active_tab == 'All'">Reason Of Cancellation</th>
               <th class="w160"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                 Status Update Date</th>
@@ -255,7 +255,7 @@
               </th> -->
 
               <th class="w70 text-center"></th>
-              <th class="w180" *ngIf="active_tab == 'Cancel'"></th>
+              <th class="w180" *ngIf="active_tab == 'Cancel'|| active_tab == 'All'"></th>
               <th class="w160"
                 *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
                 <div class="th-search-acmt">
@@ -316,7 +316,7 @@
 
                 <td class="w130"
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                  {{row.closing_remark ? (row.closing_remark | titlecase ): '--'}}</td>
+                  {{row.remark ? (row.remark | titlecase ): '--'}}</td>
                 <!-- <td class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">{{row.return_on
                   !='0000-00-00 00:00:00' ? (row.return_on | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
                 <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
@@ -327,7 +327,7 @@
                 </td> -->
 
                 <td class="w70">{{row.pending_at}}</td>
-                <td class="w180" *ngIf="active_tab == 'Cancel'">{{row.closing_remark| titlecase}}
+                <td class="w180" *ngIf="active_tab == 'Cancel' || active_tab == 'All'">{{row.status_reason| titlecase}}
                 </td>
                 <td class="w160"
                   *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
@@ -386,7 +386,7 @@
                 <td class="w70 text-center">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w180" *ngIf="active_tab == 'Cancel'">
+                <td class="w180" *ngIf="active_tab == 'Cancel' || active_tab == 'All'">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w160"
