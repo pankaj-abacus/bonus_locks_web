@@ -111,7 +111,7 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="tabType== 'warranty'">
+    <div class="row container container-scroll" *ngIf="tabType== 'warranty'">
       <div class="cs-table horizontal-scroll">
         <div class="sticky-head">
           <div class="table-head">
@@ -357,7 +357,7 @@
 
     </div>
 
-    <div class="row" *ngIf="tabType== 'complaint'">
+    <div class="container container-scroll row" *ngIf="tabType== 'complaint'">
       <div class="cs-table horizontal-scroll">
         <div class="sticky-head">
           <div class="table-head">
@@ -508,9 +508,9 @@
                   </td>
 
                   <td class="w130">
-                    {{row.closing_remark ? (row.closing_remark | titlecase ): '--'}}</td>
+                    {{row.remark ? (row.remark | titlecase ): '--'}}</td>
                   <td class="w70">{{row.pending_at}}</td>
-                  <td class="w180">{{row.closing_remark| titlecase}}
+                  <td class="w180">{{row.status_reason| titlecase}}
                   </td>
                   <td class="w160">
                     {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
@@ -568,7 +568,7 @@
 
 
     </div>
-    <div class="row" *ngIf="tabType== 'installation'">
+    <div class="row container container-scroll" *ngIf="tabType== 'installation'">
       <div class="cs-table horizontal-scroll">
         <div class="sticky-head">
           <div class="table-head">
@@ -718,7 +718,7 @@
 
                   <td class="w70 text-center">{{row.pending_at}}</td>
                   <td class="w180">{{row.remark?(row.remark| titlecase):'--'}}</td>
-                  <td class="w180">{{row.closing_remark?(row.closing_remark|titlecase):'--'}}</td>
+                  <td class="w180">{{row.status_reason?(row.status_reason|titlecase):'--'}}</td>
                   <td class="w140">
                     {{
                     row.status_updated_date != "0000-00-00 00:00:00"
