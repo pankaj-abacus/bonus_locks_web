@@ -13,11 +13,11 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { MatDialogModule, MatIconModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
-import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
 import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-model-component/engineer-assign-model-component.component';
 import { AddComplaintRemarkComponent } from 'src/app/add-complaint-remark/add-complaint-remark.component';
 import { InstallationAddComponent } from 'src/app/installation/installation-add/installation-add.component';
 import { ComplaintUpdateModelComponent } from '../complaint-update-model/complaint-update-model.component';
+import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
 
 
 const serviceRoutes = [

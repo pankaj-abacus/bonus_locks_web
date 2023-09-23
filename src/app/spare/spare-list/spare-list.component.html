@@ -69,12 +69,19 @@
               <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="created_name"
-                      (keyup.enter)="getSpareList('')" #created_name="ngModel" [(ngModel)]="filter_data.created_name">
+                    <input type="text" matInput placeholder="Search ..." name="part_name"
+                      (keyup.enter)="getSpareList('')" #part_name="ngModel" [(ngModel)]="filter_data.part_name">
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100"></th>
+              <th class="w100">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="part_no"
+                      (keyup.enter)="getSpareList('')" #part_no="ngModel" [(ngModel)]="filter_data.part_no">
+                  </mat-form-field>
+                </div>
+              </th>
               <th class="w100 text-center"></th>
               <th class="w50 text-center"></th>
               <th class="w80 text-center"></th>
