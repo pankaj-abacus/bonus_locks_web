@@ -74,7 +74,6 @@ export class ComplaintVisitListComponent implements OnInit {
     this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
     this.getComplaintVisitList('');
   }
-
   lastBtnValue(value) {
     this.fabBtnValue = value;
   }
@@ -87,7 +86,7 @@ export class ComplaintVisitListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
-    let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceSparePart/sparePartList")
+    let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/complaintVisitList")
 
     this.loader = true;
     header.subscribe((result) => {
@@ -130,6 +129,21 @@ export class ComplaintVisitListComponent implements OnInit {
       }
 
     })
+  }
+  endVisit(id) {
+    this.dialog1.visit('visit!').then((result) => {
+      if (result) {
+        this.service.post_rqst({ 'visit_id': id }, "ServiceTask/stopComplaintVisit").subscribe((result) => {
+          if (result['statusCode'] == 200) {
+            this.toast.successToastr(result['statusMsg']);
+            this.getComplaintVisitList('')
+          }
+          else {
+            this.toast.errorToastr(result['statusMsg']);
+          }
+        })
+      }
+    });
   }
 
 

@@ -70,6 +70,30 @@ export class DialogComponent implements OnInit {
       })
     }
 
+    visit(msg:any){
+      return Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do You Want To End This '+ msg,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, End it!',
+        cancelButtonText: 'No, keep it!'
+      }).then((result) => {
+        if (result.value) {
+          return true;
+          // For more information about handling dismissals please visit
+          // https://sweetalert2.github.io/#handling-dismissals
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire(
+            'Cancelled',
+            'Your '+ msg +' data is safe',
+            'error'
+            )
+            return false;
+  
+          }
+        })
+      }
 
     confirm(msg:any){
       return Swal.fire({
