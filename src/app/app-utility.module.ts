@@ -71,7 +71,7 @@ import { ProductUploadComponent } from './product-upload/product-upload.componen
     ViewMasterBoxDispatchDetailComponent,
     ViewMasterBoxDispatchDetailComponent,
     InstallationAddComponent,
-    ProductUploadComponent
+    ProductUploadComponent,
 
 ],
   imports: [

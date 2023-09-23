@@ -80,9 +80,9 @@
               <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="complain_no"
-                      (keyup.enter)="getComplaintVisitList('')" #complain_no="ngModel"
-                      [(ngModel)]="filter_data.complain_no">
+                    <input type="text" matInput placeholder="Search ..." name="complaint_no"
+                      (keyup.enter)="getComplaintVisitList('')" #complaint_no="ngModel"
+                      [(ngModel)]="filter_data.complaint_no">
                   </mat-form-field>
                 </div>
               </th>
@@ -125,7 +125,8 @@
                 <td class="w50">{{i + 1 + sr_no}}</td>
                 <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
                 <td class="w150">{{row.created_by_name? (row.created_by_name | titlecase):'--'}}</td>
-                <td class="w100">{{row.complaint_no? (row.complaint_no):'--'}}</td>
+                <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
+                  routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complaint_no}}</a></td>
                 <td class="w80">{{row.visit_start_time ? (row.visit_start_time | date : 'shortTime') : '--'}}</td>
                 <td class="w180">{{row.visit_start_address? (row.visit_start_address | titlecase):'--'}}</td>
                 <td class="w100">{{row.visit_start_lat? (row.visit_start_lat):'--'}}</td>
@@ -136,7 +137,7 @@
                 <td class="w100">{{row.visit_stop_lng? (row.visit_stop_lng):'--'}}</td>
                 <td class="w100 text-center">
                   <button mat-raised-button color="accent" (click)="endVisit(row.id)"
-                    [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.visit_stop_time==''">End Visit</button>
+                    [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.visit_stop_time=='0000-00-00 00:00:00'">End Visit</button>
                 </td>
               </tr>
             </ng-container>
@@ -195,8 +196,7 @@
   </div>
 
   <div class="fab-btns">
-    <button mat-fab class="excel pulse" (click)="downloadExcel()"
-      *ngIf="show_today && assign_login_data2.export_checkin=='1'">
+    <button mat-fab class="excel pulse" (click)="downloadExcel()">
       <img src="assets/img/excel.svg">
       Download Excel
     </button>
