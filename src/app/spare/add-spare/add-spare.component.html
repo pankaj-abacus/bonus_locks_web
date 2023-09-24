@@ -1,26 +1,9 @@
 <div class="edit-modal">
   <form #update_basic="ngForm" (ngSubmit)="update_basic.valid && submit()">
     <div mat-dialog-content>
-      <p class="heading">{{ id ? "Edit" : "Spare Part" }} {{ params_network }}</p>
+      <p class="heading">{{id ? 'Edit':'Add New'}} Spare Part</p>
       <div class="cs-form">
         <div class="row">
-          <!-- <div class="col s6">
-            <mat-form-field appearance="outline" [ngClass]="{'has-error' : dealer_id.invalid } ">
-              <mat-label>Select Category</mat-label>
-              <mat-select name="dealer_id" #dealer_id="ngModel" [(ngModel)]="formData.dealer_id"
-                (selectionChange)="get_dealer_detail(formData.dealer_id)" required>
-                <mat-option>
-                  <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
-                    (keyup)="getDealerList($event.target.value)"></ngx-mat-select-search>
-                </mat-option>
-                <mat-option *ngFor="let row of dealerList" value="{{row.id}}" color="accent">{{row.company_name |
-                  titlecase}}-{{row.mobile}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="update_basic.submitted && dealer_id?.invalid ">
-              This field is required
-            </div>
-          </div> -->
           <div class="col s6">
             <mat-form-field appearance="outline" [ngClass]="{ 'has-error': part_name.invalid }">
               <mat-label>Part Name</mat-label>
@@ -110,7 +93,7 @@
         <button class="mr10" mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
         <button mat-raised-button color="accent" type="submit" [ngClass]="{'loading': savingFlag == true}"
           [disabled]="savingFlag == true ">
-          {{savingFlag == true ? 'Saving' : 'Save'}}
+          {{savingFlag == true ? 'Saving' : (id ? 'Update':'Save')}}
         </button>
       </div>
     </div>

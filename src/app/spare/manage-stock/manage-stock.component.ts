@@ -73,7 +73,7 @@ export class ManageStockComponent implements OnInit {
 
       }
       else {
-        this.add_list[isExistIndex].qty = parseInt(this.add_list[isExistIndex].qty) + parseInt(this.spare_data.qty)
+        this.add_list[isExistIndex].qty = parseInt(this.formData.qty)
         this.spare_data = {}
 
       }

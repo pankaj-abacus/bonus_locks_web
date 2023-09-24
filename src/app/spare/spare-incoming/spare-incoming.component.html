@@ -12,8 +12,8 @@
       </div>
     </div>
   </div>
-  <p class="heading mt-10 border-top">Product List</p>
-  <div mat-dialog-content>
+  <p class="heading mt-10 border-top" *ngIf="spareIncomingList.length > 0">Spare Part List</p>
+  <div mat-dialog-content *ngIf="spareIncomingList.length > 0">
     <div class="cs-table left-right-10">
       <div class=" border-top">
         <div class="table-head">

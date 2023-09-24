@@ -12,6 +12,8 @@ export class AssignQtyComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data) {
     this.qtyList=data.data
+    console.log(this.qtyList);
+    
    }
 
   ngOnInit() {

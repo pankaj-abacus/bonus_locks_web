@@ -12,28 +12,24 @@
       </div>
     </div>
   </div>
-  <!-- <p class="heading mt-10 border-top">Product List</p> -->
-  <div mat-dialog-content>
+  <div mat-dialog-content *ngIf="qtyList.length > 0">
     <div class="cs-table left-right-10">
-      <!-- <div class=" border-top"> -->
         <div class="table-head">
           <table>
             <tr>
               <th class="w30 text-center ">Sr.No</th>
-              <th class="w100">Technician</th>
+              <th class="w100">Technician Details</th>
               <th class="w30 text-center ">Qty</th>
             </tr>
           </table>
         </div>
-      <!-- </div> -->
-
       <div class="table-container pb0">
         <div class="table-content none-shadow">
           <table>
             <ng-container>
               <tr *ngFor="let row of qtyList; let i = index">
                 <td class="w30 text-center ">{{i+1}}</td>
-                <td class="w100">{{row.technician_name | titlecase}}</td>
+                <td class="w100">{{row.technician_name | titlecase}}-{{row.technician_mobile}}</td>
                 <td class="w30 text-center ">{{row.assigned_qty}}</td>
               </tr>
             </ng-container>

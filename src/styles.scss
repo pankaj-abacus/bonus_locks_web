@@ -2526,7 +2526,7 @@ label.upload-file-input {
         left: 0;
         z-index: 3;
         color: var(--dark);
-        border-bottom: 1.5px solid var(--df-bodrColor);
+        // border-bottom: 1.5px solid var(--df-bodrColor);
         background: var(--light);
         @extend.semibold;
     }
