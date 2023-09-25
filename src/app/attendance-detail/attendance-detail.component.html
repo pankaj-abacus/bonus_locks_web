@@ -27,7 +27,7 @@
         <div class="card">
           <div class="card-head">
             <h2>Basic Details</h2>
-          
+
           </div>
 
           <div class="card-body">
@@ -67,16 +67,17 @@
                     <p *ngIf="attendance_data.start_time == '00:00:00'">---</p>
                     <p *ngIf="attendance_data.start_time != '00:00:00'">{{attendance_data.start_time | date: 'h:mm a'}}
                     </p>
-                    <a class="sm-mat-icon-button"  *ngIf="assign_login_data2.edit_attendence=='1'" mat-icon-button matTooltip="Edit Start Time"
-                      (click)="editStartTime=true">
+                    <a class="sm-mat-icon-button" *ngIf="assign_login_data2.edit_attendence=='1'" mat-icon-button
+                      matTooltip="Edit Start Time" (click)="editStartTime=true">
                       <i class="material-icons">edit</i>
                     </a>
                   </div>
                   <div style="display: flex; justify-content: space-between;" *ngIf="editStartTime==true">
                     <input type="time" required name="start_time" #start_time="ngModel"
                       [(ngModel)]="attendance_data.start_time" class="time-input">
-                    <a class="sm-mat-icon-button" *ngIf="assign_login_data2.edit_attendence=='1'  && attendance_data.start_time" mat-icon-button matTooltip="Save Start Time"
-                      (click)="editStartTime=true">
+                    <a class="sm-mat-icon-button"
+                      *ngIf="assign_login_data2.edit_attendence=='1'  && attendance_data.start_time" mat-icon-button
+                      matTooltip="Save Start Time" (click)="editStartTime=true">
                       <i class="material-icons pt15" (click)="saveNewStartTime('editStartTime')">save</i>
                     </a>
                   </div>
@@ -92,17 +93,18 @@
 
                   <div style="display: flex; justify-content: space-between;" *ngIf="editStopTime==false">
                     <p *ngIf="attendance_data.stop_time == '00:00:00'">---</p>
-                    <p *ngIf="attendance_data.stop_time != '00:00:00'">{{attendance_data.stop_time | date: 'h:mm a'}}</p>
-                    <a class="sm-mat-icon-button"  *ngIf="assign_login_data2.edit_attendence=='1'" mat-icon-button matTooltip="Edit Stop Time"
-                      (click)="editStopTime=true">
+                    <p *ngIf="attendance_data.stop_time != '00:00:00'">{{attendance_data.stop_time | date: 'h:mm a'}}
+                    </p>
+                    <a class="sm-mat-icon-button" *ngIf="assign_login_data2.edit_attendence=='1'" mat-icon-button
+                      matTooltip="Edit Stop Time" (click)="editStopTime=true">
                       <i class="material-icons">edit</i>
                     </a>
                   </div>
                   <div style="display: flex; justify-content: space-between;" *ngIf="editStopTime==true">
                     <input type="time" required name="stop_time" #stop_time="ngModel"
                       [(ngModel)]="attendance_data.stop_time" class="time-input">
-                    <a class="sm-mat-icon-button" *ngIf="assign_login_data2.edit_attendence=='1'" mat-icon-button matTooltip="Save Stop Time"
-                      (click)="editStartTime=true">
+                    <a class="sm-mat-icon-button" *ngIf="assign_login_data2.edit_attendence=='1'" mat-icon-button
+                      matTooltip="Save Stop Time" (click)="editStartTime=true">
                       <i class="material-icons pt15" (click)="saveNewStartTime('editStopTime')">save</i>
                     </a>
                   </div>
@@ -156,8 +158,8 @@
               <p>
                 <strong>Day Start </strong>
                 <ng-container *ngIf="attendance_data.start_time == '0000-00-00 00:00:00'">---</ng-container>
-                <ng-container *ngIf="attendance_data.start_time != '0000-00-00 00:00:00'">{{attendance_data.start_time |
-                  date:' h:mm a'}}
+                <ng-container *ngIf="attendance_data.start_time != '0000-00-00 00:00:00'">{{attendance_data.start_time
+                  |date:'h:mm a'}}
                   <br> <br><strong>Start GPS Address :</strong> {{attendance_data.start_address}}
 
                 </ng-container>
