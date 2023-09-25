@@ -14,6 +14,8 @@ import { DialogComponent } from 'src/app/dialog.component';
 export class GenerateMasterBoxComponent implements OnInit {
 
   id: any;
+  start: any = 0;
+  page_limit: any;
   couponNumber: any = {};
   filter: any = {};
   data: any = {};
@@ -70,6 +72,15 @@ export class GenerateMasterBoxComponent implements OnInit {
       }
     });
   }
+    pervious() {
+      this.start = this.start - this.page_limit;
+      // this.masterdispatchboxitemdetail();
+    }
+    nextPage() {
+      
+      this.start = this.start + this.page_limit;
+      // this.getdispatchMasterboxdetail(); 
+    }
 
   checkCoupon(number, couponGrandMasterId) {
     if (number.length == 16) {
@@ -169,7 +180,7 @@ export class GenerateMasterBoxComponent implements OnInit {
   }
   getmasterbox(searcValue) {
     this.filter.coupon_code = searcValue;
-    this.service.post_rqst({}, 'Dispatch/fetchMasterGrandCouponDropdownNew').subscribe((resp) => {
+    this.service.post_rqst({'filter': this.filter,}, 'Dispatch/fetchMasterGrandCouponDropdownNew').subscribe((resp) => {
       if (resp['statusCode'] == 200) {
         this.masterboxData = resp['master_grand_coupon'];
       }
