@@ -12,16 +12,16 @@
       </div>
     </div>
   </div>
-  <p class="heading mt-10 border-top">Product List</p>
-  <div mat-dialog-content>
+  <p class="heading mt-10 border-top" *ngIf="spareIncomingList.length > 0">Spare Part List</p>
+  <div mat-dialog-content *ngIf="spareIncomingList.length > 0">
     <div class="cs-table left-right-10">
       <div class=" border-top">
         <div class="table-head">
           <table>
             <tr>
               <th class="w30 text-center ">Sr.No</th>
-              <th class="w150">Date</th>
-              <th class="w100">Type</th>
+              <th class="w110">Date</th>
+              <th class="w70">Type</th>
               <th class="w30 text-center ">Qty</th>
             </tr>
           </table>
@@ -34,8 +34,8 @@
             <ng-container>
               <tr *ngFor="let row of spareIncomingList; let i = index">
                 <td class="w30 text-center ">{{i+1}}</td>
-                <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                <td class="w100 ">{{row.type? (row.type | titlecase):'--'}}</td>
+                <td class="w110">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+                <td class="w70 ">{{row.type? (row.type | titlecase):'--'}}</td>
                 <td class="w30 text-center ">{{row.qty? row.qty :'--'}}</td>
               </tr>
             </ng-container>

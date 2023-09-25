@@ -12,16 +12,16 @@
       </div>
     </div>
   </div>
-  <p class="heading mt-10 border-top">Product List</p>
-  <div mat-dialog-content>
+  <p class="heading mt-10 border-top" *ngIf="spareOutgoingList.length > 0">Spare Part List</p>
+  <div mat-dialog-content *ngIf="spareOutgoingList.length > 0">
     <div class="cs-table left-right-10">
       <div class=" border-top">
         <div class="table-head">
           <table>
             <tr>
               <th class="w30 text-center ">Sr.No</th>
-              <th class="w150">Date</th>
-              <th class="w100">Technician</th>
+              <th class="w100">Date</th>
+              <th class="w150">Technician Details</th>
               <th class="w30 text-center ">Qty</th>
             </tr>
           </table>
@@ -34,9 +34,9 @@
             <ng-container>
               <tr *ngFor="let row of spareOutgoingList; let i = index">
                 <td class="w30 text-center ">{{i+1}}</td>
-                <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                <td class="w100 ">{{row.technician_name? (row.technician_name | titlecase):'--'}}</td>
-                <td class="w30 text-center ">{{row.assigned_qty? row.assigned_qty :'--'}}</td>
+                <td class="w100">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+                <td class="w150 ">{{row.technician_name? (row.technician_name | titlecase):'--'}}-{{row.technician_mobile}}</td>
+                <td class="w30 text-center ">{{row.qty? row.qty :'--'}}</td>
               </tr>
             </ng-container>
           </table>

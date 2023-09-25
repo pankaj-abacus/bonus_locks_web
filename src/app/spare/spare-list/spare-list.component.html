@@ -37,14 +37,13 @@
             <tr>
               <th class="w50">Sr.No</th>
               <th class="w150">Date Created</th>
-              <th class="w100">Part Name</th>
+              <th class="w150">Part Name</th>
               <th class="w100">Part No.</th>
               <th class="w100 text-center">Min Stock Alert</th>
               <th class="w50 text-center">Stock Qty</th>
               <th class="w80 text-center">Assign Qty</th>
-              <th class="w100">MRP</th>
-              <th class="w150">Stock Incoming</th>
-              <th class="w150">Stock Outgoing</th>
+              <th class="w100 text-center">MRP</th>
+              <th class="w300 text-center">Stock</th>
               <th class="w150 text-center">Image</th>
               <th class="w100 text-center">Action</th>
             </tr>
@@ -66,7 +65,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
+              <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="part_name"
@@ -77,17 +76,16 @@
               <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="part_no"
-                      (keyup.enter)="getSpareList('')" #part_no="ngModel" [(ngModel)]="filter_data.part_no">
+                    <input type="text" matInput placeholder="Search ..." name="part_no" (keyup.enter)="getSpareList('')"
+                      #part_no="ngModel" [(ngModel)]="filter_data.part_no">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w100 text-center"></th>
               <th class="w50 text-center"></th>
               <th class="w80 text-center"></th>
-              <th class="w100"></th>
-              <th class="w150"></th>
-              <th class="w150"></th>
+              <th class="w100 text-right"></th>
+              <th class="w300 text-center"></th>
               <th class="w150 text-center"></th>
               <th class="w100 text-center"></th>
             </tr>
@@ -104,22 +102,42 @@
                 [ngClass]="{'Current': service.currentUserID == row.id}">
                 <td class="w50">{{i + 1 + sr_no}}</td>
                 <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                <td class="w100">{{row.part_name? (row.part_name | titlecase):'--'}}</td>
+                <td class="w150">{{row.part_name? (row.part_name | titlecase):'--'}}</td>
                 <td class="w100">{{row.part_no? (row.part_no | titlecase):'--'}}</td>
-                <td class="w100 text-center">{{row.min_stock? row.min_stock:'--'}}</td>
+                <td class="w100 text-center">
+                  <strong class="red-clr" *ngIf="row.current_stock<row.min_stock">{{row.min_stock ?
+                    row.min_stock : '--'}}</strong>
+                </td>
                 <td class="w50 text-center">{{row.current_stock? row.current_stock:'--'}}</td>
                 <td class="w80 text-center">
-                  <a class="link-btn" mat-button (click)="spareQty(row.part_name,row.part_no,row.assign_part)" routerLinkActive="active">{{row.assign_stock?
-                    row.assign_stock:'--'}}</a>
+                  <button mat-raised-button style="border-radius: 25px;"
+                    (click)="spareQty(row.part_name,row.part_no,row.assign_part)"
+                    [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.assign_stock!='0'">
+                    <span>{{row.assign_stock?row.assign_stock:''}}</span>
+                    <mat-icon>chevron_right</mat-icon>
+                  </button>
                 </td>
-                <td class="w100">Rs.{{row.mrp? row.mrp:'--'}}</td>
-                <td class="w150">
-                  <button mat-raised-button color="accent" (click)="spareIncomingDialog(row.part_name,row.part_no,row.incoming_data)"
-                    [ngClass]="{'pulse': fabBtnValue=='activity'}">Stock Incoming</button>
-                </td>
-                <td class="w150">
-                  <button mat-raised-button color="accent" (click)="spareOutgoingDialog(row.part_name,row.part_no,row.assign_part)"
-                    [ngClass]="{'pulse': fabBtnValue=='activity'}">Stock Outgoing</button>
+                <td class="w100 text-right">Rs.{{row.mrp? row.mrp:'--'}}</td>
+                <td class="w300 text-center">
+                  <div class="flex-button">
+                    <button mat-raised-button style="border-radius: 25px;"
+                      (click)="spareIncomingDialog(row.part_name,row.part_no,row.incoming_data)"
+                      [ngClass]="{'pulse': fabBtnValue=='activity'}">
+                      <mat-icon>arrow_circle_down</mat-icon>
+                      <span>Incoming</span>
+                    </button>
+                    <button mat-raised-button style="border-radius: 25px;" (click)="spareOutgoingDialog(row.part_name,row.part_no,row.assign_stock
+                      )" [ngClass]="{'pulse': fabBtnValue=='activity'}">
+                      <mat-icon>arrow_circle_up</mat-icon>
+                      <span>Outgoing</span>
+                    </button>
+                    <button mat-raised-button style="border-radius: 25px;"
+                      (click)="returnDialog(row.part_name,row.part_no,row.return_data)"
+                      [ngClass]="{'pulse': fabBtnValue=='activity'}">
+                      <mat-icon>assignment_returned</mat-icon>
+                      <span>Return</span>
+                    </button>
+                  </div>
                 </td>
                 <td class="w150 text-center">
                   <div *ngIf="row.image.length">
@@ -149,7 +167,7 @@
                 <td class="w150">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100">
+                <td class="w150">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w100">
@@ -164,13 +182,10 @@
                 <td class="w80 text-center">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w100">
+                <td class="w100 text-right">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w150 ">
+                <td class="w300 text-center">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w150 text-center">

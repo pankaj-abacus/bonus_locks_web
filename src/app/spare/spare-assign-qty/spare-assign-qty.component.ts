@@ -110,7 +110,7 @@ export class SpareAssignQtyComponent implements OnInit {
 
       }
       else {
-        this.add_list[isExistIndex].qty = parseInt(this.add_list[isExistIndex].qty) + parseInt(this.formData.qty)
+        this.add_list[isExistIndex].qty = parseInt(this.formData.qty)
         this.formData = {}
 
       }
