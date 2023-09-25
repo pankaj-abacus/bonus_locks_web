@@ -76,6 +76,7 @@ import { ManageStockComponent } from './spare/manage-stock/manage-stock.componen
 import { ReturnStockComponent } from './spare/return-stock/return-stock.component';
 import { ProductUploadComponent } from './product-upload/product-upload.component';
 import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-module/complanit-visit-module.module';
+import { ReturnDataComponent } from './spare/return-data/return-data.component';
 
 
 
@@ -173,6 +174,7 @@ import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-mo
         SpareAssignQtyComponent,
         SpareIncomingComponent,
         SpareOutgoingComponent,
+        ReturnDataComponent,
         AddSpareComponent,
         AssignQtyComponent,
         ManageStockComponent,

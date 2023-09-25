@@ -36,7 +36,7 @@
                 <td class="w30 text-center ">{{i+1}}</td>
                 <td class="w100">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
                 <td class="w150 ">{{row.technician_name? (row.technician_name | titlecase):'--'}}-{{row.technician_mobile}}</td>
-                <td class="w30 text-center ">{{row.assigned_qty? row.assigned_qty :'--'}}</td>
+                <td class="w30 text-center ">{{row.qty? row.qty :'--'}}</td>
               </tr>
             </ng-container>
           </table>

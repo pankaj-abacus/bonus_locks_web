@@ -17,6 +17,7 @@ import { ManageStockComponent } from '../manage-stock/manage-stock.component';
 import { AssignQtyComponent } from '../assign-qty/assign-qty.component';
 import { ReturnStockComponent } from '../return-stock/return-stock.component';
 import { ProductUploadComponent } from 'src/app/product-upload/product-upload.component';
+import { ReturnDataComponent } from '../return-data/return-data.component';
 @Component({
   selector: 'app-spare-list',
   templateUrl: './spare-list.component.html',
@@ -210,6 +211,23 @@ export class SpareListComponent implements OnInit {
 
     });
   }
+
+  returnDialog(part_name,part_no,row) {
+    console.log(row);
+    const dialogRef = this.dialog.open(ReturnDataComponent, {
+      width: '500px',
+      panelClass: 'cs-modal',
+      data: {
+        data: row,
+        part_name:part_name,
+        part_no:part_no
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
   spareAssignQty() {
     const dialogRef = this.dialog.open(SpareAssignQtyComponent, {
       width: '650px',
@@ -218,7 +236,7 @@ export class SpareListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getSpareList('');
+      // this.getSpareList('');
     });
   }
   spareQty(part_name,part_no,row) {
@@ -235,7 +253,7 @@ export class SpareListComponent implements OnInit {
     });
   }
   returnStock() {
-    const dialogRef = this.dialog.open(ReturnStockComponent, {
+    const dialogRef = this.dialog.open(ReturnDataComponent, {
       width: '650px',
       panelClass: 'cs-modal',
       data: {

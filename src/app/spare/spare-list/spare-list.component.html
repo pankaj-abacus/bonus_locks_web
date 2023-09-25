@@ -43,7 +43,7 @@
               <th class="w50 text-center">Stock Qty</th>
               <th class="w80 text-center">Assign Qty</th>
               <th class="w100 text-center">MRP</th>
-              <th class="w210 text-center">Stock</th>
+              <th class="w300 text-center">Stock</th>
               <th class="w150 text-center">Image</th>
               <th class="w100 text-center">Action</th>
             </tr>
@@ -85,7 +85,7 @@
               <th class="w50 text-center"></th>
               <th class="w80 text-center"></th>
               <th class="w100 text-right"></th>
-              <th class="w210 text-center"></th>
+              <th class="w300 text-center"></th>
               <th class="w150 text-center"></th>
               <th class="w100 text-center"></th>
             </tr>
@@ -104,7 +104,10 @@
                 <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
                 <td class="w150">{{row.part_name? (row.part_name | titlecase):'--'}}</td>
                 <td class="w100">{{row.part_no? (row.part_no | titlecase):'--'}}</td>
-                <td class="w100 text-center">{{row.min_stock? row.min_stock:'--'}}</td>
+                <td class="w100 text-center">
+                  <strong class="red-clr" *ngIf="row.current_stock<row.min_stock">{{row.min_stock ?
+                    row.min_stock : '--'}}</strong>
+                </td>
                 <td class="w50 text-center">{{row.current_stock? row.current_stock:'--'}}</td>
                 <td class="w80 text-center">
                   <button mat-raised-button style="border-radius: 25px;"
@@ -115,19 +118,24 @@
                   </button>
                 </td>
                 <td class="w100 text-right">Rs.{{row.mrp? row.mrp:'--'}}</td>
-                <td class="w210 text-center">
+                <td class="w300 text-center">
                   <div class="flex-button">
                     <button mat-raised-button style="border-radius: 25px;"
                       (click)="spareIncomingDialog(row.part_name,row.part_no,row.incoming_data)"
                       [ngClass]="{'pulse': fabBtnValue=='activity'}">
-                      <mat-icon>vertical_align_bottom</mat-icon>
+                      <mat-icon>arrow_circle_down</mat-icon>
                       <span>Incoming</span>
                     </button>
-                    <button mat-raised-button style="border-radius: 25px;"
-                      (click)="spareOutgoingDialog(row.part_name,row.part_no,row.assign_part)"
-                      [ngClass]="{'pulse': fabBtnValue=='activity'}">
-                      <mat-icon>vertical_align_top</mat-icon>
+                    <button mat-raised-button style="border-radius: 25px;" (click)="spareOutgoingDialog(row.part_name,row.part_no,row.assign_stock
+                      )" [ngClass]="{'pulse': fabBtnValue=='activity'}">
+                      <mat-icon>arrow_circle_up</mat-icon>
                       <span>Outgoing</span>
+                    </button>
+                    <button mat-raised-button style="border-radius: 25px;"
+                      (click)="returnDialog(row.part_name,row.part_no,row.return_data)"
+                      [ngClass]="{'pulse': fabBtnValue=='activity'}">
+                      <mat-icon>assignment_returned</mat-icon>
+                      <span>Return</span>
                     </button>
                   </div>
                 </td>
@@ -177,7 +185,7 @@
                 <td class="w100 text-right">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w210 text-center">
+                <td class="w300 text-center">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w150 text-center">
