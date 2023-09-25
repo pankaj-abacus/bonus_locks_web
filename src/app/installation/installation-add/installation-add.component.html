@@ -284,6 +284,29 @@
                 </div>
               </div>
             </div>
+            <div class="row" *ngIf="data2.complaint_type!='Installation'">
+            <div class="col s12">
+              <div class="uploade-image">
+                <ul>
+                  <li *ngFor="let image of selected_image; let i=index">
+                    <img src="{{image.id ? url+image.image : image.image}}">
+                    <span class="cancel-icon">
+                      <i class="material-icons crose-icon"  (click)="remove_image(i)">clear</i>
+                    </span>									
+                  </li>
+                  <li class="add-bg-1" *ngIf="selected_image.length < 5">
+                    <label>
+                      <input type="file" (change)="onUploadChange($event)"    ng2FileSelect #fileInput style="display:none;" accept=".png, .jpg, .jpeg, .pdf" multiple required />
+                      <div class="other">
+                        <i class="material-icons">cloud_upload</i>
+                        <p>Upload Images</p>
+                      </div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
           </div>
         </div>
       </div>

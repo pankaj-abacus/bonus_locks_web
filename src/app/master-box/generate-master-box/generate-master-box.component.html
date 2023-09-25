@@ -1,7 +1,27 @@
 <div class="main-container">
   <div class="tools-container">
     <h2>Generate Master Box</h2>
+
     <div class="left-auto df ac flex-gap-10">
+
+
+      <!-- <div class="pagination">
+        <div class="pagination-content">
+          Pages
+          <span>{{pagenumber}}</span>
+          of
+          <span>{{total_page}}</span>
+        </div>
+        <div class="page-nav">
+          <button mat-icon-button  matTooltip="Older" (click)="pervious(active_tab)"  [disabled]="start == 0">
+            <i class="material-icons">navigate_before</i>
+          </button>
+          <button mat-icon-button  matTooltip="Newer" (click)="nextPage(active_tab)" [disabled]="pagenumber == total_page ">
+            <i class="material-icons">navigate_next</i>
+          </button>
+          
+        </div>
+      </div> -->
 
       <button class="mr16" matTooltip="Add Master Boxes" [disabled]="btnFlag == true" (click)="addGrandmasterboxes()"
         mat-raised-button color="primary">
