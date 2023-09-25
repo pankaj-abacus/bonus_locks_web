@@ -209,7 +209,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
 
   dispatchItems(number, couponGrandMasterId) {
     this.dispatchItem = [];
-    this.service.post_rqst({ 'coupon_code': number, 'dispatch_status': this.dispatch_status, 'bill_dispatch_type': this.invoice_detail.bill_dispatch_type, 'dr_code': this.invoice_detail.dr_code, 'created_by_name': this.data.created_by_name, 'created_by_id': this.data.created_by_id, 'company_name': this.invoice_detail.company_name, 'invoice_id': this.id, 'invoice_no': this.invoice_detail.order_no, 'couponGrandMasterId': couponGrandMasterId }, 'Dispatch/checkCouponCodeCheck').subscribe((result) => {
+    this.service.post_rqst({ 'coupon_code': number, 'dispatch_status': this.dispatch_status, 'bill_dispatch_type': this.invoice_detail.bill_dispatch_type, 'warehouse_id': this.invoice_detail.warehouse_id, 'dr_code': this.invoice_detail.dr_code, 'created_by_name': this.data.created_by_name, 'created_by_id': this.data.created_by_id, 'company_name': this.invoice_detail.company_name, 'invoice_id': this.id, 'invoice_no': this.invoice_detail.order_no, 'couponGrandMasterId': couponGrandMasterId }, 'Dispatch/checkCouponCodeCheck').subscribe((result) => {
       if (result['statusCode'] == 200) {
         this.dispatchedCoupon = result['coupon_code'];
         this.dispatchQTY = result['sale_dispatch_qty'];
@@ -513,7 +513,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
     })
   }
   updateGrandMasterCoupon() {
-    this.apiHit.post_rqst({ 'data': { 'dr_id': this.invoice_detail.dr_id, 'dr_code': this.invoice_detail.dr_code, 'bill_dispatch_type': this.invoice_detail.bill_dispatch_type, 'filter': this.filter, 'id': this.search.couponGrandMasterId, 'created_by_name': this.data.created_by_name, 'created_by_id': this.data.created_by_id, 'company_name': this.invoice_detail.company_name, 'invoice_id': this.id, 'invoice_no': this.invoice_detail.order_no, } }, "Dispatch/updateMasterGrandCouponNew").subscribe((result => {
+    this.apiHit.post_rqst({ 'data': { 'dr_id': this.invoice_detail.dr_id, 'dr_code': this.invoice_detail.dr_code, 'warehouse_id': this.invoice_detail.warehouse_id, 'bill_dispatch_type': this.invoice_detail.bill_dispatch_type, 'filter': this.filter, 'id': this.search.couponGrandMasterId, 'created_by_name': this.data.created_by_name, 'created_by_id': this.data.created_by_id, 'company_name': this.invoice_detail.company_name, 'invoice_id': this.id, 'invoice_no': this.invoice_detail.order_no, } }, "Dispatch/updateMasterGrandCouponNew").subscribe((result => {
       if (result['statusCode'] == 200) {
         this.mainmasterboxDisable = true;
         this.masterboxData = result['master_grand_coupon']
