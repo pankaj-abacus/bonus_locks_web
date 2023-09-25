@@ -39,8 +39,11 @@ export class GenerateMasterBoxComponent implements OnInit {
   loader: boolean = false;
   viewType: any;
   btnFlag: boolean = false;
-
-
+  total_page: any = 0;
+  pagenumber: any = 0;
+  pageCount: any;
+  sr_no: number;
+  datanotofound: boolean = false;
 
 
 
@@ -52,7 +55,9 @@ export class GenerateMasterBoxComponent implements OnInit {
     public dialog: MatDialog,
     public dialogs: DialogComponent,
     public serve: DatabaseService
-  ) { }
+  ) {
+    this.page_limit = 20;
+  }
 
   ngOnInit() {
     this.viewType = this.data.type
@@ -61,26 +66,58 @@ export class GenerateMasterBoxComponent implements OnInit {
   }
 
 
+
+  pervious() {
+    this.start = this.start - this.page_limit;
+    this.getdispatchMasterboxdetail();
+  }
+
+  nextPage() {
+    this.start = this.start + this.page_limit;
+    this.getdispatchMasterboxdetail();
+  }
+
+
   getdispatchMasterboxdetail() {
-    this.service.post_rqst({ 'data': data }, 'Dispatch/fetchMasterGrandCouponNew').subscribe((result) => {
+    if (this.pagenumber > this.total_page) {
+      this.pagenumber = this.total_page;
+      this.start = this.pageCount - this.page_limit;
+    }
+    if (this.start < 0) {
+      this.start = 0;
+    }
+
+    this.loader = true;
+    this.service.post_rqst({ 'data': data, 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit }, 'Dispatch/fetchMasterGrandCouponNew').subscribe((result) => {
       if (result['statusCode'] == 200) {
-        this.masterdispatchboxitemdetail = result['master_grand_coupon']
+        this.masterdispatchboxitemdetail = result['master_grand_coupon'];
+        if (!result['master_grand_coupon']) {
+          this.datanotofound = false;
+        } else {
+          this.datanotofound = true;
+          this.loader = false;
+        }
+
+        this.pageCount = result['count'];
+        if (this.pagenumber > this.total_page) {
+          this.pagenumber = this.total_page;
+          this.start = this.pageCount - this.page_limit;
+        }
+        else {
+          this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
+        }
+        this.total_page = Math.ceil(this.pageCount / this.page_limit);
+        this.sr_no = this.pagenumber - 1;
+        this.sr_no = this.sr_no * this.page_limit
       }
       else {
+        this.datanotofound = true;
+        this.loader = false;
         this.toast.errorToastr(result['statusMsg']);
-        // this.couponNumber =  {};
       }
     });
   }
-    pervious() {
-      this.start = this.start - this.page_limit;
-      // this.masterdispatchboxitemdetail();
-    }
-    nextPage() {
-      
-      this.start = this.start + this.page_limit;
-      // this.getdispatchMasterboxdetail(); 
-    }
+
 
   checkCoupon(number, couponGrandMasterId) {
     if (number.length == 16) {
@@ -157,7 +194,11 @@ export class GenerateMasterBoxComponent implements OnInit {
     this.couponNumber.coupon_number = '';
   }
 
-
+  refresh() {
+    this.start = 0;
+    this.filter = {};
+    this.getdispatchMasterboxdetail();
+  }
 
   blankValue() {
     this.temCoupon = [];
@@ -180,11 +221,14 @@ export class GenerateMasterBoxComponent implements OnInit {
   }
   getmasterbox(searcValue) {
     this.filter.coupon_code = searcValue;
-    this.service.post_rqst({'filter': this.filter,}, 'Dispatch/fetchMasterGrandCouponDropdownNew').subscribe((resp) => {
+    this.skLoading = true;
+    this.service.post_rqst({ 'filter': this.filter, }, 'Dispatch/fetchMasterGrandCouponDropdownNew').subscribe((resp) => {
       if (resp['statusCode'] == 200) {
         this.masterboxData = resp['master_grand_coupon'];
+        this.skLoading = false;
       }
       else {
+        this.skLoading = false;
         this.toast.errorToastr(resp['statusMsg']);
       }
     }, error => {

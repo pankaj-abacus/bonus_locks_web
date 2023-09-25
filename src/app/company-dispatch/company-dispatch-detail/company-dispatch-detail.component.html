@@ -247,6 +247,34 @@
           <div class="card pb0 mb10" *ngIf="masterboxData.length">
             <div class="card-head">
               <h2 style="margin-bottom: 0px;">Master Box Detail</h2>
+
+
+
+              <div class="left-auto  df ac flex-gap-10">
+                <a mat-icon-button matTooltip="Refresh" (click)="refresh()">
+                  <i class="material-icons">refresh</i>
+                </a>
+
+                <div class="pagination" *ngIf="masterdispatchboxitemdetail.length > 0 ">
+                  <div class="pagination-content">
+                    Pages
+                    <span>{{pagenumber}}</span>
+                    of
+                    <span>{{total_page}}</span>
+                  </div>
+                  <div class="page-nav">
+                    <button mat-icon-button matTooltip="Older" (click)="pervious()" [disabled]="start == 0">
+                      <i class="material-icons">navigate_before</i>
+                    </button>
+                    <button mat-icon-button matTooltip="Newer" (click)="nextPage()"
+                      [disabled]="pagenumber == total_page ">
+                      <i class="material-icons">navigate_next</i>
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
             </div>
 
             <div class="card-body cs-form">
@@ -263,12 +291,30 @@
                     </tr>
                   </table>
                 </div>
+                <div class="table-head bdrt">
+                  <table>
+                    <tr>
+                      <th class="w40">&nbsp;</th>
+                      <th class="w180 text-center">
+                        <div class="th-search-acmt">
+                          <mat-form-field class="example-full-width cs-input">
+                            <input matInput placeholder="Search" name="master_box" [(ngModel)]="filter.coupon_code"
+                              (keyup.enter)="getdispatchMasterboxdetail()">
+                          </mat-form-field>
+                        </div>
+                      </th>
+                      <th class="w100 text-center">&nbsp;</th>
+                      <th class="w100 text-center">&nbsp;</th>
+                      <th class="w80 text-center">&nbsp;</th>
+                    </tr>
+                  </table>
+                </div>
 
 
                 <div class="table-container">
-                  <div class="table-content" *ngIf="masterdispatchboxitemdetail.length > 0">
+                  <div class="table-content">
                     <table>
-                      <ng-container *ngIf="!skLoading">
+                      <ng-container *ngIf="!loader">
                         <tr *ngFor="let row of masterdispatchboxitemdetail; let i =index">
                           <td class="w40">{{i+1}}</td>
                           <td class="w180 text-center">{{row.coupon_code}}</td>
@@ -296,6 +342,27 @@
                                 <i class="material-icons del">delete</i>
                               </button>
                             </div>
+                          </td>
+                        </tr>
+                      </ng-container>
+
+
+                      <ng-container *ngIf="loader">
+                        <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                          <td class="w40">
+                            <div>&nbsp;</div>
+                          </td>
+                          <td class="w180 text-center">
+                            <div>&nbsp;</div>
+                          </td>
+                          <td class="w100 text-center">
+                            <div>&nbsp;</div>
+                          </td>
+                          <td class="w100 text-center">
+                            <div>&nbsp;</div>
+                          </td>
+                          <td class="w80 text-center">
+                            <div>&nbsp;</div>
                           </td>
                         </tr>
                       </ng-container>

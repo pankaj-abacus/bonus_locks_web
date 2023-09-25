@@ -44,7 +44,20 @@ export class CompanyDispatchDetailComponent implements OnInit {
   gatePassAssign: any = [];
   assign_login_data2: any = {};
   product_data: any = []
+  loader: boolean = false;
 
+  couponList: any = [];
+  temArray: any = [];
+  dispatchQTY: any = 0;
+  dispatchInvoice: any = 0;
+  dispatch_status: any = 'Pending';
+  temCoupon: any = [];
+  start: any = 0;
+  page_limit: any;
+  total_page: any = 0;
+  pagenumber: any = 0;
+  pageCount: any;
+  sr_no: number;
 
   constructor(public route: ActivatedRoute, public service: DatabaseService, public rout: Router,
     public apiHit: DatabaseService,
@@ -56,6 +69,8 @@ export class CompanyDispatchDetailComponent implements OnInit {
     this.assign_login_data = this.session.getSession();
     this.logined_user_data = this.assign_login_data.value.data;
     this.assign_login_data2 = this.assign_login_data.data;
+    this.page_limit = 10;
+
     this.route.params.subscribe(params => {
       this.id = params.id;
     });
@@ -127,12 +142,6 @@ export class CompanyDispatchDetailComponent implements OnInit {
 
 
 
-  couponList: any = [];
-  temArray: any = [];
-  dispatchQTY: any = 0;
-  dispatchInvoice: any = 0;
-  dispatch_status: any = 'Pending';
-  temCoupon: any = [];
   checkCoupon(number, couponGrandMasterId) {
     if (number.length == 16) {
       if (number == undefined) {
@@ -272,13 +281,42 @@ export class CompanyDispatchDetailComponent implements OnInit {
   }
 
 
+
+  refresh() {
+    this.start = 0;
+    this.filter = {};
+    this.getdispatchMasterboxdetail();
+  }
+
+
   getdispatchMasterboxdetail() {
-    this.service.post_rqst({ 'data': { 'invoice_id': this.id, 'bill_number': this.invoice_detail.order_no } }, 'Dispatch/fetchMasterGrandCoupon').subscribe((result) => {
+    if (this.pagenumber > this.total_page) {
+      this.pagenumber = this.total_page;
+      this.start = this.pageCount - this.page_limit;
+    }
+    if (this.start < 0) {
+      this.start = 0;
+    }
+    this.loader = true;
+    this.service.post_rqst({ 'data': { 'invoice_id': this.id, 'bill_number': this.invoice_detail.order_no, 'start': this.start, 'pagelimit': this.page_limit }, 'filter': this.filter, }, 'Dispatch/fetchMasterGrandCoupon').subscribe((result) => {
       if (result['statusCode'] == 200) {
-        this.masterdispatchboxitemdetail = result['master_grand_coupon']
+        this.masterdispatchboxitemdetail = result['master_grand_coupon'];
+        this.loader = false;
+        this.pageCount = result['count'];
+        if (this.pagenumber > this.total_page) {
+          this.pagenumber = this.total_page;
+          this.start = this.pageCount - this.page_limit;
+        }
+        else {
+          this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
+        }
+        this.total_page = Math.ceil(this.pageCount / this.page_limit);
+        this.sr_no = this.pagenumber - 1;
+        this.sr_no = this.sr_no * this.page_limit
       }
       else {
         this.toast.errorToastr(result['statusMsg']);
+        this.loader = false;
         // this.couponNumber =  {};
       }
     });
