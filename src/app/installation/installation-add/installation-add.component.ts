@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./installation-add.component.scss']
 })
 export class InstallationAddComponent implements OnInit {
-
+  @ViewChild('fileInput') fileInput: any;
   data: any = {};
   data2: any = {};
   product_data: any = {};
@@ -61,6 +61,8 @@ export class InstallationAddComponent implements OnInit {
   bill_img: any;
   filter: any = {};
   warranty_img: any;
+  urls=new Array<string>();
+  selectedFile=[];
 
   constructor(private renderer: Renderer2,
     public location: Location,
@@ -70,6 +72,8 @@ export class InstallationAddComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: DialogComponent,
     public dialog2: MatDialog) {
+
+      this.url = this.service.uploadUrl + 'service_task/'
 
     this.getStateList();
     this.route.params.subscribe(params => {
@@ -90,6 +94,7 @@ export class InstallationAddComponent implements OnInit {
   ngOnInit() {
   }
   submitDetail() {
+    this.data.image = this.selected_image ? this.selected_image : []; 
     this.data.add_list = this.add_list
     this.savingFlag = true;
     let header
@@ -302,6 +307,10 @@ export class InstallationAddComponent implements OnInit {
     }
   }
 
+  remove_image(i: any) {
+    this.selected_image.splice(i, 1);
+  }
+
 
   delete(i) {
     this.add_list.splice(i, 1)
@@ -324,6 +333,7 @@ export class InstallationAddComponent implements OnInit {
   getInstallationDetail(id) {
     this.service.post_rqst({ 'complaint_id': id }, "ServiceTask/serviceInstallationDetail").subscribe((result => {
       this.getData = result['result'];
+      this.selected_image=this.getData['image'];
       console.log('getData', this.getData);
       this.data = this.getData;
       this.data2.complaint_type=this.getData.complaint_type
