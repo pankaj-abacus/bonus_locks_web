@@ -117,7 +117,10 @@ export class GenerateMasterBoxComponent implements OnInit {
       }
     });
   }
+  setcouponnoFocused() {
+    this.inputEl.nativeElement.focus();
 
+  }
 
   checkCoupon(number, couponGrandMasterId) {
     if (number.length == 16) {
@@ -183,7 +186,7 @@ export class GenerateMasterBoxComponent implements OnInit {
         this.toast.errorToastr(result['statusMsg']);
       }
       this.couponNumber.coupon_number = '';
-      this.getmasterbox('')
+      // this.getmasterbox('')
       this.getdispatchMasterboxdetail()
     });
   }

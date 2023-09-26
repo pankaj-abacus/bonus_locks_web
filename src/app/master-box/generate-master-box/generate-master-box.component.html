@@ -43,7 +43,7 @@
                   <mat-form-field appearance="outline">
                     <mat-label>Grand Master Box</mat-label>
                     <mat-select name="couponGrandMasterId" [(ngModel)]="couponNumber.couponGrandMasterId"
-                      #couponGrandMasterId="ngModel" *ngIf="masterboxData.length" (selectionChange)="blankValue()">
+                      #couponGrandMasterId="ngModel" *ngIf="masterboxData.length" (selectionChange)="blankValue();setcouponnoFocused()">
                       <mat-option>
                         <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
                           (keyup)="getmasterbox($event.target.value,invoice_detail.order_no)"></ngx-mat-select-search>
