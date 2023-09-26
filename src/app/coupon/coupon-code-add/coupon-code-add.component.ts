@@ -32,8 +32,8 @@ export class CouponCodeAddComponent implements OnInit {
   assign_login_data2: any = [];
   uploadurl: any;
   today_date: Date;
-  warehouse_id:any
-  warehouse:any =[];
+  warehouse_id: any
+  warehouse: any = [];
 
 
   constructor(public location: Location, public service: DatabaseService, public route: ActivatedRoute, public rout: Router, public toast: ToastrManager, public dialog: DialogComponent, public session: sessionStorage) {
@@ -51,10 +51,10 @@ export class CouponCodeAddComponent implements OnInit {
     console.log(this.session.getSession());
     console.log(this.assign_login_data2);
     console.log(this.assign_login_data2.warehouse_id);
-    this.warehouse_id=this.assign_login_data2.warehouse_id
+    this.warehouse_id = this.assign_login_data2.warehouse_id
 
-    
-    
+
+
 
     // this.data.coupon_type = 'Master Box';
   }
@@ -105,12 +105,12 @@ export class CouponCodeAddComponent implements OnInit {
 
 
 
-  getWarehouse(){
+  getWarehouse() {
     this.service.post_rqst({}, "Dispatch/fetchWarehouse").subscribe((result => {
-      if(result['statusCode'] == 200){
+      if (result['statusCode'] == 200) {
         this.warehouse = result['result'];
       }
-      else{
+      else {
         this.toast.errorToastr(result['statusMsg']);
       }
     }));
@@ -189,20 +189,27 @@ export class CouponCodeAddComponent implements OnInit {
       this.toast.errorToastr('Minimum coupon value 1');
       return
     }
-    else if (this.data.total_coupon > 10000) {
-      this.toast.errorToastr('Total Coupon Should be less than 10,000');
+    else if (this.data.total_coupon > 10000 && this.data.coupon_type == 'Item Box') {
+      this.toast.errorToastr('Total Coupon Should be 10,000 less than 10,000');
       this.savingFlag = false;
       return
     }
 
+    else if (this.data.total_coupon > 200 && this.data.coupon_type == 'Master Box') {
+      this.toast.errorToastr('Total Coupon Should be 200 or less than 200');
+      this.savingFlag = false;
+      return
+    }
+
+
     else {
-      this.data.warehouse=this.warehouse.id;
+      this.data.warehouse = this.warehouse.id;
       // this.warehouse = [];
       this.data.created_by_name = this.userName;
       this.data.created_by_id = this.userId;
-      this.data.warehouse_id=this.warehouse_id
+      this.data.warehouse_id = this.warehouse_id
       this.savingFlag = true;
-      this.service.post_rqst({ 'data': this.data}, 'CouponCode/genrateCoupon').subscribe((result) => {
+      this.service.post_rqst({ 'data': this.data }, 'CouponCode/genrateCoupon').subscribe((result) => {
         if (result['statusCode'] == 200) {
           this.toast.successToastr(result['statusMsg']);
           this.rout.navigate(['coupon-list/coupon-add/coupon-code-detail/' + result['offer_coupon_history_id']]);
