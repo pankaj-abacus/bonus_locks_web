@@ -160,7 +160,7 @@
 
                                 <div class="block-feilds">
                                     <span>Created By</span>
-                                    <p>{{getData.created_by_type ? (getData.created_by_type | titlecase ):'---'}}</p>
+                                    <p>{{getData.created_name ? (getData.created_name | titlecase ):'---'}}</p>
                                 </div>
                                 <div class="block-feilds">
                                     <span>Complaint No.</span>
@@ -438,12 +438,9 @@
 
             </div>
 
-
-            <div class="row">
-
-
-
-                <div class="col s12 m4 l4 mt25">
+            <!-- ########################## Tracker ############################ -->
+            <div class="row ml2">
+                <div class="col s12 m4 l4 mt25" *ngIf="!skLoading">
                     <div>
                         <div class="travel">
                             <ul>
@@ -456,123 +453,30 @@
                                             <p>Complaint Tracker</p>
                                         </strong>
                                         <!-- <p>{{getData.date_created |date : 'dd MMM yyy ,h:mm a'}}</p> -->
-
                                     </div>
-
                                     <br>
-
-
-
                                 </li>
-                                <!-- <li [ngClass]="getData.carpenter_assign_status == 'Done' ?'check' :'reject'">
-                                                <span class="vistit-count">
-                                                    <i class="material-icons">location_on</i>
-                                                </span>
-                                                <div class="tracking-con">
-                                                    <strong>
-                                                        <p>Assign Date</p>
-                                                    </strong>
-                                                    <p>{{getData.carpenter_assign_date != '0000-00-00' ?
-                                                        (getData.carpenter_assign_date |date : 'dd MMM yyy ,h:mm a') :'---'}}
-                                                    </p>
-                                                </div>
-                                                <br>
-                                                <br>
-                                                <br>
-
-                                            </li>
-                                            <li [ngClass]="getData.inspection_status == 'Done' ?'check' :'reject'">
-                                                <span class="vistit-count">
-                                                    <i class="material-icons">location_on</i>
-                                                </span>
-                                                <div class="tracking-con">
-                                                    <strong>
-
-                                                        <p>Inspection Date</p>
-                                                    </strong>
-                                                    <p>{{getData.inspection_date != '0000-00-00' ? (getData.inspection_date |
-                                                        date : 'dd MMM yyy ,h:mm a') :'---'}}</p>
-                                                </div>
-                                                <br>
-                                                <br>
-                                                <br>
-
-                                            </li>
-                                            <li [ngClass]="getData.complaint_status == 'Closed' ?'check' :'reject'">
-                                                <span class="vistit-count">
-                                                    <i class="material-icons">location_on</i>
-                                                </span>
-                                                <div class="tracking-con">
-                                                    <strong>
-
-                                                        <p>Closed Date</p>
-                                                    </strong>
-                                                    <p>
-                                                        {{getData.closed_date != '0000-00-00' ? (getData.closed_date |
-                                                        date :'dd MMM yyy ,h:mm a'):'---'}}
-                                                    </p>
-                                                </div>
-                                                <br>
-                                                <br>
-                                                <br>
-
-                                            </li>
-                                            <li [ngClass]="getData.feedback_status == 'Done' ?'check' :'reject'">
-                                                <span class="vistit-count">
-                                                    <i class="material-icons">location_on</i>
-                                                </span>
-                                                <div class="tracking-con">
-                                                    <strong>
-
-                                                        <p>Feedback Date</p>
-                                                    </strong>
-                                                    <p>{{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date :
-                                                        'dd MMM yyy ,h:mm a'):'---'}}</p>
-                                                </div>
-                                            </li> -->
-
-                                <li>
-                                    <span class="vistit-count">1</span>
+                                <li *ngIf="getData.date_created!=='0000-00-00 00:00:00'">
+                                    <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km"> {{getData.date_created_to_assign
                                                     ? getData.date_created_to_assign :''}}</span> -->
-
                                     <div class="counter">
                                         <div>
                                             <div class="visit-time">
-
                                                 <div class="visit-hours mt10">
                                                     <span class="green-clr">Date Created</span>
                                                     <p>{{getData.date_created |date : 'dd MMM yyy ,h:mm a'}}</p>
 
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <!-- <div class="type-visit">
-                                                        <div class="types" [ngClass]="{'active': row.order_flag > 0}">
-                                                            <span>&nbsp;</span>
-                                                            Order
-                                                        </div>
-                                                        <div class="types" [ngClass]="{'active': row.followup_flag > 0}">
-                                                            <span>&nbsp;</span>
-                                                            Followup
-                                                        </div>
-                                                        <div class="types" [ngClass]="{'active': row.Doc > 0}">
-                                                            <span>&nbsp;</span>
-                                                            Photo upload
-                                                        </div>
-
-                                                    </div> -->
                                     </div>
                                     <br>
-
-
                                 </li>
-                                <li>
-                                    <span class="vistit-count">2</span>
+                                <li *ngIf="getData.carpenter_assign_date!=='0000-00-00 00:00:00'">
+                                    <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km">{{getData.date_created_to_assign
                                                     ? getData.date_created_to_assign :''}}</span> -->
-
                                     <div class="counter">
                                         <div>
                                             <!-- <p><strong>Assign Date :</strong>
@@ -588,7 +492,6 @@
                                                         (getData.carpenter_assign_date |date : 'dd MMM yyy ,h:mm a')
                                                         :'---'}}</p>
                                                     <!-- <p *ngIf="carpenter_assign_date == '0000-00-00 00:00:00'">--</p> -->
-
                                                 </div>
                                                 <div class="visit-hours mt10">
                                                     <span>Total Time Taken</span>
@@ -596,19 +499,14 @@
                                                         ? getData.date_created_to_assign :'--'}}</p>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                     <br>
-
-
                                 </li>
-                                <li>
-                                    <span class="vistit-count">3</span>
+                                <li *ngIf="getData.inspection_date!=='0000-00-00 00:00:00'">
+                                    <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km">{{getData.assign_to_inspection
                                                     ? getData.assign_to_inspection :''}}</span> -->
-
                                     <div class="counter">
                                         <div>
                                             <!-- <p><strong>Inspection Date :</strong>
@@ -621,7 +519,6 @@
                                                     <p>{{getData.inspection_date != '0000-00-00 00:00:00' ?
                                                         (getData.inspection_date |
                                                         date : 'dd MMM yyy ,h:mm a') :'---'}}</p>
-
                                                 </div>
                                                 <div class="visit-hours mt10">
                                                     <span>Total Time Taken</span>
@@ -630,17 +527,13 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                     <br>
-
-
                                 </li>
-                                <li>
-                                    <span class="vistit-count">4</span>
+                                <li *ngIf="getData.closed_date!=='0000-00-00 00:00:00'">
+                                    <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km"> {{getData.inspection_to_closed
                                                     ? getData.inspection_to_closed :''}}</span> -->
-
                                     <div class="counter">
                                         <div>
                                             <!-- <p><strong>Closed Date :</strong>
@@ -648,12 +541,19 @@
                                                             date :'dd MMM yyy ,h:mm a'):'---'}}</p> -->
                                             <!-- <p *ngIf="row.start_address"><strong>End GPS Address :</strong> {{row.address}}</p> -->
                                             <div class="visit-time">
-                                                <div class="visit-hours mt10">
+                                                <div class="visit-hours mt10"
+                                                    *ngIf="getData.complaint_status=='Closed'">
                                                     <span class="green-clr">Closed Date</span>
                                                     <p>{{getData.closed_date != '0000-00-00 00:00:00' ?
                                                         (getData.closed_date |
                                                         date :'dd MMM yyy ,h:mm a'):'---'}}</p>
-
+                                                </div>
+                                                <div class="visit-hours mt10"
+                                                    *ngIf="getData.complaint_status=='Cancel'">
+                                                    <span class="green-clr">Cancel Date</span>
+                                                    <p>{{getData.closed_date != '0000-00-00 00:00:00' ?
+                                                        (getData.closed_date |
+                                                        date :'dd MMM yyy ,h:mm a'):'---'}}</p>
                                                 </div>
                                                 <div class="visit-hours mt10">
                                                     <span>Total Time Taken</span>
@@ -662,17 +562,13 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                     <br>
-
-
                                 </li>
-                                <li>
-                                    <span class="vistit-count">5</span>
+                                <li *ngIf="getData.feedback_date!=='0000-00-00 00:00:00'">
+                                    <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km">{{getData.inspection_to_closed
                                                     ? getData.inspection_to_closed :''}} </span> -->
-
                                     <div class="counter">
                                         <div>
                                             <!-- <p><strong>Feedback Date :</strong>
@@ -688,30 +584,20 @@
                                                         | date
                                                         :
                                                         'dd MMM yyy ,h:mm a'):'---'}}</p>
-
                                                 </div>
                                                 <div class="visit-hours mt10">
                                                     <span>Total Time Taken</span>
                                                     <p>--</p>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </li>
-
-
                             </ul>
                         </div>
                     </div>
-
-
                 </div>
-
-
             </div>
-
         </div>
     </div>
     <!-- <div class="fab-btns">
