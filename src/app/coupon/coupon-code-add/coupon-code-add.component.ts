@@ -195,8 +195,8 @@ export class CouponCodeAddComponent implements OnInit {
       return
     }
 
-    else if (this.data.total_coupon > 200 && this.data.coupon_type == 'Master Box') {
-      this.toast.errorToastr('Total Coupon Should be 200 or less than 200');
+    else if (this.data.total_coupon > 500 && this.data.coupon_type == 'Master Box') {
+      this.toast.errorToastr('Total Coupon Should be 500 or less than 500');
       this.savingFlag = false;
       return
     }
