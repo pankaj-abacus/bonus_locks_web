@@ -34,6 +34,7 @@ export class ComplaintDetailComponent implements OnInit {
   complaintImg: any = [];
   inspectionImg: any = [];
   closeImg: any = [];
+  spare_list: any = [];
   fabBtnValue: any = 'excel';
 
   constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
@@ -63,7 +64,7 @@ export class ComplaintDetailComponent implements OnInit {
         this.complaintImg = this.getData['image'];
         this.inspectionImg = this.getData['inspection_image'];
         this.closeImg = this.getData['closing_image'];
-
+        this.spare_list = this.getData['spare_list'];
       } else {
         this.skLoading = false;
         this.toast.errorToastr(result['statusMsg']);

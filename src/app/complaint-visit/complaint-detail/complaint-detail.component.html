@@ -327,6 +327,51 @@
                         </div>
                     </div>
                 </div>
+                <div class="col s12 mt16 m12 l12" *ngIf="spare_list.length > 0">
+                    <div class="card" *ngIf="!skLoading">
+                        <div class="card-head">
+                            <h2>Spare Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <div mat-dialog-content>
+                                <div class="cs-table left-right-10">
+                                    <div class=" border-top">
+                                        <div class="table-head">
+                                            <table>
+                                                <tr>
+                                                    <th class="w30 text-center ">Sr.No</th>
+                                                    <th class="w110">Install Date</th>
+                                                    <th class="w150">Technician Details</th>
+                                                    <th class="w100">Part Name</th>
+                                                    <th class="w100">Part No.</th>
+                                                    <th class="w30 text-center ">Qty</th>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-container pb0">
+                                        <div class="table-content none-shadow">
+                                            <table>
+                                                <ng-container>
+                                                    <tr *ngFor="let row of spare_list; let i = index">
+                                                        <td class="w30 text-center ">{{i+1}}</td>
+                                                        <td class="w110">{{row.installed_on ? (row.installed_on |
+                                                            date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+                                                            <td class="w150 ">{{row.installation_by_name? (row.installation_by_name | titlecase):'--'}}-{{row.installation_by_mobile}}</td>
+                                                        <td class="w100 text-center ">{{row.part_name? (row.part_name| titlecase) :'--'}}</td>
+                                                        <td class="w100 text-center ">{{row.part_no?( row.part_no| titlecase) :'--'}}</td>
+                                                        <td class="w30 text-center ">{{row.qty? row.qty :'--'}}</td>
+                                                    </tr>
+                                                </ng-container>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col s12 mt16 m12 l12"
                     *ngIf="getData.complaint_status=='Closed' || getData.complaint_status=='Cancel'">
                     <div class="card" *ngIf="!skLoading">

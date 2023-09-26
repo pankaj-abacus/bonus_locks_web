@@ -38,7 +38,7 @@
             <tr>
               <th class="w50">Sr.No</th>
               <th class="w150">Date Created</th>
-              <th class="w150">Created By</th>
+              <th class="w180">Visitor Details</th>
               <th class="w100">Compliant No.</th>
               <th class="w80">Start Time</th>
               <th class="w180">Start Adddress</th>
@@ -68,12 +68,12 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w150">
+              <th class="w180">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="created_by_name"
-                      (keyup.enter)="getComplaintVisitList('')" #created_by_name="ngModel"
-                      [(ngModel)]="filter_data.created_by_name">
+                    <input type="text" matInput placeholder="Search ..." name="visitor_detail"
+                      (keyup.enter)="getComplaintVisitList('')" #visitor_detail="ngModel"
+                      [(ngModel)]="filter_data.visitor_detail">
                   </mat-form-field>
                 </div>
               </th>
@@ -124,7 +124,7 @@
                 [ngClass]="{'Current': service.currentUserID == row.id}">
                 <td class="w50">{{i + 1 + sr_no}}</td>
                 <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                <td class="w150">{{row.created_by_name? (row.created_by_name | titlecase):'--'}}</td>
+                <td class="w180">{{row.created_by_name? (row.created_by_name | titlecase):'--'}}-{{row.created_by_mobile}}</td>
                 <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
                   routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complaint_no}}</a></td>
                 <td class="w80">{{row.visit_start_time ? (row.visit_start_time | date : 'shortTime') : '--'}}</td>
@@ -139,6 +139,10 @@
                   <button mat-raised-button color="accent" (click)="endVisit(row.id)"
                     [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.visit_stop_time=='0000-00-00 00:00:00'">End Visit</button>
                 </td>
+                <td class="w100 text-center">
+                  <button mat-raised-button color="accent" (click)="endVisit(row.id)"
+                    [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.visit_stop_time!='0000-00-00 00:00:00'">{{row.total_time ? row.total_time : '--'}}</button>
+                </td>
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">
@@ -149,7 +153,7 @@
                 <td class="w150">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150">
+                <td class="w180">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w100">

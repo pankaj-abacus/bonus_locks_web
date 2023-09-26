@@ -29,6 +29,7 @@ export class ComplaintDetailComponent implements OnInit {
   logined_user_data: any = {};
   stateDetail: any = [];
   product_size: any = [];
+  spare_list: any = [];
   featureFlag: boolean = false;
   allMrpFlag: boolean = false;
   complaintImg: any = [];
@@ -63,6 +64,7 @@ export class ComplaintDetailComponent implements OnInit {
         this.complaintImg = this.getData['image'];
         this.inspectionImg = this.getData['inspection_image'];
         this.closeImg = this.getData['closing_image'];
+        this.spare_list = this.getData['spare_list'];
 
       } else {
         this.skLoading = false;

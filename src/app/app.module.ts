@@ -67,16 +67,10 @@ import { InstallationUpdateModelComponent } from './installation/installation-up
 import { ComplaintUpdateModelComponent } from './service/complaint-update-model/complaint-update-model.component';
 import { GatepassAddComponent } from './company-dispatch/gatepass-add/gatepass-add.component';
 import { SapreModuleModule } from './spare/sapre-module/sapre-module.module';
-import { SpareAssignQtyComponent } from './spare/spare-assign-qty/spare-assign-qty.component';
-import { SpareIncomingComponent } from './spare/spare-incoming/spare-incoming.component';
-import { SpareOutgoingComponent } from './spare/spare-outgoing/spare-outgoing.component';
 import { AddSpareComponent } from './spare/add-spare/add-spare.component';
 import { AssignQtyComponent } from './spare/assign-qty/assign-qty.component';
-import { ManageStockComponent } from './spare/manage-stock/manage-stock.component';
-import { ReturnStockComponent } from './spare/return-stock/return-stock.component';
 import { ProductUploadComponent } from './product-upload/product-upload.component';
 import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-module/complanit-visit-module.module';
-import { ReturnDataComponent } from './spare/return-data/return-data.component';
 
 
 
@@ -171,14 +165,8 @@ import { ReturnDataComponent } from './spare/return-data/return-data.component';
         InstallationUpdateModelComponent,
         ComplaintUpdateModelComponent,
         GatepassAddComponent,
-        SpareAssignQtyComponent,
-        SpareIncomingComponent,
-        SpareOutgoingComponent,
-        ReturnDataComponent,
         AddSpareComponent,
         AssignQtyComponent,
-        ManageStockComponent,
-        ReturnStockComponent,
         ProductUploadComponent
 
 

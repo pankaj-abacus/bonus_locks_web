@@ -6,7 +6,7 @@ import { sessionStorage } from 'src/app/localstorage.service';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { DialogComponent } from 'src/app/dialog.component';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import * as moment from 'moment';
 
 @Component({
@@ -31,7 +31,7 @@ export class AddSpareComponent implements OnInit {
 
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data,public service: DatabaseService,public rout: Router,public toast: ToastrManager,private route: ActivatedRoute,public dialog: DialogComponent,public dialog2: MatDialog) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data,public service: DatabaseService,public rout: Router,public toast: ToastrManager,private route: ActivatedRoute,public dialog: DialogComponent,public dialog2: MatDialog,public dialogRef: MatDialogRef<AddSpareComponent>) {
 
     this.route.params.subscribe(params => {
       this.id =  params.id;
@@ -94,7 +94,7 @@ export class AddSpareComponent implements OnInit {
     }
     header.subscribe((result => {
       if (result['statusCode'] == 200) {
-        this.dialog2.closeAll();
+        this.dialogRef.close(true);
         this.toast.successToastr(result['statusMsg']);
         this.savingFlag = false;
       }
