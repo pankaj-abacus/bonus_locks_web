@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { data } from 'jquery';
@@ -12,7 +12,7 @@ import { DialogComponent } from 'src/app/dialog.component';
   templateUrl: './generate-master-box.component.html'
 })
 export class GenerateMasterBoxComponent implements OnInit {
-
+  @ViewChild('focusInput') inputEl: ElementRef;
   id: any;
   start: any = 0;
   page_limit: any;
