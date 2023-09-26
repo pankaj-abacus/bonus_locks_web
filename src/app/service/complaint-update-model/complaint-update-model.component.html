@@ -26,9 +26,6 @@
               <input matInput placeholder="Type Here ..." name="new_serial_no" #new_serial_no="ngModel"
                 [(ngModel)]="formData.new_serial_no">
             </mat-form-field>
-            <div class="alert alert-danger" *ngIf="update_basic.submitted || new_serial_no?.invalid">
-              This field is required
-            </div>
           </div>
 
           <div class="col s12" *ngIf="formData.complaint_status=='Closed'">

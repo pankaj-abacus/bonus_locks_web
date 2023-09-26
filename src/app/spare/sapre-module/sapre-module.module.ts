@@ -11,13 +11,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { MatDialogModule, MatIconModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
-import { SpareAssignQtyComponent } from '../spare-assign-qty/spare-assign-qty.component';
-import { SpareIncomingComponent } from '../spare-incoming/spare-incoming.component';
-import { SpareOutgoingComponent } from '../spare-outgoing/spare-outgoing.component';
 import { AssignQtyComponent } from '../assign-qty/assign-qty.component';
-import { ManageStockComponent } from '../manage-stock/manage-stock.component';
-import { ReturnStockComponent } from '../return-stock/return-stock.component';
-import { ReturnDataComponent } from '../return-data/return-data.component';
 
 const spareRoutes = [
   { path: "", children:[
@@ -27,7 +21,7 @@ const spareRoutes = [
 ]
 
 @NgModule({
-  declarations: [SpareListComponent,AddSpareComponent,SpareAssignQtyComponent,SpareIncomingComponent,SpareOutgoingComponent,AssignQtyComponent,ManageStockComponent,ReturnStockComponent,ReturnDataComponent],
+  declarations: [SpareListComponent,AddSpareComponent,AssignQtyComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(spareRoutes),

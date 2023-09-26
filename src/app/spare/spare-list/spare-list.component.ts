@@ -7,17 +7,11 @@ import { DatabaseService } from 'src/_services/DatabaseService';
 import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { sessionStorage } from 'src/app/localstorage.service';
-import { ExportexcelService } from 'src/app/service/exportexcel.service';
-import { SpareAssignQtyComponent } from '../spare-assign-qty/spare-assign-qty.component';
-import { SpareOutgoingComponent } from '../spare-outgoing/spare-outgoing.component';
-import { SpareIncomingComponent } from '../spare-incoming/spare-incoming.component';
+import { ExportexcelService } from 'src/app/service/exportexcel.service';;
 import { AddSpareComponent } from '../add-spare/add-spare.component';
 import { ImageModuleComponent } from 'src/app/image-module/image-module.component';
-import { ManageStockComponent } from '../manage-stock/manage-stock.component';
 import { AssignQtyComponent } from '../assign-qty/assign-qty.component';
-import { ReturnStockComponent } from '../return-stock/return-stock.component';
 import { ProductUploadComponent } from 'src/app/product-upload/product-upload.component';
-import { ReturnDataComponent } from '../return-data/return-data.component';
 @Component({
   selector: 'app-spare-list',
   templateUrl: './spare-list.component.html',
@@ -155,11 +149,12 @@ export class SpareListComponent implements OnInit {
   }
 
   downloadExcel() {
-
+    this.excelLoader = true;
     this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_spare_part_list").subscribe((result => {
       if (result['msg'] == true) {
         window.open(this.downurl + result['filename'])
         this.getSpareList('');
+        this.excelLoader = false;
       } else {
       }
     }));
@@ -182,96 +177,22 @@ export class SpareListComponent implements OnInit {
     });
   }
 
-  spareIncomingDialog(part_name,part_no,row) {
-    console.log(row);
-    const dialogRef = this.dialog.open(SpareIncomingComponent, {
-      width: '500px',
-      panelClass: 'cs-modal',
-      data: {
-        data: row,
-        part_name:part_name,
-        part_no:part_no
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-    });
-  }
-  spareOutgoingDialog(part_name,part_no,row) {
-    console.log(row);
-    const dialogRef = this.dialog.open(SpareOutgoingComponent, {
-      width: '500px',
-      panelClass: 'cs-modal',
-      data: {
-        data: row,
-        part_name:part_name,
-        part_no:part_no
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
-  }
-
-  returnDialog(part_name,part_no,row) {
-    console.log(row);
-    const dialogRef = this.dialog.open(ReturnDataComponent, {
-      width: '500px',
-      panelClass: 'cs-modal',
-      data: {
-        data: row,
-        part_name:part_name,
-        part_no:part_no
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
-  }
-
-  spareAssignQty() {
-    const dialogRef = this.dialog.open(SpareAssignQtyComponent, {
-      width: '650px',
-      panelClass: 'cs-modal',
-      data: {
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // this.getSpareList('');
-    });
-  }
-  spareQty(part_name,part_no,row) {
+  spareQty(part_name, part_no, row, type) {
     const dialogRef = this.dialog.open(AssignQtyComponent, {
       width: '550px',
       panelClass: 'cs-modal',
       data: {
         data: row,
-        part_name:part_name,
-        part_no:part_no
+        part_name: part_name,
+        part_no: part_no,
+        type: type
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-    });
-  }
-  returnStock() {
-    const dialogRef = this.dialog.open(ReturnDataComponent, {
-      width: '650px',
-      panelClass: 'cs-modal',
-      data: {
+      console.log(result);
+      if (result==true) {        
+        this.getSpareList('');
       }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.getSpareList('');
-    });
-  }
-  manageStock() {
-    const dialogRef = this.dialog.open(ManageStockComponent, {
-      width: '500px',
-      panelClass: 'cs-modal',
-      data: {
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.getSpareList('');
     });
   }
 
@@ -292,7 +213,7 @@ export class SpareListComponent implements OnInit {
   }
 
 
-   upload_excel(type) {
+  upload_excel(type) {
     const dialogRef = this.dialog.open(ProductUploadComponent, {
       width: '500px',
       panelClass: 'cs-modal',
@@ -306,6 +227,21 @@ export class SpareListComponent implements OnInit {
         this.getSpareList('');
       }
     });
+  }
+  assignZero(assign_stock) {
+    if (assign_stock==0) {
+      this.toast.errorToastr('Assign Stock Qty Is Zero');
+    }
+  }
+  outgoingStock(assign_stock) {
+    if (assign_stock==0) {
+      this.toast.errorToastr('Outgoing Stock Qty Is Zero');
+    }
+  }
+  return(return_data) {
+    if (return_data.length==0) {
+      this.toast.errorToastr('Return Stock Qty Is Zero');
+    }
   }
 }
 

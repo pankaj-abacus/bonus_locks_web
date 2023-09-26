@@ -18,8 +18,8 @@
           </div>
           <div class="col s6" >
             <mat-form-field appearance="outline" [ngClass]="{'has-error' : part_no?.invalid } ">
-              <mat-label>Part No.</mat-label>
-              <input matInput placeholder="Type Here ..." name="part_no" #part_no="ngModel" [(ngModel)]="formData.part_no" required />
+              <mat-label>Part No.{{id}}</mat-label>
+              <input matInput placeholder="Type Here ..." name="part_no" #part_no="ngModel" [(ngModel)]="formData.part_no" [readonly]="id!=''" />
             </mat-form-field>
             <div class="alert alert-danger" *ngIf="part_no.touched || update_basic.submitted">
               <p *ngIf="part_no.errors?.required">
@@ -78,7 +78,7 @@
                       accept=".png, .jpg, .jpeg," required />
                     <div class="other" *ngIf="!formData.image">
                       <i class="material-icons">cloud_upload</i>
-                      <p>Upload Part Image</p>
+                      <p>Upload Image</p>
                     </div>
                   </label>
                 </li>
