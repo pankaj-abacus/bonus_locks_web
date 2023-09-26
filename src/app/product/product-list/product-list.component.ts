@@ -52,12 +52,12 @@ export class ProductListComponent implements OnInit {
     this.assign_login_data = this.session.getSession();
     this.logined_user_data = this.assign_login_data.value.data;
     this.today_date = new Date();
-    this.getProductList('');
-    this.getSegment();
   }
 
   ngOnInit() {
-    this.filter_data = this.service.getData()
+    this.filter_data = this.service.getData();
+    this.getSegment();
+    this.getProductList('');
   }
 
   pervious() {

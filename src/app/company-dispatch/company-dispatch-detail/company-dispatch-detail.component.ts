@@ -121,6 +121,17 @@ export class CompanyDispatchDetailComponent implements OnInit {
       }))
   }
 
+
+  pervious() {
+    this.start = this.start - this.page_limit;
+    this.getdispatchMasterboxdetail();
+  }
+
+  nextPage() {
+    this.start = this.start + this.page_limit;
+    this.getdispatchMasterboxdetail();
+  }
+
   openDialog(type, number): void {
     const dialogRef = this.dialog.open(GatepassAddComponent, {
       width: '1024px',
