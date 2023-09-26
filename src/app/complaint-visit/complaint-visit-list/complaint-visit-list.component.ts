@@ -147,10 +147,12 @@ export class ComplaintVisitListComponent implements OnInit {
   }
 
   downloadExcel() {
+    this.excelLoader=true;
     this.service.post_rqst({ 'filter': this.filter_data }, "Excel/complaint_visit_list").subscribe((result => {
       if (result['msg'] == true) {
         window.open(this.downurl + result['filename'])
         this.getComplaintVisitList('');
+        this.excelLoader=false;
       } else {
       }
     }));

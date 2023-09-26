@@ -95,12 +95,12 @@ export class InstallationListComponent implements OnInit {
     header.subscribe((result) => {
       if (result['statusCode'] == 200) {
 
-        console.log('result',result);
+        // console.log('result',result);
 
 
         this.installationList = result['result'];
-        console.log(this.installationList);
-        console.log(this.installationList['add_list']);
+        // console.log(this.installationList);
+        // console.log(this.installationList['add_list']);
 
         this.pageCount = result['count'];
         this.tab_count = result['tab_count'];
@@ -148,10 +148,13 @@ export class InstallationListComponent implements OnInit {
 
 
   downloadExcel() {
-    this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_installation_list").subscribe((result => {
+    let header=this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_installation_list")
+    this.excelLoader=true
+    header.subscribe((result => {
       if (result['msg'] == true) {
         window.open(this.downurl + result['filename'])
         this.getinspectionList('');
+        this.excelLoader = false;
       } else {
       }
     }));
@@ -159,7 +162,7 @@ export class InstallationListComponent implements OnInit {
 
   attendancDetail(row) {
     console.log(row.add_list);
-    
+
     const dialogRef = this.dialog2.open(ProductDetailModelComponent, {
       width: '800px',
         panelClass: 'cs-model',

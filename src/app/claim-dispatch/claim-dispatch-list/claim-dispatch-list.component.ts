@@ -135,10 +135,12 @@ export class ClaimDispatchListComponent implements OnInit {
   }
 
   downloadExcel() {
+    this.excelLoader=true;
     this.service.post_rqst({ 'filter': this.filter_data }, "Excel/claim_dispatch_list").subscribe((result => {
       if (result['msg'] == true) {
         window.open(this.downurl + result['filename'])
         this.getCumtomerList('');
+        this.excelLoader=false;
       } else {
       }
     }));
