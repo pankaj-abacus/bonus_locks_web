@@ -48,6 +48,7 @@
               <th class="w180">Stop Adddress</th>
               <th class="w100">Stop latitude </th>
               <th class="w100">Stop longitude</th>
+              <th class="w100">Stop By</th>
               <th class="w100 text-center">Total Time</th>
             </tr>
           </table>
@@ -110,6 +111,15 @@
               </th>
               <th class="w100"></th>
               <th class="w100"></th>
+              <th class="w100">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="visit_stop_by_name"
+                      (keyup.enter)="getComplaintVisitList('')" #visit_stop_by_name="ngModel"
+                      [(ngModel)]="filter_data.visit_stop_by_name">
+                  </mat-form-field>
+                </div>
+              </th>
               <th class="w100 text-center"></th>
             </tr>
           </table>
@@ -125,8 +135,7 @@
                 <td class="w50">{{i + 1 + sr_no}}</td>
                 <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
                 <td class="w180">{{row.created_by_name? (row.created_by_name | titlecase):'--'}}-{{row.created_by_mobile}}</td>
-                <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
-                  routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complaint_no}}</a></td>
+                <td class="w100">{{row.complaint_no}}</td>
                 <td class="w80">{{row.visit_start_time ? (row.visit_start_time | date : 'shortTime') : '--'}}</td>
                 <td class="w180">{{row.visit_start_address? (row.visit_start_address | titlecase):'--'}}</td>
                 <td class="w100">{{row.visit_start_lat? (row.visit_start_lat):'--'}}</td>
@@ -135,14 +144,12 @@
                 <td class="w180">{{row.visit_stop_address? (row.visit_stop_address | titlecase):'--'}}</td>
                 <td class="w100">{{row.visit_stop_lat? (row.visit_stop_lat):'--'}}</td>
                 <td class="w100">{{row.visit_stop_lng? (row.visit_stop_lng):'--'}}</td>
-                <td class="w100 text-center">
+                <td class="w100">{{row.visit_stop_by_name? (row.visit_stop_by_name):'--'}}</td>
+                <td class="w100 text-center" *ngIf="row.visit_stop_time=='0000-00-00 00:00:00'">
                   <button mat-raised-button color="accent" (click)="endVisit(row.id)"
-                    [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.visit_stop_time=='0000-00-00 00:00:00'">End Visit</button>
+                    [ngClass]="{'pulse': fabBtnValue=='activity'}" >End Visit</button>
                 </td>
-                <td class="w100 text-center">
-                  <button mat-raised-button color="accent" (click)="endVisit(row.id)"
-                    [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.visit_stop_time!='0000-00-00 00:00:00'">{{row.total_time ? row.total_time : '--'}}</button>
-                </td>
+                <td class="w100 text-center" *ngIf="row.visit_stop_time!='0000-00-00 00:00:00'">{{row.total_time ? row.total_time : '--'}}</td>
               </tr>
             </ng-container>
             <ng-container *ngIf="loader">
@@ -175,6 +182,9 @@
                   <div>&nbsp;</div>
                 </td>
                 <td class="w180">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w100">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w100">

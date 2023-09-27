@@ -44,7 +44,7 @@
               <th class="w80 text-center">Assign Qty</th>
               <th class="w100 text-right">MRP</th>
               <th class="w300 text-center">Stock</th>
-              <th class="w150 text-center">Image</th>
+              <th class="w100 text-center">Image</th>
               <th class="w100 text-center">Action</th>
             </tr>
           </table>
@@ -86,7 +86,7 @@
               <th class="w80 text-center"></th>
               <th class="w100 text-right"></th>
               <th class="w300 text-center"></th>
-              <th class="w150 text-center"></th>
+              <th class="w100 text-center"></th>
               <th class="w100 text-center"></th>
             </tr>
           </table>
@@ -125,7 +125,13 @@
                   <div class="flex-button">
                     <button mat-raised-button style="border-radius: 25px;"
                       (click)="spareQty(row.part_name,row.part_no,row.incoming_data,'Incoming')"
-                      [ngClass]="{'pulse': fabBtnValue=='activity'}">
+                      [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.incoming_data.length">
+                      <mat-icon>arrow_circle_down</mat-icon>
+                      <span>Incoming</span>
+                    </button>
+                    <button mat-raised-button style="border-radius: 25px;"
+                      (click)="returnQty(row.incoming_data)"
+                      [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="!row.incoming_data.length">
                       <mat-icon>arrow_circle_down</mat-icon>
                       <span>Incoming</span>
                     </button>
@@ -151,7 +157,7 @@
                     </button>
                   </div>
                 </td>
-                <td class="w150 text-center">
+                <td class="w100 text-center">
                   <div *ngIf="row.image.length">
                     <img [src]="url+row.image" (click)="imageModel(url+row.image)"
                       style="cursor: zoom-in; width: 50px;">
@@ -200,7 +206,7 @@
                 <td class="w300 text-center">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w150 text-center">
+                <td class="w100 text-center">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w100 text-center">

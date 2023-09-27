@@ -243,5 +243,10 @@ export class SpareListComponent implements OnInit {
       this.toast.errorToastr('Return Stock Qty Is Zero');
     }
   }
+  returnQty(return_data) {
+    if (return_data.length==0) {
+      this.toast.errorToastr('Incoming Stock Qty Is Zero');
+    }
+  }
 }
 

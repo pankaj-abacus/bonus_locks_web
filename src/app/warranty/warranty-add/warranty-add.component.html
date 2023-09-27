@@ -38,7 +38,7 @@
                     <mat-label>Customer Name</mat-label>
                     <input matInput placeholder="Type Here ..." name="customer_name" #customer_name="ngModel"
                       [(ngModel)]="data.customer_name"
-                      onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)"
+                      onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode === 32"
                       required>
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="f.submitted && customer_name?.invalid">

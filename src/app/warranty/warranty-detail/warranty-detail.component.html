@@ -55,17 +55,19 @@
 
               <div class="block-feilds">
                 <span>Product Code</span>
-                <p>{{getData.product_code ? (getData.product_code | titlecase):'---'}}</p>
+                <p>{{getData.product_code ? (getData.product_code ):'---'}}</p>
+              </div>
+
+              
+
+              <div class="block-feilds">
+                <span>Serial No.</span>
+                <p>{{getData.serial_no ? (getData.serial_no | titlecase) :'---'}}</p>
               </div>
 
               <div class="block-feilds">
                 <span>Warranty Months</span>
                 <p>{{getData.warranty_period ? getData.warranty_period :'---'}}</p>
-              </div>
-
-              <div class="block-feilds">
-                <span>Serial No.</span>
-                <p>{{getData.serial_no ? (getData.serial_no | titlecase) :'---'}}</p>
               </div>
 
               <div class="block-feilds">
@@ -84,7 +86,7 @@
               <div class="block-feilds flex-heading">
                 <div>
 
-                  <span>Verification Status</span>
+                  <span>Status</span>
                   <!-- <p>{{getData.company_verification_status ? getData.company_verification_status :'---'}}</p> -->
                   <p>
                     <strong class="yellow-clr" *ngIf="getData.company_verification_status=='Pending'">
@@ -101,7 +103,7 @@
 
                 <div class="left-auto" *ngIf="getData.company_verification_status=='Pending'">
                   <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
-                    (click)="updateWarrantyStataus(getData.id,getData.warranty_period)">
+                    (click)="updateWarrantyStataus(getData.id,getData.warranty_period,getData.date_of_purchase)">
                     <i class="material-icons">edit</i>
                   </a>
                 </div>
