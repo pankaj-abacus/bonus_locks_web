@@ -260,7 +260,7 @@ export class CouponCodeListComponent implements OnInit {
     if (type == 'scan_item') {
       this.scanCouponList();
     }
-    if (type == 'master_grand_box') {
+    else if (type == 'master_grand_box') {
       this.getGrandMaster();
     }
     else if (type == 'scan_item_by_sales') {

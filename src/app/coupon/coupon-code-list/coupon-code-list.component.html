@@ -28,18 +28,18 @@
       </div>
       <div class="mat-tabbar">
         <button mat-button [ngClass]="active_tab == 'master_box' ? 'active' : ''"
-          (click)="active_tab = 'master_box'; couponCodeList()"><i class="material-icons">all_inbox</i>Box
+          (click)="active_tab = 'master_box'; filter = {}; couponCodeList()"><i class="material-icons">all_inbox</i>Box
           Coupon</button>
         <button mat-button [ngClass]="active_tab == 'item_box' ? 'active' : ''"
-          (click)="active_tab = 'item_box'; couponCodeList()"><i class="material-icons">category</i>Product
+          (click)="active_tab = 'item_box'; filter = {}; couponCodeList()"><i class="material-icons">category</i>Product
           Coupon</button>
         <button mat-button [ngClass]="active_tab == 'scan_item' ? 'active' : ''" *ngIf="assign_login_data2.id =='1'"
-          (click)="active_tab = 'scan_item'; scanCouponList()"><i class="material-icons">qr_code_scanner</i>Scanned
+          (click)="active_tab = 'scan_item'; filter = {}; scanCouponList()"><i class="material-icons">qr_code_scanner</i>Scanned
           Coupon</button>
         <!-- <button mat-button [ngClass]="active_tab == 'scan_item_by_sales' ? 'active' : ''" (click)="active_tab = 'scan_item_by_sales'; scanCouponList()"><i class="material-icons">qr_code_scanner</i>Sales Boy Scanned Coupon </button> -->
         <ng-container *ngIf="assign_login_data2.id =='1'">
           <button mat-button [ngClass]="active_tab == 'master_grand_box' ? 'active' : ''"
-            (click)="active_tab = 'master_grand_box'; getGrandMaster()"><i class="material-icons">all_inbox</i>Master
+            (click)="active_tab = 'master_grand_box'; filter = {}; getGrandMaster()"><i class="material-icons">all_inbox</i>Master
             Box</button>
         </ng-container>
       </div>
@@ -115,7 +115,14 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w250">&nbsp;</th>
+              <th class="w250">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="product_detail"
+                      [(ngModel)]="filter.product_detail" (keyup.enter)="couponCodeList()">
+                  </mat-form-field>
+                </div>
+              </th>
 
               <th class="w100">
                 <div class="th-search-acmt">
@@ -128,7 +135,14 @@
                 </div>
               </th>
               <th class="w100">&nbsp;</th>
-              <th class="w250">&nbsp; </th>
+              <th class="w250"> 
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="customer_detail"
+                      [(ngModel)]="filter.dr_detail" (keyup.enter)="couponCodeList()">
+                  </mat-form-field>
+                </div>
+              </th>
 
               <th class="w130">
                 <div class="th-search-acmt">
@@ -296,7 +310,14 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w250">&nbsp;</th>
+              <th class="w250">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="product_detail"
+                      [(ngModel)]="filter.product_detail" (keyup.enter)="scanCouponList()">
+                  </mat-form-field>
+                </div>
+              </th>
 
               <th class="w100">
                 <div class="th-search-acmt">
@@ -309,7 +330,14 @@
                 </div>
               </th>
               <th class="w100">&nbsp;</th>
-              <th class="w250">&nbsp;</th>
+              <th class="w250">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="distributor_detail"
+                      [(ngModel)]="filter.dr_detail" (keyup.enter)="scanCouponList()">
+                  </mat-form-field>
+                </div>
+              </th>
 
               <th class="w130">
                 <div class="th-search-acmt">
