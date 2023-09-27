@@ -51,13 +51,14 @@ export class CompanyDispatchDetailComponent implements OnInit {
   dispatchQTY: any = 0;
   dispatchInvoice: any = 0;
   dispatch_status: any = 'Pending';
-  temCoupon: any = [];
   start: any = 0;
   page_limit: any;
   total_page: any = 0;
   pagenumber: any = 0;
   pageCount: any;
   sr_no: number;
+  temCoupon: any = [];
+  dispatchedCoupon: any;
 
   constructor(public route: ActivatedRoute, public service: DatabaseService, public rout: Router,
     public apiHit: DatabaseService,
@@ -103,12 +104,12 @@ export class CompanyDispatchDetailComponent implements OnInit {
             this.dispacthItemDetail();
           }
           this.getdispatchMasterboxdetail();
-          this.getmasterbox('', this.invoice_detail.order_no);
+          // this.getmasterbox('', this.invoice_detail.order_no);
           // for (let i = 0; i < this.billing_list.length; i++) {
           //   this.dispatchItem.push({'item_code':this.billing_list[i]['product_code'], 'sale_qty':this.billing_list[i]['qty'], 'remaining_qty':this.billing_list[i]['qty'], 'item_name':this.billing_list[i]['product_name'], 'dispatch_qty':0, })
           // }
           this.payment_list = result['payment_list'];
-          this.getdispatchDetail();
+          this.dispatchItems('', '');
           this.skLoading = false;
           this.service.count_list();
           this.couponNumber.coupon_number = '';
@@ -150,8 +151,6 @@ export class CompanyDispatchDetailComponent implements OnInit {
       }
     });
   }
-
-
 
   checkCoupon(number, couponGrandMasterId) {
     if (number.length == 16) {
@@ -197,83 +196,77 @@ export class CompanyDispatchDetailComponent implements OnInit {
     }
   }
 
-  getdispatchDetail() {
-    this.dispatchItem = [];
-    this.service.post_rqst({ 'invoice_id': this.id, 'invoice_no': this.invoice_detail.order_no }, 'Dispatch/checkCouponCodeCheck').subscribe((result) => {
-      if (result['statusCode'] == 200) {
-        this.dispatchQTY = result['sale_dispatch_qty'];
-        this.dispatchInvoice = result['invoice_qty'];
-
-        if (this.dispatchQTY == this.dispatchInvoice) {
-          this.dispatch_status = 'Dispatched';
-        };
-        for (let i = 0; i < result['dispatch']['dispatch_item'].length; i++) {
-          this.dispatchItem.push({ 'item_code': result['dispatch']['dispatch_item'][i]['item_code'], 'sale_qty': result['dispatch']['dispatch_item'][i]['sale_qty'], 'remaining_qty': result['dispatch']['dispatch_item'][i]['sale_qty'], 'item_name': result['dispatch']['dispatch_item'][i]['item_name'], 'sale_dispatch_qty': result['dispatch']['dispatch_item'][i]['sale_dispatch_qty'], 'id': result['dispatch']['dispatch_item'][i]['id'], 'dispatch_qty': 0, })
-        }
-        if (this.dispatchItem.length == 0) {
-          this.rout.navigate(['company-dispatch']);
-        }
-        this.couponNumber.coupon_number = '';
-      }
-      else {
-        this.couponNumber.coupon_number = '';
-        this.toast.errorToastr(result['statusMsg']);
-      }
-    });
-  }
-
-
-
-
-  dispatchedCoupon: any = {};
-
+  storeData: any = [];
   dispatchItems(number, couponGrandMasterId) {
-    this.dispatchItem = [];
-    this.service.post_rqst({ 'coupon_code': number, 'dispatch_status': this.dispatch_status, 'bill_dispatch_type': this.invoice_detail.bill_dispatch_type, 'warehouse_id': this.invoice_detail.warehouse_id, 'dr_code': this.invoice_detail.dr_code, 'created_by_name': this.data.created_by_name, 'created_by_id': this.data.created_by_id, 'company_name': this.invoice_detail.company_name, 'invoice_id': this.id, 'invoice_no': this.invoice_detail.order_no, 'couponGrandMasterId': couponGrandMasterId }, 'Dispatch/checkCouponCodeCheck').subscribe((result) => {
+    this.service.post_rqst({ 'coupon_code': number, 'dispatch_status': this.dispatch_status, 'bill_dispatch_type': this.invoice_detail.bill_dispatch_type, 'warehouse_id': this.invoice_detail.warehouse_id, 'dr_id': this.invoice_detail.dr_id, 'created_by_name': this.data.created_by_name, 'created_by_id': this.data.created_by_id, 'company_name': this.invoice_detail.company_name, 'invoice_id': this.id, 'invoice_no': this.invoice_detail.order_no, 'couponGrandMasterId': couponGrandMasterId }, 'Dispatch/checkCouponCodeCheck').subscribe((result) => {
       if (result['statusCode'] == 200) {
-        this.dispatchedCoupon = result['coupon_code'];
+        this.dispatchItem = [];
+        if (result['coupon_code'] != undefined) {
+          this.dispatchedCoupon = result['coupon_code'];
+        }
         this.dispatchQTY = result['sale_dispatch_qty'];
         this.dispatchInvoice = result['invoice_qty'];
-        this.dispatchItem = result['dispatch'];
-
-        console.log(this.dispatchItem, 'this.dispatchItem');
-
+        this.storeData = result['dispatch'];
+        if (this.storeData.length > 0) {
+          for (let i = 0; i < this.storeData.length; i++) {
+            this.dispatchItem.push({ 'product_code': this.storeData[i]['product_code'], 'sale_qty': this.storeData[i]['sale_qty'], 'remaining_qty': this.storeData[i]['sale_qty'], 'product_name': this.storeData[i]['product_name'], 'sale_dispatch_qty': this.storeData[i]['sale_dispatch_qty'], 'id': this.storeData[i]['id'], 'dispatch_qty': 0, })
+          }
+        }
+        this.refresh();
 
         if (this.dispatchedCoupon) {
           for (let i = 0; i < this.temCoupon.length; i++) {
             if (this.temCoupon[i]['coupon_no'] == this.dispatchedCoupon) {
+              this.temCoupon[i]['status'] = result['statusMsg'];
+              console.log(this.temCoupon[i]['status'], 'status 250');
+
+              this.temCoupon[i]['product_detail'] = result['product_detail'];
+
               if (result['statusMsg'] != 'Success') {
                 this.toast.errorToastr(result['statusMsg']);
               }
 
-              this.temCoupon[i]['status'] = result['statusMsg'];
-              this.temCoupon[i]['product_detail'] = result['product_detail'];
-              this.billDatadetail()
+
+              // this.billDatadetail()
             }
           }
         }
 
+        if (parseInt(this.dispatchQTY) == parseInt(this.dispatchInvoice) && this.invoice_detail.order_status == 'readyToDispatch') {
+          this.rout.navigate(['company-dispatch']);
+        }
+
+        this.getmasterbox('', this.invoice_detail.order_no)
+
       }
       else {
+
+        console.log(this.dispatchedCoupon, 'this.dispatchedCoupon');
+
         if (result['coupon_code']) {
           this.dispatchedCoupon = result['coupon_code'];
           for (let i = 0; i < this.temCoupon.length; i++) {
             if (this.temCoupon[i]['coupon_no'] == this.dispatchedCoupon) {
+              this.temCoupon[i]['status'] = result['statusMsg'];
+              console.log(this.temCoupon[i]['status'], 'status 269');
+              this.temCoupon[i]['product_detail'] = result['product_detail'];
               if (result['statusMsg'] != 'Success') {
                 this.toast.errorToastr(result['statusMsg']);
               }
-              this.temCoupon[i]['status'] = result['statusMsg'];
-              this.temCoupon[i]['product_detail'] = result['product_detail'];
+
             }
           }
           this.couponNumber.coupon_number = '';
-          this.billDatadetail()
+
+
         }
         else {
           if (result['statusMsg'] == 'Coupon not exist.') {
             for (let i = 0; i < this.temCoupon.length; i++) {
               if (this.temCoupon[i]['coupon_no'] == number) {
                 this.temCoupon[i]['status'] = result['statusMsg'];
+                console.log(this.temCoupon[i]['status'], 'status 285');
+
                 this.temCoupon[i]['product_detail'] = result['product_detail'];
               }
             }
@@ -396,6 +389,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
       if (result == true) {
         this.billDatadetail();
       }
+
 
     });
   }
