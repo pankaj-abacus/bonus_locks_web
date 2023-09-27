@@ -53,7 +53,6 @@ export class WarrantyDetailComponent implements OnInit {
     this.service.post_rqst({'warranty_id':this.id},"ServiceTask/serviceWarrantyDetail").subscribe((result=>
       {
         this.getData = result['result'];
-        console.log('getData',this.getData);
         
         this.warrantyImg = this.getData['image'];
         
@@ -74,12 +73,11 @@ export class WarrantyDetailComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
       });
     }
     
     
-    updateWarrantyStataus(row,warranty_period)
+    updateWarrantyStataus(row,warranty_period,date_of_purchase)
     {
       const dialogRef = this.dialog.open(WarrantyUpdateModelComponent, {
         width: '400px',
@@ -87,6 +85,7 @@ export class WarrantyDetailComponent implements OnInit {
         data: {
           id: row,
           period: warranty_period,
+          date_of_purchase: date_of_purchase,
           
         }
       });

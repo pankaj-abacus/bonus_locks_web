@@ -198,6 +198,7 @@ export class WarrantyAddComponent implements OnInit {
         this.data.segment_id = this.data.segment_id.toString();
         this.data.sub_segment_id = this.data.sub_segment_id.toString();
         this.data.product_id = this.data.product_id.toString();
+        this.data.warranty_period = parseInt(this.data.warranty_period);
 
         if(this.data.segment_id){
           this.getSubCatgory(this.data.segment_id)
@@ -262,15 +263,15 @@ export class WarrantyAddComponent implements OnInit {
         if (index != -1) {
           this.data.product_name = this.productList[index].product_name;
           this.data.product_code = this.productList[index].product_code;
-          this.warranty_period = this.productList[index].warranty_period;
+          this.data.warranty_period = this.productList[index].warranty_period;
         }
         console.log(this.data.product_name);
         console.log(this.data.product_code);
-        console.log(this.warranty_period);
+        console.log(this.data.warranty_period);
       }
-      typeof(this.warranty_period)
+      typeof(this.data.warranty_period)
       console.log(this.data);
-      this.data.warranty_period = parseInt(this.warranty_period);
+      this.data.warranty_period = parseInt(this.data.warranty_period);
       console.log(this.data.warranty_period);
       
     }

@@ -20,13 +20,10 @@ export class WarrantyUpdateModelComponent implements OnInit {
   date_of_purchase: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data, public dialog: MatDialog, public serve: DatabaseService, public session: sessionStorage, public toast: ToastrManager, public dialogRef: MatDialogRef<WarrantyUpdateModelComponent>) {
-    console.log(data);
     this.warranty_period = data.period
-    this.date_of_purchase = data.dop
-
+    this.date_of_purchase = data.date_of_purchase
     const warrantyStartDate = new Date(this.date_of_purchase);
     const warrantyEnd = new Date(warrantyStartDate.getFullYear(), warrantyStartDate.getMonth() + parseInt(this.warranty_period), warrantyStartDate.getDate());
-    console.log(warrantyEnd);
     this.formData.warranty_end_date = warrantyEnd;
   }
 
