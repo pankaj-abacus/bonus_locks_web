@@ -130,7 +130,7 @@
                 </a>
             </li>
 
-            <li *ngIf="login_data.id== '1' ">
+            <li *ngIf="login_data.view_master_box== '1' ">
                 <a mat-button routerLink="/generate-master-box" routerLinkActive="active">
                     <i class="material-icons ">widgets</i>
                     Master Box
@@ -387,13 +387,16 @@
                     <li>
                         <a mat-button (click)="clearFilter()" routerLink="/spare-list" routerLinkActive="active">
                             Spare Part
-                            <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_spare_part}}</span>
+                            <span class="nav-counter"
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_spare_part}}</span>
                         </a>
                     </li>
                     <li>
-                        <a mat-button (click)="clearFilter()" routerLink="/Complaint-visit-list" routerLinkActive="active">
+                        <a mat-button (click)="clearFilter()" routerLink="/Complaint-visit-list"
+                            routerLinkActive="active">
                             Complaint Visits
-                            <span class="nav-counter" *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_complaint_visit}}</span>
+                            <span class="nav-counter"
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_complaint_visit}}</span>
                         </a>
                     </li>
                 </ul>
@@ -564,7 +567,7 @@
                     </li>
                     <li>
                         <a mat-button (click)="clearFilter(); openDialog('log_report')">
-                           Integration Log Report
+                            Integration Log Report
                         </a>
                     </li>
 
