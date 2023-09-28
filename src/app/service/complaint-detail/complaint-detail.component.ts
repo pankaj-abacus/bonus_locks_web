@@ -30,6 +30,7 @@ export class ComplaintDetailComponent implements OnInit {
   stateDetail: any = [];
   product_size: any = [];
   spare_list: any = [];
+  complaint_visit: any = [];
   featureFlag: boolean = false;
   allMrpFlag: boolean = false;
   complaintImg: any = [];
@@ -60,11 +61,12 @@ export class ComplaintDetailComponent implements OnInit {
       if (result['statusCode'] == 200) {
         this.skLoading = false;
         this.getData = result['result'];
-        // console.log('getData',this.getData);        
+        // console.log('getData',this.getData);
         this.complaintImg = this.getData['image'];
         this.inspectionImg = this.getData['inspection_image'];
         this.closeImg = this.getData['closing_image'];
         this.spare_list = this.getData['spare_list'];
+        this.complaint_visit = this.getData['complaint_visit'];
 
       } else {
         this.skLoading = false;

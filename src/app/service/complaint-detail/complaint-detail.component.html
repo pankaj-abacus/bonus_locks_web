@@ -325,7 +325,7 @@
                 <div class="col s12 mt16 m12 l12" *ngIf="spare_list.length > 0">
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
-                            <h2>Spare Details</h2>
+                            <h2>Spare Part Details</h2>
                         </div>
                         <div class="card-body">
                             <div mat-dialog-content>
@@ -337,8 +337,8 @@
                                                     <th class="w30 text-center ">Sr.No</th>
                                                     <th class="w110">Install Date</th>
                                                     <th class="w150">Technician Details</th>
-                                                    <th class="w100">Part Name</th>
-                                                    <th class="w100">Part No.</th>
+                                                    <th class="w80">Part Name</th>
+                                                    <th class="w80">Part No.</th>
                                                     <th class="w30 text-center ">Qty</th>
                                                 </tr>
                                             </table>
@@ -353,9 +353,13 @@
                                                         <td class="w30 text-center ">{{i+1}}</td>
                                                         <td class="w110">{{row.installed_on ? (row.installed_on |
                                                             date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                                                            <td class="w150 ">{{row.installation_by_name? (row.installation_by_name | titlecase):'--'}}-{{row.installation_by_mobile}}</td>
-                                                        <td class="w100 text-center ">{{row.part_name? (row.part_name| titlecase) :'--'}}</td>
-                                                        <td class="w100 text-center ">{{row.part_no?( row.part_no| titlecase) :'--'}}</td>
+                                                        <td class="w150 ">{{row.installation_by_name?
+                                                            (row.installation_by_name |
+                                                            titlecase):'--'}}-{{row.installation_by_mobile}}</td>
+                                                        <td class="w80">{{row.part_name? (row.part_name| titlecase)
+                                                            :'--'}}</td>
+                                                        <td class="w80">{{row.part_no?( row.part_no| titlecase) :'--'}}
+                                                        </td>
                                                         <td class="w30 text-center ">{{row.qty? row.qty :'--'}}</td>
                                                     </tr>
                                                 </ng-container>
@@ -367,6 +371,60 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col s12 mt16 m12 l12" *ngIf="complaint_visit.length > 0">
+                    <div class="card" *ngIf="!skLoading">
+                        <div class="card-head">
+                            <h2>Complaint Visit</h2>
+                        </div>
+                        <div class="card-body">
+                            <div mat-dialog-content>
+                                <div class="cs-table left-right-10">
+                                    <div class=" border-top">
+                                        <div class="table-head">
+                                            <table>
+                                                <tr>
+                                                    <th class="w40">Sr.No</th>
+                                                    <th class="w130">Visit Date</th>
+                                                    <th class="w180">Technician Details</th>
+                                                    <th class="w50">Start Time</th>
+                                                    <th class="w180">Start Adddress</th>
+                                                    <th class="w50">Stop Time</th>
+                                                    <th class="w200">Stop Adddress</th>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-container pb0">
+                                        <div class="table-content none-shadow">
+                                            <table>
+                                                <ng-container>
+                                                    <tr *ngFor="let row of complaint_visit; let i = index">
+                                                        <td class="w40 text-center">{{i + 1}}</td>
+                                                        <td class="w130">{{row.date_created ? (row.date_created | date :
+                                                            'dd MMM yyy ,h:mm a') : '--'}}</td>
+                                                        <td class="w180">{{row.created_by_name? (row.created_by_name |
+                                                            titlecase):'--'}}-{{row.created_by_mobile}}</td>
+                                                        <td class="w50">{{row.visit_start_time ? (row.visit_start_time |
+                                                            date : 'shortTime') : '--'}}</td>
+                                                        <td class="w180">{{row.visit_start_address?
+                                                            (row.visit_start_address | titlecase):'--'}}</td>
+                                                        <td class="w50">{{row.visit_stop_time ? (row.visit_stop_time |
+                                                            date : 'shortTime') : '--'}}</td>
+                                                        <td class="w200">{{row.visit_stop_address?
+                                                            (row.visit_stop_address | titlecase):'--'}}</td>
+                                                    </tr>
+                                                </ng-container>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
 
                 <div class="col s12 mt16 m12 l12"
@@ -519,72 +577,7 @@
                                     </div>
                                     <br>
                                 </li>
-                                <!-- <li [ngClass]="getData.carpenter_assign_status == 'Done' ?'check' :'reject'">
-                                    <span class="vistit-count">
-                                        <i class="material-icons">location_on</i>
-                                    </span>
-                                    <div class="tracking-con">
-                                        <strong>
-                                            <p>Assign Date</p>
-                                        </strong>
-                                        <p>{{getData.carpenter_assign_date != '0000-00-00' ?
-                                            (getData.carpenter_assign_date |date : 'dd MMM yyy ,h:mm a') :'---'}}
-                                        </p>
-                                    </div>
-                                    <br>
-                                    <br>
-                                    <br>
 
-                                </li>
-                                <li [ngClass]="getData.inspection_status == 'Done' ?'check' :'reject'">
-                                    <span class="vistit-count">
-                                        <i class="material-icons">location_on</i>
-                                    </span>
-                                    <div class="tracking-con">
-                                        <strong>
-
-                                            <p>Inspection Date</p>
-                                        </strong>
-                                        <p>{{getData.inspection_date != '0000-00-00' ? (getData.inspection_date |
-                                            date : 'dd MMM yyy ,h:mm a') :'---'}}</p>
-                                    </div>
-                                    <br>
-                                    <br>
-                                    <br>
-
-                                </li>
-                                <li [ngClass]="getData.complaint_status == 'Closed' ?'check' :'reject'">
-                                    <span class="vistit-count">
-                                        <i class="material-icons">location_on</i>
-                                    </span>
-                                    <div class="tracking-con">
-                                        <strong>
-
-                                            <p>Closed Date</p>
-                                        </strong>
-                                        <p>
-                                            {{getData.closed_date != '0000-00-00' ? (getData.closed_date |
-                                            date :'dd MMM yyy ,h:mm a'):'---'}}
-                                        </p>
-                                    </div>
-                                    <br>
-                                    <br>
-                                    <br>
-
-                                </li>
-                                <li [ngClass]="getData.feedback_status == 'Done' ?'check' :'reject'">
-                                    <span class="vistit-count">
-                                        <i class="material-icons">location_on</i>
-                                    </span>
-                                    <div class="tracking-con">
-                                        <strong>
-
-                                            <p>Feedback Date</p>
-                                        </strong>
-                                        <p>{{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date :
-                                            'dd MMM yyy ,h:mm a'):'---'}}</p>
-                                    </div>
-                                </li> -->
                                 <li class="check">
                                     <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km"> {{getData.date_created_to_assign
@@ -600,21 +593,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="type-visit">
-                                            <div class="types" [ngClass]="{'active': row.order_flag > 0}">
-                                                <span>&nbsp;</span>
-                                                Order
-                                            </div>
-                                            <div class="types" [ngClass]="{'active': row.followup_flag > 0}">
-                                                <span>&nbsp;</span>
-                                                Followup
-                                            </div>
-                                            <div class="types" [ngClass]="{'active': row.Doc > 0}">
-                                                <span>&nbsp;</span>
-                                                Photo upload
-                                            </div>
 
-                                        </div> -->
                                     </div>
                                     <br>
                                 </li>

@@ -11,7 +11,8 @@
         <mat-form-field class="mr15 mt15" appearance="outline">
           <mat-label>Select Master Box</mat-label>
           <mat-select name="couponGrandMasterId" [(ngModel)]="search.couponGrandMasterId" #couponGrandMasterId="ngModel"
-            (ngModelChange)="getProduct();updateGrandMasterCoupon()" [disabled]="mainmasterboxDisable">
+            (ngModelChange)="getProduct();updateGrandMasterCoupon()">
+            <!-- [disabled]="mainmasterboxDisable" -->
             <mat-option>
               <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
                 (keyup)="getmasterboxnew($event.target.value)"></ngx-mat-select-search>
@@ -100,16 +101,19 @@
               </div>
 
               <div class="block-feilds">
+                <span>Dispatch Type</span>
+                <p>{{invoice_detail.bill_dispatch_type ? invoice_detail.bill_dispatch_type : '---'}}</p>
+              </div>
+
+              <div class="block-feilds">
                 <span>Order Number</span>
                 <p>#{{invoice_detail.order_no}}</p>
               </div>
-
 
               <div class="block-feilds">
                 <span>Total Item</span>
                 <p>{{invoice_detail.order_item}}</p>
               </div>
-
 
               <div class="block-feilds">
                 <span>Total QTY.</span>
@@ -336,11 +340,13 @@
                                 <i class="material-icons edit">print</i>
                               </button>
 
-                              <button mat-icon-button matTooltip="Edit"
-                                *ngIf="row.master_grand_coupon_small_box_qty=='0' && row.master_grand_coupon_item_qty=='0'"
-                                (click)="deletemasterboxes(row,invoice_detail.order_no)">
-                                <i class="material-icons del">delete</i>
-                              </button>
+                              <ng-container *ngIf="invoice_detail.order_status == 'readyToDispatch'">
+                                <button mat-icon-button matTooltip="Edit"
+                                  *ngIf="row.master_grand_coupon_small_box_qty=='0' && row.master_grand_coupon_item_qty=='0'"
+                                  (click)="deletemasterboxes(row,invoice_detail.order_no)">
+                                  <i class="material-icons del">delete</i>
+                                </button>
+                              </ng-container>
                             </div>
                           </td>
                         </tr>
@@ -408,7 +414,10 @@
                           <tr
                             [ngClass]="{'dispatchWait': row.sale_dispatch_qty == 0, 'dispatchPending': row.sale_dispatch_qty > 0 && row.sale_dispatch_qty < row.sale_qty, 'dispatchCom': row.sale_dispatch_qty == row.sale_qty}">
                             <td class="w50">{{i+1}}</td>
-                            <td>{{row.item_name | titlecase}} <strong>({{row.item_code}})</strong></td>
+                            <td>{{row.product_name ? (row.product_name | titlecase) : '---'}}
+                              <strong>({{row.product_code ?
+                                row.product_code : '---'}})</strong>
+                            </td>
                             <td class="w150 text-center">
                               <ng-container
                                 *ngIf="row.sale_qty == row.sale_dispatch_qty">{{row.sale_qty}}</ng-container>
