@@ -104,11 +104,12 @@
                 <td class="w150">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
                 <td class="w150">{{row.part_name? (row.part_name | titlecase):'--'}}</td>
                 <td class="w100">{{row.part_no? (row.part_no | titlecase):'--'}}</td>
-                <td class="w100 text-center" [ngClass]="{'light-green': row.current_stock >= row.min_stock , 'red-bgclr': row.current_stock < row.min_stock}">{{row.min_stock}}</td>
+                <td class="w100 text-center"
+                  [ngClass]="{'light-green': row.current_stock >= row.min_stock , 'red-bgclr': row.current_stock < row.min_stock}">
+                  {{row.min_stock}}</td>
                 <td class="w50 text-center">{{row.current_stock? row.current_stock:'0'}}</td>
                 <td class="w80 text-center">
-                  <button mat-raised-button style="border-radius: 25px;"
-                    (click)="assignZero(row.assign_stock)"
+                  <button mat-raised-button style="border-radius: 25px;" (click)="assignZero(row.assign_stock)"
                     [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.assign_stock=='0'">
                     <span>{{row.assign_stock?row.assign_stock:0}}</span>
                     <mat-icon>chevron_right</mat-icon>
@@ -129,17 +130,19 @@
                       <mat-icon>arrow_circle_down</mat-icon>
                       <span>Incoming</span>
                     </button>
-                    <button mat-raised-button style="border-radius: 25px;"
-                      (click)="returnQty(row.incoming_data)"
+                    <button mat-raised-button style="border-radius: 25px;" (click)="returnQty(row.incoming_data)"
                       [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="!row.incoming_data.length">
                       <mat-icon>arrow_circle_down</mat-icon>
                       <span>Incoming</span>
                     </button>
-                    <button mat-raised-button style="border-radius: 25px;" (click)="spareQty(row.part_name,row.part_no,row.assign_part,'Outgoing')" [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.assign_stock!='0'">
+                    <button mat-raised-button style="border-radius: 25px;"
+                      (click)="spareQty(row.part_name,row.part_no,row.assign_part,'Outgoing')"
+                      [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.assign_stock!='0'">
                       <mat-icon>arrow_circle_up</mat-icon>
                       <span>Outgoing</span>
                     </button>
-                    <button mat-raised-button style="border-radius: 25px;" (click)="outgoingStock(row.assign_stock)" [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.assign_stock=='0'">
+                    <button mat-raised-button style="border-radius: 25px;" (click)="outgoingStock(row.assign_stock)"
+                      [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="row.assign_stock=='0'">
                       <mat-icon>arrow_circle_up</mat-icon>
                       <span>Outgoing</span>
                     </button>
@@ -149,8 +152,7 @@
                       <mat-icon>assignment_returned</mat-icon>
                       <span>Return</span>
                     </button>
-                    <button mat-raised-button style="border-radius: 25px;"
-                      (click)="return(row.return_data)"
+                    <button mat-raised-button style="border-radius: 25px;" (click)="return(row.return_data)"
                       [ngClass]="{'pulse': fabBtnValue=='activity'}" *ngIf="!row.return_data.length">
                       <mat-icon>assignment_returned</mat-icon>
                       <span>Return</span>
@@ -233,19 +235,22 @@
     </button>
   </div>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="downloadExcel();">
+    <button mat-menu-item (click)="downloadExcel();" *ngIf="spareList.length > 0">
       <mat-icon>download</mat-icon>
       <span>Download Excel</span>
     </button>
-    <button mat-menu-item (click)="spareQty('','','','Return Stock')" routerLink="add-customer" routerLinkActive="router-link-active">
+    <button mat-menu-item (click)="spareQty('','','','Return Stock')" routerLink="add-customer"
+      routerLinkActive="router-link-active">
       <mat-icon>assignment_returned</mat-icon>
       <span>Return Stock</span>
     </button>
-    <button mat-menu-item (click)="spareQty('','','','Manage Stock')" routerLink="add-customer" routerLinkActive="router-link-active">
+    <button mat-menu-item (click)="spareQty('','','','Manage Stock')" routerLink="add-customer"
+      routerLinkActive="router-link-active">
       <mat-icon>inventory</mat-icon>
       <span>Manage Stock</span>
     </button>
-    <button mat-menu-item (click)="spareQty('','','','assign_stock')" routerLink="add-customer" routerLinkActive="router-link-active">
+    <button mat-menu-item (click)="spareQty('','','','assign_stock')" routerLink="add-customer"
+      routerLinkActive="router-link-active">
       <mat-icon>assignment</mat-icon>
       <span>Assign Stock</span>
     </button>

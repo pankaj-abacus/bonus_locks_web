@@ -627,7 +627,8 @@
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
-                        #carpenter_detail="ngModel" [(ngModel)]="filter_data.carpenter_detail">
+                        #carpenter_detail="ngModel" (keyup.enter)="getInstallationDetail()"
+                        [(ngModel)]="filter_data.carpenter_detail">
                     </mat-form-field>
                   </div>
                 </th>

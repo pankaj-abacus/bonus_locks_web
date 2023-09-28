@@ -151,7 +151,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
-                      #carpenter_detail="ngModel" [(ngModel)]="filter_data.carpenter_detail">
+                      (keyup.enter)="getinspectionList('')" #carpenter_detail="ngModel"
+                      [(ngModel)]="filter_data.carpenter_detail">
                   </mat-form-field>
                 </div>
               </th>
@@ -185,11 +186,11 @@
               <th class="w140" *ngIf="active_tab != 'Pending'">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
-                    <input matInput [matDatepicker]="picker" placeholder="Date" name="status_updated_date"
+                    <input matInput [matDatepicker]="picker2" placeholder="Date" name="status_updated_date"
                       #status_updated_date="ngModel" [(ngModel)]="filter_data.status_updated_date"
-                      (ngModelChange)="date_format()" [max]="today_date" readonly />
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                      (ngModelChange)="date_format2()" [max]="today_date" readonly />
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
                   </mat-form-field>
                 </div>
               </th>

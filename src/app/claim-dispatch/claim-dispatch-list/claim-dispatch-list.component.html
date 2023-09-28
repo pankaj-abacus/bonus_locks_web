@@ -9,7 +9,7 @@
         <i class="material-icons">refresh</i>
       </a>
 
-      <div class="pagination">
+      <div class="pagination" *ngIf="customerList.length > 0">
         <div class="pagination-content">
           Pages
           <span>{{pagenumber}}</span>
@@ -83,7 +83,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="customer_detail"
-                      (keyup.enter)="getCumtomerList('')" #customer_detail="ngModel" [(ngModel)]="filter_data.customer_detail">
+                      (keyup.enter)="getCumtomerList('')" #customer_detail="ngModel"
+                      [(ngModel)]="filter_data.customer_detail">
                   </mat-form-field>
                 </div>
               </th>
@@ -100,7 +101,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="dealer_detail"
-                      (keyup.enter)="getCumtomerList('')" #dealer_detail="ngModel" [(ngModel)]="filter_data.dealer_detail">
+                      (keyup.enter)="getCumtomerList('')" #dealer_detail="ngModel"
+                      [(ngModel)]="filter_data.dealer_detail">
                   </mat-form-field>
                 </div>
               </th>
@@ -108,7 +110,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="product_detail"
-                      (keyup.enter)="getCumtomerList('')" #product_detail="ngModel" [(ngModel)]="filter_data.product_detail">
+                      (keyup.enter)="getCumtomerList('')" #product_detail="ngModel"
+                      [(ngModel)]="filter_data.product_detail">
                   </mat-form-field>
                 </div>
               </th>
@@ -127,9 +130,11 @@
                 <td class="w160">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
                 <td class="w100">{{row.created_name | titlecase}}</td>
                 <td class="w100"> {{row.complain_no | titlecase}}</td>
-                <td class="w150 ">{{ row.customer_name ? (row.customer_name | titlecase) : '--'}}-{{ row.customer_mobile ? row.customer_mobile :'--' }}</td>
+                <td class="w150 ">{{ row.customer_name ? (row.customer_name | titlecase) : '--'}}-{{ row.customer_mobile
+                  ? row.customer_mobile :'--' }}</td>
                 <td class="w70">{{row.replaced_by_company_name?(row.replaced_by_company_name | titlecase):'--'}}</td>
-                <td class="w150 ">{{ row.replaced_by_name ? (row.replaced_by_name | titlecase) : '--'}}-{{ row.replaced_by_mobile ? row.replaced_by_mobile :'--' }}</td>
+                <td class="w150 ">{{ row.replaced_by_name ? (row.replaced_by_name | titlecase) : '--'}}-{{
+                  row.replaced_by_mobile ? row.replaced_by_mobile :'--' }}</td>
                 <td class="w150 ">{{ row.product_name | titlecase }}-{{ row.product_code | titlecase }}</td>
               </tr>
             </ng-container>
@@ -180,7 +185,7 @@
     </button>
   </div>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="downloadExcel();">
+    <button mat-menu-item (click)="downloadExcel();" *ngIf="customerList.length > 0">
       <mat-icon>download</mat-icon>
       <span>Download excel</span>
     </button>
