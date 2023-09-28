@@ -89,12 +89,12 @@
 
           <div class="col s12" *ngIf="formData.complaint_status=='Cancel'">
             <mat-form-field class="cs-input" appearance="outline" [ngClass]="{'has-error' : status_reason.invalid } ">
-              <mat-label>Cancel Remark</mat-label>
+              <mat-label>Cancel Reason</mat-label>
               <textarea matInput placeholder="Type here ..." name="status_reason" #status_reason="ngModel"
                 [(ngModel)]="formData.status_reason" required></textarea>
             </mat-form-field>
             <div class="alert alert-danger" *ngIf="status_reason.invalid && update_basic.submitted">
-              Cancel Remark is required...
+              Cancel Reason is required...
             </div>
           </div>
 

@@ -78,6 +78,10 @@ export class InstallationListComponent implements OnInit {
     this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
     this.getinspectionList('');
   }
+   date_format2(): void {
+    this.filter_data.status_updated_date = moment(this.filter_data.status_updated_date).format('YYYY-MM-DD');
+    this.getinspectionList('');
+  }
 
   getinspectionList(data) {
     if (this.pagenumber > this.total_page) {

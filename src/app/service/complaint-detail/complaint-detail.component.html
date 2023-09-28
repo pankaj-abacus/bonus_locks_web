@@ -444,6 +444,11 @@
                                     <p>{{getData.replaced_by_type ? (getData.replaced_by_type| titlecase):'N/A'}}</p>
                                 </div>
                                 <div class="block-feilds" *ngIf="getData.replaced_by_type=='Dealer'">
+                                    <span>Company Name</span>
+                                    <p>{{getData.replaced_by_company_name?(getData.replaced_by_company_name |
+                                        titlecase):'N/A'}}</p>
+                                </div>
+                                <div class="block-feilds" *ngIf="getData.replaced_by_type=='Dealer'">
                                     <span>Dealer Name</span>
                                     <p>{{getData.replaced_by_name ? (getData.replaced_by_name | titlecase):'N/A'}}</p>
                                 </div>
@@ -451,6 +456,7 @@
                                     <span>Dealer Mobile</span>
                                     <p>{{getData.replaced_by_mobile ? getData.replaced_by_mobile:'N/A'}}</p>
                                 </div>
+
                                 <div class="block-feilds" *ngIf="getData.replaced_status=='Done'">
                                     <span>Product type</span>
                                     <p>{{getData.product_type ? getData.product_type:'N/A'}}</p>
