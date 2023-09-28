@@ -10,18 +10,16 @@ import { MatDialogModule, MatIconModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
 import { ComplaintVisitListComponent } from '../complaint-visit-list/complaint-visit-list.component';
-import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
 
 const complaintVisitRoutes = [
   { path: "", children:[
     { path: "", component: ComplaintVisitListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    {path:'complaint-detail/:id', component: ComplaintDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
   ]},
 
 ]
 
 @NgModule({
-  declarations: [ComplaintVisitListComponent,ComplaintDetailComponent],
+  declarations: [ComplaintVisitListComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(complaintVisitRoutes),
