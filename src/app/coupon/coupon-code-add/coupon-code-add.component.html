@@ -30,8 +30,18 @@
                       <p *ngIf="coupon_type.errors?.required">This field is required</p>
                     </div>
                   </div>
+                  <div class="col s12 m2 l2" *ngIf="data.coupon_type == 'Item Box' ">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Paper Size</mat-label>
+                      <mat-select name="paper_size" [(ngModel)]="data.paper_size" #paper_size="ngModel" [ngClass]="{'has-error' : paper_size.invalid }"required>
+                        <mat-option value="" disabled>Select</mat-option>
+                        <mat-option value="100 * 55" >100 * 55</mat-option>
+                        <mat-option value="25 * 25" >25 * 25</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
                   
-                  <div class="col s12 m5 l6">
+                  <div class="col s12 m6 l4">
                     <mat-form-field  appearance="outline">
                       <mat-label>Product</mat-label>
                       <mat-select  name="product_code" [(ngModel)]="data.product_code" #product_code="ngModel" required (ngModelChange)="findProductId(data.product_code)" >
