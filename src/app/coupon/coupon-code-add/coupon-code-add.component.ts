@@ -61,7 +61,9 @@ export class CouponCodeAddComponent implements OnInit {
 
   ngOnInit() {
     // this.getProduct('');
+    this.data.paper_size = '100 * 55';
     this.generated_coupon_listing();
+
   }
 
 
