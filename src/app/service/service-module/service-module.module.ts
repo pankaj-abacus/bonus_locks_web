@@ -20,6 +20,7 @@ import { ComplaintUpdateModelComponent } from '../complaint-update-model/complai
 import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
 
 
+
 const serviceRoutes = [
   { path: "", children:[
     { path: "", component: ComplaintListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},

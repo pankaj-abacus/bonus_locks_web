@@ -12,8 +12,6 @@ import { ExportexcelService } from 'src/app/service/exportexcel.service';
 import { EngineerAssignModelComponent } from 'src/app/installation/engineer-assign-model/engineer-assign-model.component';
 import { AddInstallationRemarkComponent } from 'src/app/installation/add-installation-remark/add-installation-remark.component';
 import { InstallationUpdateModelComponent } from 'src/app/installation/installation-update-model/installation-update-model.component';
-
-
 @Component({
   selector: 'app-installation-detail',
   templateUrl: './installation-detail.component.html',
@@ -128,7 +126,7 @@ export class InstallationDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != false) {
-        this.getInstallationDetail();
+        // this.getInstallationDetail();
       }
     });
   }
@@ -145,7 +143,7 @@ export class InstallationDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != false) {
-        this.getInstallationDetail();
+        // this.getInstallationDetail();
       }
     });
   }
@@ -160,7 +158,7 @@ export class InstallationDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != false) {
-        this.getInstallationDetail();
+        // this.getInstallationDetail();
       }
     });
   }

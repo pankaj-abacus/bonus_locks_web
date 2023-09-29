@@ -122,7 +122,35 @@
       <a *ngIf="modal_type=='addSpare'" (click)="downloadExcelForSpare();" target="_blank"><i
           class="material-icons">download</i>Click Here To Download Sample File</a>
     </div>
-
+    <div *ngIf="uploadError">
+      <p mat-dialog-title>Failed To Upload: <span class="red-clr">Failed:
+          {{uploadErrorMsgCount.failed}}</span> | <span class="green-clr">Success:
+          {{uploadErrorMsgCount.Success}}</span></p>
+      <div class="cs-table left-right-10">
+        <div class="collapse-body pt0">
+          <div class="cs-form">
+            <div class="cs-table">
+              <div class="table-container">
+                <div class="table-content">
+                  <table>
+                    <tr>
+                      <td class=" padding0">
+                        <table>
+                          <tr *ngFor="let row of uploadErrorMsg; let i=index">
+                            <td class="border-top border-bottom">{{i+1}}. {{row}}
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div mat-dialog-actions *ngIf="modal_type=='addSpare'">
