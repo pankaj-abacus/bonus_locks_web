@@ -299,16 +299,40 @@ export class CouponCodeListComponent implements OnInit {
 
   exportAsXLSX(status) {
     this.loader = true;
-    this.service.post_rqst({ 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit }, '/Excel/coupon_code_all_list').subscribe((result => {
-      if (result['msg'] == true) {
-        this.loader = false;
-        window.open(this.downurl + result['filename'])
-        this.couponCodeList();
-      } else {
-        this.loader = false;
-      }
-    }));
+    if(status == 'scan_item'){
+      this.service.post_rqst({ 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit }, '/Excel/scanned_coupon_code_list').subscribe((result => {
+        if (result['msg'] == true) {
+          this.loader = false;
+          window.open(this.downurl + result['filename']);
+          if(status == 'scan_item'){
+            this.scanCouponList();
+          }
+        } else {
+          this.loader = false;
+        }
+      }));
+    }
+    else{
+      this.service.post_rqst({ 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit }, '/Excel/coupon_code_all_list').subscribe((result => {
+        if (result['msg'] == true) {
+          this.loader = false;
+          window.open(this.downurl + result['filename']);
+          if(status == 'item_box' || status == 'master_box'){
+            this.couponCodeList();
+          }
+        } else {
+          this.loader = false;
+        }
+      }));
+    }
   }
+
+
+
+
+
+
+
 
   openScanLimitModal() {
     const dialogRef = this.dialog.open(CouponDetailModalComponent, {
