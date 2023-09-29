@@ -13,12 +13,12 @@
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
             <h2>Customer Details</h2>
-            <!-- <div class="left-auto">
+            <div class="left-auto" *ngIf="getData.complaint_status=='Pending'">
               <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
                 [routerLink]="['add-installation/', 'installation',this.id]">
                 <i class="material-icons">edit</i>
               </a>
-            </div> -->
+            </div>
           </div>
           <div class="card-body">
             <div class="grid-box">
@@ -136,18 +136,26 @@
                         '--'}}</strong>
                     </p>
                   </div>
-                  <!-- <div class="left-auto">
+                  <div class="left-auto" *ngIf="getData.complaint_status == 'Pending'">
                     <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
                       (click)="updateInstallationStataus(getData.id)">
                       <i class="material-icons">edit</i>
                     </a>
-                  </div> -->
+                  </div>
                 </div>
                 <div class="block-feilds " *ngIf="getData.complaint_status=='Reject'">
                   <span>Reason Of Reject</span>
                   <p>
                     {{
                     getData.status_reason ? (getData.status_reason |titlecase) : "N/A"
+                    }}
+                  </p>
+                </div>
+                <div class="block-feilds ">
+                  <span>TAT</span>
+                  <p>
+                    {{
+                    getData.pending_at ? getData.pending_at : "N/A"
                     }}
                   </p>
                 </div>
@@ -177,8 +185,8 @@
                         <ng-container *ngFor="let row of add_list; let i = index">
                           <tr>
                             <td class="w30 text-center ">{{ i + 1 }}</td>
-                            <td class="w100">{{ row.category_name }}</td>
-                            <td class="w100">{{ row.subcat_name }}</td>
+                            <td class="w100">{{ row.category_name | titlecase}}</td>
+                            <td class="w100">{{ row.subcat_name | titlecase}}</td>
                             <td class="w180">{{ row.product_name | titlecase}}-{{row.product_code | titlecase}}</td>
                             <td class="w30 text-center ">{{ row.qty }}</td>
                           </tr>
@@ -227,7 +235,12 @@
                     {{ getData.closing_type ? getData.closing_type : "N/A" }}
                   </p>
                 </div> -->
-
+                <div class="block-feilds">
+                  <span>Status Update By</span>
+                  <p>
+                    {{ getData.status_updated_by_name ? (getData.status_updated_by_name | titlecase): "N/A" }}
+                  </p>
+                </div>
                 <div class="block-feilds" *ngIf="getData.complaint_status=='Done'">
                   <span>Closing Remark</span>
                   <p>
@@ -244,7 +257,7 @@
                     }}
                   </p>
                 </div>
-                <div class="block-feilds">
+                <!-- <div class="block-feilds">
                   <span>Status Update Date</span>
                   <p>
                     {{
@@ -253,13 +266,8 @@
                     : "N/A"
                     }}
                   </p>
-                </div>
-                <div class="block-feilds">
-                  <span>Status Update By</span>
-                  <p>
-                    {{ getData.status_updated_by_name ? (getData.status_updated_by_name | titlecase): "N/A" }}
-                  </p>
-                </div>
+                </div> -->
+
               </div>
               <div class="card-head mt15" *ngIf="closeImg.length">
                 <h2>Product Images</h2>
@@ -313,7 +321,7 @@
 
 
   </div>
-  <!-- <div class="fab-btns">
+  <div class="fab-btns" *ngIf="getData.complaint_status=='Pending'">
     <button class="pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
       <i class="material-icons">apps</i>
       Action
@@ -330,5 +338,5 @@
         <span>Add Remark</span>
       </button>
     </mat-menu>
-  </div> -->
+  </div>
 </div>

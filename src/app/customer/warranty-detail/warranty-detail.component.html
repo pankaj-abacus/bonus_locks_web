@@ -13,12 +13,12 @@
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
             <h2>Warranty Information</h2>
-            <!-- <div class="left-auto" *ngIf="getData.company_verification_status=='Pending'">
+            <div class="left-auto" *ngIf="getData.company_verification_status=='Pending'">
               <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
                 [routerLink]="[ 'add-warranty/', this.id ]">
                 <i class="material-icons">edit</i>
               </a>
-            </div> -->
+            </div>
           </div>
           <div class="card-body">
             <div class="grid-box">
@@ -55,17 +55,19 @@
 
               <div class="block-feilds">
                 <span>Product Code</span>
-                <p>{{getData.product_code ? (getData.product_code | titlecase):'---'}}</p>
+                <p>{{getData.product_code ? (getData.product_code ):'---'}}</p>
+              </div>
+
+              
+
+              <div class="block-feilds">
+                <span>Serial No.</span>
+                <p>{{getData.serial_no ? (getData.serial_no | titlecase) :'---'}}</p>
               </div>
 
               <div class="block-feilds">
                 <span>Warranty Months</span>
                 <p>{{getData.warranty_period ? getData.warranty_period :'---'}}</p>
-              </div>
-
-              <div class="block-feilds">
-                <span>Serial No.</span>
-                <p>{{getData.serial_no ? (getData.serial_no | titlecase) :'---'}}</p>
               </div>
 
               <div class="block-feilds">
@@ -75,7 +77,7 @@
               </div>
 
               <div class="block-feilds">
-                <span>Warranty End Date</span>
+                <span>End Date</span>
                 <p>{{getData.warranty_end_date != "0000-00-00" ? (getData.warranty_end_date | date :"dd MMM yyy"): "--"
                   }}</p>
               </div>
@@ -84,7 +86,7 @@
               <div class="block-feilds flex-heading">
                 <div>
 
-                  <span>Warranty Verification Status</span>
+                  <span>Status</span>
                   <!-- <p>{{getData.company_verification_status ? getData.company_verification_status :'---'}}</p> -->
                   <p>
                     <strong class="yellow-clr" *ngIf="getData.company_verification_status=='Pending'">
@@ -99,24 +101,24 @@
                   </p>
                 </div>
 
-                <!-- <div class="left-auto" *ngIf="getData.company_verification_status=='Pending'">
+                <div class="left-auto" *ngIf="getData.company_verification_status=='Pending'">
                   <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
-                    (click)="updateWarrantyStataus(getData.id,getData.warranty_period)">
+                    (click)="updateWarrantyStataus(getData.id,getData.warranty_period,getData.date_of_purchase)">
                     <i class="material-icons">edit</i>
                   </a>
-                </div> -->
+                </div>
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status=='Reject'">
-                <span>Reject Reason</span>
+                <span>Reason Of Reject</span>
                 <p>{{getData.reject_reason ? (getData.reject_reason | titlecase) : '--'}}</p>
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
-                <span>Verification Date</span>
+                <span>Status Update Date</span>
                 <p>{{getData.verification_on != '0000-00-00 00:00:00' ? (getData.verification_on | date : 'dd MMM yyy
                   ,h:mm a') :'---'}}</p>
               </div>
               <div class="block-feilds" *ngIf="getData.company_verification_status!='Pending'">
-                <span>Verification By</span>
+                <span>Status Update By</span>
                 <p>{{getData.verification_by_name ? getData.verification_by_name : '--'}}</p>
               </div>
 
@@ -142,7 +144,7 @@
 
       <div class="col s12 m12 l4">
         <div class="card" *ngIf="!skLoading">
-          <div class="card-head" >
+          <div class="card-head">
             <h2>Images</h2>
           </div>
           <div class="card-body">

@@ -106,6 +106,15 @@
                         </div>
                         <div class="card-body">
                             <div class="grid-box">
+
+
+
+
+                                <!-- <div class="block-feilds">
+                                    <span>Serial No.</span>
+                                    <p>{{getData.serial_no ? getData.serial_no :'---'}}</p>
+                                </div> -->
+
                                 <div class="block-feilds">
                                     <span>Customer Name</span>
                                     <p>{{getData.customer_name ? (getData.customer_name | titlecase) :'---'}}</p>
@@ -206,6 +215,10 @@
                                 <div class="block-feilds" *ngIf="getData.carpenter_assign_status=='Done'">
                                     <span>Technician Mobile No.</span>
                                     <p>{{getData.carpenter_mobile ? getData.carpenter_mobile :'---'}}</p>
+                                </div>
+                                <div class="block-feilds">
+                                    <span>TAT</span>
+                                    <p>{{getData.pending_at ? (getData.pending_at | titlecase ):'---'}}</p>
                                 </div>
                             </div>
                         </div>
@@ -308,10 +321,11 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col s12 mt16 m12 l12" *ngIf="spare_list.length > 0">
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
-                            <h2>Spare Details</h2>
+                            <h2>Spare Part Details</h2>
                         </div>
                         <div class="card-body">
                             <div mat-dialog-content>
@@ -323,8 +337,8 @@
                                                     <th class="w30 text-center ">Sr.No</th>
                                                     <th class="w110">Install Date</th>
                                                     <th class="w150">Technician Details</th>
-                                                    <th class="w100">Part Name</th>
-                                                    <th class="w100">Part No.</th>
+                                                    <th class="w80">Part Name</th>
+                                                    <th class="w80">Part No.</th>
                                                     <th class="w30 text-center ">Qty</th>
                                                 </tr>
                                             </table>
@@ -339,9 +353,13 @@
                                                         <td class="w30 text-center ">{{i+1}}</td>
                                                         <td class="w110">{{row.installed_on ? (row.installed_on |
                                                             date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                                                            <td class="w150 ">{{row.installation_by_name? (row.installation_by_name | titlecase):'--'}}-{{row.installation_by_mobile}}</td>
-                                                        <td class="w100 text-center ">{{row.part_name? (row.part_name| titlecase) :'--'}}</td>
-                                                        <td class="w100 text-center ">{{row.part_no?( row.part_no| titlecase) :'--'}}</td>
+                                                        <td class="w150 ">{{row.installation_by_name?
+                                                            (row.installation_by_name |
+                                                            titlecase):'--'}}-{{row.installation_by_mobile}}</td>
+                                                        <td class="w80">{{row.part_name? (row.part_name| titlecase)
+                                                            :'--'}}</td>
+                                                        <td class="w80">{{row.part_no?( row.part_no| titlecase) :'--'}}
+                                                        </td>
                                                         <td class="w30 text-center ">{{row.qty? row.qty :'--'}}</td>
                                                     </tr>
                                                 </ng-container>
@@ -353,6 +371,62 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col s12 mt16 m12 l12" *ngIf="complaint_visit.length > 0">
+                    <div class="card" *ngIf="!skLoading">
+                        <div class="card-head">
+                            <h2>Complaint Visit</h2>
+                        </div>
+                        <div class="card-body">
+                            <div mat-dialog-content>
+                                <div class="cs-table left-right-10">
+                                    <div class=" border-top">
+                                        <div class="table-head">
+                                            <table>
+                                                <tr>
+                                                    <th class="w40">Sr.No</th>
+                                                    <th class="w130">Visit Date</th>
+                                                    <th class="w180">Technician Details</th>
+                                                    <th class="w50">Start Time</th>
+                                                    <th class="w180">Start Adddress</th>
+                                                    <th class="w50">Stop Time</th>
+                                                    <th class="w200">Stop Adddress</th>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-container pb0">
+                                        <div class="table-content none-shadow">
+                                            <table>
+                                                <ng-container>
+                                                    <tr *ngFor="let row of complaint_visit; let i = index">
+                                                        <td class="w40 text-center">{{i + 1}}</td>
+                                                        <td class="w130">{{row.date_created ? (row.date_created | date :
+                                                            'dd MMM yyy ,h:mm a') : '--'}}</td>
+                                                        <td class="w180">{{row.created_by_name? (row.created_by_name |
+                                                            titlecase):'--'}}-{{row.created_by_mobile}}</td>
+                                                        <td class="w50">{{row.visit_start_time ? (row.visit_start_time |
+                                                            date : 'shortTime') : '--'}}</td>
+                                                        <td class="w180">{{row.visit_start_address?
+                                                            (row.visit_start_address | titlecase):'--'}}</td>
+                                                        <td class="w50">{{row.visit_stop_time ? (row.visit_stop_time |
+                                                            date : 'shortTime') : '--'}}</td>
+                                                        <td class="w200">{{row.visit_stop_address?
+                                                            (row.visit_stop_address | titlecase):'--'}}</td>
+                                                    </tr>
+                                                </ng-container>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
                 <div class="col s12 mt16 m12 l12"
                     *ngIf="getData.complaint_status=='Closed' || getData.complaint_status=='Cancel'">
                     <div class="card" *ngIf="!skLoading">
@@ -370,6 +444,11 @@
                                     <p>{{getData.replaced_by_type ? (getData.replaced_by_type| titlecase):'N/A'}}</p>
                                 </div>
                                 <div class="block-feilds" *ngIf="getData.replaced_by_type=='Dealer'">
+                                    <span>Company Name</span>
+                                    <p>{{getData.replaced_by_company_name?(getData.replaced_by_company_name |
+                                        titlecase):'N/A'}}</p>
+                                </div>
+                                <div class="block-feilds" *ngIf="getData.replaced_by_type=='Dealer'">
                                     <span>Dealer Name</span>
                                     <p>{{getData.replaced_by_name ? (getData.replaced_by_name | titlecase):'N/A'}}</p>
                                 </div>
@@ -377,6 +456,7 @@
                                     <span>Dealer Mobile</span>
                                     <p>{{getData.replaced_by_mobile ? getData.replaced_by_mobile:'N/A'}}</p>
                                 </div>
+
                                 <div class="block-feilds" *ngIf="getData.replaced_status=='Done'">
                                     <span>Product type</span>
                                     <p>{{getData.product_type ? getData.product_type:'N/A'}}</p>
@@ -448,7 +528,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col s12 m10 l4">
+            <div class="col s12 m10 l4" *ngIf="getData.log.length>0">
 
                 <div class="card mt16 " *ngIf="!skLoading">
                     <div class="card-head">
@@ -483,8 +563,10 @@
 
             </div>
 
-            <!-- ########################## Tracker ############################ -->
-            <div class="row ml2">
+            <!-- ######################  TRACKER ######################## -->
+
+
+            <div class="row">
                 <div class="col s12 m4 l4 mt25" *ngIf="!skLoading">
                     <div>
                         <div class="travel">
@@ -501,33 +583,36 @@
                                     </div>
                                     <br>
                                 </li>
-                                <li *ngIf="getData.date_created!=='0000-00-00 00:00:00'">
+
+                                <li class="check">
                                     <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km"> {{getData.date_created_to_assign
-                                                    ? getData.date_created_to_assign :''}}</span> -->
+                                        ? getData.date_created_to_assign :''}}</span> -->
+
                                     <div class="counter">
                                         <div>
                                             <div class="visit-time">
+
                                                 <div class="visit-hours mt10">
                                                     <span class="green-clr">Date Created</span>
                                                     <p>{{getData.date_created |date : 'dd MMM yyy ,h:mm a'}}</p>
-
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                     <br>
                                 </li>
                                 <li *ngIf="getData.carpenter_assign_date!=='0000-00-00 00:00:00'">
                                     <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km">{{getData.date_created_to_assign
-                                                    ? getData.date_created_to_assign :''}}</span> -->
+                                        ? getData.date_created_to_assign :''}}</span> -->
                                     <div class="counter">
                                         <div>
                                             <!-- <p><strong>Assign Date :</strong>
-                                                            {{getData.carpenter_assign_date != '0000-00-00' ?
-                                                            (getData.carpenter_assign_date |date : 'dd MMM yyy ,h:mm a') :'---'}}
-                                                        </p> -->
+                                                {{getData.carpenter_assign_date != '0000-00-00' ?
+                                                (getData.carpenter_assign_date |date : 'dd MMM yyy ,h:mm a') :'---'}}
+                                            </p> -->
                                             <!-- <p *ngIf="row.start_address"><strong>End GPS Address :</strong> {{row.address}}</p> -->
                                             <div class="visit-time">
                                                 <div class="visit-hours mt10">
@@ -551,12 +636,12 @@
                                 <li *ngIf="getData.inspection_date!=='0000-00-00 00:00:00'">
                                     <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km">{{getData.assign_to_inspection
-                                                    ? getData.assign_to_inspection :''}}</span> -->
+                                        ? getData.assign_to_inspection :''}}</span> -->
                                     <div class="counter">
                                         <div>
                                             <!-- <p><strong>Inspection Date :</strong>
-                                                            {{getData.inspection_date != '0000-00-00' ? (getData.inspection_date |
-                                                            date : 'dd MMM yyy ,h:mm a') :'---'}}</p> -->
+                                                {{getData.inspection_date != '0000-00-00' ? (getData.inspection_date |
+                                                date : 'dd MMM yyy ,h:mm a') :'---'}}</p> -->
                                             <!-- <p *ngIf="row.start_address"><strong>End GPS Address :</strong> {{row.address}}</p> -->
                                             <div class="visit-time">
                                                 <div class="visit-hours mt10">
@@ -578,12 +663,12 @@
                                 <li *ngIf="getData.closed_date!=='0000-00-00 00:00:00'">
                                     <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km"> {{getData.inspection_to_closed
-                                                    ? getData.inspection_to_closed :''}}</span> -->
+                                        ? getData.inspection_to_closed :''}}</span> -->
                                     <div class="counter">
                                         <div>
                                             <!-- <p><strong>Closed Date :</strong>
-                                                            {{getData.closed_date != '0000-00-00' ? (getData.closed_date |
-                                                            date :'dd MMM yyy ,h:mm a'):'---'}}</p> -->
+                                                {{getData.closed_date != '0000-00-00' ? (getData.closed_date |
+                                                date :'dd MMM yyy ,h:mm a'):'---'}}</p> -->
                                             <!-- <p *ngIf="row.start_address"><strong>End GPS Address :</strong> {{row.address}}</p> -->
                                             <div class="visit-time">
                                                 <div class="visit-hours mt10"
@@ -613,13 +698,13 @@
                                 <li *ngIf="getData.feedback_date!=='0000-00-00 00:00:00'">
                                     <span class="vistit-count"><i class="material-icons">location_on</i></span>
                                     <!-- <span class="km">{{getData.inspection_to_closed
-                                                    ? getData.inspection_to_closed :''}} </span> -->
+                                        ? getData.inspection_to_closed :''}} </span> -->
                                     <div class="counter">
                                         <div>
                                             <!-- <p><strong>Feedback Date :</strong>
-                                                            {{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date
-                                                            :
-                                                            'dd MMM yyy ,h:mm a'):'---'}}</p> -->
+                                                {{getData.feedback_date != '0000-00-00' ? (getData.feedback_date | date
+                                                :
+                                                'dd MMM yyy ,h:mm a'):'---'}}</p> -->
                                             <!-- <p *ngIf="row.start_address"><strong>End GPS Address :</strong> {{row.address}}</p> -->
                                             <div class="visit-time">
                                                 <div class="visit-hours mt10">
@@ -645,8 +730,8 @@
             </div>
         </div>
     </div>
-    <!-- <div class="fab-btns">
-        <button class="pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
+    <div class="fab-btns" *ngIf="getData.complaint_status=='Pending'">
+        <button class=" pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
             <i class="material-icons">apps</i>
             Action
         </button>
@@ -662,5 +747,5 @@
                 <span>Add Remark</span>
             </button>
         </mat-menu>
-    </div> -->
+    </div>
 </div>
