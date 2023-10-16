@@ -11,7 +11,7 @@
     
     <div id="print_card" style="width: 50%;margin-left: 250px;" hidden>
       <div id='qr_code_container'>
-        <ng-container *ngIf="getData.coupon_type == 'Master Box'">
+        <ng-container *ngIf="getData.coupon_type == 'Item Box'">
           <div style="width: 377.95275591px; height:207.87401575px;position: relative;" *ngFor="let row of qrCode; let i = index;">
             <div style="width:100%; height:10px;">&nbsp;</div>
             <div style="border: 1.5px dashed #000;">
@@ -65,7 +65,7 @@
         </ng-container>
         
         
-        <ng-container *ngIf="getData.coupon_type == 'Item Box'">
+        <ng-container *ngIf="getData.coupon_type == 'Master Box'">
           <!-- ***** CASE 1 BOX WITH ITEM START***** -->
           <ng-container *ngIf="getData.box_type == 1">
             <div style="width: 396.8503937px; position: relative; display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;" *ngFor="let row of qrCode; let i = index;">

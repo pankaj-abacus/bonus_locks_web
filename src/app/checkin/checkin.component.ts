@@ -249,8 +249,11 @@ export class CheckinComponent implements OnInit {
       }
     });
     this.bottomSheet._openedBottomSheetRef.afterDismissed().subscribe((data) => {
+      console.log(data)
       this.data.date_from = data.date_from;
       this.data.date_to = data.date_to;
+      this.data.emp_code=data.emp_code
+
       this.exportAsXLSX2();
     })
   }

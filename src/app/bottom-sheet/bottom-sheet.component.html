@@ -1,18 +1,40 @@
 <mat-nav-list>
   <div class="cs-form">
     <div class="bottom-sheet-heading">
-      Filter 
+      Filter
     </div>
-    <div class="row" *ngIf="lastPageData.filterPage == 'Expense' || lastPageData.filterPage == 'product_wise_secondary_report'">
+    <div class="row"
+      *ngIf="lastPageData.filterPage == 'Expense' || lastPageData.filterPage == 'product_wise_secondary_report'">
       <div class="col s12">
         <mat-form-field appearance="outline">
           <mat-label>Employee Name</mat-label>
           <mat-select name="user_id" [(ngModel)]="search.user_id" #user_id="ngModel" required>
             <mat-option>
-              <ngx-mat-select-search noEntriesFoundLabel="'no search found'" placeholderLabel="Search.." (keyup)="getSalesUser($event.target.value)"></ngx-mat-select-search>
+              <ngx-mat-select-search noEntriesFoundLabel="'no search found'" placeholderLabel="Search.."
+                (keyup)="getSalesUser($event.target.value)"></ngx-mat-select-search>
             </mat-option>
             <!--  {{row.role_name}} -->
             <mat-option *ngFor="let row of salesUser" value="{{row.id}}">{{row.name}} ({{row.employee_id}})</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row"
+      *ngIf=" lastPageData.filterPage == 'checkin_list'">
+      <div class="col s12">
+        <mat-form-field appearance="outline">
+          <mat-label>Users*</mat-label>
+          <mat-select name="emp_code" #emp_code="ngModel" [(ngModel)]="search.emp_code" multiple>
+            <mat-option>
+              <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.." #name="ngModel"
+                [(ngModel)]="filter.name"></ngx-mat-select-search>
+            </mat-option>
+            <div class="pl16" *ngIf="usersList.length>0">
+              <mat-checkbox [(ngModel)]="search.allSalesUser" (change)="allSalesUser1('allSalesUser')"
+                name="allSalesUser" value="true">Select All</mat-checkbox>
+            </div>
+            <mat-option *ngFor="let d of usersList | filterBy:{name:filter.name}" [value]="d.id"
+              (click)="search.emp_code.length==usersList.length ? search.allSalesUser=true:search.allSalesUser=false">{{d.name}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -21,8 +43,8 @@
       <div class="col s12">
         <mat-form-field appearance="outline">
           <mat-label>Date From</mat-label>
-          <input matInput [matDatepicker]="picker2"  name="date_from" (dateChange)="date($event)"
-          [max]="search.date_to||today_date" [(ngModel)]="search.date_from" readonly>
+          <input matInput [matDatepicker]="picker2" name="date_from" (dateChange)="date($event)"
+            [max]="search.date_to||today_date" [(ngModel)]="search.date_from" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
@@ -32,8 +54,8 @@
       <div class="col s12">
         <mat-form-field appearance="outline">
           <mat-label>Date To</mat-label>
-          <input matInput [matDatepicker]="picker3" name="date_to" [min]="search.date_from" [max]="today_date" (dateChange)="date($event)"
-          [(ngModel)]="search.date_to" readonly>
+          <input matInput [matDatepicker]="picker3" name="date_to" [min]="search.date_from" [max]="today_date"
+            (dateChange)="date($event)" [(ngModel)]="search.date_to" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
           <mat-datepicker #picker3></mat-datepicker>
         </mat-form-field>
@@ -41,7 +63,7 @@
     </div>
     <div class="row">
       <div class="col s12">
-        <a  class="add-item text-btn" mat-raised-button [disabled]="!search.date_to" (click)="getValue()">
+        <a class="add-item text-btn" mat-raised-button [disabled]="!search.date_to" (click)="getValue()">
           {{lastPageData.filterPage == 'Expense' ? 'Download Excel' : 'Go'}}
         </a>
       </div>
