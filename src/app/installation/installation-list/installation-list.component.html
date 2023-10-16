@@ -208,6 +208,72 @@
         </div>
       </div>
 
+      
+      <div class="table-head bdrt">
+        <table>
+          <tr>
+            <th class="w60"></th>
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="cs-input date-column infix-bodr">
+                  <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
+                  #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
+                  [max]="today_date" readonly />
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w100">
+              <div class="th-search-acmt">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Search ..." name="created_name"
+                  (keyup.enter)="getinspectionList('')" #created_name="ngModel"
+                  [(ngModel)]="filter_data.created_name" />
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w120">
+              <div class="th-search-acmt">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Search ..." name="complain_no"
+                  (keyup.enter)="getinspectionList('')" #complain_no="ngModel"
+                  [(ngModel)]="filter_data.complain_no" />
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w130">
+              <div class="th-search-acmt">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Search ..." name="customer_name"
+                  (keyup.enter)="getinspectionList('')" #customer_name="ngModel"
+                  [(ngModel)]="filter_data.customer_name" />
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w130">
+              <div class="th-search-acmt">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Search ..." name="customer_mobile"
+                  (keyup.enter)="getinspectionList('')" #customer_mobile="ngModel"
+                  [(ngModel)]="filter_data.customer_mobile" />
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
+                 #carpenter_detail="ngModel"
+                  [(ngModel)]="filter_data.carpenter_detail">
+                </mat-form-field>
+              </div>
+            </th>
+            <!-- <th class="w70 text-center"></th> -->
+          </tr>
+        </table>
+
+
       <div class="table-container">
         <div class="table-content">
           <table>
@@ -317,6 +383,7 @@
             </ng-container>
           </table>
         </div>
+
       </div>
     </div>
     <ng-container *ngIf="datanotofound == true && installationList.length == 0">
