@@ -20,7 +20,7 @@ import { AuthComponentGuard } from './auth-component.guard';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { AddDiscountComponent } from './discount/add-discount/add-discount.component';
 import { DiscountListComponent } from './discount/discount-list/discount-list.component';
-import { MatDialogModule, MatIconModule, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, MatSelectModule } from '@angular/material';
+import { MatDialogModule, MatIconModule, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, MatSelectModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 import { NgxEditorModule } from 'ngx-editor';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { DialogComponent } from './dialog.component';
@@ -62,6 +62,16 @@ import { EngineerAssignModelComponentComponent } from './engineer-assign-model-c
 import { WarrantyUpdateModelComponent } from './warranty/warranty-update-model/warranty-update-model.component';
 import { AddComplaintRemarkComponent } from './add-complaint-remark/add-complaint-remark.component';
 import { AddInstallationRemarkComponent } from './installation/add-installation-remark/add-installation-remark.component';
+import { ProductDetailModelComponent } from './installation/product-detail-model/product-detail-model.component';
+import { InstallationUpdateModelComponent } from './installation/installation-update-model/installation-update-model.component';
+import { ComplaintUpdateModelComponent } from './service/complaint-update-model/complaint-update-model.component';
+import { GatepassAddComponent } from './company-dispatch/gatepass-add/gatepass-add.component';
+import { SapreModuleModule } from './spare/sapre-module/sapre-module.module';
+import { AddSpareComponent } from './spare/add-spare/add-spare.component';
+import { AssignQtyComponent } from './spare/assign-qty/assign-qty.component';
+import { ProductUploadComponent } from './product-upload/product-upload.component';
+import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-module/complanit-visit-module.module';
+
 
 
 @NgModule({
@@ -82,7 +92,7 @@ import { AddInstallationRemarkComponent } from './installation/add-installation-
         StrReplace,
         Crypto,
         NumericWords,
-        
+
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -122,10 +132,14 @@ import { AddInstallationRemarkComponent } from './installation/add-installation-
         NgMultiSelectDropDownModule.forRoot(),
         AppUtilityModule,
         ServiceModuleModule,
+        SapreModuleModule,
+        ComplanitVisitModuleModule,
         CustomerModuleModule,
         WarrantyModuleModule,
         InstallationModuleModule,
         // FusionChartsModule
+        MatFormFieldModule,
+        MatInputModule,
     ],
     providers: [
         DatabaseService,
@@ -146,7 +160,16 @@ import { AddInstallationRemarkComponent } from './installation/add-installation-
         EngineerAssignModelComponentComponent,
         WarrantyUpdateModelComponent,
         AddComplaintRemarkComponent,
-        AddInstallationRemarkComponent
+        AddInstallationRemarkComponent,
+        ProductDetailModelComponent,
+        InstallationUpdateModelComponent,
+        ComplaintUpdateModelComponent,
+        GatepassAddComponent,
+        AddSpareComponent,
+        AssignQtyComponent,
+        ProductUploadComponent
+
+
     ],
 
     exports: [RouterModule],

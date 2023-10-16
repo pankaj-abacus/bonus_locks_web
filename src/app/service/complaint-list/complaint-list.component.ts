@@ -37,49 +37,49 @@ export class ComplaintListComponent implements OnInit {
   sr_no: number;
   datanotofound: boolean = false;
   downurl: any = ''
-  
-  
-  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { 
+
+
+  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) {
     this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
-    this.getComplantList('');
-    
-    
   }
-  
+
   ngOnInit() {
     this.filter_data = this.service.getData()
     this.getComplantList('');
-    
+
     if (this.filter_data.status) {
       this.active_tab = this.filter_data.status
+      if ( this.active_tab=='Pending') {
+        this.sub_active_tab='Not_Assigned'
+      }else{
+        this.sub_active_tab='Closed_By_Service'
+      }
     }
-    
-    if (this.filter_data.status) {
-      this.sub_active_tab = this.filter_data.status
-    }
+
+
   }
-  
+
   pervious() {
     this.start = this.start - this.page_limit;
     this.getComplantList('');
   }
-  
+
   nextPage() {
     this.start = this.start + this.page_limit;
     this.getComplantList('');
   }
-  
+
   refresh() {
     this.start = 0;
     this.filter_data = {};
     this.getComplantList('');
   }
-  
+
   clear() {
     this.refresh();
   }
-  
+
   goToDetailHandler(id) {
     window.open(`/complaint-detail/` + id);
   }
@@ -95,7 +95,7 @@ export class ComplaintListComponent implements OnInit {
     this.filter_data.return_on = moment(this.filter_data.return_on).format('YYYY-MM-DD');
     this.getComplantList('');
   }
-  
+
   getComplantList(data) {
     if (this.pagenumber > this.total_page) {
       this.pagenumber = this.total_page;
@@ -104,35 +104,35 @@ export class ComplaintListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
-    
-    
+
+
     if (this.active_tab == 'All') {
       this.filter_data.status = this.active_tab;
-      this.filter_data.sub_status = ''; 
+      this.filter_data.sub_status = '';
     }
     if (this.active_tab == 'Pending') {
       this.filter_data.status = this.active_tab;
       this.filter_data.sub_status = 'Not_Assigned';
     }
-    
+
     if (this.active_tab == 'Cancel') {
       this.filter_data.status = this.active_tab;
-      this.filter_data.sub_status = ''; 
+      this.filter_data.sub_status = '';
     }
-    
+
     if (this.active_tab == 'Closed') {
       this.filter_data.status = this.active_tab;
-      this.filter_data.sub_status = 'Closed_By_Service'; 
+      this.filter_data.sub_status = 'Closed_By_Service';
     }
-    
+
     if (this.sub_active_tab == 'Not_Assigned') {
       this.filter_data.sub_status = this.sub_active_tab;
     }
-    
+
     if (this.sub_active_tab == 'Assigned') {
       this.filter_data.sub_status = this.sub_active_tab;
     }
-    
+
     if (this.sub_active_tab == 'Inspection_Complete') {
       this.filter_data.sub_status = this.sub_active_tab;
     }
@@ -142,34 +142,34 @@ export class ComplaintListComponent implements OnInit {
     if (this.sub_active_tab == 'Sparepart_Pending') {
       this.filter_data.sub_status = this.sub_active_tab;
     }
-    
+
     if (this.sub_active_tab == 'Closed_By_Service') {
       this.filter_data.sub_status = this.sub_active_tab;
     }
-    
+
     if (this.sub_active_tab == 'Closed_By_Replacement') {
       this.filter_data.sub_status = this.sub_active_tab;
     }
-    
+
     if (this.sub_active_tab == 'Return_Pending') {
       this.filter_data.sub_status = this.sub_active_tab;
     }
     if (this.sub_active_tab == 'Feedback_Complete') {
       this.filter_data.sub_status = this.sub_active_tab;
     }
-    
+
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceTask/serviceComplaintList")
-    
+
     this.loader = true;
     header.subscribe((result) => {
       if (result['statusCode'] == 200) {
-        
+
         console.log('result',result);
-        
-        
+
+
         this.complaintList = result['result'];
         console.log(this.complaintList);
-        
+
         this.pageCount = result['count'];
         this.tab_count = result['tab_count'];
         this.sub_tab_count = result['sub_tab_count'];
@@ -181,7 +181,7 @@ export class ComplaintListComponent implements OnInit {
           this.datanotofound = true;
           this.loader = false;
         }
-        
+
         if (this.pagenumber > this.total_page) {
           this.pagenumber = this.total_page;
           this.start = this.pageCount - this.page_limit;
@@ -192,8 +192,8 @@ export class ComplaintListComponent implements OnInit {
         this.total_page = Math.ceil(this.pageCount / this.page_limit);
         this.sr_no = this.pagenumber - 1;
         this.sr_no = this.sr_no * this.page_limit
-        
-        
+
+
         for (let i = 0; i < this.complaintList.length; i++) {
           if (this.complaintList[i].status == '1') {
             this.complaintList[i].newStatus = true
@@ -208,25 +208,27 @@ export class ComplaintListComponent implements OnInit {
         this.datanotofound = true;
         this.loader = false;
       }
-      
+
     })
   }
   lastBtnValue(value) {
     this.fabBtnValue = value;
   }
-  
-  
+
+
   downloadExcel() {
+    this.excelLoader=true;
     this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_complaint_list").subscribe((result => {
       if (result['msg'] == true) {
         window.open(this.downurl + result['filename'])
         this.getComplantList('');
+        this.excelLoader=false;
       } else {
       }
     }));
   }
-  
+
   rejectComplaint(){
-    
+
   }
 }

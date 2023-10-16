@@ -32,7 +32,7 @@
             <mat-form-field class="cs-input" appearance="outline">
               <mat-label>Select Organization Name</mat-label>
               <mat-select name="organisation_id" placeholder="Select Organization Name" #organisation_id="ngModel"
-              [(ngModel)]="data.organisation_id" required>
+              [(ngModel)]="data.organisation_id" (ngModelChange)="getOrganizationCode(data.organisation_id)" required>
               <mat-option *ngFor="let row of organisationData" value="{{row.id}}">{{row.company_name}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -556,6 +556,49 @@
 </div>
 <!-- excel download provisioon -->
 
+<!-- Integration Log Report Download Function  -->
+<div class="edit-modal" *ngIf="(delivery_from=='log_report')">
+  <form validate #update_basic="ngForm" name="update_basic"
+  (ngSubmit)="(update_basic.valid && update_basic.submitted) ? downloadLogReport():''">
+  <p class="heading" *ngIf="delivery_from=='log_report'">Download Log Report</p>
+  <div mat-dialog-content>
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s12 l6 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Date From</mat-label>
+            <input matInput [matDatepicker]="picker2" placeholder="Date" name="date_from" #date_from="ngModel"
+            [max]="today_date||data.date_to" [(ngModel)]="data.date_from" readonly required>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="date_from.touched || update_basic.submitted">
+            <p *ngIf="date_from.errors?.required">This field is required</p>
+          </div>
+        </div>
+        <div class="col s12 l6 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Date To</mat-label>
+            <input matInput [matDatepicker]="picker3" placeholder="Date" name="date_to" #date_to="ngModel"
+            [min]="data.date_from" [max]="today_date" [(ngModel)]="data.date_to" readonly required>
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="date_to.touched || update_basic.submitted">
+            <p *ngIf="date_to.errors?.required">This field is required</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="warn" [mat-dialog-close]="false">Cancel</button>
+    <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
+    [disabled]="savingFlag == true">{{savingFlag == true ? 'Downloading' : 'Download'}}</button>
+  </div>
+</form>
+</div>
+<!-- Integration Log Report Download Function  -->
 
 
 <!--month wise secondary excel download provision -->

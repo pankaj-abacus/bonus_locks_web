@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { sessionStorage } from 'src/app/localstorage.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import * as moment from 'moment';
-import {DialogComponent} from 'src/app/dialog.component';
+import { DialogComponent } from 'src/app/dialog.component';
 
 
 @Component({
@@ -37,8 +37,8 @@ export class StatusModalComponent implements OnInit {
   reqProductDetails: any = [];
   sendProductDetails: any = [];
   dr_inDetails: any = [];
-  order_item:any = [];
-  warehouse:any =[];
+  order_item: any = [];
+  warehouse: any = [];
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public data, public dialog: MatDialog, public dialog1: DialogComponent, public serve: DatabaseService, public session: sessionStorage, public toast: ToastrManager, public dialogRef: MatDialogRef<StatusModalComponent>) {
@@ -48,13 +48,13 @@ export class StatusModalComponent implements OnInit {
     this.userId = this.userData['data']['id'];
     this.userName = this.userData['data']['name'];
     this.delivery_from = this.data.delivery_from;
-    if(this.data.from == 'primary_order'){
+    if (this.data.from == 'primary_order') {
       for (let i = 0; i < this.data.order_item.length; i++) {
-        this.order_item.push({'id':this.data.order_item[i]['id'],'product_name':this.data.order_item[i]['product_name'], 'product_code':this.data.order_item[i]['product_code'], 'order_qty':this.data.order_item[i]['qty'] , 'qty':this.data.order_item[i]['sale_dispatch_qty'], 'dispatch_qty':parseInt(this.data.order_item[i]['qty']) - parseInt(this.data.order_item[i]['sale_dispatch_qty'])})
+        this.order_item.push({ 'id': this.data.order_item[i]['id'], 'product_name': this.data.order_item[i]['product_name'], 'product_code': this.data.order_item[i]['product_code'], 'order_qty': this.data.order_item[i]['qty'], 'qty': this.data.order_item[i]['sale_dispatch_qty'], 'dispatch_qty': parseInt(this.data.order_item[i]['qty']) - parseInt(this.data.order_item[i]['sale_dispatch_qty']) })
       }
-      
+
     }
-    
+
     this.tmpOrderStatus = this.data.order_status;
     if (this.tmpOrderStatus) {
       this.data.order_status = '';
@@ -101,7 +101,7 @@ export class StatusModalComponent implements OnInit {
       console.log(this.data.reqProductData);
       this.reqProductDetails = this.data.reqProductData.product_details;
       console.log(this.reqProductDetails);
-      
+
     }
 
     else if (this.data.from == 'send_product_data') {
@@ -111,7 +111,7 @@ export class StatusModalComponent implements OnInit {
     else if (this.data.from == 'stock_product_trans') {
       this.dr_outDetails = this.data.stockProductTrans.dr_out;
       this.dr_inDetails = this.data.stockProductTrans.dr_in;
-     
+
     }
 
     else if (this.data.from == 'approve_transfer_equest') {
@@ -125,27 +125,27 @@ export class StatusModalComponent implements OnInit {
   }
   reason_reject: any
   primary_order_status_change(reason, status) {
-    if(status == 'readyToDispatch'){
+    if (status == 'readyToDispatch') {
       for (let i = 0; i < this.order_item.length; i++) {
-        let indexValue = i+1;
-        if(this.order_item[i]['qty']  == 0 ){
-          if((parseInt(this.order_item[i]['dispatch_qty'])) >  this.order_item[i]['order_qty']){
-            this.toast.errorToastr( 'Row number ' + indexValue +     ' remaining QTY. can not be greater than QTY.');
+        let indexValue = i + 1;
+        if (this.order_item[i]['qty'] == 0) {
+          if ((parseInt(this.order_item[i]['dispatch_qty'])) > this.order_item[i]['order_qty']) {
+            this.toast.errorToastr('Row number ' + indexValue + ' remaining QTY. can not be greater than QTY.');
             return;
           }
         }
-        if(this.order_item[i]['qty'] >  0){
-          if(parseInt(this.order_item[i]['dispatch_qty'])  > parseInt(this.order_item[i]['order_qty']) - parseInt(this.order_item[i]['qty']) ){
-            let value = parseInt(this.order_item[i]['order_qty']) -  parseInt(this.order_item[i]['qty'])
-            this.toast.errorToastr('Row number ' + indexValue +' Dispatch QTY. can not be greater than remaining QTY. ' +  value );
+        if (this.order_item[i]['qty'] > 0) {
+          if (parseInt(this.order_item[i]['dispatch_qty']) > parseInt(this.order_item[i]['order_qty']) - parseInt(this.order_item[i]['qty'])) {
+            let value = parseInt(this.order_item[i]['order_qty']) - parseInt(this.order_item[i]['qty'])
+            this.toast.errorToastr('Row number ' + indexValue + ' Dispatch QTY. can not be greater than remaining QTY. ' + value);
             return;
           }
         }
       }
-      this.dialog1.confirm('You want to update dispatch planned?').then((result)=>{
-        if(result){
+      this.dialog1.confirm('You want to update dispatch planned?').then((result) => {
+        if (result) {
           this.savingFlag = true;
-          this.serve.post_rqst({'dispatch_item':this.order_item,'status': status, 'id': this.data.order_id,'organisation_id': this.data.organisation_id, 'warehouse_id': this.data.warehouse_id, 'action_by': this.login.data.id, 'uid': this.userId, 'uname': this.userName }, "dispatch/dispatchOrderCreate").subscribe((result => {
+          this.serve.post_rqst({ 'dispatch_item': this.order_item, 'status': status, 'id': this.data.order_id, 'organisation_id': this.data.organisation_id, 'warehouse_id': this.data.warehouse_id, 'action_by': this.login.data.id, 'uid': this.userId, 'uname': this.userName }, "dispatch/dispatchOrderCreate").subscribe((result => {
             if (result['statusCode'] == 200) {
               this.dialog.closeAll();
               this.savingFlag = false;
@@ -158,13 +158,14 @@ export class StatusModalComponent implements OnInit {
           }))
         }
       });
-      
-      
-      
+
+
+
     }
-    else{
+    else {
       this.savingFlag = true;
-      this.serve.post_rqst({ 'reason': reason, 'status': status, 'warehouse_id': this.data.warehouse_id, 'id': this.data.order_id, 'organisation_id': this.data.organisation_id, 'action_by': this.login.data.id, 'uid': this.userId, 'uname': this.userName }, "Order/primaryOrderStatusChange").subscribe((result => {
+      this.serve.post_rqst({ 'reason': reason, 'status': status, 'warehouse_id': this.data.warehouse_id, 'id': this.data.order_id, 'organisation_id': this.data.organisation_id,
+      'orgCode': this.data.orgCode, 'action_by': this.login.data.id, 'uid': this.userId, 'uname': this.userName }, "Order/primaryOrderStatusChange").subscribe((result => {
         if (result['statusCode'] == 200) {
           this.dialog.closeAll();
           this.savingFlag = false;
@@ -174,29 +175,29 @@ export class StatusModalComponent implements OnInit {
           this.savingFlag = false;
           this.toast.errorToastr(result['statusMsg'])
         }
-        
+
       }))
     }
-    
+
   }
 
-  selectWarehouse(value){
-    if(value.value == "Yes"){
+  selectWarehouse(value) {
+    if (value.value == "Yes") {
       this.serve.post_rqst({}, "Dispatch/fetchWarehouse").subscribe((result => {
-        if(result['statusCode'] == 200){
+        if (result['statusCode'] == 200) {
           this.warehouse = result['result'];
         }
-        else{
+        else {
           this.toast.errorToastr(result['statusMsg']);
         }
       }));
-      
+
     }
-    else{
-      this.data.warehouse_id ='';
+    else {
+      this.data.warehouse_id = '';
       this.warehouse = [];
     }
-    
+
   }
 
   secondary_order_status_change(reason, status) {
@@ -223,6 +224,15 @@ export class StatusModalComponent implements OnInit {
       }
 
     }));
+  }
+
+  getOrganizationCode(orgId) {
+    console.log(orgId);
+    let index = this.organisationData.findIndex(row => row.id == orgId)
+    if (index != -1) {
+      this.data.orgCode = this.organisationData[index].organisation_code
+    }
+    console.log(this.data.orgCode);
   }
 
   getCompanyData() {
@@ -347,7 +357,7 @@ export class StatusModalComponent implements OnInit {
   AddCustomerNetworkTravel() {
     this.savingFlag = true;
 
-    this.serve.post_rqst({ 'id': this.data.id, 'drData': this.dr_data,'data':this.data}, "Travel/addDr").subscribe((result => {
+    this.serve.post_rqst({ 'id': this.data.id, 'drData': this.dr_data, 'data': this.data }, "Travel/addDr").subscribe((result => {
       if (result['statusCode'] == 200) {
         this.dialogRef.close(true);
         this.savingFlag = false;
@@ -416,6 +426,27 @@ export class StatusModalComponent implements OnInit {
       }
     }, () => this.savingFlag = false)
   }
+  downloadLogReport() {
+    console.log('download log report')
+    this.savingFlag = true;
+    this.data.date_from ? (this.data.date_from = moment(this.data.date_from).format('YYYY-MM-DD')) : null;
+    this.data.date_to ? (this.data.date_to = moment(this.data.date_to).format('YYYY-MM-DD')) : null;
+    let apiName = '';
+    if (this.delivery_from == 'log_report') {
+      apiName = "Excel/IntegrationLogsCsv"
+    }
+    this.serve.post_rqst({ "date_from": this.data.date_from, "date_to": this.data.date_to }, apiName).subscribe((result: any) => {
+      if (result['statusCode'] == 200) {
+        this.savingFlag = false;
+        window.open(this.serve.downloadUrl + result['filename'])
+        // return true;
+      } else {
+        this.savingFlag = false;
+        this.toast.errorToastr(result['statusMsg']);
+
+      }
+    }, () => { this.savingFlag = false; this.toast.errorToastr('Something went wrong'); })
+  }
 
 
   downloadsecondarySaleReport() {
@@ -433,22 +464,22 @@ export class StatusModalComponent implements OnInit {
 
 
 
-  checkValidation(order_qty, qty, dispatch, index){ 
-    
-    if(qty == 0 ){
-      if((parseInt(dispatch)) > order_qty){
+  checkValidation(order_qty, qty, dispatch, index) {
+
+    if (qty == 0) {
+      if ((parseInt(dispatch)) > order_qty) {
         this.toast.errorToastr('Row number ' + index + ' dispatch QTY. can not be greater than QTY.');
         return;
       }
     }
-    if(qty >  0){
-      if((dispatch > parseInt(order_qty) - parseInt(qty))){
+    if (qty > 0) {
+      if ((dispatch > parseInt(order_qty) - parseInt(qty))) {
         let value = parseInt(order_qty) - parseInt(qty)
-        this.toast.errorToastr('Row number ' + index + ' dispatch QTY. can not be greater than remaining QTY. ' +  value );
+        this.toast.errorToastr('Row number ' + index + ' dispatch QTY. can not be greater than remaining QTY. ' + value);
         return;
       }
     }
-    
+
   }
 
 
@@ -479,16 +510,16 @@ export class StatusModalComponent implements OnInit {
       }
     }))
   }
-  
-  salesIn:any =[];
-  salesOut:any =[];
+
+  salesIn: any = [];
+  salesOut: any = [];
 
   getStock() {
-    this.serve.post_rqst({'id': this.data.stockProductTrans.product_id, 'dr_id':this.data.id}, "stock/salesReturnPartyList").subscribe((result => {
+    this.serve.post_rqst({ 'id': this.data.stockProductTrans.product_id, 'dr_id': this.data.id }, "stock/salesReturnPartyList").subscribe((result => {
       if (result['statusCode'] == 200) {
         this.salesIn = result['return_in'];
         this.salesOut = result['return_out'];
-        
+
       } else {
         this.toast.errorToastr(result['statusMsg']);
       }

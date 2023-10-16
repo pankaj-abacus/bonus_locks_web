@@ -96,6 +96,7 @@ export class AddItemComponent implements OnInit {
     this.orderData.contact_person = params.contact_person
     this.assign_login_data = this.session.getSession();
     this.logined_user_data = this.assign_login_data.value.data;
+    
   }
 
   tabActive(tab: any) {

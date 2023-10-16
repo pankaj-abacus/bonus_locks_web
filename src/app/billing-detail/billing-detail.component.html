@@ -1,6 +1,6 @@
 <div class="main-container" >
   <div class="tools-container">
-    <a mat-icon-button  matTooltip="Back"  routerLink="/billing">
+    <a mat-icon-button  matTooltip="Back"  (click)="back()">
       <i class="material-icons">arrow_back</i>
     </a>
     <h2>Invoice Details</h2>
@@ -189,8 +189,6 @@
                   <th class="w80 text-right">Price</th>
                   <th class="w80 text-center">QTY.</th>
                   <th class="w80 text-right">Sub Total</th>
-                  <th class="w80 text-right">GST</th>
-                  <th class="w80 text-right">Net Amount</th>
                   <th class="w40 text-right" *ngIf="status  == 'Pending'">Action</th>
                 </tr>
               </table>
@@ -216,8 +214,6 @@
                       </div>
                     </td>
                     <td class="w80 text-right">&#x20B9; {{row.sub_total}}</td>
-                    <td class="w80 text-right">&#x20B9; {{row.gst_amount}} ({{row.gst_percent}}%)</td>
-                    <td class="w80 text-right"><strong>&#x20B9; {{row.net_amount}}</strong></td>
                     <td class="w40 text-center" *ngIf="status  == 'Pending'">
                       <div class="action-button text-center">
                         <a  mat-icon-button  matTooltip="Delete">
@@ -262,7 +258,7 @@
                 </tr>
                 
                 <tr>
-                  <td>Sub-Total</td>
+                  <td>Taxable Value</td>
                   <td class="text-center">:</td>
                   <td class="text-right ">&#8377;{{invoice_detail.sub_total}}</td>
                 </tr>

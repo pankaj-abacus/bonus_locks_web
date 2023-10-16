@@ -16,6 +16,7 @@ export class EngineerAssignModelComponentComponent implements OnInit {
   engineerList: any = [];  
   id;
 
+  savingFlag:boolean = false;
   
   
   constructor(@Inject(MAT_DIALOG_DATA) public data,public dialogRef: MatDialogRef<EngineerAssignModelComponentComponent>,public service: DatabaseService,public toast: ToastrManager,public alert:DialogComponent,public dialog:MatDialog) {
@@ -30,7 +31,8 @@ export class EngineerAssignModelComponentComponent implements OnInit {
   
   filter: any = {};
   assign_engineerget(searcValue) {
-    this.filter.engineer_name = searcValue;
+    this.filter.technician_detail = searcValue;
+    this.filter.state = this.data.state;
     this.service.post_rqst({ 'filter': this.filter, }, 'ServiceTask/plumberList').subscribe((resp) => {
       if (resp['statusCode'] == 200) {
         this.engineerList = resp.data;
@@ -61,6 +63,8 @@ export class EngineerAssignModelComponentComponent implements OnInit {
   
   assign_engineer(){ 
     console.log(this.id);
+    this.savingFlag = true;
+
     this.service.post_rqst({'complaint_id':this.data.id,'data':this.formData},"ServiceTask/carpenterAssign").subscribe((result)=>{
       
       if(result['statusCode']==200)
@@ -69,6 +73,8 @@ export class EngineerAssignModelComponentComponent implements OnInit {
         this.dialog.closeAll();
       }else{
         this.toast.errorToastr(result['statusMsg']);
+        this.savingFlag = false;
+
       }
     })
   }

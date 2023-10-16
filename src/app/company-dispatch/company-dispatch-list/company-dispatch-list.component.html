@@ -107,7 +107,7 @@
                                         <mat-form-field class="cs-input select-input">
                                             <mat-select (selectionChange)="billData('')" placeholder="Organization Name" name="organisation_name"  #organisation_name="ngModel" [(ngModel)]="filter.organisation_name">
                                                 <mat-option value="">All</mat-option>
-                                                <mat-option *ngFor="let row of organisationData" value="{{row.company_name}}">{{row.company_name}}</mat-option>
+                                                <mat-option *ngFor="let row of organisationData" value="{{row.id}}">{{row.company_name}}</mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
@@ -150,7 +150,7 @@
                                     <td class="w40">{{ i + 1 + sr_no }}</td>
                                     <td class="w40 text-center" *ngIf="active_tab== 'Dispatched' && assign_login_data2.warehouse_flag !='1'">
                                         <ng-container  *ngIf="row.gate_pass_number == 0">
-                                            <mat-checkbox name="checked" [(ngModel)]="row.checked" (change)="select_item($event,i,row.organisation_name)"></mat-checkbox>
+                                            <mat-checkbox name="checked" [(ngModel)]="row.checked" (change)="select_item($event,i,row.organisation_id)"></mat-checkbox>
                                         </ng-container>
                                     </td>
                                     <td class="w60">{{row.date_created | date:'dd MMM yyyy , h:mm a'}}</td>

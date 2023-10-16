@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GenerateMasterBoxComponent } from './generate-master-box.component';
+import { AddSpareComponent } from './add-spare.component';
 
-describe('GenerateMasterBoxComponent', () => {
-  let component: GenerateMasterBoxComponent;
-  let fixture: ComponentFixture<GenerateMasterBoxComponent>;
+describe('AddSpareComponent', () => {
+  let component: AddSpareComponent;
+  let fixture: ComponentFixture<AddSpareComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GenerateMasterBoxComponent ]
+      declarations: [ AddSpareComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GenerateMasterBoxComponent);
+    fixture = TestBed.createComponent(AddSpareComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

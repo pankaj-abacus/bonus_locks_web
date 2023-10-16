@@ -38,6 +38,8 @@ import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
 import { AddGrandMasterBoxComponent } from './company-dispatch/add-grand-master-box/add-grand-master-box.component';
 import { ViewMasterBoxDispatchDetailComponent } from './company-dispatch/view-master-box-dispatch-detail/view-master-box-dispatch-detail.component';
 import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-add/dist-primary-order-add.component';
+import { InstallationAddComponent } from './installation/installation-add/installation-add.component';
+import { ProductUploadComponent } from './product-upload/product-upload.component';
 
 
 @NgModule({
@@ -67,7 +69,9 @@ import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-
     BottomSheetComponent,
     AddGrandMasterBoxComponent,
     ViewMasterBoxDispatchDetailComponent,
-    ViewMasterBoxDispatchDetailComponent
+    ViewMasterBoxDispatchDetailComponent,
+    InstallationAddComponent,
+    ProductUploadComponent,
 
 ],
   imports: [

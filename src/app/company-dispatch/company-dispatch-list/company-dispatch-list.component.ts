@@ -54,6 +54,7 @@ export class CompanyDispatchListComponent implements OnInit {
   pendingGatepassCount: any;
   organisationData:any =[];
   organizationFlag:boolean = false;
+  organisation_id: any;
 
   constructor(public serve: DatabaseService, public route: Router, public ActivatedRoute: ActivatedRoute,
     public dialog: DialogComponent, public session: sessionStorage, public alrt: MatDialog,public toast :ToastrManager) {
@@ -198,7 +199,7 @@ export class CompanyDispatchListComponent implements OnInit {
       
       this.filter.active_tab = this.active_tab;
       this.organizationFlag = false;
-      this.serve.post_rqst({'branch_code':this.loginData.branch_code, 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit}, "Dispatch/tallyInvoiceCreditBillingListing")
+      this.serve.post_rqst({'branch_code':this.loginData.branch_code,'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit}, "Dispatch/tallyInvoiceCreditBillingListing")
       .subscribe((result => {
         if(result['statusCode']==200){
           this.distributor_list = (result['credit_billing_list']);
@@ -344,7 +345,7 @@ export class CompanyDispatchListComponent implements OnInit {
     {        
 
 
-      if(!this.filter.organisation_name && event.checked){
+      if(!this.filter.organisation_name && event.checked && this.assign_login_data2.id == '1'){
         this.toast.errorToastr('Please select organization filter');
         this.organizationFlag = true;
         return
@@ -353,7 +354,7 @@ export class CompanyDispatchListComponent implements OnInit {
 
       if(event.checked)
       {
-        if(this.filter.organisation_name != organisation_name){
+        if(this.filter.organisation_name != organisation_name && this.assign_login_data2.id == '1'){
           this.toast.errorToastr('Organization filter not match');
           this.organizationFlag = true;
           return

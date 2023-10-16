@@ -14,21 +14,23 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
 import { EngineerAssignModelComponent } from '../engineer-assign-model/engineer-assign-model.component';
 import { AddInstallationRemarkComponent } from '../add-installation-remark/add-installation-remark.component';
+import { ProductDetailModelComponent } from '../product-detail-model/product-detail-model.component';
+import { InstallationUpdateModelComponent } from '../installation-update-model/installation-update-model.component';
 
 const inspectionRoutes = [
   { path: "", children:[
     { path: "", component: InstallationListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: 'add-installation', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: 'add-installation/:type', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     { path: "installation-detail/:id", children:[
       {path:"", component:InstallationDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-      {path:'add-installation/:id', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
+      {path:'add-installation/:type/:id', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
 
     ] }
   ]},
 ]
 
 @NgModule({
-  declarations: [InstallationListComponent,InstallationAddComponent,InstallationDetailComponent,EngineerAssignModelComponent,AddInstallationRemarkComponent],
+  declarations: [InstallationListComponent,InstallationDetailComponent,EngineerAssignModelComponent,AddInstallationRemarkComponent,ProductDetailModelComponent,InstallationUpdateModelComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(inspectionRoutes),

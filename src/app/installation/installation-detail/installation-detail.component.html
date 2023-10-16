@@ -4,18 +4,6 @@
       <i class="material-icons">arrow_back</i>
     </a>
     <h2>Installation Details</h2>
-
-    <div class="left-auto">
-      <div class="left-auto">
-        <button mat-button class="ouline-btns status" mat-raised-button color="accent" (click)="openDialog(getData.id)"
-          *ngIf="
-            getData.complaint_status != 'Done' &&
-            getData.complaint_status != 'Reject'
-          ">
-          Assign Engineer
-        </button>
-      </div>
-    </div>
   </div>
 
   <div class="container pt10 pl10 pr10 pb50">
@@ -24,37 +12,21 @@
         <!-- product data start -->
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
-            <h2>Basic Details</h2>
-            <div class="left-auto">
+            <h2>Customer Details</h2>
+            <div class="left-auto" *ngIf="getData.complaint_status=='Pending'">
               <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
-                [routerLink]="['add-installation/', this.id]">
+                [routerLink]="['add-installation/', 'installation',this.id]">
                 <i class="material-icons">edit</i>
               </a>
             </div>
           </div>
           <div class="card-body">
             <div class="grid-box">
-              <div class="block-feilds">
-                <span>Date Created</span>
-                <p>{{ getData.date_created ? getData.date_created : "---" }}</p>
-              </div>
-
-              <div class="block-feilds">
-                <span>Created By</span>
-                <p>
-                  {{ getData.created_name ? getData.created_name : "---" }}
-                </p>
-              </div>
-
-              <div class="block-feilds">
-                <span>Installation No.</span>
-                <p>{{ getData.complain_no ? getData.complain_no : "---" }}</p>
-              </div>
 
               <div class="block-feilds">
                 <span>Customer Name</span>
                 <p>
-                  {{ getData.customer_name ? getData.customer_name : "---" }}
+                  {{ getData.customer_name ? (getData.customer_name| titlecase) : "---" }}
                 </p>
               </div>
 
@@ -68,18 +40,23 @@
               </div>
 
               <div class="block-feilds">
+                <span>Alternate Mobile No.</span>
+                <p>{{getData.alternate_mobile_no ? getData.alternate_mobile_no :'---'}}</p>
+              </div>
+
+              <div class="block-feilds">
                 <span>State</span>
-                <p>{{ getData.state ? getData.state : "---" }}</p>
+                <p>{{ getData.state ? (getData.state| titlecase) : "---" }}</p>
               </div>
 
               <div class="block-feilds">
                 <span>District</span>
-                <p>{{ getData.district ? getData.district : "---" }}</p>
+                <p>{{ getData.district ? (getData.district| titlecase) : "---" }}</p>
               </div>
 
               <div class="block-feilds">
                 <span>City</span>
-                <p>{{ getData.city ? getData.city : "---" }}</p>
+                <p>{{ getData.city ? (getData.city| titlecase) : "---" }}</p>
               </div>
 
               <div class="block-feilds">
@@ -89,47 +66,152 @@
 
               <div class="block-feilds">
                 <span>Address</span>
-                <p>{{ getData.address ? getData.address : "N/A" }}</p>
-              </div>
-
-              <div class="block-feilds">
-                <span>Carpenter Name</span>
-                <p>
-                  {{ getData.carpenter_name ? getData.carpenter_name : "N/A" }}
-                </p>
-              </div>
-
-              <div class="block-feilds">
-                <span>Carpenter Mobile No.</span>
-                <p>
-                  {{
-                  getData.carpenter_mobile ? getData.carpenter_mobile : "N/A"
-                  }}
-                </p>
-              </div>
-              <div class="block-feilds">
-                <span>Installation Status</span>
-                <p>{{getData.complaint_status ? getData.complaint_status : '--'}}</p>
+                <p>{{ getData.address ? (getData.address| titlecase) : "N/A" }}</p>
               </div>
             </div>
-            <!-- <div class="card-head mt15" >
-                            <h2>Installation Images</h2>
-                        </div>
-                        <div class="card-body" >
-                            <div class="grid-box">
-                                <div class="block-feilds">
-                                    <div class="doc-img">
-                                        <div class="image-block" *ngFor="let row of inspectionImg">
-                                            <img [src]="url+row.image" (click)="imageModel(url+row.image)" style="cursor: zoom-in;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
+          </div>
+
+        </div>
+        <div class="card" *ngIf="skLoading">
+          <div class="sk-head">
+            <h2>&nbsp;</h2>
+          </div>
+          <div class="card-body">
+            <div class="grid-box single mt10" *ngFor="let row of [].constructor(5)">
+              <div class="sk-box">&nbsp;</div>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 mt16 m12 l12">
+          <div class="card" *ngIf="!skLoading">
+            <div class="card-head">
+              <h2>Installation Details</h2>
+            </div>
+            <div class="card-body">
+              <div class="grid-box">
+                <div class="block-feilds">
+                  <span>Date Created</span>
+                  <p>{{ getData.date_created ? (getData.date_created | date : 'dd MMM yyy ,h:mm a'): "---" }}</p>
+                </div>
+
+                <div class="block-feilds">
+                  <span>Created By</span>
+                  <p>
+                    {{ getData.created_name ? (getData.created_name | titlecase): "---" }}
+                  </p>
+                </div>
+
+                <div class="block-feilds">
+                  <span>Installation No.</span>
+                  <p>{{ getData.complain_no ? getData.complain_no : "---" }}</p>
+                </div>
+                <div class="block-feilds">
+                  <span>Technician Name</span>
+                  <p>
+                    {{ getData.carpenter_name ? (getData.carpenter_name | titlecase): "N/A" }}
+                  </p>
+                </div>
+
+                <div class="block-feilds ">
+                  <span>Technician Mobile No.</span>
+                  <p>
+                    {{
+                    getData.carpenter_mobile ? getData.carpenter_mobile : "N/A"
+                    }}
+                  </p>
+                </div>
+                <div class="block-feilds flex-heading">
+                  <div>
+                    <span>Installation Status</span>
+                    <!-- <p>{{getData.complaint_status ? (getData.complaint_status| titlecase) : '--'}}</p> -->
+                    <p>
+                      <strong class="yellow-clr" *ngIf="getData.complaint_status=='Pending'">
+                        {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                        '--'}}</strong>
+                      <strong class="green-clr" *ngIf="getData.complaint_status=='Done'">
+                        {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                        '--'}}</strong>
+                      <strong class="red-clr" *ngIf="getData.complaint_status=='Reject'">
+                        {{getData.complaint_status ? (getData.complaint_status | titlecase) :
+                        '--'}}</strong>
+                    </p>
+                  </div>
+                  <div class="left-auto" *ngIf="getData.complaint_status == 'Pending'">
+                    <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
+                      (click)="updateInstallationStataus(getData.id)">
+                      <i class="material-icons">edit</i>
+                    </a>
+                  </div>
+                </div>
+                <div class="block-feilds " *ngIf="getData.complaint_status=='Reject'">
+                  <span>Reason Of Reject</span>
+                  <p>
+                    {{
+                    getData.status_reason ? (getData.status_reason |titlecase) : "N/A"
+                    }}
+                  </p>
+                </div>
+                <div class="block-feilds ">
+                  <span>TAT</span>
+                  <p>
+                    {{
+                    getData.pending_at ? getData.pending_at : "N/A"
+                    }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="edit-modal mt15">
+              <p class="heading">Product List</p>
+              <div mat-dialog-content>
+                <div class="cs-table left-right-10">
+                  <!-- <div class=" border-top"> -->
+                  <div class="table-head">
+                    <table>
+                      <tr>
+                        <th class="w30 text-center ">Sr.No</th>
+                        <th class="w100">Category</th>
+                        <th class="w100">Sub Category</th>
+                        <th class="w180">Product Detail</th>
+                        <th class="w30 text-center ">Qty</th>
+                      </tr>
+                    </table>
+                    <!-- </div> -->
+                  </div>
+
+                  <div class="table-container pb0">
+                    <div class="table-content none-shadow">
+                      <table>
+                        <ng-container *ngFor="let row of add_list; let i = index">
+                          <tr>
+                            <td class="w30 text-center ">{{ i + 1 }}</td>
+                            <td class="w100">{{ row.category_name | titlecase}}</td>
+                            <td class="w100">{{ row.subcat_name | titlecase}}</td>
+                            <td class="w180">{{ row.product_name | titlecase}}-{{row.product_code | titlecase}}</td>
+                            <td class="w30 text-center ">{{ row.qty }}</td>
+                          </tr>
+                        </ng-container>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" *ngIf="skLoading">
+            <div class="sk-head">
+              <h2>&nbsp;</h2>
+            </div>
+            <div class="card-body">
+              <div class="grid-box single mt10" *ngFor="let row of [].constructor(5)">
+                <div class="sk-box">&nbsp;</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="col s12 mt16 m12 l12">
+        <div class="col s12 mt16 m12 l12"
+          *ngIf="getData.complaint_status=='Done' || getData.complaint_status=='Reject'">
           <div class="card" *ngIf="!skLoading">
             <div class="card-head">
               <h2>Closing Details</h2>
@@ -141,7 +223,7 @@
                   <p>
                     {{
                     getData.closed_date != "0000-00-00 00:00:00"
-                    ? (getData.closed_date | date)
+                    ? (getData.closed_date | date : 'dd MMM yyy ,h:mm a')
                     : "N/A"
                     }}
                   </p>
@@ -153,20 +235,44 @@
                     {{ getData.closing_type ? getData.closing_type : "N/A" }}
                   </p>
                 </div> -->
-
                 <div class="block-feilds">
+                  <span>Status Update By</span>
+                  <p>
+                    {{ getData.status_updated_by_name ? (getData.status_updated_by_name | titlecase): "N/A" }}
+                  </p>
+                </div>
+                <div class="block-feilds" *ngIf="getData.complaint_status=='Done'">
                   <span>Closing Remark</span>
                   <p>
                     {{
-                    getData.closing_remark ? getData.closing_remark : "N/A"
+                    getData.closing_remark ? (getData.closing_remark | titlecase): "N/A"
                     }}
                   </p>
                 </div>
+                <div class="block-feilds" *ngIf="getData.complaint_status=='Reject'">
+                  <span>Reason of Reject</span>
+                  <p>
+                    {{
+                    getData.status_reason ? (getData.status_reason | titlecase): "N/A"
+                    }}
+                  </p>
+                </div>
+                <!-- <div class="block-feilds">
+                  <span>Status Update Date</span>
+                  <p>
+                    {{
+                    getData.status_updated_date != "0000-00-00 00:00:00"
+                    ? (getData.status_updated_date | date : 'dd MMM yyy ,h:mm a')
+                    : "N/A"
+                    }}
+                  </p>
+                </div> -->
+
               </div>
-              <div class="card-head mt15">
-                <h2>Closing Images</h2>
+              <div class="card-head mt15" *ngIf="closeImg.length">
+                <h2>Product Images</h2>
               </div>
-              <div class="card-body">
+              <div class="card-body" *ngIf="closeImg.length">
                 <div class="grid-box">
                   <div class="block-feilds">
                     <div class="doc-img">
@@ -182,25 +288,25 @@
         </div>
       </div>
       <div class="col s12 m4 l4">
-        <div class="card" *ngIf="!loader">
+        <div class="card" *ngIf="!skLoading">
           <div class="card-head">
             <h2>Logs</h2>
           </div>
 
           <div class="logs-box">
-            <ng-container *ngFor="let row of getData.log">
+            <ng-container *ngFor="let row of logs">
               <div class="logshead">
-                {{ row.created_by_name }} :-
-                {{ row.date_created | date : "dd MMM yyyy" }}
+                {{ row.created_by_name| titlecase }} :-
+                {{ row.date_created | date : 'dd MMM yyy ,h:mm a'}}
               </div>
               <div class="logscontent">
-                <span>Remark : </span> {{ row.msg ? row.msg : row.remark }}
+                <span>Remark : </span> {{ row.msg ? (row.msg| titlecase) : (row.remark| titlecase) }}
               </div>
             </ng-container>
           </div>
         </div>
 
-        <div class="card" *ngIf="loader">
+        <div class="card" *ngIf="skLoading">
           <div class="sk-head">
             <h2>&nbsp;</h2>
           </div>
@@ -212,59 +318,25 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="add_list.length > 0">
-      <div class="col s12 m12 l12">
-        <div class="card">
-          <div class="card-head">
-            <h2>Product List</h2>
-          </div>
-          <div class="card-body">
-            <div class="cs-table left-right-10">
-              <div class="border-top">
-                <div class="table-head">
-                  <table>
-                    <tr>
-                      <th class="w50 text-center">Sr.No</th>
-                      <th class="w130 text-center">Category</th>
-                      <th class="w130 text-center">Sub Category</th>
-                      <th class="w130 text-center">Product</th>
-                      <th class="w80 text-center">Qty</th>
-                      <!-- <th class="w50 text-center">Action</th> -->
-                    </tr>
-                  </table>
-                </div>
-              </div>
 
-              <div class="table-container pb0">
-                <div class="table-content none-shadow">
-                  <table>
-                    <tr *ngFor="let row of add_list; let i = index">
-                      <td class="w50 text-center">{{ i + 1 }}</td>
-                      <td class="w130 text-center">{{ row.category_name }}</td>
-                      <td class="w130 text-center">{{ row.subcat_name }}</td>
-                      <td class="w130 text-center">{{ row.product_name }}</td>
-                      <td class="w80 text-center">{{ row.qty }}</td>
-                      <!-- <td class="w50 text-center" >
-                                                <div class="action-button">
-                                                    <button mat-icon-button matTooltip="Delete" (click)="delete(i)">
-                                                        <i class="material-icons del">delete</i>
-                                                    </button>
-                                                </div>
-                                            </td> -->
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
-  <div class="fab-btns">
-    <button (click)="openDialog2(getData.id)" mat-fab color="primary" [ngClass]="{ pulse: fabBtnValue == 'activity' }">
-      <i class="material-icons">add</i>
-      Add Remark
+  <div class="fab-btns" *ngIf="getData.complaint_status=='Pending'">
+    <button class="pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
+      <i class="material-icons">apps</i>
+      Action
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openDialog(getData.id,getData.state)"
+        [ngClass]="{'pulse': fabBtnValue=='activity'}">
+        <mat-icon>assignment</mat-icon>
+        <span>Assign Technician</span>
+      </button>
+
+      <button mat-menu-item (click)="openDialog2(getData.id)" [ngClass]="{'pulse': fabBtnValue=='activity'}">
+        <mat-icon>add</mat-icon>
+        <span>Add Remark</span>
+      </button>
+    </mat-menu>
   </div>
 </div>

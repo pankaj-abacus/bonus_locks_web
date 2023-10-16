@@ -46,6 +46,8 @@ export class InvoiceComponent implements OnInit {
   OrderYear: any;
   date: any;
   downurl: any = '';
+  organisationData:any =[];
+
   constructor(public serve: DatabaseService, public route: Router, public ActivatedRoute: ActivatedRoute,
     public dialog: DialogComponent, public session: sessionStorage, public alrt: MatDialog, public toast: ToastrManager) {
     this.downurl = serve.downloadUrl;
@@ -73,6 +75,7 @@ export class InvoiceComponent implements OnInit {
     this.ActivatedRoute.params.subscribe(params => {
       this.type_id = params.id;
       this.type = params.type;
+      this.getCompanyData();
       this.billData('', this.currentMonth_no, this.currentYear);
     });
 
@@ -96,6 +99,27 @@ export class InvoiceComponent implements OnInit {
     this.filter.date_created = moment(event.value).format('YYYY-MM-DD');
     this.billData('', month, year);
   }
+
+  onDate(event, month, year): void {
+    if (this.filter.date_created) {
+        this.filter.date_created = moment(event.value).format('YYYY-MM-DD');
+    }
+    if (this.filter.transaction_date) {
+        this.filter.transaction_date = moment(event.value).format('YYYY-MM-DD');
+    }
+    this.billData('', month, year);
+}
+
+  getCompanyData() {
+    this.serve.post_rqst({}, "Order/organizationName").subscribe((response => {
+        if (response['statusCode'] == 200) {
+            this.organisationData = response['result'];
+        } else {
+            this.toast.errorToastr(response['statusMsg']);
+        }
+    }));
+}
+
   calenderInfo: any = []
   billData(action: any = '', month, year) {
     if (action == "refresh") {
@@ -114,10 +138,10 @@ export class InvoiceComponent implements OnInit {
     this.OrderMonth = month
     this.OrderYear = year
     this.loader = true;
-    this.serve.post_rqst({ 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit, 'month': month, 'year': year }, "Account/invoicePaymentListing")
+    this.serve.post_rqst({ 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit, 'month': month, 'year': year }, "Account/ledgerListing")
       .subscribe((result => {
         if (result['statusCode'] == 200) {
-          this.payment_list = (result['list']);
+          this.payment_list = (result['result']);
           this.calenderInfo = (result['calenderInfo']);
           if (this.payment_list.length == 0) {
             this.datanotfound = true
@@ -154,12 +178,12 @@ export class InvoiceComponent implements OnInit {
   }
 
 
-  upload_excel() {
+  upload_excel(ledger) {
     const dialogRef = this.alrt.open(UploadFileModalComponent, {
       width: '500px',
       panelClass: 'cs-modal',
       data: {
-        'from': 'Payment',
+        'from': ledger,
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -184,7 +208,7 @@ export class InvoiceComponent implements OnInit {
 
   exportAsXLSX(month, year) {
     this.loader = true;
-    this.serve.post_rqst({ 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit, 'month': month, 'year': year }, "Excel/invoice_payment_listing")
+    this.serve.post_rqst({ 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit, 'month': month, 'year': year }, "Excel/ledgerListingCsv")
       .subscribe((result => {
         if (result['msg'] == true) {
           this.loader = false;

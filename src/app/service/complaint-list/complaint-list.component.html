@@ -1,14 +1,14 @@
 <div class="main-container">
   <app-loader *ngIf="excelLoader"></app-loader>
   <div class="tools-container">
-    <h2>Complaint</h2>
-    
-    
+    <h2>Complaint List</h2>
+
+
     <div class="left-auto df ac flex-gap-10">
       <a mat-icon-button matTooltip="Refresh" (click)="refresh()">
         <i class="material-icons">refresh</i>
       </a>
-      
+
       <div class="pagination" *ngIf="complaintList.length > 0 ">
         <div class="pagination-content">
           Pages
@@ -26,25 +26,25 @@
         </div>
       </div>
     </div>
-    
+
     <div class="mat-tabbar">
       <ng-container>
         <button mat-button [ngClass]="active_tab == 'All' ? 'active' : ''"
-        (click)="active_tab = 'All'; getComplantList('')"><i
-        class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
-        
+          (click)="active_tab = 'All'; getComplantList('')"><i
+            class="material-icons">all_inbox</i>All({{tab_count.all_count}})</button>
+
         <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
-        (click)="active_tab = 'Pending';sub_active_tab = 'Not_Assigned';getComplantList('')"><i
-        class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
-        
+          (click)="active_tab = 'Pending';sub_active_tab = 'Not_Assigned';getComplantList('')"><i
+            class="material-icons">pending_actions</i>Pending({{tab_count.pending_count}})</button>
+
         <button mat-button [ngClass]="active_tab == 'Closed' ? 'active' : ''"
-        (click)="active_tab = 'Closed';sub_active_tab = 'Closed_By_Service'; getComplantList('')"><i
-        class="material-icons">thumb_up_alt</i>Close({{tab_count.closed_count}})</button>
-        
+          (click)="active_tab = 'Closed';sub_active_tab = 'Closed_By_Service'; getComplantList('')"><i
+            class="material-icons">thumb_up_alt</i>Close({{tab_count.closed_count}})</button>
+
         <button mat-button [ngClass]="active_tab == 'Cancel' ? 'active' : ''"
-        (click)="active_tab = 'Cancel'; getComplantList('')"><i
-        class="material-icons">thumb_down_alt</i>Cancel({{tab_count.reject_count}})</button>
-        
+          (click)="active_tab = 'Cancel'; getComplantList('')"><i
+            class="material-icons">thumb_down_alt</i>Cancel({{tab_count.reject_count}})</button>
+
       </ng-container>
     </div>
   </div>
@@ -52,52 +52,52 @@
     <div class="mat-tabbar">
       <ng-container>
         <button mat-button [ngClass]="sub_active_tab == 'Not_Assigned' ? 'active' : ''"
-        (click)="sub_active_tab = 'Not_Assigned';getComplantList('')"><i class="material-icons">thumb_down_alt</i>Not
-        Assigned({{sub_tab_count.Not_Assigned}})</button>
-        
+          (click)="sub_active_tab = 'Not_Assigned';getComplantList('')"><i class="material-icons">thumb_down_alt</i>Not
+          Assigned({{sub_tab_count.Not_Assigned}})</button>
+
         <button mat-button [ngClass]="sub_active_tab == 'Assigned' ? 'active' : ''"
-        (click)="sub_active_tab = 'Assigned';getComplantList('')"><i
-        class="material-icons">thumb_up_alt</i>Assigned({{sub_tab_count.Assigned}})</button>
-        
+          (click)="sub_active_tab = 'Assigned';getComplantList('')"><i
+            class="material-icons">thumb_up_alt</i>Assigned({{sub_tab_count.Assigned}})</button>
+
         <button mat-button [ngClass]="sub_active_tab == 'Inspection_Complete' ? 'active' : ''"
-        (click)="sub_active_tab = 'Inspection_Complete';getComplantList('')"><i
-        class="material-icons">ballot</i>Inspection Complete({{sub_tab_count.Inspection_Complete}})</button>
-        
+          (click)="sub_active_tab = 'Inspection_Complete';getComplantList('')"><i
+            class="material-icons">ballot</i>Inspection Complete({{sub_tab_count.Inspection_Complete}})</button>
+
         <button mat-button [ngClass]="sub_active_tab == 'Replacement_Pending' ? 'active' : ''"
-        (click)="sub_active_tab = 'Replacement_Pending';getComplantList('')"><i
-        class="material-icons">thumb_down_alt</i>Replacement Pending({{sub_tab_count.Replacement_Pending}})</button>
-        
+          (click)="sub_active_tab = 'Replacement_Pending';getComplantList('')"><i
+            class="material-icons">thumb_down_alt</i>Replacement Pending({{sub_tab_count.Replacement_Pending}})</button>
+
         <button mat-button [ngClass]="sub_active_tab == 'Sparepart_Pending' ? 'active' : ''"
-        (click)="sub_active_tab = 'Sparepart_Pending';getComplantList('')"><i
-        class="material-icons">thumb_down_alt</i>Spare Part Pending({{sub_tab_count.Sparepart_Pending}})</button>
+          (click)="sub_active_tab = 'Sparepart_Pending';getComplantList('')"><i
+            class="material-icons">thumb_down_alt</i>Spare Part Pending({{sub_tab_count.Sparepart_Pending}})</button>
       </ng-container>
     </div>
-    
+
   </div>
-  
+
   <div class="tools-container" *ngIf="active_tab == 'Closed'">
     <div class="mat-tabbar">
       <ng-container>
         <button mat-button [ngClass]="sub_active_tab == 'Closed_By_Service' ? 'active' : ''"
-        (click)="sub_active_tab = 'Closed_By_Service';getComplantList('')"><i
-        class="material-icons">thumb_up_alt</i>Closed By Service({{sub_tab_count.Closed_By_Service}})</button>
-        
+          (click)="sub_active_tab = 'Closed_By_Service';getComplantList('')"><i
+            class="material-icons">thumb_up_alt</i>Closed By Service({{sub_tab_count.Closed_By_Service}})</button>
+
         <button mat-button [ngClass]="sub_active_tab == 'Closed_By_Replacement' ? 'active' : ''"
-        (click)="sub_active_tab = 'Closed_By_Replacement';getComplantList('')"><i
-        class="material-icons">cancel</i>Closed By Replacement({{sub_tab_count.Closed_By_Replacement}})</button>
-        
+          (click)="sub_active_tab = 'Closed_By_Replacement';getComplantList('')"><i
+            class="material-icons">cancel</i>Closed By Replacement({{sub_tab_count.Closed_By_Replacement}})</button>
+
         <button mat-button [ngClass]="sub_active_tab == 'Return_Pending' ? 'active' : ''"
-        (click)="sub_active_tab = 'Return_Pending';getComplantList('')"><i
-        class="material-icons">thumb_down_alt</i>Return Pending({{sub_tab_count.Return_Pending}})</button>
-        
+          (click)="sub_active_tab = 'Return_Pending';getComplantList('')"><i
+            class="material-icons">thumb_down_alt</i>Return Pending({{sub_tab_count.Return_Pending}})</button>
+
         <button mat-button [ngClass]="sub_active_tab == 'Feedback_Complete' ? 'active' : ''"
-        (click)="sub_active_tab = 'Feedback_Complete';getComplantList('')"><i
-        class="material-icons">comment</i>Feedback Complete({{sub_tab_count.Feedback_Complete}})</button>
+          (click)="sub_active_tab = 'Feedback_Complete';getComplantList('')"><i
+            class="material-icons">comment</i>Feedback Complete({{sub_tab_count.Feedback_Complete}})</button>
       </ng-container>
     </div>
-    
+
   </div>
-  
+
   <div class="container container-scroll">
     <div class="cs-table horizontal-scroll">
       <div class="sticky-head">
@@ -107,29 +107,32 @@
               <th class="w60">Sr.No</th>
               <th class="w160">Date Created</th>
               <th class="w100">Created By</th>
+              <th class="w100">Complaint No.</th>
               <th class="w130">Customer Name</th>
               <th class="w130">Customer Mobile No.</th>
-              <th class="w120">Complaint No.</th>
-              <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Carpenter Details</th>
-              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Serial No.</th>
-              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Product Name</th>
-              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Product Code</th>
-              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Warranty Status</th>
+              <th class="w180">District & State</th>
+              <th class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Technician Details</th>
               <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">Inspection Status</th>
-              <th class="w160"
-              *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-              Closing Date</th>
+              <th class="w100" *ngIf="active_tab == 'All'">Status</th>
+
               <th class="w130"
-              *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-              Closing remark</th>
-              <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Date</th>
-              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Status</th>
-              <th class="w130">Complaint Status</th>
-              <!-- <th class="w70 text-center">Action</th> -->
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                Last Remark</th>
+              <!-- <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Date</th>
+              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">Return Status</th> -->
+
+              <th class="w70 text-center">TAT</th>
+              <th class="w180" *ngIf="active_tab == 'Cancel' || active_tab == 'All'">Reason Of Cancellation</th>
+              <th class="w160"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                Status Update Date</th>
+              <th class="w120"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                Status Update By</th>
             </tr>
           </table>
         </div>
-        
+
         <div class="table-head bdrt">
           <table>
             <tr>
@@ -138,8 +141,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                    #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
-                    [max]="today_date" readonly>
+                      #date_created="ngModel" [(ngModel)]="filter_data.date_created" (ngModelChange)="date_format()"
+                      [max]="today_date" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -148,9 +151,17 @@
               <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="created_by_type"
-                    (keyup.enter)="getComplantList('')" #created_by_type="ngModel"
-                    [(ngModel)]="filter_data.created_by_type">
+                    <input type="text" matInput placeholder="Search ..." name="created_name"
+                      (keyup.enter)="getComplantList('')" #created_name="ngModel"
+                      [(ngModel)]="filter_data.created_name">
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w100">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="complain_no"
+                      (keyup.enter)="getComplantList('')" #complain_no="ngModel" [(ngModel)]="filter_data.complain_no">
                   </mat-form-field>
                 </div>
               </th>
@@ -158,8 +169,8 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="customer_name"
-                    (keyup.enter)="getComplantList('')" #customer_name="ngModel"
-                    [(ngModel)]="filter_data.customer_name">
+                      (keyup.enter)="getComplantList('')" #customer_name="ngModel"
+                      [(ngModel)]="filter_data.customer_name">
                   </mat-form-field>
                 </div>
               </th>
@@ -167,16 +178,16 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="customer_mobile"
-                    (keyup.enter)="getComplantList('')" #customer_mobile="ngModel"
-                    [(ngModel)]="filter_data.customer_mobile">
+                      (keyup.enter)="getComplantList('')" #customer_mobile="ngModel"
+                      [(ngModel)]="filter_data.customer_mobile">
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w120">
+              <th class="w180">
                 <div class="th-search-acmt">
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="complain_no"
-                    (keyup.enter)="getComplantList('')" #complain_no="ngModel" [(ngModel)]="filter_data.complain_no">
+                    <input type="text" matInput placeholder="Search ..." name="address"
+                      (keyup.enter)="getComplantList('')" #address="ngModel" [(ngModel)]="filter_data.address" />
                   </mat-form-field>
                 </div>
               </th>
@@ -184,250 +195,237 @@
                 <div class="th-search-acmt">
                   <mat-form-field>
                     <input type="text" matInput placeholder="Search ..." name="carpenter_detail"
-                    (keyup.enter)="getComplantList('')" #carpenter_detail="ngModel"
-                    [(ngModel)]="filter_data.carpenter_detail">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="serial_no"
-                    (keyup.enter)="getComplantList('')" #serial_no="ngModel" [(ngModel)]="filter_data.serial_no">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_name"
-                    (keyup.enter)="getComplantList('')" #product_name="ngModel"
-                    [(ngModel)]="filter_data.product_name">
-                  </mat-form-field>
-                </div>
-              </th>
-              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
-                <div class="th-search-acmt">
-                  <mat-form-field>
-                    <input type="text" matInput placeholder="Search ..." name="product_code"
-                    (keyup.enter)="getComplantList('')" #product_code="ngModel"
-                    [(ngModel)]="filter_data.product_code">
+                      (keyup.enter)="getComplantList('')" #carpenter_detail="ngModel"
+                      [(ngModel)]="filter_data.carpenter_detail">
                   </mat-form-field>
                 </div>
               </th>
               <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input select-input">
-                    <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.warranty_status"
-                    (selectionChange)="getComplantList('')">
-                    <mat-option value="">All</mat-option>
-                    <mat-option value="In Warranty">In Warranty</mat-option>
-                    <mat-option value="Out Of Warranty">Out Of Warranty </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </th>
-            <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
-              <div class="th-search-acmt">
-                <mat-form-field class="cs-input select-input">
-                  <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.inspection_status"
-                  (selectionChange)="getComplantList('')">
-                  <mat-option value="All">All</mat-option>
-                  <mat-option value="Pending">Pending</mat-option>
-                  <mat-option value="Done">Done </mat-option>
-                  
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </th>
-          <th class="w160"
-          *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-          <div class="th-search-acmt">
-            <mat-form-field class="cs-input date-column infix-bodr">
-              <input matInput [matDatepicker]="picker" placeholder="Date" name="closed_date"
-              #closed_date="ngModel" [(ngModel)]="filter_data.closed_date" (ngModelChange)="date_format2()"
-              [max]="today_date" readonly>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </th>
-        <th class="w130"
-        *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-      </th>
-      <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
-        <div class="th-search-acmt">
-          <mat-form-field class="cs-input date-column infix-bodr">
-            <input matInput [matDatepicker]="picker" placeholder="Date" name="return_on" #return_on="ngModel"
-            [(ngModel)]="filter_data.return_on" (ngModelChange)="date_format3()" [max]="today_date" readonly>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
-      </th>
-      <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
-        <div class="th-search-acmt">
-          <mat-form-field class="cs-input select-input">
-            <mat-select name="return_status" #return_status="ngModel" [(ngModel)]="filter_data.return_status"
-            (selectionChange)="getComplantList('')">
-            <mat-option value="">All</mat-option>
-            <mat-option value="Pending">Pending</mat-option>
-            <mat-option value="Done">Done </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </th>
-    <th class="w130">
-      <div class="th-search-acmt">
-        <mat-form-field class="cs-input select-input">
-          <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.complaint_status"
-          (selectionChange)="getComplantList('')">
-          <mat-option value="">All</mat-option>
-          <mat-option value="Pending">Pending</mat-option>
-          <mat-option value="Closed">Closed </mat-option>
-          <mat-option value="Reject">Reject </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </th>
-  <!-- <th class="w70 text-center"></th> -->
-</tr>
-</table>
-</div>
-</div>
+                    <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.inspection_status"
+                      (selectionChange)="getComplantList('')">
+                      <mat-option value="All">All</mat-option>
+                      <mat-option value="Pending">Pending</mat-option>
+                      <mat-option value="Done">Done </mat-option>
 
-<div class="table-container">
-  <div class="table-content">
-    <table>
-      <ng-container *ngIf="!loader">
-        <tr *ngFor="let row of complaintList; let i = index "
-        [ngClass]="{'Current': service.currentUserID == row.id}">
-        <td class="w60">{{i + 1 + sr_no}}</td>
-        <td class="w160">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-        <td class="w100">{{row.created_name ? row.created_name : '--'}}</td>
-        <td class="w130">{{row.customer_name | titlecase}}</td>
-        <td class="w130">{{row.customer_mobile}}</td>
-        <td class="w120"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
-          routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
-          <td class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.carpenter_name ?
-            row.carpenter_name : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
-            <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.serial_no ?
-              row.serial_no : '--'}}</td>
-              <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.product_name ?
-                row.product_name : '--'}}</td>
-                <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.product_code ?
-                  row.product_code : '--'}}</td>
-                  <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.warranty_status ?
-                    row.warranty_status : '--'}}</td>
-                    <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.inspection_status
-                      ? row.inspection_status : '--'}}</td>
-                      <td class="w160"
-                      *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                      {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
-                    </td>
-                    <td class="w130"
-                    *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
-                    {{row.closing_remark ? row.closing_remark : '--'}}</td>
-                    <td class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">{{row.return_on
-                      !='0000-00-00 00:00:00' ? (row.return_on | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
-                      <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">{{row.return_status ?
-                        row.return_status : '--'}}</td>
-                        <td class="w130">{{row.complaint_status ? row.complaint_status : '--'}}</td>
-                        <!-- <td class="w70 text-center">
-                          <div class="action-button">
-                            <button mat-icon-button matTooltip="Edit" (click)="rejectComplaint(row.id)">
-                              <i class="material-icons edit">edit</i>
-                            </button>
-                            
-                          </div>
-                        </td> -->
-                      </tr>
-                    </ng-container>
-                    <ng-container *ngIf="loader">
-                      <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
-                        <td class="w60">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w160">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w100">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w120">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w180">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w160">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130 ">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w160 ">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130 ">
-                          <div>&nbsp;</div>
-                        </td>
-                        <td class="w130">
-                          <div>&nbsp;</div>
-                        </td>
-                        <!-- <td class="w70 text-center">
-                          <div>&nbsp;</div>
-                        </td> -->
-                      </tr>
-                    </ng-container>
-                  </table>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
-              </div>
-            </div>
-            <ng-container *ngIf="datanotofound==true && complaintList.length == 0;">
-              <app-not-result-found></app-not-result-found>
-            </ng-container>
-          </div>
-          <div>
-          </div>
-          
-          <div class="fab-btns">
-            <button class="pulse excel" mat-fab color="primary" [ngClass]="{'pulse': fabBtnValue=='add'}"
-            [matMenuTriggerFor]="menu">
-            <i class="material-icons">apps</i>
-            Action
-          </button>
+              </th>
+              <th class="w100" *ngIf="active_tab == 'All'">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input select-input">
+                    <mat-select name="status" #status="ngModel" [(ngModel)]="filter_data.complaint_status"
+                      (selectionChange)="getComplantList('')">
+                      <mat-option value="">All</mat-option>
+                      <mat-option value="Pending">Pending</mat-option>
+                      <mat-option value="Closed">Closed </mat-option>
+                      <mat-option value="Cancel">Cancel </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </th>
+
+
+              <th class="w130"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+              </th>
+              <!-- <th class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="picker" placeholder="Date" name="return_on" #return_on="ngModel"
+                      [(ngModel)]="filter_data.return_on" (ngModelChange)="date_format3()" [max]="today_date" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input select-input">
+                    <mat-select name="return_status" #return_status="ngModel" [(ngModel)]="filter_data.return_status"
+                      (selectionChange)="getComplantList('')">
+                      <mat-option value="">All</mat-option>
+                      <mat-option value="Pending">Pending</mat-option>
+                      <mat-option value="Done">Done </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </th> -->
+
+              <th class="w70 text-center"></th>
+              <th class="w180" *ngIf="active_tab == 'Cancel'|| active_tab == 'All'"></th>
+              <th class="w160"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                <div class="th-search-acmt">
+                  <mat-form-field class="cs-input date-column infix-bodr">
+                    <input matInput [matDatepicker]="picker" placeholder="Date" name="closed_date"
+                      #closed_date="ngModel" [(ngModel)]="filter_data.closed_date" (ngModelChange)="date_format2()"
+                      [max]="today_date" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </th>
+              <th class="w120"
+                *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                <div class="th-search-acmt">
+                  <mat-form-field>
+                    <input type="text" matInput placeholder="Search ..." name="status_updated_by_name"
+                      (keyup.enter)="getComplantList('')" #status_updated_by_name="ngModel"
+                      [(ngModel)]="filter_data.status_updated_by_name" />
+                  </mat-form-field>
+                </div>
+              </th>
+            </tr>
+          </table>
         </div>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="downloadExcel();">
-            <mat-icon>download</mat-icon>
-            <span>Download excel</span>
-          </button>
-          <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-complaint"
-          routerLinkActive="router-link-active">
-          <mat-icon>add</mat-icon>
-          <span>Add New</span>
-        </button>
-      </mat-menu>
+      </div>
+
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <ng-container *ngIf="!loader">
+              <tr *ngFor="let row of complaintList; let i = index "
+                [ngClass]="{'Current': service.currentUserID == row.id}">
+                <td class="w60">{{i + 1 + sr_no}}</td>
+                <td class="w160">{{row.date_created ? (row.date_created | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+                <td class="w100">{{row.created_name ? (row.created_name | titlecase): '--'}}</td>
+                <td class="w100"><a class="link-btn" mat-button (click)="service.setData(filter_data)"
+                    routerLink="complaint-detail/{{(row.id)}}" routerLinkActive="active">{{row.complain_no}}</a></td>
+                <td class="w130">{{row.customer_name | titlecase}}</td>
+                <td class="w130">{{row.customer_mobile}}</td>
+                <td class="w180">{{row.address?(row.address|titlecase):'--'}}</td>
+                <td class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">{{row.carpenter_name ?
+                  (row.carpenter_name | titlecase) : ''}}-{{row.carpenter_mobile ? row.carpenter_mobile : ''}}</td>
+                <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
+                  <strong class="yellow-clr" *ngIf="row.inspection_status=='Pending'">{{row.inspection_status
+                    ? row.inspection_status : '--'}}</strong>
+                  <strong class="green-clr" *ngIf="row.inspection_status=='Done'">{{row.inspection_status
+                    ? row.inspection_status : '--'}}</strong>
+                </td>
+                <td class="w100" *ngIf="active_tab == 'All'">
+                  <strong class="yellow-clr" *ngIf="row.complaint_status=='Pending'">{{row.complaint_status ?
+                    row.complaint_status : '--'}}</strong>
+                  <strong class="green-clr" *ngIf="row.complaint_status=='Closed'">{{row.complaint_status ?
+                    row.complaint_status : '--'}}</strong>
+                  <strong class="red-clr" *ngIf="row.complaint_status=='Cancel'">{{row.complaint_status ?
+                    row.complaint_status : '--'}}</strong>
+                </td>
+
+                <td class="w130"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  {{row.remark ? (row.remark | titlecase ): '--'}}</td>
+                <!-- <td class="w160" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">{{row.return_on
+                  !='0000-00-00 00:00:00' ? (row.return_on | date : 'dd MMM yyy ,h:mm a') : '--'}}</td>
+                <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
+                  <strong class="yellow-clr" *ngIf="row.return_status=='Pending'">{{row.return_status ?
+                    row.return_status : '--'}}</strong>
+                  <strong class="green-clr" *ngIf="row.return_status=='Done'">{{row.return_status ? row.return_status :
+                    '--'}}</strong>
+                </td> -->
+
+                <td class="w70">{{row.pending_at}}</td>
+                <td class="w180" *ngIf="active_tab == 'Cancel' || active_tab == 'All'">{{row.status_reason| titlecase}}
+                </td>
+                <td class="w160"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  {{row.closed_date !='0000-00-00 00:00:00' ? (row.closed_date | date : 'dd MMM yyy ,h:mm a') : '--'}}
+                </td>
+                <td class="w120"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  {{row.status_updated_by_name?(row.status_updated_by_name|titlecase):'--'}}
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="loader">
+              <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                <td class="w60">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w160">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w100">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w100">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w130">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w130">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w180">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w180" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w130" *ngIf="active_tab == 'All' || sub_active_tab != 'Not_Assigned'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w100" *ngIf="active_tab == 'All'">
+                  <div>&nbsp;</div>
+                </td>
+
+                <td class="w130 "
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  <div>&nbsp;</div>
+                </td>
+                <!-- <td class="w160 " *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w130 " *ngIf="active_tab == 'All' || sub_active_tab == 'Return_Pending'">
+                  <div>&nbsp;</div>
+                </td> -->
+
+                <td class="w70 text-center">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w180" *ngIf="active_tab == 'Cancel' || active_tab == 'All'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w160"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w120"
+                  *ngIf="active_tab == 'All' || sub_active_tab == 'Closed_By_Replacement' || sub_active_tab == 'Closed_By_Service'">
+                  <div>&nbsp;</div>
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+        </div>
+      </div>
     </div>
+    <ng-container *ngIf="datanotofound==true && complaintList.length == 0;">
+      <app-not-result-found></app-not-result-found>
+    </ng-container>
+  </div>
+  <div>
+  </div>
+
+  <div class="fab-btns">
+    <button class="pulse excel" mat-fab color="primary" [ngClass]="{'pulse': fabBtnValue=='add'}"
+      [matMenuTriggerFor]="menu">
+      <i class="material-icons">apps</i>
+      Action
+    </button>
+  </div>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="downloadExcel();" *ngIf="complaintList.length > 0 ">
+      <mat-icon>download</mat-icon>
+      <span>Download excel</span>
+    </button>
+    <button mat-menu-item (click)="lastBtnValue('add')" routerLink="add-complaint/complaint"
+      routerLinkActive="router-link-active">
+      <mat-icon>add</mat-icon>
+      <span>Add New</span>
+    </button>
+  </mat-menu>
+</div>

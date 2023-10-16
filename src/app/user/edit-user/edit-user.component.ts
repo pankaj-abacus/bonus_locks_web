@@ -10,7 +10,6 @@ import { Location } from '@angular/common';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { MatDialog } from '@angular/material';
 import { DesignationComponent } from '../designation/designation.component';
-import { stringify } from 'querystring';
 
 
 @Component({
@@ -38,6 +37,8 @@ export class EditUserComponent implements OnInit {
   maxDate: any;
   branch: any = [];
   brandList: any = [];
+  organisationData:any =[];
+
 
 
   constructor(public serve: DatabaseService,
@@ -59,6 +60,7 @@ export class EditUserComponent implements OnInit {
       if (this.userId) {
         this.loader = true;
         this.userDetail();
+        this.getCompanyData();
       }
     });
   }
@@ -181,7 +183,16 @@ export class EditUserComponent implements OnInit {
 
     }));
   }
+  getCompanyData() {
+    this.serve.post_rqst({}, "Order/organizationName").subscribe((response => {
+      if (response['statusCode'] == 200) {
+        this.organisationData = response['result'];
+      } else {
+        this.toast.errorToastr(response['statusMsg']);
+      }
 
+    }));
+  }
   getReportManager(searcValue) {
     this.serve.post_rqst({ 'search': searcValue }, "Master/getSalesUserForReporting").subscribe((result => {
       if (result['all_sales_user']['statusCode'] == 200) {

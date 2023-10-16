@@ -59,6 +59,8 @@ export class SaleUserDetailComponent implements OnInit {
       this.skLoading = true;
       this.service.post_rqst({'id':this.user_id},"Master/salesUserDetail").subscribe((result)=>{
         this.detail=result['sales_detail'];
+        console.log(this.detail.warehouse_id);
+        
         this.skLoading = false;
         if( this.detail.user_type == 'System User'){
           this.assign_module_data=this.detail.assign_module;

@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComplaintListComponent } from '../complaint-list/complaint-list.component';
 import { AuthComponentGuard } from 'src/app/auth-component.guard';
-import { ComplaintAddComponent } from '../complaint-add/complaint-add.component';
+
+// import { ComplaintAddComponent } from '../complaint-add/complaint-add.component';
+
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -11,26 +13,28 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { MatDialogModule, MatIconModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
-import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
 import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-model-component/engineer-assign-model-component.component';
 import { AddComplaintRemarkComponent } from 'src/app/add-complaint-remark/add-complaint-remark.component';
+import { InstallationAddComponent } from 'src/app/installation/installation-add/installation-add.component';
+import { ComplaintUpdateModelComponent } from '../complaint-update-model/complaint-update-model.component';
+import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
+
 
 
 const serviceRoutes = [
   { path: "", children:[
     { path: "", component: ComplaintListComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-    { path: 'add-complaint', component: ComplaintAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+    { path: 'add-complaint/:type', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     { path: "complaint-detail/:id", children:[
       {path:"", component:ComplaintDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-      {path:'add-complaint/:id', component: ComplaintAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
-
+      {path:'add-complaint/:type/:id', component: InstallationAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}}
     ] }
   ]},
   
 ]
 
 @NgModule({
-  declarations: [ComplaintListComponent,ComplaintAddComponent,ComplaintDetailComponent,EngineerAssignModelComponentComponent,AddComplaintRemarkComponent],
+  declarations: [ComplaintListComponent,ComplaintDetailComponent,EngineerAssignModelComponentComponent,AddComplaintRemarkComponent,ComplaintUpdateModelComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(serviceRoutes),

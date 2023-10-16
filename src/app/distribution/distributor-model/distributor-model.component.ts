@@ -6,7 +6,6 @@ import * as moment from 'moment';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { DialogComponent } from 'src/app/dialog.component';
 import {  sessionStorage} from 'src/app/localstorage.service';
-import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-distributor-model',

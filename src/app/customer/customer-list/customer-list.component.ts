@@ -32,38 +32,37 @@ export class CustomerListComponent implements OnInit {
   sr_no: number;
   datanotofound: boolean = false;
   downurl: any = ''
-  
-  
-  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) { 
+
+
+  constructor(public dialog: DialogComponent, public dialogs: MatDialog, public alert: DialogComponent, public service: DatabaseService, public rout: Router, public toast: ToastrManager, public session: sessionStorage) {
     this.downurl = service.downloadUrl
     this.page_limit = service.pageLimit;
-    this.getCumtomerList('');
-    
   }
   ngOnInit() {
     this.filter_data = this.service.getData()
+    this.getCumtomerList('');
   }
-  
+
   pervious() {
     this.start = this.start - this.page_limit;
     this.getCumtomerList('');
   }
-  
+
   nextPage() {
     this.start = this.start + this.page_limit;
     this.getCumtomerList('');
   }
-  
+
   refresh() {
     this.start = 0;
     this.filter_data = {};
     this.getCumtomerList('');
   }
-  
+
   clear() {
     this.refresh();
   }
-  
+
   goToDetailHandler(id) {
     window.open(`/customer-detail/` + id);
   }
@@ -71,7 +70,7 @@ export class CustomerListComponent implements OnInit {
     this.filter_data.date_created = moment(this.filter_data.date_created).format('YYYY-MM-DD');
     this.getCumtomerList('');
   }
-  
+
   getCumtomerList(data) {
     if (this.pagenumber > this.total_page) {
       this.pagenumber = this.total_page;
@@ -81,17 +80,17 @@ export class CustomerListComponent implements OnInit {
       this.start = 0;
     }
     let header = this.service.post_rqst({ 'filter': this.filter_data, 'start': this.start, 'pagelimit': this.page_limit }, "ServiceCustomer/serviceCustomerList")
-    
+
     this.loader = true;
     header.subscribe((result) => {
       if (result['statusCode'] == 200) {
-        
+
         console.log('result',result);
-        
-        
+
+
         this.customerList = result['result'];
         console.log(this.customerList);
-        
+
         this.pageCount = result['count'];
         this.scheme_active_count = result['scheme_active_count'];
         this.loader = false;
@@ -101,7 +100,7 @@ export class CustomerListComponent implements OnInit {
           this.datanotofound = true;
           this.loader = false;
         }
-        
+
         if (this.pagenumber > this.total_page) {
           this.pagenumber = this.total_page;
           this.start = this.pageCount - this.page_limit;
@@ -112,8 +111,8 @@ export class CustomerListComponent implements OnInit {
         this.total_page = Math.ceil(this.pageCount / this.page_limit);
         this.sr_no = this.pagenumber - 1;
         this.sr_no = this.sr_no * this.page_limit
-        
-        
+
+
         for (let i = 0; i < this.customerList.length; i++) {
           if (this.customerList[i].status == '1') {
             this.customerList[i].newStatus = true
@@ -128,7 +127,7 @@ export class CustomerListComponent implements OnInit {
         this.datanotofound = true;
         this.loader = false;
       }
-      
+
     })
   }
   lastBtnValue(value) {
@@ -136,13 +135,15 @@ export class CustomerListComponent implements OnInit {
   }
 
   downloadExcel() {
+    this.excelLoader=true;
     this.service.post_rqst({ 'filter': this.filter_data }, "Excel/service_customer_list").subscribe((result => {
       if (result['msg'] == true) {
         window.open(this.downurl + result['filename'])
         this.getCumtomerList('');
+        this.excelLoader=false;
       } else {
       }
     }));
   }
-  
+
 }

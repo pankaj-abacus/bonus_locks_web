@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { DatabaseService } from 'src/_services/DatabaseService';
 import { DialogComponent } from 'src/app/dialog.component';
 import * as moment from 'moment';
-import { parse } from 'querystring';
 
 @Component({
   selector: 'app-user-target',
