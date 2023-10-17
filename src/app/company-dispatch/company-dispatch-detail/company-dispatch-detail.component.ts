@@ -562,6 +562,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
         this.masterboxData = result['master_grand_coupon']
         this.toast.successToastr('Success');
         this.billDatadetail()
+        this.getmasterboxnew('');
       }
       else {
         this.toast.errorToastr(result['statusMsg'])
