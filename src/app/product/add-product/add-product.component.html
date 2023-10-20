@@ -119,6 +119,18 @@
                     <p *ngIf="brand.errors?.required">This field is required</p>
                   </div>
                 </div> -->
+                <div class="col s12 m3 l3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Brands</mat-label>
+                    <mat-select name="brand" [(ngModel)]="data.brand" #brand="ngModel" multiple required>
+                      <mat-option *ngFor="let row of brandList"
+                        value="{{row.brand_code}}">{{row.display_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="brand.touched || f.submitted">
+                    <p *ngIf="brand.errors?.required">This field is required</p>
+                  </div>
+                </div>
                 <!-- <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>Colors</mat-label>
