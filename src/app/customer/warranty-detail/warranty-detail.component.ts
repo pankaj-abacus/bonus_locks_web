@@ -18,7 +18,7 @@ import { WarrantyUpdateModelComponent } from 'src/app/warranty/warranty-update-m
   styleUrls: ['./warranty-detail.component.scss']
 })
 export class WarrantyDetailComponent implements OnInit {
-  
+
   id;
   getData:any ={};
   skLoading:boolean = false;
@@ -30,12 +30,12 @@ export class WarrantyDetailComponent implements OnInit {
   featureFlag :boolean = false;
   allMrpFlag :boolean = false;
   warrantyImg:any =[];
-  
-  constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) { 
-    
-    
+
+  constructor(public location: Location, public session: sessionStorage, private router: Router, public alert: DialogComponent, public service: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public toast: ToastrManager, public excelservice: ExportexcelService, public dialog1: DialogComponent) {
+
+
     this.url = this.service.uploadUrl + 'service_task/'
-    
+
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.service.currentUserID = params.id
@@ -44,28 +44,28 @@ export class WarrantyDetailComponent implements OnInit {
       }
     });
   }
-  
+
   ngOnInit() {
   }
-  
+
   getWarrantyDetail()
   {
     this.skLoading = true;
     this.service.post_rqst({'warranty_id':this.id},"ServiceTask/serviceWarrantyDetail").subscribe((result=>
       {
         this.getData = result['result'];
-        
+
         this.warrantyImg = this.getData['image'];
-        
+
         this.skLoading = false;
       }
       ));
-      
+
     }
     back(): void {
       this.location.back()
     }
-    
+
     imageModel(image){
       const dialogRef = this.dialog.open( ImageModuleComponent, {
         panelClass:'Image-modal',
@@ -76,8 +76,8 @@ export class WarrantyDetailComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       });
     }
-    
-    
+
+
     updateWarrantyStataus(row,warranty_period,date_of_purchase)
     {
       const dialogRef = this.dialog.open(WarrantyUpdateModelComponent, {
@@ -87,10 +87,10 @@ export class WarrantyDetailComponent implements OnInit {
           id: row,
           period: warranty_period,
           date_of_purchase: date_of_purchase,
-          
+
         }
       });
-      
+
       dialogRef.afterClosed().subscribe(result => {
         if (result != false) {
           this.getWarrantyDetail();
@@ -98,4 +98,3 @@ export class WarrantyDetailComponent implements OnInit {
       });
     }
   }
-  

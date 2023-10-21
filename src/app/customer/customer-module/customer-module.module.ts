@@ -13,7 +13,6 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
 import { RouterModule } from '@angular/router';
 import { WarrantyDetailComponent } from '../warranty-detail/warranty-detail.component';
-import { InstallationDetailComponent } from '../installation-detail/installation-detail.component';
 import { ComplaintDetailComponent } from '../complaint-detail/complaint-detail.component';
 
 
@@ -28,7 +27,6 @@ const customerRoutes = [
       {path:"", component:CustomerDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
       {path:'add-customer/:id', component: CustomerAddComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
       {path:'warranty-detail/:id', component: WarrantyDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
-      {path:'installation-detail/:id', component: InstallationDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
       {path:'complaint-detail/:id', component: ComplaintDetailComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
     ] }
    
@@ -37,7 +35,7 @@ const customerRoutes = [
 ]
 
 @NgModule({
-  declarations: [CustomerListComponent,CustomerAddComponent,CustomerDetailComponent,WarrantyDetailComponent,InstallationDetailComponent,ComplaintDetailComponent],
+  declarations: [CustomerListComponent,CustomerAddComponent,CustomerDetailComponent,WarrantyDetailComponent,ComplaintDetailComponent],
   imports: [
     RouterModule.forChild(customerRoutes),
     CommonModule,

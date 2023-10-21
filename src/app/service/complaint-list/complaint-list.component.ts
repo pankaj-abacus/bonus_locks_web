@@ -26,7 +26,9 @@ export class ComplaintListComponent implements OnInit {
   pagenumber: any = 0;
   loader: boolean = false;
   active_tab: any = 'Pending';
-  sub_active_tab: any = '';
+  sub_active_tab: any='Not_Assigned'
+
+  // sub_active_tab: any = '';
   tab_count: any;
   sub_tab_count: any;
   scheme_active_count: any;
@@ -46,16 +48,18 @@ export class ComplaintListComponent implements OnInit {
 
   ngOnInit() {
     this.filter_data = this.service.getData()
-    this.getComplantList('');
 
     if (this.filter_data.status) {
       this.active_tab = this.filter_data.status
       if ( this.active_tab=='Pending') {
         this.sub_active_tab='Not_Assigned'
+        this.sub_active_tab=this.filter_data.sub_status
       }else{
-        this.sub_active_tab='Closed_By_Service'
+        this.sub_active_tab=this.filter_data.sub_status
       }
     }
+    this.getComplantList('');
+
 
 
   }
@@ -104,7 +108,6 @@ export class ComplaintListComponent implements OnInit {
     if (this.start < 0) {
       this.start = 0;
     }
-
 
     if (this.active_tab == 'All') {
       this.filter_data.status = this.active_tab;
@@ -226,9 +229,5 @@ export class ComplaintListComponent implements OnInit {
       } else {
       }
     }));
-  }
-
-  rejectComplaint(){
-
   }
 }

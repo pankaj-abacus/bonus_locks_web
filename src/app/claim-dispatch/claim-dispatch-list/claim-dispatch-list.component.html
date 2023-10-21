@@ -177,7 +177,7 @@
   <div>
   </div>
 
-  <div class="fab-btns">
+  <div class="fab-btns" *ngIf="customerList.length > 0">
     <button class="pulse excel" mat-fab color="primary" [ngClass]="{'pulse': fabBtnValue=='add'}"
       [matMenuTriggerFor]="menu">
       <i class="material-icons">apps</i>
@@ -185,7 +185,7 @@
     </button>
   </div>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="downloadExcel();" *ngIf="customerList.length > 0">
+    <button mat-menu-item (click)="downloadExcel();">
       <mat-icon>download</mat-icon>
       <span>Download excel</span>
     </button>

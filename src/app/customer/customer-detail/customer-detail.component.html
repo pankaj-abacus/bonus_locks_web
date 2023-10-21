@@ -33,9 +33,9 @@
           (click)="tabType= 'warranty';getWarrantyDetail()"><i class="material-icons">person</i>Warranty</button>
         <button mat-button [ngClass]="{'active' :tabType== 'complaint'}"
           (click)="tabType= 'complaint';getComplaintDetail()"><i class="material-icons">person</i>Complaint</button>
-        <button mat-button [ngClass]="{'active' :tabType== 'installation'}"
+        <!-- <button mat-button [ngClass]="{'active' :tabType== 'installation'}"
           (click)="tabType= 'installation';getInstallationDetail()"><i
-            class="material-icons">person</i>Installation</button>
+            class="material-icons">person</i>Installation</button> -->
       </div>
     </div>
   </div>
@@ -568,7 +568,7 @@
 
 
     </div>
-    <div class="row container container-scroll" *ngIf="tabType== 'installation'">
+    <!-- <div class="row container container-scroll" *ngIf="tabType== 'installation'">
       <div class="cs-table horizontal-scroll">
         <div class="sticky-head">
           <div class="table-head">
@@ -777,7 +777,7 @@
       </div>
 
 
-    </div>
+    </div> -->
   </div>
 
 </div>

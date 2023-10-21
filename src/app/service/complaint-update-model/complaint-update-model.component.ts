@@ -11,7 +11,7 @@ import * as moment from 'moment';
   styleUrls: ['./complaint-update-model.component.scss']
 })
 export class ComplaintUpdateModelComponent implements OnInit {
-
+  
   formData: any = {}
   savingFlag: boolean = false;
   currentDate: Date;
@@ -24,31 +24,31 @@ export class ComplaintUpdateModelComponent implements OnInit {
   errorMsg: boolean = false;
   selected_image: any = [];
   dealerList: any = [];
-
+  
   constructor(@Inject(MAT_DIALOG_DATA) public data, public dialog: MatDialog, public serve: DatabaseService, public session: sessionStorage, public toast: ToastrManager, public dialogRef: MatDialogRef<ComplaintUpdateModelComponent>) {
-
+    
     this.url = this.serve.uploadUrl + 'product_image/';
     console.log(data);
   }
-
+  
   ngOnInit() {
     this.currentDate = new Date();
     this.getDealerList('');
   }
-
-
+  
+  
   getDealerList(search) {
     console.log(search);
-
+    
     this.serve.post_rqst({ 'search': search }, "ServiceTask/dealerList").subscribe((result => {
       if (result['statusCode'] == 200) {
         this.dealerList = result['dealer'];
         console.log(this.dealerList);
-
+        
       }
     }))
-
-
+    
+    
   }
   get_dealer_detail(id){
     if (id) {
@@ -60,16 +60,16 @@ export class ComplaintUpdateModelComponent implements OnInit {
       }
     }
   }
-
-
+  
+  
   deleteProductImage(arrayIndex, id, name) {
-
+    
     if (id) {
       this.serve.post_rqst({ 'image_id': id, 'image': name }, "Master/productImageDeleted").subscribe((result => {
         if (result['statusCode'] == '200') {
           this.toast.successToastr(result['statusMsg']);
           this.selected_image.splice(arrayIndex, 1);
-
+          
         } else {
           this.toast.errorToastr(result['statusMsg']);
         }
@@ -80,10 +80,10 @@ export class ComplaintUpdateModelComponent implements OnInit {
       this.selected_image.splice(arrayIndex, 1);
     }
     // this.selected_image.splice(arrayIndex, 1);
-
-
+    
+    
   }
-
+  
   // add image
   onUploadChange(data: any) {
     this.errorMsg = false;
@@ -100,17 +100,18 @@ export class ComplaintUpdateModelComponent implements OnInit {
       this.image.append("" + i, data.target.files[i], data.target.files[i].name);
     }
   }
-
-
+  
+  
   update() {
     this.formData.image = this.selected_image ? this.selected_image : [];
-
+    
     this.formData.complaint_id = this.data.id
     this.savingFlag = true;
     this.serve.post_rqst({ 'data': this.formData }, "ServiceTask/complaintStatus").subscribe((result => {
       if (result['statusCode'] == 200) {
-
+        
         this.dialogRef.close(true);
+        
         this.toast.successToastr(result['statusMsg']);
       }
       else {
@@ -119,6 +120,6 @@ export class ComplaintUpdateModelComponent implements OnInit {
       }
     }))
   }
-
-
+  
+  
 }

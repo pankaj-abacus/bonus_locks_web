@@ -69,6 +69,7 @@ const routes: Routes = [
   { path: "claimDispatch-list", loadChildren: './claim-dispatch/dispatch-module/dispatch-module.module#DispatchModuleModule'},
   { path: "spare-list", loadChildren: './spare/sapre-module/sapre-module.module#SapreModuleModule'},
   { path: "Complaint-visit-list", loadChildren: './complaint-visit/complanit-visit-module/complanit-visit-module.module#ComplanitVisitModuleModule'},
+  { path: "service-invoice-list", loadChildren: './service-invoice/service-invoice-module/service-invoice-module.module#ServiceInvoiceModuleModule'},
 
 
 
