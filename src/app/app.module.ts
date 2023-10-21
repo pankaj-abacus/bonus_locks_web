@@ -58,7 +58,6 @@ import { CustomerModuleModule } from './customer/customer-module/customer-module
 import { WarrantyModuleModule } from './warranty/warranty-module/warranty-module.module';
 import { InstallationModuleModule } from './installation/installation-module/installation-module.module';
 import { EngineerAssignModelComponent } from './installation/engineer-assign-model/engineer-assign-model.component';
-import { EngineerAssignModelComponentComponent } from './engineer-assign-model-component/engineer-assign-model-component.component';
 import { WarrantyUpdateModelComponent } from './warranty/warranty-update-model/warranty-update-model.component';
 import { AddComplaintRemarkComponent } from './add-complaint-remark/add-complaint-remark.component';
 import { AddInstallationRemarkComponent } from './installation/add-installation-remark/add-installation-remark.component';
@@ -157,7 +156,6 @@ import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-mo
     entryComponents: [
         UploadFileModalComponent,
         EngineerAssignModelComponent,
-        EngineerAssignModelComponentComponent,
         WarrantyUpdateModelComponent,
         AddComplaintRemarkComponent,
         AddInstallationRemarkComponent,
@@ -168,8 +166,6 @@ import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-mo
         AddSpareComponent,
         AssignQtyComponent,
         ProductUploadComponent
-
-
     ],
 
     exports: [RouterModule],

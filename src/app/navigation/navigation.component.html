@@ -392,6 +392,13 @@
                         </a>
                     </li>
                     <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/service-invoice-list" routerLinkActive="active">
+                            Invoice
+                            <span class="nav-counter"
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_invoice}}</span>
+                        </a>
+                    </li>
+                    <li>
                         <a mat-button (click)="clearFilter()" routerLink="/Complaint-visit-list"
                             routerLinkActive="active">
                             Complaint Visits

@@ -10,7 +10,7 @@
       </a>
 
       <div class="pagination">
-        <div class="pagination-content">
+        <div class="pagination-content" *ngIf="customerList.length > 0">
           Pages
           <span>{{pagenumber}}</span>
           of
@@ -179,7 +179,7 @@
     </button>
   </div>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="downloadExcel();">
+    <button mat-menu-item (click)="downloadExcel();" *ngIf="customerList.length > 0">
       <mat-icon>download</mat-icon>
       <span>Download excel</span>
     </button>

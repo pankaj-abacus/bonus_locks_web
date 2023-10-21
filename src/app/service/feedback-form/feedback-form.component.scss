@@ -1,0 +1,14 @@
+.container {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    &.table-container {
+        padding-bottom: 104px;
+    }
+    &.container-scroll {
+        height: calc(100% - 48px);
+    }
+    &.no-tab {
+        height: calc(100% - 100px);
+    }
+}

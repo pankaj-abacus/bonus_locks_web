@@ -40,6 +40,7 @@ import { ViewMasterBoxDispatchDetailComponent } from './company-dispatch/view-ma
 import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-add/dist-primary-order-add.component';
 import { InstallationAddComponent } from './installation/installation-add/installation-add.component';
 import { ProductUploadComponent } from './product-upload/product-upload.component';
+import { EngineerAssignModelComponent } from './installation/engineer-assign-model/engineer-assign-model.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { ProductUploadComponent } from './product-upload/product-upload.componen
     ViewMasterBoxDispatchDetailComponent,
     InstallationAddComponent,
     ProductUploadComponent,
+    EngineerAssignModelComponent
 
 ],
   imports: [

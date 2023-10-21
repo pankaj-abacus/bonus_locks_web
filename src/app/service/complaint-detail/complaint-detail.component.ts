@@ -97,7 +97,7 @@ export class ComplaintDetailComponent implements OnInit {
   }
   openDialog(row, state): void {
     console.log(row);
-    const dialogRef = this.dialog.open(EngineerAssignModelComponentComponent, {
+    const dialogRef = this.dialog.open(EngineerAssignModelComponent, {
       width: '400px',
       panelClass: 'cs-model',
       data: {
@@ -105,9 +105,8 @@ export class ComplaintDetailComponent implements OnInit {
         state: state,
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result != false) {
+      if (result==true) {        
         this.getComplaintDetail();
       }
     });
@@ -122,7 +121,9 @@ export class ComplaintDetailComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      if (result==true) {        
+        this.getComplaintDetail();
+      }
     });
   }
   updateComplaintStataus(id) {
@@ -133,9 +134,8 @@ export class ComplaintDetailComponent implements OnInit {
         id: id,
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result != false) {
+      if (result==true) {        
         this.getComplaintDetail();
       }
     });

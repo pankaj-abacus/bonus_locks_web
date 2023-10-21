@@ -70,7 +70,7 @@ export class EngineerAssignModelComponentComponent implements OnInit {
       if(result['statusCode']==200)
       {
         this.toast.successToastr(result['statusMsg']);
-        this.dialog.closeAll();
+        this.dialogRef.close(true);
       }else{
         this.toast.errorToastr(result['statusMsg']);
         this.savingFlag = false;

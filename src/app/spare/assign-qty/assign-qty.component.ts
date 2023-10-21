@@ -36,20 +36,15 @@ export class AssignQtyComponent implements OnInit {
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public data,public service: DatabaseService,public rout: Router,public toast: ToastrManager,private route: ActivatedRoute,public dialog: DialogComponent,public dialog2: MatDialog,public dialogRef: MatDialogRef<AssignQtyComponent>) {
-    console.log(this.data);
-    console.log(this.data.type);
     this.qtyList=data.data
-    console.log(this.qtyList);
+
     this.model_type=data.type
 
     this.spareIncomingList=data.data
-    console.log(this.spareIncomingList);
 
     this.spareOutgoingList=data.data
-    console.log(this.spareOutgoingList);
 
     this.sparereturnList=data.data
-    console.log(this.sparereturnList);
    }
 
    ngOnInit() {

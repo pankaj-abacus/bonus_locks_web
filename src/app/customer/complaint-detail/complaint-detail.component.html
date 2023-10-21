@@ -97,12 +97,12 @@
                     <div class="card" *ngIf="!skLoading">
                         <div class="card-head">
                             <h2>Customer Details</h2>
-                            <div class="left-auto" *ngIf="getData.complaint_status=='Pending'">
+                            <!-- <div class="left-auto" *ngIf="getData.complaint_status=='Pending'">
                                 <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
                                     [routerLink]="[ 'add-complaint/', 'complaint',this.id ]">
                                     <i class="material-icons">edit</i>
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="card-body">
                             <div class="grid-box">
@@ -192,12 +192,12 @@
                                                 '--'}}</strong>
                                         </p>
                                     </div>
-                                    <div class="left-auto" *ngIf="getData.complaint_status=='Pending'">
+                                    <!-- <div class="left-auto" *ngIf="getData.complaint_status=='Pending'">
                                         <a class="sm-mat-icon-button" mat-icon-button matTooltip="Change Status"
                                             (click)="updateComplaintStataus(getData.id)">
                                             <i class="material-icons">edit</i>
                                         </a>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="block-feilds" *ngIf="getData.complaint_status=='Cancel'">
                                     <span>Reason Of Cancellation</span>
@@ -730,7 +730,7 @@
             </div>
         </div>
     </div>
-    <div class="fab-btns" *ngIf="getData.complaint_status=='Pending'">
+    <!-- <div class="fab-btns" *ngIf="getData.complaint_status=='Pending'">
         <button class=" pulse excel" mat-fab color="primary" [matMenuTriggerFor]="menu">
             <i class="material-icons">apps</i>
             Action
@@ -747,5 +747,5 @@
                 <span>Add Remark</span>
             </button>
         </mat-menu>
-    </div>
+    </div> -->
 </div>
