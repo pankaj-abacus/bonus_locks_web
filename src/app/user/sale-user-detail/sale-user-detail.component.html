@@ -5,7 +5,7 @@
     </a>
     <h2>{{detail.user_type | titlecase}} Details</h2>
     <div class="left-auto">
-      <button class="mr16" matTooltip="Transfer Data" *ngIf="detail.user_type != 'System User' "
+      <button class="mr16" matTooltip="Transfer Data" *ngIf="detail.user_type != 'Service Engineer' "
         (click)="openDialog('transferData')" mat-raised-button color="primary"><i class="material-icons">swap_horiz</i>
         Transfer Data</button>
       <button class="mr16" matTooltip="Transfer Data" *ngIf="detail.user_type == 'System User' "
@@ -20,7 +20,7 @@
   </div>
   <div class="container pt10 pl10 pr10 pb50">
     <div class="row">
-      <div class="col s12 m8 l8" [ngClass]="{'m12 l12': detail.user_type != 'System User'}">
+      <div class="col s12 m8 l8" [ngClass]="{'m12 l12': detail.user_type != 'System User'}" *ngIf=" detail.user_type != 'Service Engineer'">
         <div class="card" *ngIf="!skLoading">
           <div class="card-head">
             <h2>Basic Details</h2>
@@ -160,9 +160,57 @@
         <!-- Skeleton end -->
 
       </div>
+      
+      <div class="col s12 m12 l12" *ngIf="detail.user_type == 'Service Engineer'">
+        <div class="card" *ngIf="!skLoading">
+          <div class="card-head">
+            <h2>Basic Details</h2>
+            <!-- <div class="left-auto" *ngIf="login_data.edit_users_master=='1'">
+              <a class="sm-mat-icon-button" mat-icon-button matTooltip="Edit Detail"
+              [routerLink]="[ 'user-edit/', user_id ]">
+              <i class="material-icons">edit</i>
+            </a>
+          </div> -->
+        </div>
+        <div class="card-body">
+          <div class="grid-box">
+            <div class="block-feilds user-dp">
+              <div class="wp100">
+                <span>Name</span>
+                <p>{{detail.name | titlecase}}</p>
+              </div>
+            </div>
+            <div class="block-feilds">
+              <span>Mobile Number</span>
+              <p>{{detail.contact_01}}</p>
+            </div>
+            <div class="block-feilds">
+              <span> Paytm Number</span>
+              <p>{{detail.paytm_mobileno}}</p>
+            </div>
+            <div class="block-feilds">
+              <span>Email ID</span>
+              <p>{{detail.email ? detail.email :'---'}}</p>
+            </div>
+            <div class="block-feilds">
+              <span>Address</span>
+              <p>{{detail.address | titlecase}} {{detail.city ? ',' + (detail.city |titlecase) + ',' : ''}}
+                {{detail.district_name ?
+                  (detail.district_name |titlecase) + ',' : ''}} {{detail.state_name ? (detail.state_name |titlecase)
+                    + ',' : ''}}
+                    {{detail.pincode}}</p>
+                  </div>
+                  <div class="block-feilds">
+                    <span>Status</span>
+                    <p>{{detail.status == '1' ? 'Active' : 'Deactive'}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
       <div class="col s12 m4 l4">
-        <ng-container *ngIf="detail.user_type != 'System User'">
+        <ng-container *ngIf="detail.user_type != 'System User' && detail.user_type != 'Service Engineer'">
           <div class="card pb0 mt10" *ngIf="!skLoading">
             <div class="card-head">
               <h2>Assigned Brand</h2>
@@ -177,7 +225,7 @@
             </div>
           </div>
         </ng-container>
-        <ng-container *ngIf="detail.user_type == 'System User'">
+        <ng-container *ngIf="detail.user_type == 'System User' ">
           <div class="card" *ngIf="!skLoading">
             <div class="card-head">
               <h2>Login Credentials</h2>
@@ -198,7 +246,7 @@
             </div>
 
           </div>
-          <div class="card pb0 mt10" *ngIf="!skLoading">
+          <div class="card pb0 mt10" *ngIf="!skLoading && detail.user_type != 'Service Engineer'">
             <div class="card-head">
               <h2>Assigned Users</h2>
             </div>
@@ -231,7 +279,7 @@
         <!-- Skeleton end -->
       </div>
       <div class="col s12 m4 l4">
-        <ng-container *ngIf="detail.user_type != 'System User'">
+        <ng-container *ngIf="detail.user_type != 'System User' && detail.user_type != 'Service Engineer'">
           <div class="card pb0 mt10" *ngIf="!skLoading">
             <div class="card-head">
               <h2>Leave Master</h2>

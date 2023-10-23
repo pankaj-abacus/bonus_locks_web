@@ -76,7 +76,6 @@ export class InstallationUpdateModelComponent implements OnInit {
     this.savingFlag = true;
     this.serve.post_rqst({ 'data': this.formData }, "ServiceTask/complaintStatus").subscribe((result => {
       if (result['statusCode'] == 200) {
-
         this.dialogRef.close(true);
         this.toast.successToastr(result['statusMsg']);
       }

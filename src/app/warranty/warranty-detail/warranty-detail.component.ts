@@ -89,9 +89,8 @@ export class WarrantyDetailComponent implements OnInit {
           
         }
       });
-      
       dialogRef.afterClosed().subscribe(result => {
-        if (result != false) {
+        if (result==true) {        
           this.getWarrantyDetail();
         }
       });

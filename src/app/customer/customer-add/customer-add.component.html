@@ -17,20 +17,6 @@
             <div class="card-body cs-form">
               <div class="row">
                 <div class="col s12 m3 l3">
-                  <mat-form-field appearance="outline" [ngClass]="{'has-error' : customer_type.invalid } ">
-                    <mat-label>Select Customer Type</mat-label>
-                    <mat-select name="customer_type" [(ngModel)]="data.customer_type" #customer_type="ngModel" required>
-                      <mat-option value="Residential">Residential</mat-option>
-                      <mat-option value="Commercial">Commercial</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <div class="alert alert-danger" *ngIf="f.submitted && customer_type?.invalid ">
-                    This field is required
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline" [ngClass]="{ 'has-error': name.invalid }">
                     <mat-label>Name</mat-label>
                     <input matInput placeholder="Type Here ..." name="name" #name="ngModel" [(ngModel)]="data.name"

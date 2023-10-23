@@ -45,7 +45,6 @@ export class WarrantyUpdateModelComponent implements OnInit {
     this.savingFlag = true;
     this.serve.post_rqst({ 'data': this.formData }, "ServiceTask/change_warranty_status").subscribe((result => {
       if (result['statusCode'] == 200) {
-
         this.dialogRef.close(true);
         this.toast.successToastr(result['statusMsg']);
       }
