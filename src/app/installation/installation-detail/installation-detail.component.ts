@@ -82,20 +82,6 @@ export class InstallationDetailComponent implements OnInit {
     })
   }
 
-  // getInstallationDetail()
-  // {
-  //   this.loader=true
-  //   this.skLoading = true;
-  //   this.service.post_rqst({'complaint_id':this.id},"ServiceTask/serviceInstallationDetail").subscribe((result=>
-  //     {
-
-  //       this.skLoading = false;
-  //       this.loader=false;
-  //     }
-  //     ));
-
-  //   }
-
   imageModel(image) {
     const dialogRef = this.dialog.open(ImageModuleComponent, {
       panelClass: 'Image-modal',
@@ -124,10 +110,9 @@ export class InstallationDetailComponent implements OnInit {
         state: state,
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result != false) {
-        // this.getInstallationDetail();
+      if (result==true) {        
+        this.getInstallationDetail();
       }
     });
   }
@@ -141,10 +126,9 @@ export class InstallationDetailComponent implements OnInit {
         id: id,
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result != false) {
-        // this.getInstallationDetail();
+      if (result==true) {        
+        this.getInstallationDetail();
       }
     });
   }
@@ -156,10 +140,9 @@ export class InstallationDetailComponent implements OnInit {
         id: id,
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result != false) {
-        // this.getInstallationDetail();
+      if (result==true) {        
+        this.getInstallationDetail();
       }
     });
   }

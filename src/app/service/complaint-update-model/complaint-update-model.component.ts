@@ -108,10 +108,8 @@ export class ComplaintUpdateModelComponent implements OnInit {
     this.formData.complaint_id = this.data.id
     this.savingFlag = true;
     this.serve.post_rqst({ 'data': this.formData }, "ServiceTask/complaintStatus").subscribe((result => {
-      if (result['statusCode'] == 200) {
-        
+      if (result['statusCode'] == 200) {  
         this.dialogRef.close(true);
-        
         this.toast.successToastr(result['statusMsg']);
       }
       else {

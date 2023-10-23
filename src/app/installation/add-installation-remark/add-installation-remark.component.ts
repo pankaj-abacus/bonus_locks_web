@@ -27,7 +27,7 @@ export class AddInstallationRemarkComponent implements OnInit {
     this.service.post_rqst({'complaint_id':this.data.id,'msg':this.form_data.msg}, "ServiceTask/addComplaintRemark").subscribe((result => {
       if(result['statusCode'] == 200){
         this.toast.successToastr(result['statusMsg']);
-        this.dialog.closeAll();
+        this.dialogRef.close(true);
         setTimeout(() => {
           this.savingFlag = false;
         }, 700);

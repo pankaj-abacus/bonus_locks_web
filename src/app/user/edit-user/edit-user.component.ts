@@ -22,7 +22,7 @@ export class EditUserComponent implements OnInit {
   report_manager: any = [];
   data: any = {};
   district_list: any = [];
-  user_type;
+  user_type:any;
   sales_type: any = [];
   loader: boolean = false;
   module_name: any = [];
@@ -37,20 +37,17 @@ export class EditUserComponent implements OnInit {
   maxDate: any;
   branch: any = [];
   brandList: any = [];
-  organisationData:any =[];
-
-
+  organisationData: any = [];
+  warehouse: any = [];
 
   constructor(public serve: DatabaseService,
     public dialog1: MatDialog,
     private route: ActivatedRoute,
     public toast: ToastrManager, public location: Location, public session: sessionStorage, public rout: Router, public dialog: DialogComponent) {
     this.maxDate = new Date();
-    this.getStateList();
-    this.data.user_type = 'Sales User';
-    this.get_sales_user_type(this.data.user_type, '');
     this.assign_login_data = this.session.getSession();
     this.logined_user_data = this.assign_login_data.value.data;
+    this.getStateList();
   }
 
 
@@ -60,7 +57,7 @@ export class EditUserComponent implements OnInit {
       if (this.userId) {
         this.loader = true;
         this.userDetail();
-        this.getCompanyData();
+        this.getReportManager('');
       }
     });
   }
@@ -69,6 +66,8 @@ export class EditUserComponent implements OnInit {
     this.serve.post_rqst(0, "Master/getAllState").subscribe((result => {
       if (result['statusCode'] == 200) {
         this.states = result['all_state'];
+        this.states.map((row) => { row.state_name = row.state_name.toUpperCase(); })
+        // this.data.district=''
       }
       else {
         this.toast.errorToastr(result['statusMsg'])
@@ -77,38 +76,86 @@ export class EditUserComponent implements OnInit {
   }
 
   userDetail() {
-    setTimeout(() => {
-      this.serve.post_rqst({ 'id': this.userId }, "Master/salesUserDetail").subscribe((result) => {
-        this.loader = false;
-        this.data = result['sales_detail'];
-        this.data.state_name = this.data.state_name;
-        this.data.rsm_id = this.data.rsm_id.toString();
-        this.data.role_id = this.data.designation_id.toString();
-        this.data.brand = this.data.brand.map(String);
-        this.data.assign_system_user = this.data.assign_system_user_id.map(String);
-        this.getBrand();
-        if (this.data.user_type == 'System User') {
-          this.assign_module_data = this.data.assign_module;
-        }
+    this.serve.post_rqst({ 'id': this.userId }, "Master/salesUserDetail").subscribe((result) => {
+      this.loader = false;
+      this.data = result['sales_detail'];
 
-        if (this.data.rsm_id != '') {
-          this.getReportManager('');
-        }
-        if (this.data.assign_system_user != '') {
-          this.getReportManager('');
-        }
-        if (this.data.date_of_joining == '0000-00-00') {
-          this.data.date_of_joining = '';
-        }
-        if (this.data.state_name != '') {
-          this.getDistrict(1);
-        }
-        this.get_sales_user_type(this.data.user_type, '');
-      })
-    }, 500);
+      if (this.data.date_of_joining == '0000-00-00') {
+        this.data.date_of_joining = '';
+      }
+      this.getStateList();
+      this.getBrand();
+      this.get_sales_user_type(this.data.user_type, '');
+
+      this.data.state = this.data.state_name;
+      if (this.data.state_name != '') {
+        this.getDistrict(1);
+      }
+      this.data.district = this.data.district_name
+      // this.getDistrict(1);
+      this.data.rsm_id = this.data.rsm_id.toString();
+      this.data.role_id = this.data.designation_id.toString();
+      this.data.brand = this.data.brand.map(String);
+      this.data.assign_system_user = this.data.assign_system_user_id.map(String);
+      this.data.working_state = this.data.working_state_name;
+      this.data.zonal_manager = this.data.zonal_manager.toString();
+      this.data.zonal_manager.toUpperCase();
+
+      this.data.working_state.map((row, i) => { this.data.working_state[i] = row.toUpperCase(); })
+
+      if (this.data.user_type == 'System User') {
+        this.assign_module_data = this.data.assign_module;
+      }
+
+      if (this.data.role_id == '53' || this.data.role_id == '54' || this.data.role_id == '58' || this.data.role_id == '59') {
+        this.getCompanyData();
+        this.data.assign_company = this.data.assign_company.toString();
+      }
+
+      if (this.data.warehouse_id != '') {
+        this.data.warehouse_id = this.data.warehouse_id.toString()
+      }
+      if (this.data.dispatch_type != '') {
+        this.getWarehouse();
+      }
+
+      if (this.data.assign_system_user != '') {
+        this.getReportManager('');
+      }
+      if (this.data.date_of_joining == '0000-00-00') {
+        this.data.date_of_joining = '';
+      }
+      if (this.data.state_name != '') {
+        this.getDistrict(1);
+      }
+      this.get_sales_user_type(this.data.user_type, '');
+    })
   }
 
 
+
+
+  getWarehouse() {
+    this.serve.post_rqst({}, "Dispatch/fetchWarehouse").subscribe((result => {
+      if (result['statusCode'] == 200) {
+        this.warehouse = result['result'];
+      }
+      else {
+        this.toast.errorToastr(result['statusMsg']);
+      }
+    }));
+  }
+
+  getCompanyData() {
+    this.serve.post_rqst({}, "Order/organizationName").subscribe((response => {
+      if (response['statusCode'] == 200) {
+        this.organisationData = response['result'];
+      } else {
+        this.toast.errorToastr(response['statusMsg']);
+      }
+
+    }));
+  }
 
   MobileNumber(event: any) {
     const pattern = /[0-9\+\-\ ]/;
@@ -132,8 +179,8 @@ export class EditUserComponent implements OnInit {
 
 
   check_number() {
-    if (this.data.mobileno.length == 10) {
-      this.serve.post_rqst({ "mobile": this.data.mobileno }, "Master/userMobileNoCheck").subscribe((result => {
+    if (this.data.contact_01.length == 10) {
+      this.serve.post_rqst({ "mobile": this.data.contact_01 }, "Master/userMobileNoCheck").subscribe((result => {
         if (result['statusCode'] == 200) {
           if (result['statusMsg'] != 'Not Exist') {
             this.exist = true;
@@ -151,13 +198,16 @@ export class EditUserComponent implements OnInit {
     }
   }
 
-
-
-
   getDistrict(val) {
     let st_name;
     if (val == 1) {
-      st_name = this.data.state_name;
+      if (this.data.state_name!='' && this.data.state_name) {
+        st_name = this.data.state_name;
+      }
+      else{
+        st_name = this.data.state;
+
+      }
     }
     this.serve.post_rqst({ 'state_name': st_name }, "Master/getAllDistrict").subscribe((result => {
       if (result['statusCode'] == 200) {
@@ -171,6 +221,7 @@ export class EditUserComponent implements OnInit {
 
   get_sales_user_type(type, event) {
     let Usertype
+
     if (type != '') {
       Usertype = type;
     }
@@ -179,22 +230,16 @@ export class EditUserComponent implements OnInit {
     }
     this.serve.post_rqst({ 'user_type': Usertype }, "Master/getDesignation").subscribe((response => {
       this.sales_type = response['all_designation'];
+      // console.log(this.sales_type);
+
+
 
 
     }));
   }
-  getCompanyData() {
-    this.serve.post_rqst({}, "Order/organizationName").subscribe((response => {
-      if (response['statusCode'] == 200) {
-        this.organisationData = response['result'];
-      } else {
-        this.toast.errorToastr(response['statusMsg']);
-      }
 
-    }));
-  }
   getReportManager(searcValue) {
-    this.serve.post_rqst({ 'search': searcValue }, "Master/getSalesUserForReporting").subscribe((result => {
+    this.serve.post_rqst({ 'search': searcValue, 'id': this.userId }, "Master/getSalesUserForReporting").subscribe((result => {
       if (result['all_sales_user']['statusCode'] == 200) {
         this.report_manager = result['all_sales_user']['all_sales_user'];
       }
@@ -207,16 +252,13 @@ export class EditUserComponent implements OnInit {
 
   submitDetail() {
 
+    if(this.data.user_type!='Service Engineer'){
     if (this.data.role_id) {
       let index = this.sales_type.findIndex(d => d.id == this.data.role_id);
-      console.log(index);
       if (index != -1) {
         this.data.role_name = this.sales_type[index].role_name
       }
-      console.log(this.data.role_name);
     }
-
-
     if (this.data.date_of_joining) {
       this.data.date_of_joining = moment(this.data.date_of_joining).format('YYYY-MM-DD');
       this.data.date_of_joining = this.data.date_of_joining;
@@ -241,6 +283,26 @@ export class EditUserComponent implements OnInit {
         this.savingFlag = false;
       }
     }));
+  }
+  else{
+    //  this.data.uid = this.userId;
+    this.data.user_id = this.userId;
+    this.data.uname = this.userName;
+    this.data.created_by_name = this.logined_user_data.name;
+    this.data.created_by_id = this.logined_user_data.id;
+    this.savingFlag = true;
+    this.serve.post_rqst({ 'data': this.data }, "Master/updateUser").subscribe((response => {
+      if (response['statusCode'] == "200") {
+        this.toast.successToastr(response['statusMsg']);
+        this.rout.navigate(['/sale-user-list']);
+        this.savingFlag = false;
+      }
+      else {
+        this.toast.errorToastr(response['statusMsg']);
+        this.savingFlag = false;
+      }
+    }));
+  }
   }
 
   // get_module_data() {
@@ -268,6 +330,7 @@ export class EditUserComponent implements OnInit {
     const dialogRef = this.dialog1.open(DesignationComponent, {
       width: '500px',
       panelClass: 'cs-modal',
+      disableClose: true,
       data: {
         'type': 'designation'
       }

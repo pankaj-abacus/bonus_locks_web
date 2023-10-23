@@ -63,13 +63,11 @@ export class EngineerAssignModelComponent implements OnInit {
   assign_engineer(){   
     console.log(this.id);
     this.savingFlag = true;
-      
     this.service.post_rqst({'complaint_id':this.data.id,'data':this.data2},"ServiceTask/carpenterAssign").subscribe((result)=>{
-      
       if(result['statusCode']==200)
       {
+        this.dialogRef.close(true);
         this.toast.successToastr(result['statusMsg']);
-        this.dialog.closeAll();
       }else{
         this.toast.errorToastr(result['statusMsg']);
     this.savingFlag = false;
