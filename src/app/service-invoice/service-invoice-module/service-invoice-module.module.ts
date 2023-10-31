@@ -12,6 +12,8 @@ import { AuthComponentGuard } from 'src/app/auth-component.guard';
 import { ServiceInvoiceListComponent } from '../service-invoice-list/service-invoice-list.component';
 import { ServiceInvoiceDetailComponent } from '../service-invoice-detail/service-invoice-detail.component';
 import { ServiceInvoiceAddComponent } from '../service-invoice-add/service-invoice-add.component';
+import { ServicePaymentAddComponent } from '../service-payment-add/service-payment-add.component';
+import { FeedbackFormComponent } from 'src/app/service/feedback-form/feedback-form.component';
 
 
 const invoiceRoutes = [
@@ -26,7 +28,7 @@ const invoiceRoutes = [
 ]
 
 @NgModule({
-  declarations: [ServiceInvoiceListComponent,ServiceInvoiceDetailComponent,ServiceInvoiceAddComponent],
+  declarations: [ServiceInvoiceListComponent,ServiceInvoiceDetailComponent,ServiceInvoiceAddComponent,ServicePaymentAddComponent,FeedbackFormComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(invoiceRoutes),

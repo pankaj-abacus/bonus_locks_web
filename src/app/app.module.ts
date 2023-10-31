@@ -165,7 +165,7 @@ import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-mo
         GatepassAddComponent,
         AddSpareComponent,
         AssignQtyComponent,
-        ProductUploadComponent
+        ProductUploadComponent,
     ],
 
     exports: [RouterModule],

@@ -9,7 +9,6 @@ import { Location } from '@angular/common'
 import { DialogComponent } from 'src/app/dialog.component';
 import { DialogService } from 'src/app/dialog.service';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
-import { EngineerAssignModelComponentComponent } from 'src/app/engineer-assign-model-component/engineer-assign-model-component.component';
 import { AddComplaintRemarkComponent } from 'src/app/add-complaint-remark/add-complaint-remark.component';
 import { ComplaintUpdateModelComponent } from 'src/app/service/complaint-update-model/complaint-update-model.component';
 
@@ -94,23 +93,7 @@ export class ComplaintDetailComponent implements OnInit {
   back(): void {
     this.location.back()
   }
-  openDialog(row, state): void {
-    console.log(row);
-    const dialogRef = this.dialog.open(EngineerAssignModelComponentComponent, {
-      width: '400px',
-      panelClass: 'cs-model',
-      data: {
-        id: row,
-        state: state,
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != false) {
-        this.getComplaintDetail();
-      }
-    });
-  }
+  
 
   openDialog2(id) {
     const dialogRef = this.dialog.open(AddComplaintRemarkComponent, {
