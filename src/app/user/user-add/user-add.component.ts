@@ -38,6 +38,8 @@ export class UserAddComponent implements OnInit {
   maxDate: any;
   brandList: any = [];
   organisationData: any = [];
+  assign_login_data2: any = [];
+  warehouse_id: any;
 
   constructor(public serve: DatabaseService,
     public dialog1: MatDialog,
@@ -52,6 +54,8 @@ export class UserAddComponent implements OnInit {
     this.get_sales_user_type(this.data.user_type, '');
     this.assign_login_data = this.session.getSession();
     this.logined_user_data = this.assign_login_data.value.data;
+    console.log(this.assign_login_data2.warehouse_id);
+    this.warehouse_id = this.assign_login_data2.warehouse_id
   }
 
 
@@ -211,14 +215,15 @@ export class UserAddComponent implements OnInit {
         this.data.role_name = this.sales_type[index].role_name
       }
     }
-
-
+    console.log(this.data.warehouse_id);
+    this.data.warehouse_id = this.data.warehouse_id;
+    
     this.data.uid = this.userId;
     this.data.uname = this.userName;
     this.data.created_by_name = this.logined_user_data.name;
     this.data.created_by_id = this.logined_user_data.id;
     this.savingFlag = true;
-    this.serve.post_rqst({ 'data': this.data }, "Master/addUser").subscribe((response => {
+    this.serve.post_rqst({ 'data': this.data,'warehouse_id':this.data.warehouse_id }, "Master/addUser").subscribe((response => {
       if (response['statusCode'] == "200") {
         this.toast.successToastr(response['statusMsg']);
         this.rout.navigate(['/sale-user-list']);

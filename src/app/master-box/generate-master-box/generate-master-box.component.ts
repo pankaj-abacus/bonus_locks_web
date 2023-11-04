@@ -225,7 +225,7 @@ export class GenerateMasterBoxComponent implements OnInit {
   getmasterbox(searcValue) {
     this.filter.coupon_code = searcValue;
     this.skLoading = true;
-    this.service.post_rqst({ 'filter': this.filter, }, 'Dispatch/fetchMasterGrandCouponDropdownNew').subscribe((resp) => {
+    this.service.post_rqst({ 'filter': 0, }, 'Dispatch/fetchMasterGrandCouponDropdownNew').subscribe((resp) => {
       if (resp['statusCode'] == 200) {
         this.masterboxData = resp['master_grand_coupon'];
         this.skLoading = false;
