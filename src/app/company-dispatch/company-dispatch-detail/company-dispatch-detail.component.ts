@@ -261,7 +261,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
 
         }
         else {
-          if (result['statusMsg'] == 'Coupon not exist.') {
+          if (result['statusMsg'] == 'Coupon not exist' || 'Kindly reopen master box first then scan') {
             for (let i = 0; i < this.temCoupon.length; i++) {
               if (this.temCoupon[i]['coupon_no'] == number) {
                 this.temCoupon[i]['status'] = result['statusMsg'];
@@ -274,6 +274,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
           }
           this.toast.errorToastr(result['statusMsg']);
         }
+        
       }
       this.couponNumber.coupon_number = '';
     })
@@ -367,7 +368,7 @@ export class CompanyDispatchDetailComponent implements OnInit {
   }
   getmasterboxnew(searcValue) {
     this.filter.coupon_code = searcValue;
-    this.service.post_rqst({ 'search': searcValue }, 'Dispatch/fetchMasterGrandCouponDropdownNew').subscribe((resp) => {
+    this.service.post_rqst({ 'search': searcValue, 'filter': 1, }, 'Dispatch/fetchMasterGrandCouponDropdownNew').subscribe((resp) => {
       if (resp['statusCode'] == 200) {
         this.masterboxDataforsearch = resp['master_grand_coupon'];
         this.temCoupon = [];
