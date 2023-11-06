@@ -186,7 +186,7 @@
                       <ng-container *ngIf="!loader">
                         <tr *ngFor="let row of masterdispatchboxitemdetail; let i =index">
                           <td class="w40">{{i + 1 + sr_no}}</td>
-                          <td class="w100 text-center">{{row.created_by_name}}({{row.employee_id}})</td>
+                          <td class="w100 text-center">{{row.created_by_name}}{{(row.created_by_name!='Admin')?'('+row.employee_id+')':''}}</td>
                           <td class="w180 text-center">{{row.coupon_code}}</td>
                           <td class="w100 text-center"><a
                               [ngClass]="row.master_grand_coupon_small_box_qty!='0'?'link-btn':''"
