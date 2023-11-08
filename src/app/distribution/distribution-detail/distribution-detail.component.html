@@ -43,9 +43,9 @@
                 (click)="clearFilter(); getLedger(); tabType = 'Ledger'"><i
                 class="material-icons">receipt_long</i>Account Ledger</button>
                 
-                <!-- <button mat-button *ngIf="user_type != '7'" [ngClass]="{'active' :tabType== 'Point Ledger'}"
+                <button mat-button *ngIf="user_type == '7' || user_type == '3'" [ngClass]="{'active' :tabType== 'Point Ledger'}"
                     (click)="clearFilter(); getPointLedger(); tabType = 'Point Ledger'"><i
-                    class="material-icons">receipt_long</i>Point Ledger</button> -->
+                    class="material-icons">receipt_long</i>Point Ledger</button>
                     
                 </div>
             </div>
@@ -2192,7 +2192,7 @@
                         <td class="text-right">
                             <ng-container *ngIf="row.credit == 0">--</ng-container>
                             <ng-container *ngIf="row.credit > 0">
-                                <strong class="green-clr">{{row.credit}} PT</strong>
+                                <strong class="green-clr">{{row.credit}} </strong>
                                 <br>
                                 {{row.transaction_remark}} ({{row.transaction_type}})
                             </ng-container>
@@ -2200,12 +2200,12 @@
                         <td class="text-right">
                             <ng-container *ngIf="row.debit == 0">--</ng-container>
                             <ng-container *ngIf="row.debit > 0">
-                                <strong class="red-clr">{{row.debit}} PT</strong>
+                                <strong class="red-clr">{{row.debit}} </strong>
                                 <br>
                                 {{row.transaction_remark}} ({{row.transaction_type}})
                             </ng-container>
                         </td>
-                        <td class="w160 text-right"><strong>{{row.balance}} PT</strong></td>
+                        <td class="w160 text-right"><strong>{{row.balance}} </strong></td>
                     </tr>
                     
                     <ng-container *ngIf="ledger_loader">
@@ -2234,6 +2234,12 @@
         <ng-container *ngIf="point_ledger.length == 0">
             <app-not-result-found></app-not-result-found>
         </ng-container>
+        <div class="fab-btns" >
+            <button class="excel pulse" mat-fab color="primary" (click)="PointAdjustmentmodel('point_transfer')">
+              <i class="material-icons">swap_horiz</i>
+              Point Transfer
+            </button>
+          </div>
     </div>
 </div>
 

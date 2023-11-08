@@ -1653,4 +1653,24 @@ export class DistributionDetailComponent implements OnInit {
             });
             
         }
+        PointAdjustmentmodel(type){
+
+                const dialogRef = this.dialog.open(DistributorModelComponent, {
+                    width: '500px',
+                    data: {
+                        id: this.dr_id,
+                        dr_name:this.dr_detail.company_name,
+                        dr_type:this.dr_detail.type,
+                        type,
+                    }
+                });
+                
+                dialogRef.afterClosed().subscribe(result => {
+                    if (result != false) {
+                       
+                      
+                    }
+                })
+            
+        }
     }
