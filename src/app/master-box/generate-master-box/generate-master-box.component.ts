@@ -6,6 +6,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
 import { ViewMasterBoxDispatchDetailComponent } from 'src/app/company-dispatch/view-master-box-dispatch-detail/view-master-box-dispatch-detail.component';
 import { DialogComponent } from 'src/app/dialog.component';
+import { sessionStorage } from 'src/app/localstorage.service';
 
 @Component({
   selector: 'app-generate-master-box',
@@ -29,6 +30,7 @@ export class GenerateMasterBoxComponent implements OnInit {
   dispatch_detail: any = {};
   payment_list: any = [];
   dispatch_coupon: any = [];
+  loginData: any;
   dispatchItem: any = [];
   dispatch_status: any = 'Pending';
   temCoupon: any = [];
@@ -42,6 +44,7 @@ export class GenerateMasterBoxComponent implements OnInit {
   total_page: any = 0;
   pagenumber: any = 0;
   pageCount: any;
+  session_id: any;
   sr_no: number;
   datanotofound: boolean = false;
 
@@ -54,9 +57,15 @@ export class GenerateMasterBoxComponent implements OnInit {
     public toast: ToastrManager,
     public dialog: MatDialog,
     public dialogs: DialogComponent,
-    public serve: DatabaseService
+    public serve: DatabaseService,
+    public session: sessionStorage,
+
   ) {
     this.page_limit = 20;
+    console.log(this.session);
+    this.session_id = this.session.db.login_data.id
+    
+    
   }
 
   ngOnInit() {
