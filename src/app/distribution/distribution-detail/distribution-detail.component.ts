@@ -1667,8 +1667,7 @@ export class DistributionDetailComponent implements OnInit {
                 
                 dialogRef.afterClosed().subscribe(result => {
                     if (result != false) {
-                       
-                      
+                     this.getPointLedger()                        
                     }
                 })
             

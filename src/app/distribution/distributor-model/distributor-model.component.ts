@@ -391,6 +391,7 @@ add_requirement()
       if(result['statusCode'] == 200)
       {
     this.loading = false;
+    this.alert.success("Success","Data Saved successfully...")
 
         this.dialog2.closeAll();
       }
