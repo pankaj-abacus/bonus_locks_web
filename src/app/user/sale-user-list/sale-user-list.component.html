@@ -67,6 +67,7 @@
                             <th *ngIf="userType == 'Sales User'" class="w160">Reporting Manager</th>
                             <th *ngIf="userType == 'Sales User'" class="w160">Zonal Manager</th>
                             <th *ngIf="userType == 'Sales User'" class="w160">Working State</th>
+                            <th *ngIf="userType == 'Sales User'" class="w160">Working District</th>
                             <th *ngIf="userType == 'Sales User'" class="w100">Manager Code</th>
                             <th class="w100">Updated By</th>
                             <th class="w100">Updated At</th>
@@ -197,6 +198,7 @@
                                     </mat-form-field>
                                 </div>
                             </th>
+                            <th *ngIf="userType == 'Sales User'" class="w160">&nbsp;</th>
                             <th *ngIf="userType == 'Sales User'" class="w100">
                                 <div class="th-search-acmt">
                                     <mat-form-field>
@@ -272,6 +274,8 @@
                                     row.zonal_manager_name :'---'}}</td>
                                 <td *ngIf="userType == 'Sales User'" class="w160">{{row.working_state_name ?
                                     row.working_state_name :'---'}}</td>
+                                    <td *ngIf="userType == 'Sales User'" style="word-wrap: break-word;"class="w160">{{row.working_district ?
+                                        row.working_district :'---'}}</td>   
                                 <td *ngIf="userType == 'Sales User'" class="w100">{{row.assign_user_code ?
                                     row.assign_user_code :'---'}}</td>
                                 <td class="w100">{{row.last_updated_by_name ?
@@ -337,6 +341,10 @@
                                 <td *ngIf="userType == 'Sales User'" class="w160">
                                     <div>&nbsp;</div>
                                 </td>
+                                <td *ngIf="userType == 'Sales User'" class="w160">
+                                    <div>&nbsp;</div>
+                                </td>
+                                
                                 <td *ngIf="userType == 'Sales User'" class="w120">
                                     <div>&nbsp;</div>
                                 </td>

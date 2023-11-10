@@ -275,7 +275,7 @@
                             </div>
                             
                             <div class="row">
-                                <div class="col s12 m3 l3" *ngIf="pageType != 'edit'">
+                                <!-- <div class="col s12 m3 l3" *ngIf="pageType != 'edit'">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Sales User</mat-label>
                                         <mat-select name="assigned_sales_user_name" [(ngModel)]="data.assigned_sales_user_name" #assigned_sales_user_name="ngModel" multiple [ngClass]="{'has-error' : assigned_sales_user_name.invalid } " required>
@@ -292,7 +292,7 @@
                                         *ngIf="assigned_sales_user_name.touched || f.submitted">
                                         <p *ngIf="assigned_sales_user_name.errors?.required">This field is required</p>
                                     </div>
-                                </div>
+                                </div> -->
                                 
                                 
                                 <div class="col s12 m3 l3" *ngIf="dr_type ==3 && pageType != 'edit'">

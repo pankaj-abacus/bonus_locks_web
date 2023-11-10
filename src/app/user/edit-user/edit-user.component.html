@@ -218,7 +218,7 @@
                   <div class="col s12 m3 l3">
                     <mat-form-field appearance="outline">
                       <mat-label>Working State</mat-label>
-                      <mat-select name="working_state" #working_state="ngModel" [(ngModel)]="data.working_state"
+                      <mat-select name="working_state" #working_state="ngModel" [(ngModel)]="data.working_state" (ngModelChange)="multipleDistrict(data.working_state)" 
                         multiple>
                         <mat-option disabled="">Select Working State</mat-option>
                         <mat-option *ngFor="let row of states" value="{{row.state_name}}">
@@ -232,6 +232,24 @@
                     </div> -->
 
                   </div>
+                  <div class="col s12 m3 l3">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Working District</mat-label>
+                      <mat-select name="working_district" #working_district="ngModel" [(ngModel)]="data.working_district"
+                        multiple>
+                        <mat-option disabled="">Select district State</mat-option>
+                        <mat-option *ngFor="let row of multiple_district_list" value="{{row.district_name}}">
+                          {{row.district_name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <!-- <div class="alert alert-danger" *ngIf="working_state.touched || f.submitted">
+                      <p *ngIf="working_state.errors?.required">This field is required</p>
+                    </div> -->
+
+                  </div>
+
                 </ng-container>
                 <div class="col s12 m3 l3" *ngIf="data.role_id == '52'">
                   <mat-form-field appearance="outline">
