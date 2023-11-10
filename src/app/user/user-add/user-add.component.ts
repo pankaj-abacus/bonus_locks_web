@@ -40,6 +40,7 @@ export class UserAddComponent implements OnInit {
   organisationData: any = [];
   assign_login_data2: any = [];
   warehouse_id: any;
+  multiple_district_list: any=[];
 
   constructor(public serve: DatabaseService,
     public dialog1: MatDialog,
@@ -98,7 +99,16 @@ export class UserAddComponent implements OnInit {
     }))
   }
 
-
+  multipleDistrict(list){
+    this.serve.post_rqst({ 'state_name': list }, "Master/multiple_district").subscribe((result => {
+      if (result['statusCode'] == 200) {
+        this.multiple_district_list = result['all_district'];
+      }
+      else {
+        this.toast.errorToastr(result['statusMsg'])
+      }
+    }));
+  }
   check_number() {
     if (this.data.mobileno.length == 10) {
       this.serve.post_rqst({ "mobile": this.data.mobileno }, "Master/userMobileNoCheck").subscribe((result => {

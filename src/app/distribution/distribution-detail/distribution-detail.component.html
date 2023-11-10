@@ -442,13 +442,13 @@
                                                             <h2>Assigned Sales User</h2>
                                                             <div class="left-auto"
                                                             *ngIf="(login_data.edit_customer_network=='1') ||  (user_type == '1' && login_data.edit_channel_partner=='1')|| (user_type == '3' && login_data.edit_dealer=='1') || (user_type == '7' && login_data.edit_direct_dealers=='1')">
-                                                            <a class="sm-mat-icon-button" mat-icon-button matTooltip="Update Sales User"
-                                                            (click)="openDialog('assignSales')">
-                                                            <i class="material-icons">edit</i>
-                                                        </a>
+                                                           
                                                     </div>
                                                 </div>
-                                                
+                                                <!-- <a class="sm-mat-icon-button" mat-icon-button matTooltip="Update Sales User"
+                                                (click)="openDialog('assignSales')">
+                                                <i class="material-icons">edit</i>
+                                            </a> -->
                                                 <div class="card-body pt0">
                                                     <mat-list class="cs-list-box pt0">
                                                         <mat-list-item *ngFor="let row of assign_sales_user;">

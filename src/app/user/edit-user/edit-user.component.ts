@@ -39,6 +39,7 @@ export class EditUserComponent implements OnInit {
   brandList: any = [];
   organisationData: any = [];
   warehouse: any = [];
+  multiple_district_list: any=[];
 
   constructor(public serve: DatabaseService,
     public dialog1: MatDialog,
@@ -98,6 +99,9 @@ export class EditUserComponent implements OnInit {
       this.data.brand = this.data.brand.map(String);
       this.data.assign_system_user = this.data.assign_system_user_id.map(String);
       this.data.working_state = this.data.working_state_name;
+      this.multipleDistrict(this.data.working_state);
+      this.data.working_district = this.data.working_district;
+      
       this.data.zonal_manager = this.data.zonal_manager.toString();
       this.data.zonal_manager.toUpperCase();
 
@@ -133,7 +137,20 @@ export class EditUserComponent implements OnInit {
   }
 
 
-
+  multipleDistrict(list){
+    if(list.length>0)
+    {
+      this.serve.post_rqst({ 'state_name': list }, "Master/multiple_district").subscribe((result => {
+        if (result['statusCode'] == 200) {
+          this.multiple_district_list = result['all_district'];
+        }
+        else {
+          this.toast.errorToastr(result['statusMsg'])
+        }
+      }));
+    }
+   
+  }
 
   getWarehouse() {
     this.serve.post_rqst({}, "Dispatch/fetchWarehouse").subscribe((result => {
