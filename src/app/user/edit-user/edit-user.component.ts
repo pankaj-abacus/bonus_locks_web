@@ -102,8 +102,6 @@ export class EditUserComponent implements OnInit {
       this.multipleDistrict(this.data.working_state);
       this.data.working_district = this.data.working_district;
       
-      this.data.zonal_manager = this.data.zonal_manager.toString();
-      this.data.zonal_manager.toUpperCase();
 
       this.data.working_state.map((row, i) => { this.data.working_state[i] = row.toUpperCase(); })
 
@@ -111,16 +109,22 @@ export class EditUserComponent implements OnInit {
         this.assign_module_data = this.data.assign_module;
       }
 
-      if (this.data.role_id == '53' || this.data.role_id == '54' || this.data.role_id == '58' || this.data.role_id == '59') {
-        this.getCompanyData();
-        this.data.assign_company = this.data.assign_company.toString();
+      if (this.data.role_id == '54' || this.data.role_id == '52' || this.data.role_id == '53' || this.data.role_id == '61') {
+        // this.getCompanyData();
       }
-
+      console.log(this.data.assign_company != '0');
+      if(this.data.assign_company > 0){
+      this.data.assign_company = this.data.assign_company.toString();
+      this.getCompanyData();
+      
+      }
       if (this.data.warehouse_id != '') {
         this.data.warehouse_id = this.data.warehouse_id.toString()
-      }
-      if (this.data.dispatch_type != '') {
         this.getWarehouse();
+      }
+      if (this.data.company_dispatch_type != '') {
+        console.log('tes');
+        
       }
 
       if (this.data.assign_system_user != '') {
