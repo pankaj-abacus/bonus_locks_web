@@ -251,7 +251,7 @@
                   </div>
 
                 </ng-container>
-                <div class="col s12 m3 l3" *ngIf="data.role_id == '52'">
+                <!-- <div class="col s12 m3 l3" *ngIf="data.role_id == '52'">
                   <mat-form-field appearance="outline">
                     <mat-label>Assign Unit</mat-label>
                     <mat-select name="assign_unit" [(ngModel)]="data.assign_unit" #assign_unit="ngModel" required>
@@ -261,14 +261,14 @@
                   <div class="alert alert-danger" *ngIf="assign_unit.touched || f.submitted">
                     <p *ngIf="assign_unit.errors?.required">This field is required</p>
                   </div>
-                </div>
+                </div> -->
 
-                <div class="col s12 m l3" *ngIf="data.role_id == '54'">
+                <div class="col s12 m l3" *ngIf="data.role_id == '54' || data.role_id == '52' || data.role_id == '53' ||  data.role_id == '61'">
                   <mat-form-field appearance="outline">
                     <mat-label>Dispatch Type</mat-label>
                     <mat-select name="company_dispatch_type" #company_dispatch_type="ngModel"
                       [(ngModel)]="data.company_dispatch_type" required
-                      (selectionChange)="data.company_dispatch_type == 'Warehouse' ? getWarehouse(): ''">
+                      (selectionChange)="data.company_dispatch_type == 'Warehouse' ? getWarehouse(): ''; data.assign_company =''; data.warehouse_id ='';">
                       <mat-option value="Company">Billing Company</mat-option>
                       <mat-option value="Warehouse">Warehouse</mat-option>
 
@@ -280,7 +280,7 @@
                 </div>
 
                 <div class="col s12 m l3"
-                  *ngIf="data.role_id == '53' || (data.role_id == '58' || data.role_id == '59') || data.role_id == '54' && data.company_dispatch_type == 'Company'">
+                  *ngIf="data.company_dispatch_type == 'Company'">
                   <mat-form-field appearance="outline">
                     <mat-label>Assign Billing Company</mat-label>
                     <mat-select name="assign_company" #assign_company="ngModel" [(ngModel)]="data.assign_company"
@@ -294,7 +294,7 @@
                   </div>
                 </div>
 
-                <div class="col s12 m l3" *ngIf="data.role_id == '54' && data.company_dispatch_type == 'Warehouse'">
+                <div class="col s12 m l3" *ngIf="data.company_dispatch_type == 'Warehouse'">
                   <mat-form-field class="cs-input" appearance="outline">
                     <mat-label>Warehouse</mat-label>
                     <mat-select name="warehouse_id" placeholder="Warehouse" #warehouse_id="ngModel"
