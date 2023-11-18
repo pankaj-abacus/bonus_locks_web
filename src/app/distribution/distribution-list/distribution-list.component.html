@@ -454,11 +454,11 @@
         <mat-icon>cloud_upload</mat-icon>
         <span>Upload New Data</span>
       </button>
-      <button mat-menu-item (click)="upload_excel('update');"
+      <!-- <button mat-menu-item (click)="upload_excel('update');"
         *ngIf="dr_list_temp.length > 0 && ( assign_login_data2.import_customer_network=='1' || (type_id==1 && assign_login_data2.import_channel_partner=='1') || (type_id==3 && assign_login_data2.import_dealer=='1') || (type_id==7 && assign_login_data2.import_direct_dealers=='1'))">
         <mat-icon>update</mat-icon>
         <span>Update Existing Data</span>
-      </button>
+      </button> -->
       <button mat-menu-item (click)="upload_excel('credit_limit');"
         *ngIf="dr_list_temp.length > 0 && type_id != 3 && ( assign_login_data2.import_customer_network=='1' || (type_id==1 && assign_login_data2.import_channel_partner=='1')  || (type_id==7 && assign_login_data2.import_direct_dealers=='1'))">
         <mat-icon>currency_rupee</mat-icon>

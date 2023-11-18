@@ -5,7 +5,7 @@
     </a>
     <h2>Add New Scheme</h2>
   </div>
-
+  
   <div class="container pt10 pl10 pr10 pb50" >
     <form #f="ngForm" (ngSubmit)=" f.valid && submitDetail()">
       <div class="row">
@@ -19,17 +19,18 @@
                 <div class="col s12 m3 l3" >
                   <mat-form-field appearance="outline">
                     <mat-label>User Type</mat-label>
-                    <mat-select  name="types" [(ngModel)]="data.types" #types="ngModel" (selectionChange)="pointCategory_data(data.types == 'Retailer' ? 'Master Box' : 'Item Box'); districts = []; getState()" >
-                      <!-- <mat-option  value="Retailer">Retailer</mat-option> -->
-                      <mat-option  value="Influencer">Influencer</mat-option>
+                    <mat-select  name="types" [(ngModel)]="data.types" #types="ngModel" (selectionChange)="pointCategory_data('Item Box'); districts = []; getState()" >
+                      <mat-option value="Direct Dealers">Direct Dealers</mat-option>
+                      <mat-option value="Retailer">Retailer</mat-option>
+                      <mat-option value="Influencer">Influencer</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="types.touched || f.submitted">
                     <p *ngIf="types.errors?.required">This field is required</p>
                   </div>
                 </div>
-
-
+                
+                
                 <div class="col s12 m3 l3" *ngIf="data.types == 'Influencer'">
                   <mat-form-field appearance="outline">
                     <mat-label>Influencer Type</mat-label>
@@ -41,8 +42,8 @@
                     <p *ngIf="influencer_type.errors?.required">This field is required</p>
                   </div>
                 </div>
-
-
+                
+                
                 <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>Title</mat-label>
@@ -63,7 +64,7 @@
                     <p *ngIf="start_date.errors?.required">This field is required</p>
                   </div>
                 </div>
-
+                
                 <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>End Date</mat-label>
@@ -76,52 +77,44 @@
                   </div>
                 </div>
               </div>
-
+              
             </div>
           </div>
         </div>
       </div>
-
+      
       <div class="row">
-        <!-- <div class="col s12 m8 l8" *ngIf="data.types">
+        <div class="col s12 m8 l8" *ngIf="data.types">
           <div class="card pb0">
             <div class="card-head">
               <h2>Area Wise Influencer Selection</h2>
             </div>
             <div class="card-body">
               <div class="row">
-                <div  [ngClass]="data.types != 'Retailer'?'col s12 m4 l4':'col s12 m6 l6'">
-                  <div class="check-box">
-                    <div class="check-body">
-                      <mat-checkbox  [labelPosition]="labelPosition" color="primary"  *ngFor="let val of states | filterBy : {state_name : search_st} let g=index;" [name]="'state'+val.state_name+g"  [value]="val.state_name" [ngModel]="data.checkboxState" (ngModelChange)="getDistrictList(val.state_name,$event);" >{{val.state_name}}</mat-checkbox>
-                    </div>
+                
+                <div class="check-box">
+                  <div class="check-body">
+                    <mat-checkbox  [labelPosition]="labelPosition" color="primary"  *ngFor="let val of states | filterBy : {state_name : search_st} let g=index;" [name]="'state'+val.state_name+g"  [value]="val.state_name" [ngModel]="data.checkboxState" (ngModelChange)="getDistrictList(val.state_name,$event);" >{{val.state_name}}</mat-checkbox>
                   </div>
                 </div>
-                <div [ngClass]="data.types != 'Retailer'?'col s12 m4 l4':'col s12 m6 l6'">
-                  <div class="check-box">
-                    <div class="check-head">
-                      <mat-checkbox [labelPosition]="labelPosition" color="primary" (change)="sel_all_dis($event)">Select All</mat-checkbox>
-                    </div>
-                    <div class="check-body">
-                      <ng-container *ngFor="let val of districts;let h=index">
-                        <mat-checkbox  color="primary" [labelPosition]="labelPosition" class="fill-check"  disabled="true"   checked="true" [value]="val.state_name" name="'state_name'+h" >{{val.state_name}}</mat-checkbox>
-                        <ng-container *ngFor="let dist of val.district | filterBy: {district_name : search_dis};let d=index">
-                          <mat-checkbox color="primary" [labelPosition]="labelPosition" [checked]="all_dis_check" [value]="dist.district_name" [name]="'district_name'+val.state_name+d" [ngModel]="data.checkboxDistrict" (ngModelChange)="getSelDistrict(val.state_name,dist.district_name,$event); (data.types != undefined  && data.influencer_type != undefined)? getAreaInfluencer() :''">{{dist.district_name}}</mat-checkbox>
-                        </ng-container>
+                
+                <div class="check-box">
+                  <div class="check-head">
+                    <mat-checkbox [labelPosition]="labelPosition" color="primary" (change)="sel_all_dis($event)">Select All</mat-checkbox>
+                  </div>
+                  <div class="check-body">
+                    <ng-container *ngFor="let val of districts;let h=index">
+                      <mat-checkbox  color="primary" [labelPosition]="labelPosition" class="fill-check"  disabled="true"   checked="true" [value]="val.state_name" name="'state_name'+h" >{{val.state_name}}</mat-checkbox>
+                      <ng-container *ngFor="let dist of val.district | filterBy: {district_name : search_dis};let d=index">
+                        <mat-checkbox color="primary" [labelPosition]="labelPosition" [checked]="all_dis_check" [value]="dist.district_name" [name]="'district_name'+val.state_name+d" [ngModel]="data.checkboxDistrict" (ngModelChange)="getSelDistrict(val.state_name,dist.district_name,$event); (data.types != undefined  && data.influencer_type != undefined)? getAreaInfluencer() :''">{{dist.district_name}}</mat-checkbox>
                       </ng-container>
-                    </div>
+                    </ng-container>
                   </div>
                 </div>
-
-                <div class="col s12 m4 l4" *ngIf="data.types != 'Retailer'">
+                
+                <!-- <div class="col s12 m4 l4" *ngIf="data.types != 'Retailer'">
                   <div class="check-box">
-                     <div class="check-head">
-                      <div class="th-search-acmt">
-                        <mat-form-field>
-                          <input type="text"  matInput placeholder="Search ..." name="influencer_name" (ngModelChange)="getAreaInfluencer(filter.influencer_name)" #influencer_name="ngModel" [(ngModel)]="filter.influencer_name" >
-                        </mat-form-field>
-                      </div>
-                    </div>
+                    
                     <div class="check-head">
                       <mat-checkbox color="primary" [labelPosition]="labelPosition" [(ngModel)]="data.Influencer" (change)="allInfluncer()"  name="Influencer"  value="true">Select All</mat-checkbox>
                     </div>
@@ -131,11 +124,11 @@
                       </ng-container>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
         <div class="col s12 m4 l4" *ngIf="data.types">
           <div class="card pb0">
             <div class="card-head">
@@ -178,7 +171,7 @@
           </div>
         </div>
       </div>
-
+      
       <div class="row">
         <div class="col s12">
           <div class="text-right">
@@ -188,7 +181,7 @@
           </div>
         </div>
       </div>
-
+      
     </form>
   </div>
 </div>
