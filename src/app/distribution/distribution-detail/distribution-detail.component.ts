@@ -1553,34 +1553,7 @@ export class DistributionDetailComponent implements OnInit {
             this.alert.confirm('Convert').then((result) => {
                 if (result) {
                     console.log(type);
-                    // let otp = '';
-                    // for (let i = 0; i <= 6; i++) {
-                    //     otp += Math.floor(Math.random() * 10)
-                    // }
                     
-                    // this.serve.fetchData({ type: type, dr_id: this.dr_id, otp }, 'CustomerNetwork/sendOtp').subscribe((result => {
-                    //     console.log(result);
-                    
-                    //     if (result['statusCode'] == '200') {
-                    //         const dialogRef = this.dialog.open(ConvertToDistributorComponent, {
-                    //             width: '350px',
-                    //             data: {
-                    //                 id: this.dr_id,
-                    //                 type: type,
-                    //                 otp: otp
-                    //             }
-                    //         });
-                    //         dialogRef.afterClosed().subscribe(result => {
-                    //             console.log(result);
-                    //             console.log('The dialog was closed');
-                    //         });
-                    //     } else {
-                    
-                    //     }
-                    // }));
-                    
-                    
-                    // console.log(type);
                     this.serve.post_rqst({ type: type, dr_id: this.dr_id }, "CustomerNetwork/dr_type_update").subscribe((result => {
                         console.log(result);
                         if (result['statusCode'] == 200) {
@@ -1672,4 +1645,21 @@ export class DistributionDetailComponent implements OnInit {
                 })
             
         }
+
+        imageModel(image) {
+            const dialogRef = this.dialog.open(ImageModuleComponent, {
+                panelClass: 'Image-modal',
+                data: {
+                    image,
+                }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                console.log(result);
+            });
+        }
+
+
+       
+
+
     }

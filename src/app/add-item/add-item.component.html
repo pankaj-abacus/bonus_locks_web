@@ -19,7 +19,7 @@
                             (keyup)="searchItems($event)"></ngx-mat-select-search>
                         </mat-option>
                         <mat-option *ngFor="let row of productlist" value="{{row.id}}"
-                          color="accent">{{row.product_name}}
+                          color="accent">{{row.display_name}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>

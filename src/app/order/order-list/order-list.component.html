@@ -185,7 +185,7 @@
                 [ngClass]="{'Current': serve.currentUserID == row.id}">
                 <td class="w50">{{ i + 1 + sr_no }}</td>
                 <td class="w110">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
-                <td class="w110">{{row.created_by_name}}</td>
+                <td class="w110" style="word-wrap: break-word;">{{row.created_by_name}}</td>
                 <td class="w80"><a class="link-btn" (click)="serve.setData(search_val)"
                     routerLink="order-detail/{{row.id }}" [queryParams]="{'id':row.id, 'status':active_tab}"
                     routerLinkActive="active">{{row.order_no}}</a></td>
