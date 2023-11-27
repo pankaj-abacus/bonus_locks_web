@@ -289,6 +289,7 @@
               <th class="w110 text-right">Coupon value</th>
               <th class="w150">Scan By</th>
               <th class="w110">Mobile No.</th>
+              <th class="w110">State</th>
               <th class="w100">Scan Date</th>
               <th class="w100">Scan Location</th>
               <th class="w180">Bonus Name</th>
@@ -367,6 +368,15 @@
                 </div>
               </th>
 
+              <th class="w110">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." type="text" name="state"
+                      [(ngModel)]="filter.state" (keyup.enter)="scanCouponList()">
+                  </mat-form-field>
+                </div>
+              </th>
+
               <th class="w100">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
@@ -406,6 +416,7 @@
                 </td>
                 <td class="w150">{{row.scanned_by_name?row.scanned_by_name:'---'}}</td>
                 <td class="w110">{{row.scanned_by_mobile?row.scanned_by_mobile:'---'}}</td>
+                <td class="w110">{{row.state?row.state:'---'}}</td>
                 <td class="w100">{{row.scanned_date | date:'d MMM y, h:mm a'}}</td>
                 <td class="w100">
                   <ng-container *ngIf="row.lat == ''  && row.lng == ''">---</ng-container>
@@ -451,13 +462,19 @@
                 <td class="w110">
                   <div>&nbsp;</div>
                 </td>
-                <td class="w180">
-                  <div>&nbsp;</div>
-                </td>
                 <td class="w110">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w100">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w100">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w180">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w110">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w70">

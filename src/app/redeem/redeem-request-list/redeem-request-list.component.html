@@ -285,7 +285,7 @@
                 <td class="w100">{{row.req_id ? row.req_id : '---'}}</td>
 
                 <td class="w160">{{row.user_name ? (row.user_name | titlecase) : '---'}} ({{row.influencer_type}})</td>
-                <td class="w110">{{row.mobile_no ? row.mobile_no : '---'}}</td>
+                <td class="w110">{{row.user_type == 'influencer' ? row.mobile_no : row.mobile }}</td>
                 <td class="w110 {{row.influencer_status}}"><strong>{{row.influencer_status ? row.influencer_status :
                     '---'}}</strong></td>
                 <!-- <td class="w110">{{row.redeem_type ? row.redeem_type : '---'}}</td> -->
@@ -307,8 +307,8 @@
 
                   </td>
                 </ng-container> -->
-                <td class="w130">{{row.state ? row.state : '---'}}</td>
-                <td class="w130">{{row.district ? row.district : '---'}}</td>
+                <td class="w130">{{row.user_type == 'influencer' ? row.state : row.state_name }}</td>
+                <td class="w130">{{row.user_type == 'influencer' ? row.district : row.district_name}}</td>
                 <td class="w100 text-right">{{row.point ? ('₹ '+row.point) : '---'}}</td>
                 <td class="w100 text-right">{{row.point_range_value ? ('₹ '+row.point_range_value) : '---'}}</td>
                 <td class="w100 text-right">{{row.cash_point ? ('₹ '+row.cash_point) : '---'}}</td>
