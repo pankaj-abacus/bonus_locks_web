@@ -12,9 +12,11 @@ import { AuthComponentGuard } from 'src/app/auth-component.guard';
 import { AttendenceComponent } from '../attendence.component';
 import { AttendancemodalComponent } from 'src/app/attendancemodal/attendancemodal.component';
 import { AttendanceDetailComponent } from 'src/app/attendance-detail/attendance-detail.component';
+import { TrackerComponent } from '../tracker/tracker.component';
 
 const attendenceRoutes = [
   { path: "", component: AttendenceComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
+  { path: "tracker", component: TrackerComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1'] } },
 ]
 @NgModule({
   declarations: [AttendenceComponent, AttendancemodalComponent, AttendanceDetailComponent],

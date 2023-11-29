@@ -106,6 +106,7 @@ export class AddItemComponent implements OnInit {
 
   ngOnInit() {
     this.orderDetail();
+    // this.getProductList('lastGst','');
     // this.getSegment()
   }
 
@@ -120,7 +121,8 @@ export class AddItemComponent implements OnInit {
   }
 
 
-  getProductList(lastGst) {
+  getProductList(lastGst,searcValue) {
+    this.filter.search=searcValue
     this.filter.brand = this.order_detail.brand;
     this.filter.gst = lastGst;
     this.filter.fixed_brand = this.fixedBrand;
@@ -226,7 +228,8 @@ export class AddItemComponent implements OnInit {
         this.fixedBrand = [this.order_item[0]['brand']];
 
         setTimeout(() => {
-          this.getProductList(this.lastGstPercent)
+          this.getProductList(this.lastGstPercent,'')
+          console.log("dhfkjshfdksjf")
         }, 100);
       } else {
         this.toast.errorToastr(result['statusMsg'])
@@ -235,18 +238,18 @@ export class AddItemComponent implements OnInit {
   }
 
 
-  searchItems(event) {
-    let item = event.target.value.toLowerCase();
-    console.log(item);
-    this.tempSearch = '';
-    this.productlist = [];
-    for (let x = 0; x < this.productlist2.length; x++) {
-      this.tempSearch = this.productlist2[x].product_name.toLowerCase();
-      if (this.tempSearch.includes(item)) {
-        this.productlist.push(this.productlist2[x]);
-      }
-    }
-  }
+  // searchItems(event) {
+  //   let item = event.target.value.toLowerCase();
+  //   console.log(item);
+  //   this.tempSearch = '';
+  //   this.productlist = [];
+  //   for (let x = 0; x < this.productlist2.length; x++) {
+  //     this.tempSearch = this.productlist2[x].product_name.toLowerCase();
+  //     if (this.tempSearch.includes(item)) {
+  //       this.productlist.push(this.productlist2[x]);
+  //     }
+  //   }
+  // }
 
   addToList() {
     console.log(this.product_list);

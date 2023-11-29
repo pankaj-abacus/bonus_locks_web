@@ -14,9 +14,13 @@
                       <mat-label>Item</mat-label>
                       <mat-select name="product_id" #product_id="ngModel" [(ngModel)]="orderData.product_id"
                         (selectionChange)="get_product_details(orderData.product_id);get_product_Size(filter.dr_id,orderData.product_id) ">
-                        <mat-option>
+                        <!-- <mat-option>
                           <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
                             (keyup)="searchItems($event)"></ngx-mat-select-search>
+                        </mat-option> -->
+                        <mat-option>
+                          <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                          (keyup)="getProductList('',$event.target.value)"></ngx-mat-select-search>
                         </mat-option>
                         <mat-option *ngFor="let row of productlist" value="{{row.id}}"
                           color="accent">{{row.display_name}}

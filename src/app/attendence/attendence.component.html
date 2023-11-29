@@ -89,7 +89,13 @@
                                         [ngClass]="{'Current': serve.currentUserID == row.employee_id}">
                                         <td class="w50">{{i+1+start}}</td>
                                         <td>{{row.employee_id}}</td>
-                                        <td *ngIf="tabType== 'Today'"> {{row.name | titlecase}} </td>
+                                        <td *ngIf="tabType== 'Today'">
+                                            <a class="link-btn" [routerLink]="[ 'tracker/']"
+                                                [queryParams]="{'user_id':(row.user_id ? row.user_id : row.id), 'start_date': today_date | date:'yyyy-MM-dd'}">
+                                                {{row.name | titlecase}}
+                                            </a>
+
+                                        </td>
                                         <td *ngIf="tabType== 'Month'"> {{row.name | titlecase}} </td>
                                     </tr>
                                 </ng-container>
