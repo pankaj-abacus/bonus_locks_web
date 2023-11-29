@@ -41,10 +41,15 @@ import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-
 import { InstallationAddComponent } from './installation/installation-add/installation-add.component';
 import { ProductUploadComponent } from './product-upload/product-upload.component';
 import { EngineerAssignModelComponent } from './installation/engineer-assign-model/engineer-assign-model.component';
+import { TrackerComponent } from './attendence/tracker/tracker.component';
+import { ZingchartAngularModule } from 'zingchart-angular';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
   declarations: [
+    DashboardComponent,
+    TrackerComponent,
     NotResultFoundComponent,
     LoaderComponent,
     AddDistributionComponent,
@@ -84,6 +89,7 @@ import { EngineerAssignModelComponent } from './installation/engineer-assign-mod
       use clientId
       */
   }),
+    ZingchartAngularModule,
     CommonModule,
     FilterPipeModule,
     FormsModule,
@@ -99,6 +105,8 @@ import { EngineerAssignModelComponent } from './installation/engineer-assign-mod
     NgxQRCodeModule,
   ],
   exports:[
+    ZingchartAngularModule,
+    TrackerComponent,
     NotResultFoundComponent,
     LoaderComponent,
     MyFilterPipe,

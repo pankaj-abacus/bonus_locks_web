@@ -12,7 +12,6 @@ import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { DatabaseService } from 'src/_services/DatabaseService'
 import { HttpClientModule } from '@angular/common/http';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { AuthGuardLog } from './AuthGuardLog';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -52,7 +51,6 @@ import { StrReplace } from 'src/_Pipes/StrReplace.pipe';
 import { Crypto } from 'src/_Pipes/Crypto.pipe';
 import { NumericWords } from 'src/_Pipes/NumericWords.pipe';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { ZingchartAngularModule } from 'zingchart-angular';
 import { ServiceModuleModule } from './service/service-module/service-module.module';
 import { CustomerModuleModule } from './customer/customer-module/customer-module.module';
 import { WarrantyModuleModule } from './warranty/warranty-module/warranty-module.module';
@@ -77,7 +75,6 @@ import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-mo
     declarations: [
         AppComponent,
         LoginComponent,
-        DashboardComponent,
         HeaderComponent,
         FooterComponent,
         NavigationComponent,
@@ -101,7 +98,6 @@ import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-mo
             use clientId
             */
         }),
-        ZingchartAngularModule,
         BrowserModule,
         FormsModule,
         ChartsModule,

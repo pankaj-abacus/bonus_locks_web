@@ -72,7 +72,7 @@
                   </a>
                 </div>
               </th>
-              <th class="w100">Created By
+              <th class="w150 ">Created By
                 <div class="sorting">
                   <a class=""
                     (click)="column = 'created_by_name';sorting_type='ASC';distributorList('', 'created_by_name', 'ASC')">
@@ -139,8 +139,7 @@
                 </div>
               </th>
               <th class="w120">District</th>
-              <th *ngIf="type_id=='3'" class="w150">Assign Distributor
-              </th>
+              <!-- <th *ngIf="type_id=='3'" class="w150">Assign Distributor</th> -->
               <th class="w150">Assigned To
 
               </th>
@@ -195,7 +194,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
+              <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input select-input">
                     <input matInput placeholder="Search..." name="created_by_name"
@@ -260,14 +259,14 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th *ngIf="type_id=='3'" class="w150">
+              <!-- <th *ngIf="type_id=='3'" class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input select-input">
                     <input matInput placeholder="Search..." name="assign_distributors_company_name"
                       (keyup.enter)="distributorList('', '', '')" [(ngModel)]="filter.assign_distributors_company_name">
                   </mat-form-field>
                 </div>
-              </th>
+              </th> -->
               <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field>
@@ -316,7 +315,7 @@
                 [ngClass]="{'Current': serve.currentUserID == row.id}">
                 <td class="w60">{{i + 1 + sr_no}}</td>
                 <td class="w110">{{row.date_created | date}}</td>
-                <td class="w100">{{row.created_by_name}}</td>
+                <td class="w150">{{row.created_by_name}}</td>
                 <td class="w180">
                   <a class="link-btn" mat-button (click)="serve.setData(filter)"
                     [routerLink]="[ 'distribution-detail/', row.id,'Profile' ]"
@@ -330,7 +329,7 @@
                 <td class="w120" *ngIf="type_id!=1 && type_id !=3 && type_id==7">{{row.direct_dealer_type}}</td>
                 <td class="w120">{{row.state | titlecase}}</td>
                 <td class="w120">{{row.district | titlecase}}</td>
-                <td *ngIf="type_id=='3'" class="w150">{{row.assign_distributors_company_name}}</td>
+                <!-- <td *ngIf="type_id=='3'" class="w150">{{row.assign_distributors_company_name}}</td> -->
                 <td class="w150">
                   <ng-container *ngFor="let item of row.assign_user; let j = index;">
                     <span>{{item.name}} <ng-container *ngIf="item.length > 1">, </ng-container></span>
