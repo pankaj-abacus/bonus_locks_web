@@ -2699,7 +2699,7 @@
     </div>
 </div>
 
-<div class="fab-btns pulse " *ngIf="login_data.user_type!='DMS'">
+<div class="fab-btns pulse " *ngIf="login_data.user_type!='DMS' && tabType!= 'Point Ledger'">
     <ng-container
         *ngIf="(login_data.edit_channel_partner=='1')|| (login_data.edit_dealer=='1') || (login_data.edit_direct_dealers=='1')">
         <button class="pulse" mat-fab color="primary" [matMenuTriggerFor]="menu">
