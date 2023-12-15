@@ -384,7 +384,10 @@
             <div class="card-head">
               <h2 style="margin-bottom: 0px;">Item Detail</h2>
 
-              <div class="left-auto">
+              <div class="left-auto df ac flex-gap-10">
+                <a mat-icon-button matTooltip="Refresh" (click)="refreshDispatchItems()">
+                  <i class="material-icons">refresh</i>
+                </a>
                 <button class="sm-mat-icon-button" color="accent" *ngIf="dispatchItem && dispatchItem.length > 0"
                   mat-icon-button matTooltip="Print Item Detail" (click)="printItemData()">
                   <i class="material-icons">print</i>
