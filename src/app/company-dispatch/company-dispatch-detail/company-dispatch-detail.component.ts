@@ -133,6 +133,18 @@ export class CompanyDispatchDetailComponent implements OnInit {
     this.getdispatchMasterboxdetail();
   }
 
+  refreshDispatchItems(){
+    this.service.post_rqst({'bill_id':this.id}, 'Dispatch/refreshDispatchOrder').subscribe((result) =>
+    {
+      if(result ['statusCode'] == 200){
+        this.billDatadetail();
+      }
+      else{
+        this.toast.errorToastr(result['statusMsg']);
+      }
+    });
+  }
+
   openDialog(type, number): void {
     const dialogRef = this.dialog.open(GatepassAddComponent, {
       width: '1024px',
