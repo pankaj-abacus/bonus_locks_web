@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col s12 m4 l4" *ngIf="data.type_name">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>Select Channel partner</mat-label>
+                                        <mat-label>Select Distributor</mat-label>
                                         <mat-select name="distributor_id" #distributor_id="ngModel"
                                             [disabled]="add_list.length>0" [(ngModel)]="data.distributor_id"
                                             (selectionChange)="get_item_list('','blank');" required>

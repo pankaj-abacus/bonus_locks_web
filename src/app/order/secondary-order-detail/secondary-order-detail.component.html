@@ -211,6 +211,7 @@
                                     <tr>
                                         <th class="w50">S.no.</th>
                                         <th class="w150">Item Details</th>
+                                        <th class="w120">Product Code</th>
                                         <th class="w100">Category</th>
                                         <!-- <th class="w100">Brand</th> -->
                                         <!-- <th class="w100">Color</th> -->
@@ -218,14 +219,14 @@
                                         <th class="w80 text-right">Discount (%)</th>
                                         <th class="w100 text-right">Net Price</th>
                                         <th class="w100 text-center">QTY.</th>
-                                        <th class="w130">Sub Total</th>
-                                        <th class="w130">GST Amount</th>
-                                        <th class="w100 text-right">Net Amount</th>
+                                        <th class="w130">Total</th>
+                                        <!-- <th class="w130">GST Amount</th>
+                                        <th class="w100 text-right">Net Amount</th> -->
                                         
-                                        <ng-container *ngIf=" login_data.user_type!='DMS'">
+                                        <!-- <ng-container *ngIf=" login_data.user_type!='DMS'">
                                             <th class="w120 text-right purple-th-bg">Dealer Amount</th>
                                             <th class="w120 text-right yellow-th-bg" >Company Amount</th> 
-                                        </ng-container>
+                                        </ng-container> -->
                                         <!-- <ng-container *ngIf="login_data.delete_order=='1'">
                                             <th class="w50 text-center" *ngIf="secondaryOrderDetail.order_status == 'Pending'">Action</th>
                                         </ng-container> -->
@@ -240,7 +241,8 @@
                                 <table>
                                     <tr *ngFor="let row of item_details; let i =index">
                                         <td class="w50">{{i+1}}</td>
-                                        <td class="w150">{{row.product_name}}-({{row.product_code}})</td>
+                                        <td class="w150">{{row.product_name}}</td>
+                                        <td class="w120">{{row.product_code}}</td>
                                         <td class="w100">({{row.segment_name}})</td>
                                         <!-- <td class="w100">{{row.brand}}</td>
                                         <td class="w100">{{row.color}}</td> -->
@@ -248,8 +250,8 @@
                                         <td class="w100 text-right">&#x20B9; {{row.price}} </td>
                                         <td class="w80 text-right">&#x20B9; {{row.discount_amount | number:'1.2-2'}} {{row.discount_percent > 0 ? ( '(' + row.discount_percent + '%)') : ''}}</td>
                                         <td class="w100 text-right">&#x20B9; {{row.net_price | number:'1.2-2' }} </td>
-                                        <td class="w100 text-right" *ngIf="status  == 'Approved'">{{row.qty}}</td>
-                                        <td class="w100  text-center" *ngIf="status  == 'Pending'">{{row.qty}}
+                                        <!-- <td class="w100 text-right">{{row.qty}}</td> -->
+                                        <td class="w100  text-center">{{row.qty}}
                                             <!-- <ng-container *ngIf="editqty == true">
                                                 <div class="th-search-acmt mr30">
                                                     <mat-form-field>
@@ -279,12 +281,12 @@
                                         </td>
                                         <td class="w130">&#x20B9; {{row.amount | number:'1.2-2'}}</td>
                                         
-                                        <td class="w130">&#x20B9; {{row.gst_amount | number:'1.2-2'}} {{row.gst_percent > 0 ? ( '(' + row.gst_percent + '%)') : ''}}</td>
+                                        <!-- <td class="w130">&#x20B9; {{row.gst_amount | number:'1.2-2'}} {{row.gst_percent > 0 ? ( '(' + row.gst_percent + '%)') : ''}}</td>
                                         <td class="w100 text-right"><strong>&#x20B9; {{row.total_amount}}</strong></td>
                                         <ng-container *ngIf=" login_data.user_type!='DMS'">
                                             <td class="w120 text-right purple-th-bg"><strong>&#x20B9; {{row.total_amount | number:'1.1-2'}}</strong></td>
                                             <td class="w120 text-right yellow-th-bg"><strong>&#x20B9; {{row.company_value | number:'1.1-2'}}</strong></td>
-                                        </ng-container>
+                                        </ng-container> -->
                                         <!-- <ng-container *ngIf="login_data.delete_order=='1'">
                                             <td class="w50 text-center" >
                                                 <div class="action-button text-center" *ngIf="row.order_status  == 'Pending'">
@@ -340,20 +342,20 @@
                             </tr>
                             
                             <tr>
-                                <td>Sub-Total</td>
+                                <td>Grand Total</td>
                                 <td class="text-center">:</td>
                                 <td class="text-right ">&#8377;{{secondaryOrderDetail.sub_total | number:'1.1-2'}}</td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>GST Amount</td>
                                 <td class="text-center">:</td>
                                 <td class="text-right ">&#8377;{{secondaryOrderDetail.order_gst | number:'1.1-2'}}</td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <td> Net Amount</td>
                                 <td class="text-center">:</td>
                                 <td class="text-right ">&#8377;{{(secondaryOrderDetail.order_grand_total) | number:'1.1-2'}}</td>
-                            </tr>
+                            </tr> -->
                             <!-- <tr class="purple-th-bg">
                                 <td>DEALER NET AMOUNT</td>
                                 <td class="text-center">:</td>

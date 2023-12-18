@@ -188,7 +188,7 @@
         </div>
 
         <div class="row" *ngIf="!skLoading">
-            <div class="tools-container no-sticky">
+            <div class="tools-container no-sticky"> 
                 <div class="mat-tabbar">
                     <button mat-button [ngClass]="{'active' :orderType== 'order'}" (click)="orderType= 'order'"><i
                             class="material-icons">pending_actions</i>Item Details</button>
@@ -210,15 +210,16 @@
                                 <tr>
                                     <th class="w30">S.no.</th>
                                     <th class="w250">Item Details</th>
+                                    <th class="w120">Product Code</th>
                                     <th class="w80 text-right">Category</th>
                                     <th class="w80 text-right">Price</th>
                                     <th class="w80 text-right">Discount (%)</th>
                                     <th class="w80 text-right">Net Price</th>
                                     <th class="w80 text-center">QTY.</th>
                                     <th class="w80 text-right" *ngIf="order_detail.order_status  == 'Approved' || order_detail.order_status == 'partialDispatched' || order_detail.order_status  == 'Dispatched'">Dispatch QTY.</th>
-                                    <th class="w80 text-right">Sub Total</th>
-                                    <th class="w80 text-right">GST Amount</th>
-                                    <th class="w80 text-right">Net Amount</th>
+                                    <th class="w80 text-right">Total</th>
+                                    <!-- <th class="w80 text-right">GST Amount</th>
+                                    <th class="w80 text-right">Net Amount</th> -->
                                     <!-- <th class="w40 text-right" *ngIf="order_detail.order_status  == 'Pending' && login_data.delete_order=='1'">Action</th> -->
                                 </tr>
                             </table>
@@ -231,10 +232,10 @@
                                 <tr [ngClass]="{'dispatched': row.sale_dispatch_qty == row.qty && order_detail.order_status == 'partialDispatched'}">
                                     <td class="w30">{{i+1}}</td>
                                     <td class="w250">{{row.product_name | titlecase}} <strong
-                                            *ngIf="row.product_code != ''">({{row.product_code}})</strong> <strong
                                             *ngIf="row.brand != ''">({{row.brand}})</strong> <strong
                                             *ngIf="row.color != ''">({{row.color}})</strong></td>
-                                    <td class="w80 text-right">({{row.segment_name | titlecase}})</td>
+                                    <td class="w120">{{row.product_code}}</td>
+                                    <td class="w80 text-right">{{row.segment_name | titlecase}}</td>
                                     <td class="w80 text-right">&#x20B9; {{row.price | number:'1.2-2' }}</td>
                                     <td class="w80 text-right"> &#x20B9; {{row.discount_amount | number:'1.2-2'}}
                                         ({{row.discount_percent + '%'}})</td>
@@ -275,10 +276,10 @@
                                     </td>
                                     <td class="w80 text-right" *ngIf="order_detail.order_status  == 'Approved' || order_detail.order_status == 'partialDispatched' || order_detail.order_status  == 'Dispatched'">{{row.sale_dispatch_qty ? row.sale_dispatch_qty : '0'}}</td>
                                     <td class="w80 text-right">&#x20B9; {{row.amount | number:'1.2-2'}}</td>
-                                    <td class="w80 text-right">&#x20B9; {{row.gst_amount | number:'1.2-2'}}
+                                    <!-- <td class="w80 text-right">&#x20B9; {{row.gst_amount | number:'1.2-2'}}
                                         ({{row.gst_percent}}%)</td>
                                     <td class="w80 text-right"><strong>&#x20B9; {{row.total_amount |
-                                            number:'1.2-2'}}</strong></td>
+                                            number:'1.2-2'}}</strong></td> -->
                                     <!-- <td class="w40 text-center" *ngIf="order_detail.order_status  == 'Pending' && (login_data.delete_primary_order=='1')">
                                                     <div class="action-button text-center">
                                                         <a (click)="deleteOrderitem(row.id,index)" mat-icon-button  matTooltip="Delete">
@@ -317,39 +318,39 @@
                                     <td>Subtotal </td>
                                     <th>₹ {{order_detail.sub_total_before_cd | number:'1.2-2'}}</th>
                                 </tr> -->
-                                <tr>
+                                <!-- <tr>
                                     <td>Cash Discount</td>
                                     <th>₹ {{order_detail.cash_discount | number:'1.2-2'}}</th>
-                                </tr>
+                                </tr> --> 
                                 <!-- <tr>
                                     <td>Sub Total After Cash Discount</td>
                                     <th>₹ {{order_detail.sub_total_after_cd | number:'1.2-2'}}</th>
                                 </tr> -->
-                                <tr>
+                                <!-- <tr>
                                     <td>Insurance</td>
                                     <th>₹ {{order_detail.insurance | number:'1.2-2'}}</th>
-                                </tr>
+                                </tr> -->
                                 <tr>
-                                    <td>Sub Total</td>
-                                    <th>₹ {{order_detail.order_total | number:'1.2-2'}}</th>
+                                    <td>Grand Total</td>
+                                    <th>₹ {{order_detail.sub_total_before_cd | number:'1.2-2'}}</th>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td>Total GST Amount</td>
                                     <th>₹ {{order_detail.order_gst | number:'1.2-2'}}</th>
-                                </tr>
+                                </tr> -->
                                 <!-- <tr>
                                     <td>Grand Total</td>
                                     <th>₹ {{order_detail.grand_total_before_tcs | number:'1.2-2'}}</th>
                                 </tr> -->
-                                <tr>
+                                <!-- <tr>
                                     <td>Tcs</td>
                                     <th>₹ {{order_detail.tcs | number:'1.2-2'}}</th>
-                                </tr>
+                                </tr> -->
 
-                                <tr>
+                                <!-- <tr>
                                     <td>Grand Total</td>
                                     <th>₹ {{order_detail.order_grand_total | number:'1.2-2'}}</th>
-                                </tr>
+                                </tr> -->
                             </table>
                         </div>
                     </div>

@@ -36,7 +36,7 @@
           </button>
         </div>
       </div>
-      <div class="mat-tabbar">
+      <div class="mat-tabbar horizontalOverflow-scroll">
         <!-- *ngIf="login_data.designation_name != 'Dispatch Planning'" -->
         <ng-container>
           <button mat-button [ngClass]="active_tab == 'Pending' ? 'active' : ''"
@@ -184,7 +184,7 @@
               <tr *ngFor="let row of tmp_orderlist; let i =index;"
                 [ngClass]="{'Current': serve.currentUserID == row.id}">
                 <td class="w50">{{ i + 1 + sr_no }}</td>
-                <td class="w110">{{row.date_created | date : 'dd MMM yyy ,h:mm a'}}</td>
+                <td class="w110">{{row.date_created | date : 'dd MMM yyy'}}</td>
                 <td class="w110" style="word-wrap: break-word;">{{row.created_by_name}}</td>
                 <td class="w80"><a class="link-btn" (click)="serve.setData(search_val)"
                     routerLink="order-detail/{{row.id }}" [queryParams]="{'id':row.id, 'status':active_tab}"
@@ -198,7 +198,7 @@
                 <td class="w90 text-right">{{row.total_order_qty}}</td>
                 <td class="w90 text-right" *ngIf="active_tab == 'partialDispatched'">{{row.dispatch_qty}}</td>
                 <td class="w90 text-right" *ngIf="active_tab == 'partialDispatched'">{{row.pending_qty}}</td>
-                <td class="w90 text-right"><strong>&#x20B9; {{row.order_grand_total}}</strong></td>
+                <td class="w90 text-right"><strong>&#x20B9; {{row.sub_total_before_cd}}</strong></td>
                 <td class="w120 text-right"><strong>{{row.order_type}}</strong></td>
                 <td class="w200">{{row.order_create_remark}}</td>
                 <td class="w200" *ngIf="active_tab == 'Reject'|| active_tab == 'Hold' ">{{row.reason_reject}}</td>

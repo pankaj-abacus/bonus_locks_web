@@ -60,7 +60,7 @@
   </div>
 
   <div class="container container-scroll no-tab">
-    <div class="cs-table horizontal-scroll">
+    <div class="cs-table horizontalOverflow-scroll">
       <div class="sticky-head">
         <div class="table-head">
           <table>
@@ -152,13 +152,13 @@
               <tr *ngFor="let row of tmp_orderlist; let i =index;"
                 [ngClass]="{'Current': serve.currentUserID == row.id}">
                 <td class="w50">{{ i + 1 + sr_no }}</td>
-                <td class="w110">{{row.date_created | date:"d MMM yyyy , h:mm a"}}</td>
+                <td class="w110">{{row.date_created | date:"d MMM yyyy"}}</td>
                 <td class="w110">{{row.created_by_name}}</td>
                 <td class="w120"><a class="link-btn" (click)="serve.setData(search_val)"
                     [routerLink]="[ 'secondary-order-detail/', row.id ]"
                     [queryParams]="{'id':row.id, 'status':active_tab}" routerLinkActive="active">{{row.order_no}}</a>
                 </td>
-                <td class="w200">{{row.company_name}}- ({{row.dr_code}})</td>
+                <td class="w200 text-overflow" title="{{row.company_name}}- ({{row.dr_code}})">{{row.company_name}}- ({{row.dr_code}})</td>
                 <!-- - ({{row.name}} {{row.mobile}}) -->
                 <!-- - ({{row.distributor_name}} {{row.distributor_mobile}}) -->
                 <td class="w200">{{row.distributor_company_name}} </td>

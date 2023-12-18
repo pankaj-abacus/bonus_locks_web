@@ -1334,6 +1334,15 @@ footer {
 
 // stock alert
 
+.horizontalOverflow-scroll{
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+
+.text-overflow{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 
 // cs-btn  start
 a {
