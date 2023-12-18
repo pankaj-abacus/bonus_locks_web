@@ -98,12 +98,12 @@
                         class="material-icons ">receipt_long</i> Accounts </a>
                 <ul>
                     <li *ngIf=" login_data.view_invoice=='1'">
-                        <a mat-button routerLink="/billing" routerLinkActive="active" (click)="clearFilter()">
+                        <a mat-button routerLink="/invoice" routerLinkActive="active" (click)="clearFilter()">
                             Ledger
                         </a>
                     </li>
                     <li *ngIf="login_data.view_payment=='1'">
-                        <a mat-button routerLink="/invoice" routerLinkActive="active" (click)="clearFilter()">
+                        <a mat-button routerLink="/billing" routerLinkActive="active" (click)="clearFilter()">
                             Invoice
                         </a>
                     </li>
@@ -114,6 +114,13 @@
             </li> -->
                 </ul>
             </li>
+
+            <li *ngIf="login_data.id=='1'">
+                <a mat-button routerLink="/stock-list" routerLinkActive="active">
+                    <i class="material-icons ">inventory</i>
+                    Stock
+                </a>
+            </li>
             <li
                 *ngIf="login_data.view_dispatch== '1' || login_data.view_dispatch_packing== '1' || login_data.view_dispatch_billing == '1' || login_data.view_dispatch_guard== '1' ">
                 <a mat-button routerLink="/company-dispatch" (click)="toggleDropdown(0);clearFilter()"
@@ -122,6 +129,14 @@
                     Dispatch
                 </a>
             </li>
+
+            <li *ngIf="login_data.view_master_box== '1' ">
+                <a mat-button routerLink="/generate-master-box" routerLinkActive="active">
+                    <i class="material-icons ">widgets</i>
+                    Master Box
+                </a>
+            </li>
+
 
             <!-- <li *ngIf="login_data.view_manual_dispatch== '1' ">
     <a mat-button routerLink="/manual-dispatch" (click)="toggleDropdown(0);clearFilter()"
@@ -276,9 +291,24 @@
                             </a>
                         </li> -->
             <li class="dropdown" *ngIf="login_data.id =='1' || login_data.view_redeem_request=='1'">
-                <a mat-button (click)="toggleDropdown(6);clearFilter()" [ngClass]="{'active':accountactive}"><i
+                <a mat-button (click)="clearFilter();toggleDropdown(6)" [ngClass]="{'active':accountactive}"><i
                         class="material-icons">redeem</i>Redeem Request</a>
+
                 <ul>
+                    <li>
+                        <a mat-button routerLink="/redeem-request/Cash" routerLinkActive="active"
+                            (click)="clearFilter()">
+                            Cash Request
+                        </a>
+                    </li>
+                    <!-- <li>
+                            <a mat-button routerLink="/redeem-request/Gift" routerLinkActive="active"
+                                (click)="clearFilter()">
+                                Gift Request
+                            </a>
+                        </li> -->
+                </ul>
+                <!-- <ul>
                     <li>
                         <a mat-button routerLink="/redeem-request/Bank" routerLinkActive="active"
                             (click)="clearFilter()">
@@ -291,13 +321,13 @@
                             Paytm Request
                         </a>
                     </li>
-                    <!-- <li>
+                    <li>
                         <a mat-button routerLink="/redeem-request/Khalti" routerLinkActive="active"
                             (click)="clearFilter()">
                             Khalti Request
                         </a>
-                    </li> -->
-                </ul>
+                    </li>
+                </ul> -->
             </li>
 
             <li *ngIf="login_data.view_task=='1'">
@@ -312,6 +342,71 @@
                     <i class="material-icons">help</i>
                     Support
                 </a>
+            </li>
+
+            <li class="dropdown" *ngIf="login_data.id=='1'">
+                <a mat-button (click)="clearFilter(); toggleDropdown(2); " [ngClass]="{'active':ordersactive}"><i
+                        class="material-icons ">construction</i>Service</a>
+                <ul>
+                    <li>
+                        <a mat-button (click)="clearFilter();" routerLink="/customer-list" routerLinkActive="active">
+                            Customer
+                            <span class="nav-counter "
+                                *ngIf="serve.counterArray.primary_order > 0">{{serve.counterArray.service_customer}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/warranty-list" routerLinkActive="active">
+                            Warranty Registration
+                            <span class="nav-counter"
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_warranty}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/complaint-list" routerLinkActive="active">
+                            Complaint List
+                            <span class="nav-counter"
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_complaint}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/installation-list" routerLinkActive="active">
+                            Installation List
+                            <span class="nav-counter"
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_installation}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/claimDispatch-list"
+                            routerLinkActive="active">
+                            Claim Dispatch
+                            <span class="nav-counter"
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_claim_dispatch}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/spare-list" routerLinkActive="active">
+                            Spare Part
+                            <span class="nav-counter"
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_spare_part}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/service-invoice-list" routerLinkActive="active">
+                            Invoice
+                            <span class="nav-counter"
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_invoice}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a mat-button (click)="clearFilter()" routerLink="/Complaint-visit-list"
+                            routerLinkActive="active">
+                            Complaint Visits
+                            <span class="nav-counter"
+                                *ngIf="serve.counterArray.secondary_order > 0">{{serve.counterArray.service_complaint_visit}}</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="dropdown" *ngIf="login_data.view_target=='1' ">
@@ -477,13 +572,18 @@
                             Month Wise Secondary Sale report
                         </a>
                     </li>
+                    <li>
+                        <a mat-button (click)="clearFilter(); openDialog('log_report')">
+                            Integration Log Report
+                        </a>
+                    </li>
 
                 </ul>
             </li>
         </ul>
     </div>
     <div class="nav-container" *ngIf="login_data.user_type=='DMS'">
-        <ul>
+        <ul *ngIf="login_data.warehouse_flag  !='1'">
             <li>
                 <a (click)="gotodmspages('Profile');clearFilter();tabType='Profile'" mat-button
                     [ngClass]="{'active' :tabType== 'Profile'}">
@@ -505,12 +605,6 @@
                     Checkin
                 </a>
             </li>
-            <!-- <li>
-            <a (click)="clearFilter();gotodmspages('Segment');tabType='Segment'" mat-button  [ngClass]="{'active' :tabType== 'Segment'}" >
-                <i class="material-icons">discount</i>
-                Segment Discount
-            </a>
-        </li> -->
             <li>
                 <a (click)="clearFilter();gotodmspages('Primary Order');tabType='Primary Order'" mat-button
                     [ngClass]="{'active' :tabType== 'Primary Order'}">
@@ -542,5 +636,24 @@
             </li>
         </ul>
 
+
+
+        <ul *ngIf="login_data.warehouse_flag  =='1'">
+            <li>
+                <a mat-button
+                    routerLink="/distribution-list/1/Channel%20Partner/distribution-detail/{{login_data.id}}/Profile"
+                    routerLinkActive="active">
+                    <i class="material-icons">person</i>
+                    Basic Detail
+                </a>
+            </li>
+            <li>
+                <a mat-button routerLink="/company-dispatch" (click)="toggleDropdown(0);clearFilter(); tabType = ''"
+                    routerLinkActive="active">
+                    <i class="material-icons ">local_shipping</i>
+                    Dispatch
+                </a>
+            </li>
+        </ul>
     </div>
 </div>

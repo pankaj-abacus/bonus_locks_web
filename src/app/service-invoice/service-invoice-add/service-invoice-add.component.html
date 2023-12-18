@@ -1,0 +1,264 @@
+<div class="main-container">
+  <app-loader *ngIf="loader"></app-loader>
+  <div class="tools-container">
+    <a mat-icon-button matTooltip="Back" (click)="back()">
+      <i class="material-icons">arrow_back</i>
+    </a>
+    <h2>ADD INVOICE</h2>
+  </div>
+  <div class="container pt10 pl10 pr10 pb50">
+    <form #f="ngForm" (ngSubmit)="f.valid && addInvoice()">
+      <div class="row">
+        <div class="col s12">
+          <div class="card pb0">
+            <div class="card-body cs-form">
+              <div class="row">
+                <div class="col s4">
+                  <mat-form-field appearance="outline" [ngClass]="{'has-error' : tech_id.invalid } ">
+                    <mat-label>Select Technician</mat-label>
+                    <mat-select name="tech_id" [(ngModel)]="technicianData.tech_id" #tech_id="ngModel"
+                    (selectionChange)="getCarpenterInfo(technicianData.tech_id)" required>
+                    <mat-option>
+                      <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                      (keyup)="assign_engineerget($event.target.value)"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let row of engineerList" [value]="row.id">{{row.name |
+                      titlecase}}-{{row.mobile_no}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="f.submitted && tech_id?.invalid ">
+                    This field is required
+                  </div>
+                </div>
+                <div class="col s4">
+                  <mat-form-field appearance="outline" [ngClass]="{'has-error' : complaint_data.invalid } " *ngIf="technicianData.tech_id">
+                    <mat-label>Select Complaint</mat-label>
+                    <mat-select name="complaint_data" [(ngModel)]="technicianData.complaint_data" #complaint_data="ngModel" required>
+                    <mat-option>
+                      <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                      (keyup)="getComplantList($event.target.value,'technicianData.tech_id')"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let row of complaintList" [value]="row">{{row.complain_no}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <div class="alert alert-danger" *ngIf="f.submitted && complaint_data?.invalid ">
+                  This field is required
+                </div> -->
+              </div>
+              <div class="col s4">
+                <mat-form-field appearance="outline" [ngClass]="{'has-error' : type.invalid } " *ngIf="technicianData.tech_id">
+                  <mat-label>Select Invoice Type</mat-label>
+                  <mat-select name="type" [(ngModel)]="technicianData.type" #type="ngModel" required>
+                    <mat-option value="Service">Service</mat-option>
+                    <mat-option value="Spare Part">Spare Part</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <div class="alert alert-danger" *ngIf="f.submitted && type?.invalid ">
+                  This field is required
+                </div> -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s4" [ngClass]="{'has-error' : amount.invalid } " *ngIf="technicianData.type == 'Service'">
+                <mat-form-field appearance="outline" [ngClass]="{'has-error' : amount?.invalid } ">
+                  <mat-label>Amount</mat-label>
+                  <input matInput placeholder="Type Here ..." name="amount" #amount="ngModel"
+                  [(ngModel)]="technicianData.amount" onkeypress="return event.charCode>=48 && event.charCode<=57"
+                  (ngModelChange)="calculationOfTotalService()" required>
+                </mat-form-field>
+                <div class="alert alert-danger" *ngIf="f.submitted && amount?.invalid ">
+                  This field is required
+                </div>
+              </div>
+              <div class="col s4" [ngClass]="{'has-error' : discount.invalid } " *ngIf="technicianData.type == 'Service'">
+                <mat-form-field appearance="outline" [ngClass]="{'has-error' : discount?.invalid } ">
+                  <mat-label>Discount In Rs.</mat-label>
+                  <input matInput placeholder="Type Here ..." name="discount" #discount="ngModel"
+                  [(ngModel)]="technicianData.discount" onkeypress="return event.charCode>=48 && event.charCode<=57"
+                  (ngModelChange)="calculationOfTotalService()" required>
+                </mat-form-field>
+                <div class="alert alert-danger" *ngIf="f.submitted && discount?.invalid ">
+                  This field is required
+                </div>
+              </div>
+            </div>
+            <div mat-dialog-content *ngIf="technicianData.type == 'Spare Part'">
+              <div class="card-head">
+                <h2>Part Information</h2>
+              </div>
+              <div class="cs-form">
+                <div class="row">
+                  <div class="col s4">
+                    <mat-form-field appearance="outline" [ngClass]="{'has-error' : id.invalid } ">
+                      <mat-label>Select Part</mat-label>
+                      <mat-select name="id" #id="ngModel" [(ngModel)]="formData.id"
+                      (selectionChange)="get_spare_detail(formData.id)">
+                      <mat-option>
+                        <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                        (keyup)="getSparePartList($event.target.value)"></ngx-mat-select-search>
+                      </mat-option>
+                      <mat-option *ngFor="let row of spareList" value="{{row.id}}" color="accent">{{row.part_name |
+                        titlecase}}-{{row.part_no | titlecase}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col s4">
+                    <mat-form-field appearance="outline" [ngClass]="{'has-error' : qty?.invalid } ">
+                      <mat-label>Qty</mat-label>
+                      <input matInput placeholder="Type Here ..." name="qty" #qty="ngModel" [(ngModel)]="formData.qty"
+                      onkeypress="return event.charCode>=48 && event.charCode<=57" (ngModelChange)="calculation()">
+                    </mat-form-field>
+                  </div>
+                  <div class="col s4">
+                    <mat-form-field appearance="outline" [ngClass]="{'has-error' : mrp?.invalid } ">
+                      <mat-label>Mrp</mat-label>
+                      <input matInput placeholder="Type Here ..." name="mrp" #mrp="ngModel"
+                      [(ngModel)]="formData.mrp" onkeypress="return event.charCode>=48 && event.charCode<=57" readonly>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s4">
+                    <mat-form-field appearance="outline" [ngClass]="{'has-error' : discount.invalid } ">
+                      <mat-label>Discount(%)</mat-label>
+                      <input matInput placeholder="Type Here ..." name="discount" #discount="ngModel"
+                      [(ngModel)]="formData.discount" onkeypress="return event.charCode>=48 && event.charCode<=57" (ngModelChange)="calculation()">
+                    </mat-form-field>
+                  </div>
+                  <div class="col s4" *ngIf="spareList.length">
+                    <mat-form-field appearance="outline" [ngClass]="{'has-error' : total.invalid } ">
+                      <mat-label>Total</mat-label>
+                      <input matInput placeholder="Type Here ..." name="total" #total="ngModel"
+                      [(ngModel)]="formData.total" onkeypress="return event.charCode>=48 && event.charCode<=57" readonly>
+                    </mat-form-field>
+                  </div>
+                  <div class="text-right" *ngIf="spareList.length && formData.qty  && formData.mrp && formData.total">
+                    <a style="margin: 7px;" mat-raised-button color="accent" type="text" (click)="addSpare()">Add To List</a>
+                  </div>
+                </div>
+                <div class="row" *ngIf="add_list.length > 0 ">
+                  <div class="col s12 m12 l12">
+                    <div class="card">
+                      <div class="card-head">
+                        <h2> Spare Part List</h2>
+                      </div>
+                      <div class="card-body">
+                        <div class="cs-table left-right-10">
+                          <div class=" border-top">
+                            <div class="table-head">
+                              <table>
+                                <tr>
+                                  <th class="w30 text-center ">Sr.No</th>
+                                  <th class="w100">Part Details</th>
+                                  <th class="w60 text-right">Mrp</th>
+                                  <th class="w60 text-right">Qty</th>
+                                  <th class="w60 text-right">Discount(%)</th>
+                                  <th class="w100 text-right">Total</th>
+                                  <th class="w30 text-center">Action</th>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                          
+                          <div class="table-container pb0">
+                            <div class="table-content none-shadow">
+                              <table>
+                                <tr *ngFor="let row of add_list;let i=index;">
+                                  <td class="w30 text-center">{{i+1}}</td>
+                                  <td class="w100">{{row.part_name}}-{{row.part_no |titlecase}}</td>
+                                  <td class="w60 text-right">{{row.mrp}}</td>
+                                  <td class="w60 text-right">{{row.qty}}</td>
+                                  <td class="w60 text-right">{{row.discount}}</td>
+                                  <td class="w100 text-right">{{row.total | number:'1.2-2'}}</td>
+                                  <td class="w30 text-center">
+                                    <div class="action-button">
+                                      <button mat-icon-button matTooltip="Delete" (click)="delete(i)">
+                                        <i class="material-icons del">delete</i>
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div mat-dialog-content *ngIf="technicianData.type == 'Spare Part' && add_list.length > 0 ">
+              <div class="card-head">
+                <h2>Invoice Info</h2>
+              </div>
+              <div class="row">
+                <div class="col s6 offset-s6">
+                  <div class="invoice-table">
+                    <table>
+                      <tr>
+                        <td>Sub Total</td>
+                        <th>{{technicianData.sub_total | number:'1.2-2'}}</th>
+                      </tr>
+                      <tr>
+                        <td>Discount</td>
+                        <th>{{technicianData.discount | number:'1.2-2'}}</th>
+                      </tr>
+                      <tr>
+                        <td>GST</td>
+                        <th>{{technicianData.gst_amount | number:'1.2-2'}}</th>
+                      </tr>
+                      <tr>
+                        <td>Total</td>
+                        <th>{{technicianData.total | number:'1.2-2'}}</th>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div mat-dialog-content *ngIf="technicianData.type == 'Service'">
+              <div class="card-head">
+                <h2>Invoice Info</h2>
+              </div>
+              <div class="row">
+                <div class="col s6 offset-s6">
+                  <div class="invoice-table">
+                    <table>
+                      <tr>
+                        <td>Sub Total</td>
+                        <th>{{technicianData.sub_total | number:'1.2-2'}}</th>
+                      </tr>
+                      <tr>
+                        <td>Discounted Amount</td>
+                        <th>{{technicianData.discount | number:'1.2-2'}}</th>
+                      </tr>
+                      <tr>
+                        <td>GST</td>
+                        <th>{{technicianData.gst_amount | number:'1.2-2'}}</th>
+                      </tr>
+                      <tr>
+                        <td>Total</td>
+                        <th>{{technicianData.total | number:'1.2-2'}}</th>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <div class="text-right">
+          <button [ngClass]="{'loading': savingFlag == true}" mat-raised-button color="accent" type="submit"
+          [disabled]="savingFlag == true ">{{savingFlag  == true ? 'Saving' : 'Save'}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</div>

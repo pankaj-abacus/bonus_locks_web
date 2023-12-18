@@ -19,13 +19,16 @@
               <div class="row">
                 <div class="col s12 m6 l6">
                   <mat-radio-group class="example-section" id="user_type" name="user_type" [(ngModel)]="data.user_type">
-                    <mat-radio-button class="wp50" color="primary" (change)="get_sales_user_type('', $event)"
+                    <mat-radio-button class="wp30" color="primary" (change)="get_sales_user_type('', $event)"
                       value="Sales User">
                       Sales User
                     </mat-radio-button>
-                    <mat-radio-button class="wp50" color="primary" (change)="get_sales_user_type('', $event)"
+                    <mat-radio-button class="wp30" color="primary" (change)="get_sales_user_type('', $event)"
                       value="System User">
                       System User
+                    </mat-radio-button>
+                    <mat-radio-button class="wp30" color="primary" (change)="get_sales_user_type('', $event)"
+                      value="Service Engineer"> Service Engineer
                     </mat-radio-button>
                   </mat-radio-group>
                 </div>
@@ -36,24 +39,25 @@
             </div>
             <div class="card-body cs-form">
               <div class="row">
-                <div class="col s12 m3 l3">
-                  <div class="df">
-                    <div class="wp100">
-                      <mat-form-field appearance="outline">
-                        <mat-label>Select Designation</mat-label>
-                        <mat-select name="role_id" placeholder="Role" [(ngModel)]="data.role_id" #role_id="ngModel"
-                          [ngClass]="{'has-error' : role_id.invalid } " required>
-                          <mat-option value="" disabled>Select Role</mat-option>
-                          <mat-option *ngFor="let row of sales_type" value="{{row.id}}">{{row.role_name}}</mat-option>
-                        </mat-select>
-                      </mat-form-field>
+                <div class="col s12 m3 l3" *ngIf="data.user_type != 'Service Engineer'">
 
-                      <div class="alert alert-danger" *ngIf="role_id.touched || f.submitted">
-                        <p *ngIf="role_id.errors?.required">This field is required</p>
-                      </div>
+                  <div class="wp100">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Select Designation</mat-label>
+                      <mat-select name="role_id" placeholder="Role" [(ngModel)]="data.role_id" #role_id="ngModel"
+                        (selectionChange)="data.role_id == '53' || (data.role_id == '58' || data.role_id == '59')  ? getCompanyData():  data.role_id == '54' ? getCompanyData(): '' "
+                        required>
+                        <mat-option value="" disabled>Select Role</mat-option>
+                        <mat-option *ngFor="let row of sales_type" value="{{row.id}}">{{row.role_name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <div class="alert alert-danger" *ngIf="role_id.touched || f.submitted">
+                      <p *ngIf="role_id.errors?.required">This field is required</p>
                     </div>
-
                   </div>
+
+
                 </div>
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : name.invalid } ">
@@ -69,9 +73,8 @@
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : exist == true } ">
                     <mat-label>Mobile No</mat-label>
                     <input matInput placeholder="Type Here ..." name="contact_01" #contact_01="ngModel"
-                      [(ngModel)]="data.contact_01" minlength="10" maxlength="10" min="0"
-                      (keypress)="MobileNumber($event)" (input)="check_number()"
-                      [ngClass]="{'has-error' : contact_01.invalid } " required>
+                      [(ngModel)]="data.contact_01" minlength="10" maxlength="10" (keypress)="MobileNumber($event)"
+                      (input)="check_number()" [ngClass]="{'has-error' : contact_01.invalid } " required>
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="contact_01.touched || f.submitted">
                     <p *ngIf="contact_01.errors?.required">This field is required</p>
@@ -82,6 +85,23 @@
                     Mobile no. already Exists.
                   </div>
                 </div>
+
+                <div class="col s12 m3 l3" *ngIf="data.user_type == 'Service Engineer'">
+                  <mat-form-field appearance="outline">
+                    <mat-label> Paytm No.</mat-label>
+                    <input matInput placeholder="Type Here ..." name="paytm_mobileno" #paytm_mobileno="ngModel"
+                      [(ngModel)]="data.paytm_mobileno" minlength="10" maxlength="10" min="0"
+                      (keypress)="paytmMobileNumber($event)" [ngClass]="{'has-error' : paytm_mobileno.invalid } "
+                      required>
+                  </mat-form-field>
+
+                  <div class="alert alert-danger" *ngIf="paytm_mobileno.touched || f.submitted">
+                    <p *ngIf="paytm_mobileno.errors?.required">This field is required</p>
+                    <p *ngIf="paytm_mobileno.errors?.maxlength || paytm_mobileno.errors?.minlength">paytm Mobile No.
+                      should be of 10 digits..</p>
+                  </div>
+                </div>
+
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline">
                     <mat-label>Email ID</mat-label>
@@ -94,7 +114,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row" *ngIf="data.user_type != 'Service Engineer'">
                 <div class="col s12 m3 l3">
                   <mat-form-field appearance="outline" [ngClass]="{'has-error' : employee_id.invalid } ">
                     <mat-label>Employee Code</mat-label>
@@ -166,105 +186,184 @@
                 </div>
               </div>
               <!-- <div class="row" *ngIf="data.user_type == 'Sales User'"> -->
-                <div class="row" >
-                <div class="col s12 m3 l3">
-                  <mat-form-field appearance="outline">
-                    <mat-label>State</mat-label>
-                    <mat-select name="state_name" #state_name="ngModel" [(ngModel)]="data.state_name"
-                      (selectionChange)="getDistrict(1)">
-                      <mat-option disabled="">Select State</mat-option>
-                      <mat-option *ngFor="let row of states" value="{{row.state_name}}">
-                        {{row.state_name}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
 
-                  <div class="alert alert-danger" *ngIf="state_name.touched || f.submitted">
-                    <p *ngIf="state_name.errors?.required">This field is required</p>
-                  </div>
-
-                </div>
-
-
-
-                <div class="col s12 m3 l3">
-                  <mat-form-field appearance="outline">
-                    <mat-label>District</mat-label>
-                    <mat-select name="district_name" #district_name="ngModel" [(ngModel)]="data.district_name">
-                      <mat-option disabled="">Select District</mat-option>
-                      <mat-option *ngFor="let row of district_list" value="{{row.district_name}}">
-                        {{row.district_name}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <div class="alert alert-danger" *ngIf="district_name.touched || f.submitted">
-                    <p *ngIf="district_name.errors?.required">This field is required</p>
-                  </div>
-                </div>
-
-                <div class="col s12 m3 l3">
-                  <mat-form-field appearance="outline">
-                    <mat-label>City</mat-label>
-                    <input matInput placeholder="Type here..." name="city" #city="ngModel" [(ngModel)]="data.city">
-                  </mat-form-field>
-                </div>
-
-                <div class="col s12 m3 l3">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Pincode</mat-label>
-                    <input matInput name="pincode" placeholder="Type Here ..." #pincode="ngModel" maxlength="6"
-                      [(ngModel)]="data.pincode">
-                  </mat-form-field>
-                  <div class="alert alert-danger" *ngIf="pincode.touched || f.submitted">
-                    <p *ngIf="pincode.errors?.required">This field is required</p>
-                  </div>
-                </div>
-              </div>
               <div class="row">
-                <div class="col s12 m6 l6">
-                  <div class="row" *ngIf="data.user_type == 'Sales User'">
-                    <div class="col s12 m6 l6">
-                      <mat-form-field appearance="outline">
-                        <mat-label>Assign Brands</mat-label>
-                        <mat-select name="brand" [(ngModel)]="data.brand" #brand="ngModel" multiple>
-                          <mat-option *ngFor="let row of brandList"
-                            value="{{row.brand_code}}">{{row.display_name}}</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      <div class="alert alert-danger" *ngIf="f.submitted && brand?.invalid ">
-                        This field is required
-                      </div>
-                    </div>
-                    <div class="col s12 m6 l6">
-                      <mat-form-field appearance="outline">
-                        <mat-label>Order Type</mat-label>
-                        <mat-select name="order_type" [(ngModel)]="data.order_type" #order_type="ngModel">
-                          <mat-option value="Primary">Primary</mat-option>
-                          <mat-option value="Secondary">Secondary</mat-option>
-                          <mat-option value="Both">Both</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      <div class="alert alert-danger" *ngIf="f.submitted && order_type?.invalid ">
-                        This field is required
-                      </div>
+                <ng-container *ngIf="data.user_type == 'Sales User'">
+                  <div class="col s12 m3 l3">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Assign Brands</mat-label>
+                      <mat-select name="brand" [(ngModel)]="data.brand" #brand="ngModel" multiple>
+                        <mat-option *ngFor="let row of brandList"
+                          value="{{row.brand_code}}">{{row.display_name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="f.submitted && brand?.invalid ">
+                      This field is required
                     </div>
                   </div>
-                  <!-- 
-                  <div>
+                  <div class="col s12 m3 l3">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Order Type</mat-label>
+                      <mat-select name="order_type" [(ngModel)]="data.order_type" #order_type="ngModel">
+                        <mat-option value="Primary">Primary</mat-option>
+                        <mat-option value="Secondary">Secondary</mat-option>
+                        <mat-option value="Both">Both</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="f.submitted && order_type?.invalid ">
+                      This field is required
+                    </div>
+                  </div>
+
+                  <div class="col s12 m3 l3">
                     <mat-form-field appearance="outline">
                       <mat-label>Working State</mat-label>
-                      <mat-select name="working_state" #working_state="ngModel" multiple
-                        [(ngModel)]="data.working_state">
-                        <mat-option disabled="">Select State</mat-option>
+                      <mat-select name="working_state" #working_state="ngModel" [(ngModel)]="data.working_state" (ngModelChange)="multipleDistrict(data.working_state)" 
+                        multiple>
+                        <mat-option disabled="">Select Working State</mat-option>
                         <mat-option *ngFor="let row of states" value="{{row.state_name}}">
                           {{row.state_name}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <div class="alert alert-danger" *ngIf="working_state.touched || f.submitted">
+
+                    <!-- <div class="alert alert-danger" *ngIf="working_state.touched || f.submitted">
                       <p *ngIf="working_state.errors?.required">This field is required</p>
+                    </div> -->
+
+                  </div>
+                  <div class="col s12 m3 l3">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Working District</mat-label>
+                      <mat-select name="working_district" #working_district="ngModel" [(ngModel)]="data.working_district"
+                        multiple>
+                        <mat-option disabled="">Select district State</mat-option>
+                        <mat-option *ngFor="let row of multiple_district_list" value="{{row.district_name}}">
+                          {{row.district_name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <!-- <div class="alert alert-danger" *ngIf="working_state.touched || f.submitted">
+                      <p *ngIf="working_state.errors?.required">This field is required</p>
+                    </div> -->
+
+                  </div>
+
+                </ng-container>
+                <!-- <div class="col s12 m3 l3" *ngIf="data.role_id == '52'">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Assign Unit</mat-label>
+                    <mat-select name="assign_unit" [(ngModel)]="data.assign_unit" #assign_unit="ngModel" required>
+                      <mat-option *ngFor="let row of unit" value="{{row.id}}">{{row.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="assign_unit.touched || f.submitted">
+                    <p *ngIf="assign_unit.errors?.required">This field is required</p>
+                  </div>
+                </div> -->
+
+                <div class="col s12 m l3" *ngIf="data.role_id == '54' || data.role_id == '52' || data.role_id == '53' ||  data.role_id == '61'">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Dispatch Type</mat-label>
+                    <mat-select name="company_dispatch_type" #company_dispatch_type="ngModel"
+                      [(ngModel)]="data.company_dispatch_type" required
+                      (selectionChange)="data.company_dispatch_type == 'Warehouse' ? getWarehouse(): ''; data.assign_company =''; data.warehouse_id ='';">
+                      <mat-option value="Company">Billing Company</mat-option>
+                      <mat-option value="Warehouse">Warehouse</mat-option>
+
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="company_dispatch_type.touched || f.submitted">
+                    <p *ngIf="company_dispatch_type.errors?.required">This field is required</p>
+                  </div>
+                </div>
+
+                <div class="col s12 m l3"
+                  *ngIf="data.company_dispatch_type == 'Company'">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Assign Billing Company</mat-label>
+                    <mat-select name="assign_company" #assign_company="ngModel" [(ngModel)]="data.assign_company"
+                      required>
+                      <mat-option *ngFor="let row of organisationData"
+                        value="{{row.id}}">{{row.company_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="assign_company.touched || f.submitted">
+                    <p *ngIf="assign_company.errors?.required">This field is required</p>
+                  </div>
+                </div>
+
+                <div class="col s12 m l3" *ngIf="data.company_dispatch_type == 'Warehouse'">
+                  <mat-form-field class="cs-input" appearance="outline">
+                    <mat-label>Warehouse</mat-label>
+                    <mat-select name="warehouse_id" placeholder="Warehouse" #warehouse_id="ngModel"
+                      [(ngModel)]="data.warehouse_id" required>
+                      <mat-option *ngFor="let row of warehouse" value="{{row.id}}">{{row.company_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="warehouse_id.touched || f.submitted">
+                    <p *ngIf="warehouse_id.errors?.required">This field is required</p>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col s12 m6 l6">
+                  <div class="row">
+                    <div class="col s12 m6 l6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>State</mat-label>
+                        <mat-select name="state" #state="ngModel" [(ngModel)]="data.state"
+                          (selectionChange)="getDistrict(1)">
+                          <mat-option disabled="">Select State</mat-option>
+                          <mat-option *ngFor="let row of states" value="{{row.state_name}}">
+                            {{row.state_name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <div class="alert alert-danger" *ngIf="state.touched || f.submitted">
+                        <p *ngIf="state.errors?.required">This field is required</p>
+                      </div>
+
                     </div>
-                  </div> -->
+
+                    <div class="col s12 m6 l6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>District</mat-label>
+                        <mat-select name="district" #district="ngModel" [(ngModel)]="data.district">
+                          <mat-option disabled="">Select District</mat-option>
+                          <mat-option *ngFor="let row of district_list" value="{{row.district_name}}">
+                            {{row.district_name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <div class="alert alert-danger" *ngIf="district.touched || f.submitted">
+                        <p *ngIf="district.errors?.required">This field is required</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12 m6 l6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>City</mat-label>
+                        <input matInput placeholder="Type here..." name="city" #city="ngModel" [(ngModel)]="data.city">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col s12 m6 l6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Pincode</mat-label>
+                        <input matInput name="pincode" placeholder="Type Here ..." #pincode="ngModel" maxlength="6"
+                          [(ngModel)]="data.pincode">
+                      </mat-form-field>
+                      <div class="alert alert-danger" *ngIf="pincode.touched || f.submitted">
+                        <p *ngIf="pincode.errors?.required">This field is required</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="col s12 m6 l6">
                   <mat-form-field appearance="outline">
@@ -272,10 +371,11 @@
                     <textarea matInput placeholder="Type Here ..." name="address" #address="ngModel"
                       [(ngModel)]="data.address" class="h80"></textarea>
                   </mat-form-field>
-                  <!-- <div class="alert alert-danger" *ngIf="address.touched || f.submitted">
+                  <div class="alert alert-danger" *ngIf="address.touched || f.submitted">
                     <p *ngIf="address.errors?.required">This field is required</p>
-                  </div> -->
+                  </div>
                 </div>
+
               </div>
 
 

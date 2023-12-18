@@ -4,8 +4,8 @@
             <i class="material-icons">arrow_back</i>
         </a>
         <h2>{{dr_detail.company_name ? (dr_detail.company_name | titlecase) : '---'}}</h2>
-        <div class="left-auto">
-            <div class="mat-tabbar">
+        <div class="left-auto df" style="overflow: auto;">
+            <div class="mat-tabbar df">
                 <button mat-button [ngClass]="{'active' :tabType== 'Profile'}"
                     (click)="distributorDetail();DistributorTarget();DistributorSalesChr();distributorTopSelling(); tabType= 'Profile'"><i
                         class="material-icons">person</i>Basic Detail</button>
@@ -30,16 +30,29 @@
                 <button mat-button *ngIf="user_type != '3'" [ngClass]="{'active' :tabType== 'Target'}"
                     (click)="clearFilter(); getTarget(currentMonth_no,currentYear); tabType = 'Target'"><i
                         class="material-icons">trending_up</i>Target</button>
+                <button mat-button *ngIf="user_type == '1'" [ngClass]="{'active' :tabType== 'transferRequests'}"
+                    (click)="clearFilter(); getTransferRequests(activeTab); tabType = 'transferRequests'">
+                    <i class="material-icons">receipt_long</i>Transfer Points Requests
+                </button>
+                <button mat-button *ngIf="user_type == '3'" [ngClass]="{'active' :tabType== 'sendRequest'}"
+                    (click)="clearFilter(); getSendRequest(activeTab); tabType = 'sendRequest'">
+                    <i class="material-icons">receipt_long</i>Send Points Requests
+                </button>
+                <button mat-button *ngIf="user_type == '1' || user_type == '3'"
+                    [ngClass]="{'active' :tabType== 'stock'}"
+                    (click)="clearFilter(); getDrStock(stockTab); tabType = 'stock'">
+                    <i class="material-icons">receipt_long</i>Stock
+                </button>
                 <button mat-button *ngIf="user_type != '3'" [ngClass]="{'active' :tabType== 'Ledger'}"
                     (click)="clearFilter(); getLedger(); tabType = 'Ledger'"><i
                         class="material-icons">receipt_long</i>Account Ledger</button>
 
-                <!-- <button mat-button *ngIf="user_type != '7'" [ngClass]="{'active' :tabType== 'Point Ledger'}"
+                <button mat-button *ngIf="user_type == '7' || user_type == '3'"
+                    [ngClass]="{'active' :tabType== 'Point Ledger'}"
                     (click)="clearFilter(); getPointLedger(); tabType = 'Point Ledger'"><i
-                    class="material-icons">receipt_long</i>Point Ledger</button> -->
+                        class="material-icons">receipt_long</i>Point Ledger</button>
 
             </div>
-
         </div>
     </div>
 
@@ -80,7 +93,8 @@
                                 <span>Retailer Network</span>
                             </div>
                             <div class="card-box rd-gr">
-                                <p>&#x20B9; {{dr_detail.current_year_sales ?(dr_detail.current_year_sales | number:'1.0-0') : 0}}</p>
+                                <p>&#x20B9; {{dr_detail.current_year_sales ?(dr_detail.current_year_sales |
+                                    number:'1.0-0') : 0}}</p>
                                 <span>Primary Sale</span>
                             </div>
                             <div class="card-box pr-gr">
@@ -190,13 +204,28 @@
                                 </div>
 
 
-                                <div class="block-feilds" *ngIf="user_type != 1">
+                                <!-- <div class="block-feilds" *ngIf="user_type != 1">
                                     <span>Distributor Detail</span>
                                     <p>{{dr_detail.assign_distributors_company_name | titlecase}} -
                                         {{dr_detail.assign_distributors_mobile_no}}</p>
-                                    <p
+                                        <p
                                         *ngIf="!dr_detail.assign_distributors_company_name && !dr_detail.assign_distributors_mobile_no">
                                         ---</p>
+                                    </div> -->
+
+                                <div class="block-feilds">
+                                    <span>Category</span>
+                                    <p>{{dr_detail.category ? dr_detail.category :'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Transport</span>
+                                    <p>{{dr_detail.transport ? dr_detail.transport :'---'}}</p>
+                                </div>
+
+                                <div class="block-feilds">
+                                    <span>Security Check</span>
+                                    <p>{{dr_detail.security_Cheque ? dr_detail.security_Cheque :'---'}}</p>
                                 </div>
 
                                 <div class="block-feilds">
@@ -206,7 +235,8 @@
 
                                 <div class="block-feilds">
                                     <span>Last Updated On</span>
-                                    <p>{{dr_detail.last_updated_on && dr_detail.last_updated_on != '0000-00-00 00:00:00'? (dr_detail.last_updated_on | date : 'dd MMM yyy ,h:mm a') : '--'}}
+                                    <p>{{dr_detail.last_updated_on && dr_detail.last_updated_on != '0000-00-00
+                                        00:00:00'? (dr_detail.last_updated_on | date : 'dd MMM yyy ,h:mm a') : '--'}}
                                     </p>
                                 </div>
                                 <div class="block-feilds" *ngIf="user_type == 1">
@@ -218,6 +248,7 @@
                                     <p>{{dr_detail.password ? dr_detail.password : '--'}}</p>
                                 </div>
                             </div>
+
 
                             <div class="grid-box single mt16">
                                 <div class="block-feilds">
@@ -232,11 +263,103 @@
 
                             <div class="grid-box single mt16">
                                 <div class="block-feilds">
+                                    <span>Address2</span>
+                                    <p>{{dr_detail.address_1?dr_detail.address_1+',':''}}</p>
+                                </div>
+                            </div>
+
+
+                            <div class="grid-box single mt16">
+                                <div class="block-feilds">
                                     <span>Assigned Brand</span>
                                     <p>{{dr_detail.brand}} </p>
                                 </div>
                             </div>
                         </div>
+
+                        <ng-container *ngIf="dr_detail.type == 3 || dr_detail.type == 7">
+                            <div class="card-head mt15">
+                                <h2>Document Details</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="grid-box">
+                                    <div class="block-feilds">
+                                        <div class="doc-img">
+                                            <img src="assets/img/no_image.png" *ngIf="dr_detail.pan_img == ''">
+                                            <img *ngIf="dr_detail.pan_img" src="{{url+dr_detail.pan_img}}"
+                                                (click)="goToImage(url+dr_detail.pan_img)" style="cursor: zoom-in;">
+                                        </div>
+                                    </div>
+                                    <div class="block-feilds">
+                                        <span>Pan Number</span>
+                                        <p>{{dr_detail.pan_no ?dr_detail.pan_no :'---'}}</p>
+                                    </div>
+                                    <div class="block-feilds">
+                                        <div class="doc-img">
+                                            <img src="assets/img/no_image.png" *ngIf="dr_detail.document_image == ''">
+                                            <img *ngIf="dr_detail.document_image" src="{{url+dr_detail.document_image}}"
+                                                (click)="goToImage(url+dr_detail.document_image)"
+                                                style="cursor: zoom-in;">
+                                            <img src="assets/img/no_image.png"
+                                                *ngIf="dr_detail.document_image_back == ''">
+                                            <img *ngIf="dr_detail.document_image_back"
+                                                src="{{url+dr_detail.document_image_back}}"
+                                                (click)="goToImage(url+dr_detail.document_image_back)"
+                                                style="cursor: zoom-in;">
+                                        </div>
+                                    </div>
+                                    <div class="block-feilds">
+                                        <span>Document Number</span>
+                                        <p>{{dr_detail.adhar_no ? dr_detail.adhar_no : '---'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-head mt15">
+                                <h2>Bank Details</h2>
+                                <!-- <div class="" *ngIf="dr_detail.payout_kyc_status == 'Reject' && dr_detail.influencer_type == 'Carpenter'">
+                                            <button matTooltip="Reset KYC Status" (click)="reset_status(dr_detail.id)" mat-raised-button
+                                            color="primary">Reset KYC Status</button>
+                                        </div> -->
+                            </div>
+
+                            <div class="card-body">
+                                <div class="grid-box">
+                                    <div class="block-feilds">
+                                        <span>Bank Name</span>
+                                        <p>{{dr_detail.bank_name ? dr_detail.bank_name :'---'}}</p>
+                                    </div>
+
+                                    <div class="block-feilds">
+                                        <span>Account Number</span>
+                                        <p>{{dr_detail.account_no ? dr_detail.account_no:'---'}}</p>
+                                    </div>
+
+                                    <div class="block-feilds">
+                                        <span>IFSC Code</span>
+                                        <p>{{dr_detail.ifsc_code ? dr_detail.ifsc_code :'---'}}</p>
+                                    </div>
+                                    <div class="block-feilds">
+                                        <div class="doc-img">
+                                            <img src="assets/img/no_image.png" *ngIf="dr_detail.bank_img == ''">
+                                            <img *ngIf="dr_detail.bank_img" src="{{url+dr_detail.bank_img}}"
+                                                (click)="goToImage(url+dr_detail.bank_img)" style="cursor: zoom-in;">
+                                        </div>
+                                    </div>
+                                    <div class="block-feilds">
+                                        <span>Account Holder Name</span>
+                                        <p>{{dr_detail.account_holder_name ? dr_detail.account_holder_name :'---'}}</p>
+                                    </div>
+
+                                    <!-- <div class="block-feilds">
+                                                <span>KYC Status</span>
+                                                <p>{{dr_detail.payout_kyc_status ? dr_detail.payout_kyc_status :'---'}}</p>
+                                            </div> -->
+
+
+
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
 
 
@@ -277,7 +400,8 @@
                                         </div>
                                         <div class="block-feilds">
                                             <span>Credit Day's</span>
-                                            <p>{{payment_upper_info.credit_period ? payment_upper_info.credit_period : 0}}</p>
+                                            <p>{{payment_upper_info.credit_period ? payment_upper_info.credit_period :
+                                                0}}</p>
                                         </div>
                                     </div>
 
@@ -301,7 +425,8 @@
                                                     <div class="table-content none-shadow">
                                                         <table>
                                                             <tr *ngFor="let row of payment_lower_info; let i = index">
-                                                                <td class="w120 text-center primary-bg">{{row.days}} Day's</td>
+                                                                <td class="w120 text-center primary-bg">{{row.days}}
+                                                                    Day's</td>
                                                                 <td><strong>&#x20B9; {{row.value}}</strong></td>
                                                                 <td class="w120 yellow-bgclr"
                                                                     [ngClass]="row.payment_slab == 'OVERDUE' ? 'yellow-bg' : 'red-bg'">
@@ -326,13 +451,13 @@
                                     <h2>Assigned Sales User</h2>
                                     <div class="left-auto"
                                         *ngIf="(login_data.edit_customer_network=='1') ||  (user_type == '1' && login_data.edit_channel_partner=='1')|| (user_type == '3' && login_data.edit_dealer=='1') || (user_type == '7' && login_data.edit_direct_dealers=='1')">
-                                        <a class="sm-mat-icon-button" mat-icon-button matTooltip="Update Sales User"
-                                            (click)="openDialog('assignSales')">
-                                            <i class="material-icons">edit</i>
-                                        </a>
+
                                     </div>
                                 </div>
-
+                                <!-- <a class="sm-mat-icon-button" mat-icon-button matTooltip="Update Sales User"
+                                                (click)="openDialog('assignSales')">
+                                                <i class="material-icons">edit</i>
+                                            </a> -->
                                 <div class="card-body pt0">
                                     <mat-list class="cs-list-box pt0">
                                         <mat-list-item *ngFor="let row of assign_sales_user;">
@@ -345,18 +470,18 @@
                             </div>
 
                             <!-- <div class="card pb0 mt10" *ngIf="!skLoading">
-                                                            <div class="card-head">
-                                                                <h2>Assigned Brand</h2>
-                                                            </div>
-                                                            <div class="card-body pt0">
-                                                                <mat-list class="cs-list-box pt0">
-                                                                    <mat-list-item *ngFor="let row of dr_detail.brand;">
-                                                                        <div class="alphabet">{{row ? row[0].toUpperCase():'' }}</div>
-                                                                        {{row | titlecase}} 
-                                                                    </mat-list-item>
-                                                                </mat-list>
-                                                            </div>
-                                                        </div> -->
+                                                <div class="card-head">
+                                                    <h2>Assigned Brand</h2>
+                                                </div>
+                                                <div class="card-body pt0">
+                                                    <mat-list class="cs-list-box pt0">
+                                                        <mat-list-item *ngFor="let row of dr_detail.brand;">
+                                                            <div class="alphabet">{{row ? row[0].toUpperCase():'' }}</div>
+                                                            {{row | titlecase}} 
+                                                        </mat-list-item>
+                                                    </mat-list>
+                                                </div>
+                                            </div> -->
 
 
                             <div class="card mt10" *ngIf="user_type == 3 && distributors.length >0 ">
@@ -383,23 +508,23 @@
                             </div>
 
                             <!-- <div class="card mt10" *ngIf="!skLoading">
-                                <div class="card-head">
-                                    <h2>Branding Budget V/S Actual</h2>
-                                </div>
-
-                                <div class="card-body">
-                                    <div class="grid-box two">
-                                        <div class="block-feilds approved">
-                                            <span>Branding Budget</span>
-                                            <p>&#x20B9; 10,000</p>
+                                        <div class="card-head">
+                                            <h2>Branding Budget V/S Actual</h2>
                                         </div>
-                                        <div class="block-feilds reject">
-                                            <span>Actual</span>
-                                            <p>&#x20B9; 10,000</p>
+                                        
+                                        <div class="card-body">
+                                            <div class="grid-box two">
+                                                <div class="block-feilds approved">
+                                                    <span>Branding Budget</span>
+                                                    <p>&#x20B9; 10,000</p>
+                                                </div>
+                                                <div class="block-feilds reject">
+                                                    <span>Actual</span>
+                                                    <p>&#x20B9; 10,000</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div> -->
+                                    </div> -->
                         </div>
 
                         <div class="col s12 m6 l6">
@@ -553,11 +678,12 @@
                             <tr>
                                 <th class="w60">S.no.</th>
                                 <th class="w100">Date Created</th>
-                                <th class="w100" *ngIf="login_data.user_type!='DMS'">{{login_data.user_type!='DMS'?'Employee Code':'Code'}}</th>
+                                <th class="w100" *ngIf="login_data.user_type!='DMS'">
+                                    {{login_data.user_type!='DMS'?'Employee Code':'Code'}}</th>
                                 <th class="w180">Employee Name</th>
                                 <th class="w180" *ngIf="login_data.user_type=='DMS'">Dealer Name</th>
 
-                                <th class="w150" *ngIf="login_data.user_type!='DMS'" >Reporting Manager </th>
+                                <th class="w150" *ngIf="login_data.user_type!='DMS'">Reporting Manager </th>
                                 <!-- <th class="w180">Company Name</th> -->
                                 <!-- <th>Address</th> -->
                                 <th class="w100">Check in</th>
@@ -593,7 +719,7 @@
                                     </div>
                                 </th>
 
-                                <th class="w180" >
+                                <th class="w180">
                                     <div class="th-search-acmt">
                                         <mat-form-field class="example-full-width cs-input select-input">
                                             <input matInput placeholder="Search..." type="text" name="emp_name"
@@ -615,12 +741,12 @@
 
                                 <th class="w150" *ngIf="login_data.user_type!='DMS'">
                                     <!-- <div class="th-search-acmt">
-                                                    <mat-form-field class="example-full-width cs-input select-input">
-                                                        <input matInput placeholder="Search..." type="text" name="reporting_manager"
-                                                        [(ngModel)]="filter.reporting_manager"
-                                                        (keyup.enter)="!filter.reporting_manager ? refresh(tabType) : getCheckin()">
-                                                    </mat-form-field>
-                                                </div> -->
+                                <mat-form-field class="example-full-width cs-input select-input">
+                                    <input matInput placeholder="Search..." type="text" name="reporting_manager"
+                                    [(ngModel)]="filter.reporting_manager"
+                                    (keyup.enter)="!filter.reporting_manager ? refresh(tabType) : getCheckin()">
+                                </mat-form-field>
+                            </div> -->
                                 </th>
                                 <th class="w100">&nbsp;</th>
                                 <th class="w100">&nbsp;</th>
@@ -641,8 +767,10 @@
                                     <td class="w100">{{row.date_created | date : 'd MMM y'}}</td>
                                     <td class="w100" *ngIf="login_data.user_type!='DMS'">{{row.employee_id}}</td>
                                     <td class="w180">{{row.exec_name | titlecase}}</td>
-                                    <td class="w180" *ngIf="login_data.user_type=='DMS'">{{row.company_name | titlecase}}</td>
-                                    <td class="w150" *ngIf="login_data.user_type!='DMS'" >{{row.reporting_manager_name | titlecase}}</td>
+                                    <td class="w180" *ngIf="login_data.user_type=='DMS'">{{row.company_name |
+                                        titlecase}}</td>
+                                    <td class="w150" *ngIf="login_data.user_type!='DMS'">{{row.reporting_manager_name |
+                                        titlecase}}</td>
                                     <td class="w100">
                                         <ng-container
                                             *ngIf="row.visit_start == '0000-00-00 00:00:00'">---</ng-container>
@@ -777,8 +905,7 @@
                                                 </mat-form-field>
                                             </div>
                                             <div class="action-button text-right">
-                                                <a mat-icon-button matTooltip="Save"
-                                                    (click)="UpdateDiscount(row)">
+                                                <a mat-icon-button matTooltip="Save" (click)="UpdateDiscount(row)">
                                                     <i class="material-icons edit">save</i>
                                                 </a>
                                             </div>
@@ -1038,11 +1165,11 @@
                 </ng-container>
             </div>
             <div class="fab-btns" *ngIf="login_data.user_type=='DMS'">
-                <button mat-fab  class="pulse" color="primary" routerLink="add-primary-order">
-                  <i class="material-icons">add</i>
-                  Add Order 
-                </button>  
-              </div>
+                <button mat-fab class="pulse" color="primary" routerLink="add-primary-order">
+                    <i class="material-icons">add</i>
+                    Add Order
+                </button>
+            </div>
         </div>
 
         <div *ngIf="tabType== 'Secondary Order'" style="margin: -10px -10px 0px -10px;">
@@ -1232,11 +1359,11 @@
                 </ng-container>
             </div>
             <div class="fab-btns" *ngIf="login_data.user_type=='DMS'">
-                <button mat-fab  class="pulse" color="primary" routerLink="secondary-order-add">
-                  <i class="material-icons">add</i>
-                  Add Order 
-                </button>  
-              </div>
+                <button mat-fab class="pulse" color="primary" routerLink="secondary-order-add">
+                    <i class="material-icons">add</i>
+                    Add Order
+                </button>
+            </div>
 
         </div>
 
@@ -1440,7 +1567,7 @@
                                         <table>
                                             <tr>
                                                 <th class="w50">S.No.</th>
-                                                <th>Brand</th>
+                                                <!-- <th class="w120">Brand</th> -->
                                                 <th class="w120 text-right">Target (in Lakhs)</th>
                                                 <th class="w100 text-right">Achieved</th>
                                                 <th class="w85 text-center">Achieved %</th>
@@ -1457,16 +1584,21 @@
                                             <ng-container *ngIf="!targetLoader">
                                                 <tr *ngFor="let row of target_list; let i =index">
                                                     <td class="w50">{{i+1}}</td>
-                                                    <td>{{row.brand_name+'-'+row.brand_code}}</td>
+                                                    <!-- <td class="w120">{{row.brand_name+'-'+row.brand_code}}</td> -->
                                                     <td class="w120 text-right"><strong>&#x20B9; {{row.value}}</strong>
                                                     </td>
-                                                    <td class="w100 text-right Approve"><strong>&#x20B9; {{row.achieved | number:'1.0-1'}}</strong>
+                                                    <td class="w100 text-right Approve"><strong>&#x20B9; {{row.achieved
+                                                            | number:'1.0-1'}}</strong>
                                                     </td>
                                                     <td class="w85 text-center">
-                                                        {{row.target_percentage == 'Infinity' ? '---' : row.target_percentage >= 0 ? row.target_percentage + ' %' : '0'}} 
+                                                        {{row.target_percentage == 'Infinity' ? '---' :
+                                                        row.target_percentage >= 0 ? row.target_percentage + ' %' :
+                                                        '0'}}
                                                     </td>
-                                                    <td *ngIf="row.achieved >= row.value" class="w100 green-bg" style="color:white">Completed</td>
-                                                    <td *ngIf="row.achieved < row.value" class="w100 yellow-bgclr">In Progress</td>
+                                                    <td *ngIf="row.achieved >= row.value" class="w100 green-bg"
+                                                        style="color:white">Completed</td>
+                                                    <td *ngIf="row.achieved < row.value" class="w100 yellow-bgclr">In
+                                                        Progress</td>
                                                 </tr>
                                             </ng-container>
                                             <ng-container *ngIf="targetLoader">
@@ -1474,7 +1606,10 @@
                                                     <td class="w50">
                                                         <div>&nbsp;</div>
                                                     </td>
-                                                    <td class="w100 text-center">
+                                                    <td class="w120 text-center">
+                                                        <div>&nbsp;</div>
+                                                    </td>
+                                                    <td class="w120">
                                                         <div>&nbsp;</div>
                                                     </td>
                                                     <td class="w100">
@@ -1486,7 +1621,7 @@
                                                     <td class="w100">
                                                         <div>&nbsp;</div>
                                                     </td>
-                                                   
+
                                                 </tr>
                                             </ng-container>
                                         </table>
@@ -1516,11 +1651,11 @@
                         (click)="clearFilter(); invoice_data(currentMonth_no,currentYear); ledgerType= 'billing'"><i
                             class="material-icons">receipt</i>Invoice</button>
                     <!-- <button mat-button [ngClass]="{'active' :ledgerType== 'payment'}"
-                        (click)="clearFilter(); payment_data(currentMonth_no,currentYear); ledgerType = 'payment'"><i
-                            class="material-icons">receipt</i>Payment</button>
-                    <button mat-button [ngClass]="{'active' :ledgerType== 'credit_note'}"
-                        (click)="clearFilter(); cn_data(currentMonth_no,currentYear); ledgerType = 'credit_note'"><i
-                            class="material-icons">receipt</i>Credit Note</button> -->
+                (click)="clearFilter(); payment_data(currentMonth_no,currentYear); ledgerType = 'payment'"><i
+                class="material-icons">receipt</i>Payment</button>
+                <button mat-button [ngClass]="{'active' :ledgerType== 'credit_note'}"
+                (click)="clearFilter(); cn_data(currentMonth_no,currentYear); ledgerType = 'credit_note'"><i
+                class="material-icons">receipt</i>Credit Note</button> -->
                 </div>
                 <div class="left-auto df flex-gap-10">
                     <a mat-icon-button matTooltip="Refresh" (click)="refresh(tabType)">
@@ -1554,14 +1689,16 @@
                 <button *ngFor="let row of invoice_calenderInfo; let i =index;" mat-button
                     [ngClass]="invoiceMonth == row.month && invoiceYear == row.year ? 'active' : ''"
                     (click)="invoice_data(row.month, row.year);">{{row.month_name}} {{row.year}}<span
-                        class="order-value">&#x20B9; {{row.total_billing_amount ? row.total_billing_amount:
+                        class="order-value">&#x20B9; {{row.total_billing_amount ? (row.total_billing_amount |
+                        number:'1.1-2'):
                         '0'}}</span></button>
             </div>
             <div class="tab-surface" *ngIf="ledgerType == 'payment' ">
                 <button *ngFor="let row of payment_calenderInfo; let i =index;" mat-button
                     [ngClass]="paymentMonth == row.month && paymentYear == row.year ? 'active' : ''"
                     (click)="payment_data(row.month,row.year);">{{row.month_name}} {{row.year}}<span
-                        class="order-value">&#x20B9; {{row.total_payment_amount ? row.total_payment_amount:
+                        class="order-value">&#x20B9; {{row.total_payment_amount ? (row.total_payment_amount |
+                        number:'1.1-2'):
                         '0'}}</span></button>
             </div>
             <div class="tab-surface" *ngIf="ledgerType == 'credit_note' ">
@@ -1731,8 +1868,8 @@
                                 <td class="w30">{{i+1+sr_no}}</td>
                                 <td class="w100">{{row.date_created | date:'dd MMM yyyy , h:mm a'}}</td>
                                 <td class="w100">{{row.billing_date | date:'dd MMM yyyy'}}</td>
-                                <td class="w100"><a class="link-btn"
-                                        [routerLink]="[ 'order-detail/', i+1 ]">{{row.bill_number}}</a></td>
+                                <td class="w100"><a class="link-btn" [routerLink]="[ 'billing-details/', row.id ]"
+                                        [queryParams]="{'id':row.id}">{{row.bill_number}}</a></td>
                                 <td class="w100">{{row.customer_code}}</td>
                                 <td class="w80 text-center">{{row.total_billing_item}}</td>
                                 <td class="w80 text-center">{{row.total_billing_item_qty}}</td>
@@ -2074,7 +2211,7 @@
                                 <td class="text-right">
                                     <ng-container *ngIf="row.credit == 0">--</ng-container>
                                     <ng-container *ngIf="row.credit > 0">
-                                        <strong class="green-clr">{{row.credit}} PT</strong>
+                                        <strong class="green-clr">{{row.credit}} </strong>
                                         <br>
                                         {{row.transaction_remark}} ({{row.transaction_type}})
                                     </ng-container>
@@ -2082,12 +2219,12 @@
                                 <td class="text-right">
                                     <ng-container *ngIf="row.debit == 0">--</ng-container>
                                     <ng-container *ngIf="row.debit > 0">
-                                        <strong class="red-clr">{{row.debit}} PT</strong>
+                                        <strong class="red-clr">{{row.debit}} </strong>
                                         <br>
                                         {{row.transaction_remark}} ({{row.transaction_type}})
                                     </ng-container>
                                 </td>
-                                <td class="w160 text-right"><strong>{{row.balance}} PT</strong></td>
+                                <td class="w160 text-right"><strong>{{row.balance}} </strong></td>
                             </tr>
 
                             <ng-container *ngIf="ledger_loader">
@@ -2116,7 +2253,485 @@
                 <ng-container *ngIf="point_ledger.length == 0">
                     <app-not-result-found></app-not-result-found>
                 </ng-container>
+                <div class="fab-btns">
+                    <button class="excel pulse" mat-fab color="primary"
+                        (click)="PointAdjustmentmodel('point_transfer')">
+                        <i class="material-icons">swap_horiz</i>
+                        Point Transfer
+                    </button>
+                </div>
             </div>
         </div>
+
+        <div *ngIf="tabType== 'transferRequests'" style="margin: -10px -10px 0px -10px;">
+            <div class="tools-container no-sticky">
+                <div class="mat-tabbar">
+                    <button mat-button [ngClass]="{'active' :activeTab== 'Pending'}"
+                        (click)="clearFilter(); getTransferRequests(activeTab= 'Pending'); activeTab= 'Pending'">
+                        Pending ({{tabCount.Pending}})
+                    </button>
+
+                    <button mat-button [ngClass]="{'active' :activeTab== 'Approved'}"
+                        (click)="clearFilter(); getTransferRequests(activeTab= 'Approved'); activeTab= 'Approved'">
+                        Approved ({{tabCount.Approved}})
+                    </button>
+
+                    <button mat-button [ngClass]="{'active' :activeTab== 'Reject'}"
+                        (click)="clearFilter(); getTransferRequests(activeTab= 'Reject'); activeTab= 'Reject'">
+                        Reject ({{tabCount.Reject}})
+                    </button>
+                </div>
+
+                <div class="left-auto jfe df flex-gap-10">
+                    <a mat-icon-button matTooltip="Refresh" (click)="refresh(tabType)">
+                        <i class="material-icons">refresh</i>
+                    </a>
+
+                    <div class="pagination" *ngIf="transferRequestsList.length > 0">
+                        <div class="pagination-content">
+                            Pages
+                            <span>{{pagenumber}}</span>
+                            of
+                            <span>{{total_page}}</span>
+                        </div>
+                        <div class="page-nav">
+                            <button mat-icon-button matTooltip="Older" (click)="pervious('transferRequests')"
+                                [disabled]="start == 0 || total_page == 0">
+                                <i class="material-icons">navigate_before</i>
+                            </button>
+                            <button mat-icon-button matTooltip="Newer" (click)="nextPage('transferRequests')"
+                                [disabled]="pagenumber == total_page || total_page == 0 ">
+                                <i class="material-icons">navigate_next</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cs-table horizontal-scroll">
+                <div class="sticky-head" style="top: -10px;">
+                    <div class="table-head">
+                        <table>
+                            <tr>
+                                <th class="w60 text-center">S.No.</th>
+                                <th class="w150">Date Created</th>
+                                <th class="">Requested By</th>
+                                <th class="w100 text-center">Total Items</th>
+                                <th class="w100">Attachment</th>
+                                <!-- <th class="w100" *ngIf="activeTab == 'Pending'"></th> -->
+                                <th class="w150" *ngIf="activeTab == 'Reject'">Remark</th>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-head border-top">
+                        <table>
+                            <tr>
+                                <th class="w60">&nbsp;</th>
+                                <th class="w150">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="cs-input date-column infix-bodr">
+                                            <input matInput [matDatepicker]="picker1" placeholder="Date" name="date"
+                                                [(ngModel)]="filter.date_created" (dateChange)="date_format(tabType)"
+                                                disabled>
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </th>
+                                <th class="">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="example-full-width cs-input select-input">
+                                            <input matInput placeholder="Search..." type="text" name="requested_by"
+                                                [(ngModel)]="filter.requested_by"
+                                                (keyup.enter)="!filter.requested_by ?  refresh(tabType) : getTransferRequests(activeTab)">
+                                        </mat-form-field>
+                                    </div>
+                                </th>
+                                <th class="w100">&nbsp;</th>
+                                <th class="w100">&nbsp;</th>
+                                <!-- <th class="w100" *ngIf="activeTab == 'Pending'">&nbsp;</th> -->
+                                <th class="w150" *ngIf="activeTab == 'Reject'">&nbsp;</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="table-container">
+                    <div class="table-content">
+                        <table>
+
+                            <ng-container *ngIf="!transferRequestsListLoader">
+                                <tr *ngFor="let row of transferRequestsList; let i =index">
+                                    <td class="w60 text-center">{{i+1+sr_no}}</td>
+                                    <td class="w150">{{row.date_created | date:'d MMM y hh:mm a'}}</td>
+                                    <td class="">{{row.retailer_detail | titlecase}}</td>
+                                    <td class="w100 text-center">
+                                        <a class="link-btn" mat-button (click)="openReqProductsDialog(row);"
+                                            *ngIf="row.total_items">{{row.total_items}}</a>
+                                        <p *ngIf="!row.total_items">--</p>
+                                    </td>
+                                    <td class="w100">
+                                        <a class="link-btn" mat-button (click)="imageModel(url+row.bill_image)"
+                                            *ngIf="row.bill_image">View Attachment</a>
+                                        <p *ngIf="!row.bill_image">--</p>
+                                    </td>
+                                    <!-- <td class="w100" *ngIf="activeTab == 'Pending'">
+                                <a class="link-btn" mat-button (click)="approveTransferRequest(row);">Change Status</a>
+                            </td> -->
+                                    <td class="w150" *ngIf="activeTab == 'Reject'">{{row.reject_reason}}</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="transferRequestsListLoader">
+                                <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                                    <td class="w60">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w150">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w100">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w100">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <!-- <td class="w100" *ngIf="activeTab == 'Pending'">
+                                <div>&nbsp;</div>
+                            </td> -->
+                                    <td class="w150" *ngIf="activeTab == 'Reject'">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="transferRequestsList.length <= 0">
+                <app-not-result-found></app-not-result-found>
+            </ng-container>
+
+        </div>
+
+
+        <!-- <button matTooltip="Send Transfer Request" (click)="openStockProductTransaction()" mat-raised-button color="primary">
+    <i class="material-icons">add</i> Send Transfer Request
+</button> -->
+
+        <div *ngIf="tabType== 'sendRequest'" style="margin: -10px -10px 0px -10px;">
+            <div class="tools-container no-sticky">
+                <div class="mat-tabbar">
+                    <button mat-button [ngClass]="{'active' :sendRequestTab== 'Pending'}"
+                        (click)="clearFilter(); getSendRequest(sendRequestTab= 'Pending'); sendRequestTab= 'Pending'">
+                        Pending ({{tabCount.Pending}})
+                    </button>
+
+                    <button mat-button [ngClass]="{'active' :sendRequestTab== 'Approved'}"
+                        (click)="clearFilter(); getSendRequest(sendRequestTab= 'Approved'); sendRequestTab= 'Approved'">
+                        Approved ({{tabCount.Approved}})
+                    </button>
+
+                    <button mat-button [ngClass]="{'active' :sendRequestTab== 'Reject'}"
+                        (click)="clearFilter(); getSendRequest(sendRequestTab= 'Reject'); sendRequestTab= 'Reject'">
+                        Reject ({{tabCount.Reject}})
+                    </button>
+                </div>
+
+                <div class="left-auto jfe df flex-gap-10">
+                    <a mat-icon-button matTooltip="Refresh" (click)="refresh(tabType)">
+                        <i class="material-icons">refresh</i>
+                    </a>
+
+                    <div class="pagination" *ngIf="sendRequestList.length > 0">
+                        <div class="pagination-content">
+                            Pages
+                            <span>{{pagenumber}}</span>
+                            of
+                            <span>{{total_page}}</span>
+                        </div>
+                        <div class="page-nav">
+                            <button mat-icon-button matTooltip="Older" (click)="pervious('sendRequest')"
+                                [disabled]="start == 0 || total_page == 0">
+                                <i class="material-icons">navigate_before</i>
+                            </button>
+                            <button mat-icon-button matTooltip="Newer" (click)="nextPage('sendRequest')"
+                                [disabled]="pagenumber == total_page || total_page == 0 ">
+                                <i class="material-icons">navigate_next</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cs-table horizontal-scroll">
+                <div class="sticky-head" style="top: -10px;">
+                    <div class="table-head">
+                        <table>
+                            <tr>
+                                <th class="w60 text-center">S.No.</th>
+                                <th class="w150">Date Created</th>
+                                <th class="">Requested To</th>
+                                <th class="w100">Total Items</th>
+                                <th class="w100">Attachment</th>
+                                <th class="w150" *ngIf="sendRequestTab == 'Reject'">Remark</th>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-head border-top">
+                        <table>
+                            <tr>
+                                <th class="w60">&nbsp;</th>
+                                <th class="w150">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="cs-input date-column infix-bodr">
+                                            <input matInput [matDatepicker]="picker1" placeholder="Date" name="date"
+                                                [(ngModel)]="filter.date_created" (dateChange)="date_format(tabType)"
+                                                disabled>
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="example-full-width cs-input select-input">
+                                            <input matInput placeholder="Search..." type="text" name="requested_to"
+                                                [(ngModel)]="filter.requested_to"
+                                                (keyup.enter)="!filter.requested_to ?  refresh(tabType) : getSendRequest(sendRequestTab)">
+                                        </mat-form-field>
+                                    </div>
+                                </th>
+                                <th class="w100">&nbsp;</th>
+                                <th class="w100">&nbsp;</th>
+                                <th class="w150" *ngIf="sendRequestTab == 'Reject'">&nbsp;</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="table-container">
+                    <div class="table-content">
+                        <table>
+
+                            <ng-container *ngIf="!sendRequestLoader">
+                                <tr *ngFor="let row of sendRequestList; let i =index">
+                                    <td class="w60 text-center">{{i+1+sr_no}}</td>
+                                    <td class="w150">{{row.date_created | date:'d MMM y hh:mm a'}}</td>
+                                    <td class="">{{row.distributor_detail | titlecase}}</td>
+                                    <td class="w100 text-center">
+                                        <a class="link-btn" mat-button (click)="openSendProductsDialog(row);"
+                                            *ngIf="row.total_items">{{row.total_items}}</a>
+                                        <p *ngIf="!row.total_items">--</p>
+                                    </td>
+                                    <td class="w100">
+                                        <a class="link-btn" mat-button (click)="imageModel(url+row.bill_image)"
+                                            *ngIf="row.bill_image">View Attachment</a>
+                                        <p *ngIf="!row.bill_image">--</p>
+                                    </td>
+                                    <td class="w150" *ngIf="sendRequestTab == 'Reject'">{{row.reject_reason}}</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="sendRequestLoader">
+                                <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                                    <td class="w60">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w150 text-center">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w100">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w100">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w150" *ngIf="sendRequestTab == 'Reject'">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="sendRequestList.length <= 0">
+                <app-not-result-found></app-not-result-found>
+            </ng-container>
+
+        </div>
+
+        <div *ngIf="tabType== 'stock'" style="margin: -10px -10px 0px -10px;">
+            <div class="tools-container no-sticky">
+                <div class="mat-tabbar">
+                    <button mat-button [ngClass]="{'active' :stockTab== 'in_stock'}"
+                        (click)="clearFilter(); getDrStock(stockTab= 'in_stock'); stockTab= 'in_stock'">
+                        In Stock ({{tabCount.in_stock}})
+                    </button>
+
+                    <button mat-button [ngClass]="{'active' :stockTab== 'out_stock'}"
+                        (click)="clearFilter(); getDrStock(stockTab= 'out_stock'); stockTab= 'out_stock'">
+                        Out Stock ({{tabCount.out_stock}})
+                    </button>
+                </div>
+
+                <div class="left-auto jfe df flex-gap-10">
+                    <a mat-icon-button matTooltip="Refresh" (click)="refresh(tabType)">
+                        <i class="material-icons">refresh</i>
+                    </a>
+
+                    <div class="pagination" *ngIf="drStockData.length > 0">
+                        <div class="pagination-content">
+                            Pages
+                            <span>{{pagenumber}}</span>
+                            of
+                            <span>{{total_page}}</span>
+                        </div>
+                        <div class="page-nav">
+                            <button mat-icon-button matTooltip="Older" (click)="pervious('stock')"
+                                [disabled]="start == 0 || total_page == 0">
+                                <i class="material-icons">navigate_before</i>
+                            </button>
+                            <button mat-icon-button matTooltip="Newer" (click)="nextPage('stock')"
+                                [disabled]="pagenumber == total_page || total_page == 0 ">
+                                <i class="material-icons">navigate_next</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cs-table horizontal-scroll">
+                <div class="sticky-head" style="top: -10px;">
+                    <div class="table-head">
+                        <table>
+                            <tr>
+                                <th class="w60 text-center">S.No.</th>
+                                <th class="">Product Detail</th>
+                                <th class="w120 text-center">Current Stock</th>
+                                <th class="w120 text-center">Dispatch Pending</th>
+                                <th class="w120 text-center">Order Placed</th>
+                                <th class="w120 text-center">Avg. Sale</th>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-head border-top">
+                        <table>
+                            <tr>
+                                <th class="w60">&nbsp;</th>
+                                <th class="">
+                                    <div class="th-search-acmt">
+                                        <mat-form-field class="example-full-width cs-input select-input">
+                                            <input matInput placeholder="Search..." type="text" name="product_detail"
+                                                [(ngModel)]="filter.product_detail"
+                                                (keyup.enter)="!filter.product_detail ?  refresh(tabType) : getDrStock(stockTab)">
+                                        </mat-form-field>
+                                    </div>
+                                </th>
+                                <th class="w120">&nbsp;</th>
+                                <th class="w120">&nbsp;</th>
+                                <th class="w120">&nbsp;</th>
+                                <th class="w120">&nbsp;</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="table-container">
+                    <div class="table-content">
+                        <table>
+
+                            <ng-container *ngIf="!drStockLoader">
+                                <tr *ngFor="let row of drStockData.current_stock; let i =index">
+                                    <td class="w60 text-center">{{i+1+sr_no}}</td>
+                                    <td class="">
+                                        <a class="link-btn" mat-button
+                                            (click)="openStockProductTransaction(row);">{{row.product_detail}}</a>
+                                    </td>
+                                    <td class="w120 text-center">{{row.current_stock}}</td>
+                                    <td class="w120 text-center">{{row.dispatch_pending}}</td>
+                                    <td class="w120 text-center">{{row.order_placed}}</td>
+                                    <td class="w120 text-center">{{row.average_sale}}</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="drStockLoader">
+                                <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+                                    <td class="w60">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w120">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w120">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w120">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                    <td class="w120">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="drStockData.current_stock.length <= 0">
+                <app-not-result-found></app-not-result-found>
+            </ng-container>
+
+        </div>
     </div>
+</div>
+
+<div class="fab-btns pulse " *ngIf="login_data.user_type!='DMS' && tabType!= 'Point Ledger'">
+    <ng-container
+        *ngIf="(login_data.edit_channel_partner=='1')|| (login_data.edit_dealer=='1') || (login_data.edit_direct_dealers=='1')">
+        <button class="pulse" mat-fab color="primary" [matMenuTriggerFor]="menu">
+            <i class="material-icons">swap_horiz</i>
+            Action
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngIf="user_type == '7'" (click)="convert_dr(1)">
+                <mat-icon>swap_horiz</mat-icon>
+                <span>Convert To Distributor</span>
+            </button>
+            <button mat-menu-item *ngIf="user_type == '3'" (click)="convert_dr(1)">
+                <mat-icon>swap_horiz</mat-icon>
+                <span>Convert To Distributor</span>
+            </button>
+            <button mat-menu-item *ngIf="user_type == '7'" (click)="convert_dr(3)">
+                <mat-icon>swap_horiz</mat-icon>
+                <span>Convert To Retail Partner</span>
+            </button>
+            <button mat-menu-item *ngIf="user_type == '1'" (click)="convert_dr(3)">
+                <mat-icon>swap_horiz</mat-icon>
+                <span>Convert To Retail Partner</span>
+            </button>
+            <button mat-menu-item *ngIf="user_type == '1'" (click)="convert_dr(7)">
+                <mat-icon>swap_horiz</mat-icon>
+                <span>Convert To Direct Dealer</span>
+            </button>
+            <button mat-menu-item *ngIf="user_type == '3'" (click)="convert_dr(7)">
+                <mat-icon>swap_horiz</mat-icon>
+                <span>Convert To Direct Dealer</span>
+            </button>
+        </mat-menu>
+    </ng-container>
+
 </div>

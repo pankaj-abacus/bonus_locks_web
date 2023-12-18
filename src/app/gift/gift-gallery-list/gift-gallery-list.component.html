@@ -44,17 +44,22 @@
           <table>
             <tr>
               <th class="w60">Sr.No</th>
-              <th class="w70">Images</th>
-              <th class="w90">Date</th>
+              <!-- <th class="w70">Images</th> -->
+              <th class="w90">Date Created</th>
               <th>Title</th>
-              <th class="w100 text-center" *ngIf="active_tab == 'Gift'">Gift Value</th>
+              <!-- <th class="w100 text-center" *ngIf="active_tab == 'Gift'">Gift Value</th> -->
+              <th class="w100" *ngIf="active_tab == 'Gift'">Date From</th>
+              <th class="w100" *ngIf="active_tab == 'Gift'">Date To</th>
+              <th class="w100">Range Start</th>
+              <th class="w100">Range End</th>
+              <th class="w200" *ngIf="active_tab == 'Gift'">Reward</th>
               <th class="w180">User Type</th>
               <ng-container *ngIf="active_tab == 'Cash'">
-                <th class="w100">Range Start</th>
-                <th class="w100">Range End</th>
                 <th class="w100 text-right">Per Point Value</th>
+                <!-- <th class="w150 text-right">Assigned Bonus Scheme</th> -->
               </ng-container>
-              <th class="w100" *ngIf="logined_user_data2.edit_gift_gallery=='1'">Action</th>
+              <th class="w100" *ngIf="logined_user_data2.edit_gift_gallery=='1'">Status</th>
+              <th class="w60" *ngIf="logined_user_data2.edit_gift_gallery=='1'">Action</th>
             </tr>
           </table>
         </div>
@@ -63,12 +68,12 @@
           <table>
             <tr>
               <th class="w60">&nbsp;</th>
-              <th class="w70">&nbsp;</th>
+              <!-- <th class="w70">&nbsp;</th> -->
               <th class="w90">
                 <div class="th-search-acmt">
                   <mat-form-field class="cs-input date-column infix-bodr">
                     <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                      [(ngModel)]="filter.date_created" (dateChange)="onDate($event)" [max]="today_date" disabled>
+                    [(ngModel)]="filter.date_created" (dateChange)="onDate($event)" [max]="today_date" disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker disabled="false"></mat-datepicker>
                   </mat-form-field>
@@ -78,25 +83,31 @@
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input select-input">
                     <input matInput placeholder="Search..." type="text" name="title" [(ngModel)]="filter.title"
-                      (keyup.enter)="gift_gallery_list()">
+                    (keyup.enter)="gift_gallery_list()">
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100 text-center" *ngIf="active_tab == 'Gift'">&nbsp;</th>
+              <!-- <th class="w100 text-center" *ngIf="active_tab == 'Gift'">&nbsp;</th> -->
+              <th class="w100" *ngIf="active_tab == 'Gift'">&nbsp;</th>
+              <th class="w100" *ngIf="active_tab == 'Gift'">&nbsp;</th>
+              <th class="w100">&nbsp;</th>
+              <th class="w100">&nbsp;</th>
+              <th class="w200" *ngIf="active_tab == 'Gift'">&nbsp;</th>
               <th class="w180">
-                <!-- <div class="th-search-acmt">
+                <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input select-input">
                     <input matInput placeholder="Search..." type="text" name="user_type" [(ngModel)]="filter.user_type"
                     (keyup.enter)="gift_gallery_list()">
                   </mat-form-field>
-                </div> -->
+                </div>
               </th>
+            
               <ng-container *ngIf="active_tab == 'Cash'">
                 <th class="w100">&nbsp;</th>
-                <th class="w100">&nbsp;</th>
-                <th class="w100">&nbsp;</th>
+                <!-- <th class="w150">&nbsp;</th> -->
               </ng-container>
               <th class="w100" *ngIf="logined_user_data2.edit_gift_gallery=='1'">&nbsp;</th>
+              <th class="w60" *ngIf="logined_user_data2.edit_gift_gallery=='1'">&nbsp;</th>
             </tr>
           </table>
         </div>
@@ -109,69 +120,64 @@
             <ng-container *ngIf="!loader">
               <tr *ngFor="let row of giftList; let i = index;">
                 <td class="w60">{{i + 1 + sr_no}}</td>
-                <td class="w70 text-center">
+                <!-- <td class="w70 text-center">
                   <a class="img-avtar" (click)="row.gift_type == 'Gift' ? goToImage(url+row.gift_img) : ''">
                     <img src="{{row.gift_type == 'Gift' ? url+row.gift_img: 'assets/img/cash.png'}}">
                   </a>
-                </td>
+                </td> -->
                 <td class="w90">{{row.date_created | date:'dd MMM yyyy ,h:mm a'}}</td>
                 <td>{{row.title}}</td>
-                <td class="w100 text-center" *ngIf="active_tab == 'Gift'"><strong>{{row.gift_point}} PT</strong></td>
+                <!-- <td class="w100 text-center" *ngIf="active_tab == 'Gift'"><strong>{{row.gift_point}} PT</strong></td> -->
+                <td class="w100" *ngIf="active_tab == 'Gift'">{{row.date_from | date:'dd MMM yyyy'}}</td>
+                <td class="w100" *ngIf="active_tab == 'Gift'">{{row.date_to | date:'dd MMM yyyy'}}</td>
+                <td class="w100">{{row.range_start}}</td>
+                <td class="w100">{{row.range_end}}</td>
+                <td class="w200" *ngIf="active_tab == 'Gift'">{{row.gift_reward}}</td>
                 <td class="w180">{{row.object}}</td>
                 <ng-container *ngIf="active_tab == 'Cash'">
-                  <td class="w100">{{row.range_start}} PT</td>
-                  <td class="w100">{{row.range_end}} PT</td>
                   <td class="w100 text-right"><strong>&#x20B9; {{row.point_range_value}}</strong></td>
+                  <!-- <td class="w150">{{row.bonus_scheme_title}}</td> -->
                 </ng-container>
                 <td class="w100 text-center" *ngIf="logined_user_data2.edit_gift_gallery=='1'">
                   <div class="action-button">
                     <mat-slide-toggle color="accent" [name]="'status'+i" [(ngModel)]="row.status"
-                      (change)="updateStatus(i,row.id,$event)">
-                    </mat-slide-toggle>
-                  </div>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="loader">
-              <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
-                <td class="w60">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w70 text-center">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w90">
-                  <div>&nbsp;</div>
-                </td>
-                <td>
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w100 text-center" *ngIf="active_tab == 'Gift'">
-                  <div>&nbsp;</div>
-                </td>
-                <td class="w180">
-                  <div>&nbsp;</div>
-                </td>
-                <ng-container *ngIf="active_tab == 'Cash'">
-                  <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
-                  <td class="w100">
-                    <div>&nbsp;</div>
-                  </td>
+                    (change)="updateStatus(i,row.id,$event)">
+                  </mat-slide-toggle>
+                </div>
+              </td>
+              <td class="w60 text-center" *ngIf="logined_user_data2.edit_gift_gallery=='1'">
+                <div class="action-button">
+                  <button  mat-icon-button  matTooltip="Edit" routerLink="gift-edit/{{row.id}}/{{row.gift_type}}">
+                    <i class="material-icons edit">edit</i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="loader">
+            <tr class="sk-loading" *ngFor="let row of [].constructor(10)">
+              <td class="w60"><div>&nbsp;</div></td>
+              <!-- <td class="w70 text-center"><div>&nbsp;</div></td> -->
+              <td class="w90"><div>&nbsp;</div></td>
+              <td><div>&nbsp;</div></td>
+              <td class="w100 text-center" *ngIf="active_tab == 'Gift'"><div>&nbsp;</div></td>
+              <td class="w100 text-center" *ngIf="active_tab == 'Gift'"><div>&nbsp;</div></td>
+              <td class="w100"><div>&nbsp;</div></td>
+              <td class="w100"><div>&nbsp;</div></td>
+              <td class="w200" *ngIf="active_tab == 'Gift'"><div>&nbsp;</div></td>
+              <td class="w180"><div>&nbsp;</div></td>
+              <ng-container *ngIf="active_tab == 'Cash'">
+                <td class="w100"><div>&nbsp;</div></td>
+                <td class="w150"><div>&nbsp;</div></td>
 
-                </ng-container>
-                <td class="w100 text-center" *ngIf="logined_user_data2.edit_gift_gallery=='1'">
-                  <div>&nbsp;</div>
-                </td>
-              </tr>
-            </ng-container>
-          </table>
-        </div>
+              </ng-container>
+              <td class="w100 text-center" *ngIf="logined_user_data2.edit_gift_gallery=='1'"><div>&nbsp;</div></td>
+              <td class="w60 text-center" *ngIf="logined_user_data2.edit_gift_gallery=='1'"><div>&nbsp;</div></td>
+            </tr>
+          </ng-container>
+        </table>
       </div>
+    </div>
       <div class="no-data" *ngIf="!giftList.length && datanotfound == true">
         <app-not-result-found></app-not-result-found>
       </div>
@@ -189,11 +195,11 @@
     Download Excel
   </button> -->
 
-    <button class="pulse" mat-fab (click)="lastBtnValue('add')" [ngClass]="{'pulse': fabBtnValue=='add'}"
-      *ngIf="logined_user_data2.add_gift_gallery=='1'" color="primary" routerLink="gift-add">
-      <i class="material-icons">add</i>
-      Add New
-    </button>
+  <button class="pulse" mat-fab (click)="lastBtnValue('add')" [ngClass]="{'pulse': fabBtnValue=='add'}" *ngIf="logined_user_data2.add_gift_gallery=='1'"
+  color="primary" routerLink="gift-add">
+  <i class="material-icons">add</i>
+  Add New
+</button>
   </div>
 
 </div>

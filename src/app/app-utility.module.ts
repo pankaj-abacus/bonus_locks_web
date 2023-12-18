@@ -38,10 +38,18 @@ import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
 import { AddGrandMasterBoxComponent } from './company-dispatch/add-grand-master-box/add-grand-master-box.component';
 import { ViewMasterBoxDispatchDetailComponent } from './company-dispatch/view-master-box-dispatch-detail/view-master-box-dispatch-detail.component';
 import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-add/dist-primary-order-add.component';
+import { InstallationAddComponent } from './installation/installation-add/installation-add.component';
+import { ProductUploadComponent } from './product-upload/product-upload.component';
+import { EngineerAssignModelComponent } from './installation/engineer-assign-model/engineer-assign-model.component';
+import { TrackerComponent } from './attendence/tracker/tracker.component';
+import { ZingchartAngularModule } from 'zingchart-angular';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
   declarations: [
+    DashboardComponent,
+    TrackerComponent,
     NotResultFoundComponent,
     LoaderComponent,
     AddDistributionComponent,
@@ -66,7 +74,11 @@ import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-
     ReplacementComponent,
     BottomSheetComponent,
     AddGrandMasterBoxComponent,
-    ViewMasterBoxDispatchDetailComponent
+    ViewMasterBoxDispatchDetailComponent,
+    ViewMasterBoxDispatchDetailComponent,
+    InstallationAddComponent,
+    ProductUploadComponent,
+    EngineerAssignModelComponent
 
 ],
   imports: [
@@ -77,6 +89,7 @@ import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-
       use clientId
       */
   }),
+    ZingchartAngularModule,
     CommonModule,
     FilterPipeModule,
     FormsModule,
@@ -92,6 +105,8 @@ import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-
     NgxQRCodeModule,
   ],
   exports:[
+    ZingchartAngularModule,
+    TrackerComponent,
     NotResultFoundComponent,
     LoaderComponent,
     MyFilterPipe,
@@ -102,7 +117,7 @@ import { DistPrimaryOrderAddComponent } from './distribution/dist-primary-order-
     InfluencerDetailComponent,
     OrderDetailComponent,
   ],
-  entryComponents:[StatusModalComponent, RedeemStatusModalComponent, ImageModuleComponent,DesignationComponent, BottomSheetComponent]
+  entryComponents:[StatusModalComponent, RedeemStatusModalComponent, ImageModuleComponent,DesignationComponent, BottomSheetComponent, ViewMasterBoxDispatchDetailComponent]
   
 })
 export class AppUtilityModule { }

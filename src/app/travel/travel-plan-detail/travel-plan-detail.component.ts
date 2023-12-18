@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { StatusModalComponent } from 'src/app/order/status-modal/status-modal.component';
 import { sessionStorage } from 'src/app/localstorage.service';
 import { addTravelListModal } from '../add-travel-list/add-travel-list-modal.component';
+import { CheckindocumentComponent } from 'src/app/checkindocument/checkindocument.component';
 
 
 
@@ -34,9 +35,9 @@ export class TravelPlanDetailComponent implements OnInit {
   check_in_data: any = [];
   assign_user_data: any = {};
   logined_user_data: any = {};
-  travelType:any ={};
-  traveldetailsAreawise:any=[];
-  showAddbuttonArea:boolean=false;
+  travelType: any = {};
+  traveldetailsAreawise: any = [];
+  showAddbuttonArea: boolean = false;
   constructor(public alert: DialogComponent, public toast: ToastrManager, public serve: DatabaseService, public dialog: MatDialog, public rout: Router, public route: ActivatedRoute, private _location: Location, public session: sessionStorage) {
     this.skLoading = true;
     this.route.params.subscribe(params => {
@@ -62,7 +63,7 @@ export class TravelPlanDetailComponent implements OnInit {
 
 
   travelDetail() {
-    this.skLoading=true;
+    this.skLoading = true;
     this.serve.post_rqst({ 'User_id': this.travel_id, 'Travel_date': this.travel_date }, "Travel/travelPlanDetail").subscribe(result => {
       if (result['statusCode'] == 200) {
         this.skLoading = false;
@@ -78,9 +79,9 @@ export class TravelPlanDetailComponent implements OnInit {
         console.log(this.travel_id);
         this.skLoading = false;
         let id = this.travel_id;
-        let year = this.travel_year; 
+        let year = this.travel_year;
         let month = this.travel_month;
-        this.showAddbuttonArea=true;
+        this.showAddbuttonArea = true;
         this.toast.errorToastr(result['statusMsg']);
         // this.rout.navigate(['/travel-sub-detail/' + this.travel_id], { queryParams: { id, month, year } });
       }
@@ -127,8 +128,9 @@ export class TravelPlanDetailComponent implements OnInit {
       data: {
         delivery_from: 'add_travel_plan',
         employee_id: this.travellist.employee_id,
-        'travel_id':this.travel_id,
-        'id':this.travellist.id
+        'user_id': this.travel_id,
+        'id': this.travellist.id,
+        'travel_date': this.travel_date
       }
     });
 
@@ -149,7 +151,10 @@ export class TravelPlanDetailComponent implements OnInit {
         drId: '',
         delivery_from: 'add_travel_plan_retailer',
         employee_id: this.travellist.employee_id,
-        travel_plan_id:  this.travellist.id,
+        travel_plan_id: this.travellist.id,
+        'user_id': this.travel_id,
+        'travel_date': this.travel_date
+
       }
     });
 
@@ -191,6 +196,21 @@ export class TravelPlanDetailComponent implements OnInit {
         })
       }
     });
+  }
+
+
+  opendoc(list) {
+
+    const dialogRef = this.dialog.open(CheckindocumentComponent, {
+      width: '768px',
+      data: {
+        list: [{ 'doc': list }]
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
 
 }

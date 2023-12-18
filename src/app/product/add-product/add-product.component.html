@@ -7,7 +7,7 @@
     </a>
     <h2>{{product_id ? 'Edit':'Add New'}} Product</h2>
   </div>
-  
+
   <div class="container pt10 pl10 pr10 pb50" >
     <form #f="ngForm" (ngSubmit)="f.valid && submit()">
       <div class="row">
@@ -55,7 +55,7 @@
                   <mat-form-field appearance="outline"  [ngClass]="{'has-error' : product_code.invalid } ">
                     <mat-label>Product Code</mat-label>
                     <input matInput placeholder="Type Here ..."  name="product_code" #product_code="ngModel" [(ngModel)]="data.product_code" required>
-                    
+
                   </mat-form-field>
                   <div class="alert alert-danger" *ngIf="f.submitted && product_code?.invalid">
                     This field is required
@@ -97,7 +97,7 @@
                       <mat-option >
                         <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.." (keyup)="pointCategory_data($event.target.value)"></ngx-mat-select-search>
                       </mat-option>
-                      <mat-option *ngFor="let row of pointCategories_data" value="{{row.id}}">{{row.point_category_name}}</mat-option>
+                      <mat-option *ngFor="let row of pointCategories_data" [value]="row.id">{{row.point_category_name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <!-- <div class="alert alert-danger" *ngIf="point_category_id.touched || f.submitted">
@@ -107,8 +107,8 @@
               </div>
 
               <div class="row">
-             
-                <div class="col s12 m3 l3">
+
+                <!-- <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>Brands</mat-label>
                     <mat-select  name="brand" [(ngModel)]="data.brand" #brand="ngModel" multiple required>
@@ -118,15 +118,27 @@
                   <div class="alert alert-danger" *ngIf="brand.touched || f.submitted">
                     <p *ngIf="brand.errors?.required">This field is required</p>
                   </div>
+                </div> -->
+                <div class="col s12 m3 l3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Brands</mat-label>
+                    <mat-select name="brand" [(ngModel)]="data.brand" #brand="ngModel" multiple required>
+                      <mat-option *ngFor="let row of brandList"
+                        value="{{row.brand_code}}">{{row.display_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="brand.touched || f.submitted">
+                    <p *ngIf="brand.errors?.required">This field is required</p>
+                  </div>
                 </div>
-                <div class="col s12 m3 l3"> 
+                <!-- <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label>Colors</mat-label>
                     <mat-select  name="color" [(ngModel)]="data.color" #color="ngModel" multiple>
                       <mat-option *ngFor="let row of colorList" value="{{row.color_code}}">{{row.display_name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
-                </div>
+                </div> -->
                 <div class="col s12 m3 l3">
                   <mat-form-field  appearance="outline">
                     <mat-label> Box Items with QR</mat-label>
@@ -139,8 +151,36 @@
                     <p *ngIf="boxWOItem.errors?.required">This field is required</p>
                   </div>
                 </div>
+                <div class="col s12 m3 l3">
+                  <mat-form-field  appearance="outline">
+                    <mat-label>Warranty In Months</mat-label>
+                    <mat-select  name="warranty_period" [(ngModel)]="data.warranty_period" #warranty_period="ngModel" required>
+                      <mat-option  value="6">6 Months</mat-option>
+                      <mat-option  value="12">12 Months</mat-option>
+                      <mat-option  value="18">18 Months</mat-option>
+                      <mat-option  value="24">24 Months</mat-option>
+                      <mat-option  value="30">30 Months</mat-option>
+                      <mat-option  value="36">36 Months</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="warranty_period.touched || f.submitted">
+                    <p *ngIf="warranty_period.errors?.required">This field is required</p>
+                  </div>
+                </div>
+                <div class="col s12 m3 l3">
+                  <mat-form-field  appearance="outline">
+                    <mat-label>Installation Responsibility</mat-label>
+                    <mat-select  name="installation_responsibility" [(ngModel)]="data.installation_responsibility" #installation_responsibility="ngModel" required>
+                      <mat-option  value="Customer">Customer</mat-option>
+                      <mat-option  value="Company">Company</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="alert alert-danger" *ngIf="installation_responsibility.touched || f.submitted">
+                    <p *ngIf="installation_responsibility.errors?.required">This field is required</p>
+                  </div>
+                </div>
               </div>
-         
+
               <div class="row mb0">
                 <div class="col s12 m6 l6">
                   <div class="row">
@@ -156,8 +196,8 @@
                   </div>
                 </div>
               </div>
-              
-              
+
+
               <div class="row">
                 <div class="col s12">
                   <div class="uploade-image">

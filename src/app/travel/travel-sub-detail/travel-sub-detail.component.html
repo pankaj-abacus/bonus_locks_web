@@ -64,7 +64,7 @@
             <div class="circle-1"
               [ngClass]="{'P-5':percentages>0&&percentages<=5,'P-10':percentages>5&&percentages<=10,'P-15':percentages>10&&percentages<=15,'P-20':percentages>15&&percentages<=20,'P-25':percentages>20&&percentages<=25,'P-30':percentages>25&&percentages<=30,'P-35':percentages>30&&percentages<=35 ,'P-40':percentages>35&&percentages<=40,'P-45':percentages>40&&percentages<=45,'P-50':percentages>45&&percentages<=50,'P-55':percentages>50&&percentages<=55,'P-60':percentages>55&&percentages<=60,'P-65':percentages>60&&percentages<=65,'P-70':percentages>65&&percentages<=70,'P-75':percentages>70&&percentages<=75, 'P-80':percentages>75&&percentages<=80,'P-85':percentages>80&&percentages<=85,'P-90':percentages>85&&percentages<=90,'P-95':percentages>90&&percentages<=99,'P-100':percentages>=100}">
               <div class="circle-2">
-                <h1>{{percentages}}%</h1>
+                <h1>{{percentages || '0'}}%</h1>
               </div>
             </div>
             <div class="travel-detail">

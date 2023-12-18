@@ -14,18 +14,22 @@
                       <mat-label>Item</mat-label>
                       <mat-select name="product_id" #product_id="ngModel" [(ngModel)]="orderData.product_id"
                         (selectionChange)="get_product_details(orderData.product_id);get_product_Size(filter.dr_id,orderData.product_id) ">
-                        <mat-option>
+                        <!-- <mat-option>
                           <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
                             (keyup)="searchItems($event)"></ngx-mat-select-search>
+                        </mat-option> -->
+                        <mat-option>
+                          <ngx-mat-select-search noEntriesFoundLabel="'no data found'" placeholderLabel="Search.."
+                          (keyup)="getProductList('',$event.target.value)"></ngx-mat-select-search>
                         </mat-option>
                         <mat-option *ngFor="let row of productlist" value="{{row.id}}"
-                          color="accent">{{row.product_name}}
+                          color="accent">{{row.display_name}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
 
                   </div>
-                  <div class="col s12 m3 l3" *ngIf="brandList.length > 0">
+                  <!-- <div class="col s12 m3 l3" *ngIf="brandList.length > 0">
                     <mat-form-field appearance="outline" [ngClass]="{'has-error' : brand.invalid } ">
                       <mat-label>Brand</mat-label>
                       <mat-select name="brand" #brand="ngModel" [(ngModel)]="orderData.brand">
@@ -36,8 +40,8 @@
                     <div class="alert alert-danger" *ngIf="f.submitted && brand?.invalid ">
                       This field is required
                     </div>
-                  </div>
-                  <div class="col s12 m3 l3" *ngIf="colorList.length > 0">
+                  </div> -->
+                  <!-- <div class="col s12 m3 l3" *ngIf="colorList.length > 0">
                     <mat-form-field appearance="outline" [ngClass]="{'has-error' : color.invalid } ">
                       <mat-label>Color</mat-label>
                       <mat-select name="color" #color="ngModel" [(ngModel)]="orderData.color">
@@ -48,7 +52,7 @@
                     <div class="alert alert-danger" *ngIf="f.submitted && color?.invalid ">
                       This field is required
                     </div>
-                  </div>
+                  </div> -->
                   <ng-container *ngIf="product_list.length">
                     <div class="col s12 m3 l3">
                       <mat-form-field appearance="outline" [ngClass]="{'has-error' : qty.invalid } ">
@@ -84,15 +88,14 @@
                 <div class="row">
                   <div class="col s12">
                     <div class="text-right"
-                      *ngIf="product_list.length && colorList.length>0 && orderData.color  && orderData.brand">
+                      *ngIf="product_list.length && colorList.length>0 ">
                       <a mat-raised-button type="button" [disabled]="addToListButton" (click)="addToList()"
                         color="accent">Add To list</a>
 
                     </div>
-                    <div class="text-right" *ngIf="product_list.length && colorList.length==0 && orderData.brand">
+                    <div class="text-right" *ngIf="product_list.length && colorList.length==0">
                       <a mat-raised-button type="button" [disabled]="addToListButton" (click)="addToList()"
                         color="accent">Add To list</a>
-
                     </div>
                   </div>
                 </div>
@@ -105,13 +108,14 @@
                           <tr>
                             <th class="w50">S.no.</th>
                             <th class="w150">Item Details</th>
+                            <th class="w100">Product Code</th>
                             <th class="w80 text-right">Rate</th>
                             <th class="w100 text-right">Discount (%)</th>
                             <th class="w80 text-right">Price</th>
                             <th class="w80 text-center">QTY.</th>
-                            <th class="w80 text-right">Sub Total</th>
-                            <th class="w80 text-right">GST</th>
-                            <th class="w80 text-right">Net Amount</th>
+                            <th class="w80 text-right">Total</th>
+                            <!-- <th class="w80 text-right">GST</th> -->
+                            <!-- <th class="w80 text-right">Net Amount</th> -->
                             <th class="w80 text-right">Action</th>
                           </tr>
                         </table>
@@ -124,10 +128,12 @@
                         <table>
                           <tr *ngFor="let row of order_item; let i =index">
                             <td class="w50">{{i+1}}</td>
-                            <td class="w150">{{row.product_name | titlecase}} <strong
-                                *ngIf="row.product_code != ''">({{row.product_code}})</strong> <strong
+                            <td class="w150">{{row.product_name | titlecase}} 
+                              <!-- <strong *ngIf="row.product_code != ''">({{row.product_code}})</strong>  -->
+                              <strong
                                 *ngIf="row.brand != ''">({{row.brand}})</strong> <strong
                                 *ngIf="row.color != ''">({{row.color}})</strong></td>
+                            <td class="w100">{{row.product_code}}</td>
                             <td class="w80 text-right">&#x20B9; {{row.product_price ? row.product_price : row.price}}
                             </td>
                             <td class="w100 text-right"> &#x20B9; {{row.discount_amount | number:'1.2-2'}}
@@ -137,9 +143,9 @@
                               {{row.qty}}
                             </td>
                             <td class="w80 text-right">&#x20B9; {{row.amount | number:'1.2-2'}}</td>
-                            <td class="w80 text-right">&#x20B9; {{row.gst_amount | number:'1.2-2'}}
-                              ({{row.gst_percent}}%)</td>
-                            <td class="w80 text-right"><strong>&#x20B9; {{row.total_amount | number:'1.2-2'}}</strong>
+                            <!-- <td class="w80 text-right">&#x20B9; {{row.gst_amount | number:'1.2-2'}}
+                              ({{row.gst_percent}}%)</td> -->
+                            <!-- <td class="w80 text-right"><strong>&#x20B9; {{row.total_amount | number:'1.2-2'}}</strong> -->
                             <td class="w80 text-right">
                               <div class="action-btns">
                                 <a mat-raised-button type="button" class="delete" (click)="deleteItem(i)"><i

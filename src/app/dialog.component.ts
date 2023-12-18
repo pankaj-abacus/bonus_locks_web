@@ -1,20 +1,24 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
+import { EngineerAssignModelComponent } from './installation/engineer-assign-model/engineer-assign-model.component';
 
 @Injectable({ providedIn: 'root' })
 
 
 
 export class DialogComponent implements OnInit {
+  open(EngineerAssignModelComponent: EngineerAssignModelComponent, arg1: { width: string; panelClass: string; data: { id: any; }; }) {
+    throw new Error('Method not implemented.');
+  }
   deletebanner(arg0: string) {
     throw new Error("Method not implemented.");
   }
-  
+
   constructor() { }
-  
+
   ngOnInit() {
-  } 
-  
+  }
+
   deletebanners(msg:any){
     return Swal.fire({
       title: 'Are you sure?',
@@ -35,7 +39,7 @@ export class DialogComponent implements OnInit {
           'error'
           )
           return false;
-          
+
         }
       })
     }
@@ -61,12 +65,36 @@ export class DialogComponent implements OnInit {
           'error'
           )
           return false;
-          
+
         }
       })
     }
 
-    
+    visit(msg:any){
+      return Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do You Want To End This '+ msg,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, End it!',
+        cancelButtonText: 'No, keep it!'
+      }).then((result) => {
+        if (result.value) {
+          return true;
+          // For more information about handling dismissals please visit
+          // https://sweetalert2.github.io/#handling-dismissals
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire(
+            'Cancelled',
+            'Your '+ msg +' data is safe',
+            'error'
+            )
+            return false;
+  
+          }
+        })
+      }
+
     confirm(msg:any){
       return Swal.fire({
         title: 'Are you sure?',
@@ -87,7 +115,7 @@ export class DialogComponent implements OnInit {
             'error'
             )
             return false;
-            
+
           }
         })
       }
@@ -110,11 +138,11 @@ export class DialogComponent implements OnInit {
               'error'
               )
               return false;
-              
+
             }
           })
         }
-    
+
     success(title:any,msg:any){
       Swal.fire({
         position: 'top-right',
@@ -134,7 +162,7 @@ export class DialogComponent implements OnInit {
           timer: 1500
         })
         }
-      
+
       error(msg:any){
         Swal.fire({
           type: 'error',
@@ -143,7 +171,7 @@ export class DialogComponent implements OnInit {
           // footer: '<a href>Why do I have this issue?</a>'
         })
       }
-      
+
       update(msg:any)
       {
         // Swal.fire({
@@ -173,7 +201,7 @@ export class DialogComponent implements OnInit {
         }).then((result) => {
           if (result.value) {
             return true;
-            
+
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             Swal.fire(
               'Cancelled',
@@ -181,9 +209,9 @@ export class DialogComponent implements OnInit {
               'error'
               )
               return false;
-              
+
             }
           })
       }
-      
+
     }

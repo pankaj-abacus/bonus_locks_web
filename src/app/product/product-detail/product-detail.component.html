@@ -45,6 +45,11 @@
                                 <span>Product Code</span>
                                 <p>{{getData.product_code}}</p>
                             </div>
+                            <div class="block-feilds">
+                                <span>Brand</span>
+                                <p>{{getData.brand}}</p>
+                            </div>
+                            
                             
                             
                             
@@ -58,16 +63,16 @@
                                 <p>{{getData.small_packing_size ? getData.small_packing_size :'---'}}</p>
                             </div>
                             
-                            <div class="block-feilds">
+                            <!-- <div class="block-feilds">
                                 <span>Brand</span>
                                 <p>{{getData.brand ? getData.brand :'---'}}</p>
-                            </div>
+                            </div> -->
                             
                             
-                            <div class="block-feilds">
+                            <!-- <div class="block-feilds">
                                 <span>Color</span>
                                 <p>{{getData.color ? getData.color :'---'}}</p>
-                            </div>
+                            </div> -->
 
                             <div class="block-feilds">
                                 <span>Product Scanning</span>
@@ -95,8 +100,16 @@
                             <div class="block-feilds">
                                 <span>Last Updated On</span>
                                 <p>
-                                    {{getData.last_updated_on && getData.last_updated_on != '0000-00-00 00:00:00'? (getData.last_updated_on | date:'short') : '--'}}
+                                    {{getData.last_updated_on && getData.last_updated_on != '0000-00-00 00:00:00'? (getData.last_updated_on | date:'MMM d, y, h:mm:a') : '--'}}
                                 </p>
+                            </div>
+                            <div class="block-feilds">
+                                <span>Warranty In Months</span>
+                                <p>{{getData.warranty_period ? getData.warranty_period :'---'}}</p>
+                            </div>
+                            <div class="block-feilds">
+                                <span>Installation Responsibility</span>
+                                <p>{{getData.installation_responsibility ? getData.installation_responsibility :'---'}} </p>
                             </div>
                         </div>
                         

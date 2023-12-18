@@ -9,7 +9,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppUtilityModule } from 'src/app/app-utility.module';
 import { AuthComponentGuard } from 'src/app/auth-component.guard';
 import { MaterialModule } from 'src/app/material';
-import { ProductUploadComponent } from 'src/app/product-upload/product-upload.component';
+// import { ProductUploadComponent } from 'src/app/product-upload/product-upload.component';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { ChangeSchemeStatusModelComponent } from '../change-scheme-status-model/change-scheme-status-model.component';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
@@ -34,7 +34,7 @@ const productroutes = [
       ProductDetailComponent,
       ProductQrCodeModelComponent,
       ChangeSchemeStatusModelComponent,
-      ProductUploadComponent
+      // ProductUploadComponent,
     ],
   imports: [
     CommonModule,
@@ -51,7 +51,7 @@ const productroutes = [
     AppUtilityModule
   ],
   entryComponents:[
-    ProductUploadComponent,
+    // ProductUploadComponent,
     ProductQrCodeModelComponent,
     ChangeSchemeStatusModelComponent,
   ]

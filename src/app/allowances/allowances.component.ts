@@ -78,7 +78,7 @@ export class AllowancesComponent implements OnInit {
         setTimeout(() => {
           this.loader = '';
 
-        }, 5000);
+        }, 1000);
       }
       else {
         this.toast.errorToastr(response['allowance']['statusMsg']);

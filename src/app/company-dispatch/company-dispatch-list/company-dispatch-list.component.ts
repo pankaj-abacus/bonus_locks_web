@@ -54,6 +54,7 @@ export class CompanyDispatchListComponent implements OnInit {
   pendingGatepassCount: any;
   organisationData:any =[];
   organizationFlag:boolean = false;
+  organisation_id: any;
 
   constructor(public serve: DatabaseService, public route: Router, public ActivatedRoute: ActivatedRoute,
     public dialog: DialogComponent, public session: sessionStorage, public alrt: MatDialog,public toast :ToastrManager) {
@@ -97,7 +98,7 @@ export class CompanyDispatchListComponent implements OnInit {
       }
       if (this.filter.active_tab && (this.filter.active_tab=='Pending Gatepass' || this.filter.active_tab=='Dispatch Gatepass')) {
         this.active_tab = this.filter.active_tab
-        this.getGeatePass('');
+        this.getGatePass('');
       }
       else if(this.filter.active_tab && (this.filter.active_tab=='Pending Dispatch' || this.filter.active_tab=='Dispatched')){
         this.active_tab = this.filter.active_tab
@@ -108,7 +109,7 @@ export class CompanyDispatchListComponent implements OnInit {
       }
 
       else if((this.assign_login_data2.view_dispatch_guard== '1' && this.assign_login_data2.add_dispatch_guard== '1') && (this.active_tab=='Pending Gatepass' || this.active_tab=='Dispatched Gatepass')){
-        this.getGeatePass('');
+        this.getGatePass('');
       }
       else{
 
@@ -122,7 +123,7 @@ export class CompanyDispatchListComponent implements OnInit {
       this.start = this.start - this.page_limit;
       
       if(active_tab == 'Dispatch Gatepass' || active_tab=='Pending Gatepass'){
-        this.getGeatePass('');
+        this.getGatePass('');
       }
       else if(active_tab == 'Sales Retun'){
         this.getSalesReturn('');
@@ -136,7 +137,7 @@ export class CompanyDispatchListComponent implements OnInit {
       
       this.start = this.start + this.page_limit;
       if(active_tab == 'Dispatch Gatepass' || active_tab=='Pending Gatepass'){
-        this.getGeatePass('');
+        this.getGatePass('');
       }
       else if(active_tab == 'Sales Retun'){
         this.getSalesReturn('');
@@ -151,7 +152,16 @@ export class CompanyDispatchListComponent implements OnInit {
     getCompanyData() {
       this.serve.post_rqst({}, "Order/organizationName").subscribe((response => {
         if (response['statusCode'] == 200) {
-          this.organisationData = response['result'];
+          if(this.assign_login_data2.assign_company == '1'){
+            this.filter.organisation_name = response['result']['0']['company_name'];
+          }
+          else if(this.assign_login_data2.assign_company == '2'){
+            this.filter.organisation_name = response['result']['1']['company_name'];
+          }
+          else{
+            this.organisationData = response['result'];
+          }
+
         } else {
           this.toast.errorToastr(response['statusMsg']);
         }
@@ -164,6 +174,7 @@ export class CompanyDispatchListComponent implements OnInit {
     
     billData(action: any = '') {
       this.loader = true;
+      this.gatePassAssign = [];
       
       if (action == "refresh") {
         this.filter = {};
@@ -188,7 +199,7 @@ export class CompanyDispatchListComponent implements OnInit {
       
       this.filter.active_tab = this.active_tab;
       this.organizationFlag = false;
-      this.serve.post_rqst({'branch_code':this.loginData.branch_code, 'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit}, "Dispatch/tallyInvoiceCreditBillingListing")
+      this.serve.post_rqst({'branch_code':this.loginData.branch_code,'filter': this.filter, 'start': this.start, 'pagelimit': this.page_limit}, "Dispatch/tallyInvoiceCreditBillingListing")
       .subscribe((result => {
         if(result['statusCode']==200){
           this.distributor_list = (result['credit_billing_list']);
@@ -200,9 +211,10 @@ export class CompanyDispatchListComponent implements OnInit {
           if(this.active_tab == 'Pending Dispatch'){
             this.pageCount = result['pendingDispatch'];
           }
-          if(this.active_tab == 'Dispatched'){
+          if(this.active_tab == 'Dispatched' || this.active_tab == 'Complete Dispatch'){
             this.pageCount = result['dispatch'];
           }
+        
     
           if (this.pagenumber > this.total_page) {
             this.pagenumber = this.total_page;
@@ -226,7 +238,7 @@ export class CompanyDispatchListComponent implements OnInit {
     
     
     gate_pass_list:any =[];
-    getGeatePass(action: any = '') {
+    getGatePass(action: any = '') {
       if (action == "refresh") {
         this.filter = {};
         this.gate_pass_list = [];
@@ -253,8 +265,11 @@ export class CompanyDispatchListComponent implements OnInit {
           this.dispatchGatepassCount = result['dispatchGatepass']
           
           this.loader = false;
-          if(this.active_tab == 'Pending Gatepass' || this.active_tab == 'Dispatch Gatepass'){
-            this.pageCount = result['count'];
+          if(this.active_tab == 'Pending Gatepass'){
+            this.pageCount = result['pendingGatepass'];
+          }
+          if(this.active_tab == 'Dispatch Gatepass'){
+            this.pageCount = result['dispatchGatepass'];
           }
           // if(this.active_tab == 'Dispatch Gatepass'){
           //   this.pageCount = result['dispatchGatepass'];
@@ -326,26 +341,35 @@ export class CompanyDispatchListComponent implements OnInit {
     
     
     
-    select_item(event,indx)
+    select_item(event,indx,organisation_name)
     {        
 
 
-      if(!this.filter.organisation_name && event.checked){
+      if(!this.filter.organisation_name && event.checked && this.assign_login_data2.id == '1'){
         this.toast.errorToastr('Please select organization filter');
         this.organizationFlag = true;
         return
       }
+      
 
       if(event.checked)
       {
-        this.gatePassAssign.push(this.distributor_list[indx]);
-        let idx = this.gatePassUnassign.findIndex(row => row.id == this.distributor_list[indx].id);
-        this.gatePassUnassign.splice(idx,1);
+        if(this.filter.organisation_name != organisation_name && this.assign_login_data2.id == '1'){
+          this.toast.errorToastr('Organization filter not match');
+          this.organizationFlag = true;
+          return
+        }
+        else{
+          this.gatePassAssign.push(this.distributor_list[indx]);
+          let index = this.gatePassUnassign.findIndex(row => row.id == this.distributor_list[indx].id);
+          this.gatePassUnassign.splice(index,1);
+        }
+        
       }
       else
       {
-        let idx = this.gatePassAssign.findIndex(row => row.id == this.distributor_list[indx].id);
-        this.gatePassAssign.splice(idx,1);
+        let index = this.gatePassAssign.findIndex(row => row.id == this.distributor_list[indx].id);
+        this.gatePassAssign.splice(index,1);
         this.gatePassUnassign.push(this.distributor_list[indx]);
         this.organizationFlag = false;
       }
@@ -387,7 +411,7 @@ export class CompanyDispatchListComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result != false){
-          this.getGeatePass('');
+          this.getGatePass('');
         }
       });
     }
@@ -401,7 +425,7 @@ export class CompanyDispatchListComponent implements OnInit {
       this.filter={};
       this.organizationFlag = false;
       if(active_tab == 'Dispatch Gatepass' || active_tab=='Pending Gatepass'){
-        this.getGeatePass('');
+        this.getGatePass('');
       }
       else if(active_tab == 'Sales Retun'){
         this.getSalesReturn('');

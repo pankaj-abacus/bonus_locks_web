@@ -177,7 +177,7 @@ export class GiftGalleryListComponent implements OnInit {
       })
     }  
   }
-  
+
   
   
   goToImage(image)
@@ -200,7 +200,9 @@ export class GiftGalleryListComponent implements OnInit {
     lastBtnValue(value) {
       this.fabBtnValue = value;
     }
-    
+    getGiftListExcel(){
+
+    }
     
   }
   

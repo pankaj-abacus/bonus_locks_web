@@ -63,14 +63,18 @@
                 <span>Mobile No.</span>
                 <p>{{Influencer_Detail.mobile_no}}</p>
               </div>
-              <div class="block-feilds">
-                <span>Country</span>
-                <p>{{Influencer_Detail.country}}</p>
-              </div>
-              <div class="block-feilds" *ngIf="Influencer_Detail.country=='india'">
-                <span>Paytm Mobile No.</span>
-                <p>{{Influencer_Detail.paytm_mobile_no}}</p>
-              </div>
+              <ng-container *ngIf="Influencer_Detail.type!=15">
+                <div class="block-feilds">
+                  <span>Service</span>
+                  <p>{{Influencer_Detail.service ? Influencer_Detail.service : '----'}}</p>
+                </div>
+                <div class="block-feilds" *ngIf="Influencer_Detail.country=='india'">
+                  <span>Paytm Mobile No.</span>
+                  <p>{{Influencer_Detail.paytm_mobile_no}}</p>
+                </div>
+              </ng-container>
+              
+             
               <div class="block-feilds">
                 <span>Last Check In</span>
                 <p>{{Influencer_Detail.last_checkin != '0000-00-00 00:00:00' ? (Influencer_Detail.last_checkin) :
@@ -80,10 +84,10 @@
                 *ngIf="checkRight.scanning_rights != 'Yes' || checkRight.point_transfer_right != 'Yes' ">
                 <span>Address</span>
                 <p>{{Influencer_Detail.city}} {{Influencer_Detail.district}} {{Influencer_Detail.state}}
-                  {{Influencer_Detail.country}} {{Influencer_Detail.pincode}}</p>
+                   {{Influencer_Detail.pincode}}</p>
               </div>
 
-              <ng-container *ngIf="checkRight.scanning_rights == 'Yes' || checkRight.point_transfer_right == 'Yes' ">
+              <ng-container *ngIf="(checkRight.scanning_rights == 'Yes' || checkRight.point_transfer_right == 'Yes') && Influencer_Detail.type!=15 ">
                 <div class="block-feilds">
                   <span>Referral Code</span>
                   <p>{{Influencer_Detail.referral_code ? Influencer_Detail.referral_code : '---'}}</p>
@@ -118,20 +122,20 @@
               </div>
 
               <ng-container *ngIf="checkRight.scanning_rights == 'Yes' || checkRight.point_transfer_right == 'Yes'">
-                <div class="block-feilds">
+                <div class="block-feilds" *ngIf="Influencer_Detail.type!=15">
                   <span>Dealer Name</span>
                   <p>
                     {{Influencer_Detail.dealer_name? (Influencer_Detail.dealer_name | titlecase) : '--'}}
                   </p>
                 </div>
-                <div class="block-feilds">
+                <div class="block-feilds" *ngIf="Influencer_Detail.type!=15">
                   <span>Dealer Mobile</span>
                   <p>
                     {{Influencer_Detail.dealer_mobile && Influencer_Detail.dealer_mobile ?
                     (Influencer_Detail.dealer_mobile) : '--'}}
                   </p>
                 </div>
-                <div class="block-feilds">
+                <div class="block-feilds" *ngIf="Influencer_Detail.type!=15">
                   <span>Distributor Name</span>
                   <p>
                     {{Influencer_Detail.distributor_name && Influencer_Detail.distributor_name ?
@@ -172,10 +176,10 @@
 
 
           <ng-container *ngIf="checkRight.scanning_rights == 'Yes' || checkRight.point_transfer_right == 'Yes' ">
-            <div class="card-head mt15">
+            <div class="card-head mt15" *ngIf="Influencer_Detail.type!=15">
               <h2>Document Details</h2>
             </div>
-            <div class="card-body">
+            <div class="card-body" *ngIf="Influencer_Detail.type!=15">
               <div class="grid-box">
                 <div class="block-feilds">
                   <div class="doc-img">

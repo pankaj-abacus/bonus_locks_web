@@ -12,7 +12,6 @@ import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { DatabaseService } from 'src/_services/DatabaseService'
 import { HttpClientModule } from '@angular/common/http';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { AuthGuardLog } from './AuthGuardLog';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -20,7 +19,7 @@ import { AuthComponentGuard } from './auth-component.guard';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { AddDiscountComponent } from './discount/add-discount/add-discount.component';
 import { DiscountListComponent } from './discount/discount-list/discount-list.component';
-import { MatDialogModule, MatIconModule, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS } from '@angular/material';
+import { MatDialogModule, MatIconModule, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, MatSelectModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 import { NgxEditorModule } from 'ngx-editor';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { DialogComponent } from './dialog.component';
@@ -52,14 +51,30 @@ import { StrReplace } from 'src/_Pipes/StrReplace.pipe';
 import { Crypto } from 'src/_Pipes/Crypto.pipe';
 import { NumericWords } from 'src/_Pipes/NumericWords.pipe';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { ZingchartAngularModule } from 'zingchart-angular';
+import { ServiceModuleModule } from './service/service-module/service-module.module';
+import { CustomerModuleModule } from './customer/customer-module/customer-module.module';
+import { WarrantyModuleModule } from './warranty/warranty-module/warranty-module.module';
+import { InstallationModuleModule } from './installation/installation-module/installation-module.module';
+import { EngineerAssignModelComponent } from './installation/engineer-assign-model/engineer-assign-model.component';
+import { WarrantyUpdateModelComponent } from './warranty/warranty-update-model/warranty-update-model.component';
+import { AddComplaintRemarkComponent } from './add-complaint-remark/add-complaint-remark.component';
+import { AddInstallationRemarkComponent } from './installation/add-installation-remark/add-installation-remark.component';
+import { ProductDetailModelComponent } from './installation/product-detail-model/product-detail-model.component';
+import { InstallationUpdateModelComponent } from './installation/installation-update-model/installation-update-model.component';
+import { ComplaintUpdateModelComponent } from './service/complaint-update-model/complaint-update-model.component';
+import { GatepassAddComponent } from './company-dispatch/gatepass-add/gatepass-add.component';
+import { SapreModuleModule } from './spare/sapre-module/sapre-module.module';
+import { AddSpareComponent } from './spare/add-spare/add-spare.component';
+import { AssignQtyComponent } from './spare/assign-qty/assign-qty.component';
+import { ProductUploadComponent } from './product-upload/product-upload.component';
+import { ComplanitVisitModuleModule } from './complaint-visit/complanit-visit-module/complanit-visit-module.module';
+
 
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
-        DashboardComponent,
         HeaderComponent,
         FooterComponent,
         NavigationComponent,
@@ -72,7 +87,8 @@ import { ZingchartAngularModule } from 'zingchart-angular';
         DatePikerFormat,
         StrReplace,
         Crypto,
-        NumericWords
+        NumericWords,
+
     ],
     imports: [
         AgmCoreModule.forRoot({
@@ -82,11 +98,11 @@ import { ZingchartAngularModule } from 'zingchart-angular';
             use clientId
             */
         }),
-        ZingchartAngularModule,
         BrowserModule,
         FormsModule,
         ChartsModule,
         HttpClientModule,
+        MatSelectModule,
         AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,
@@ -109,8 +125,16 @@ import { ZingchartAngularModule } from 'zingchart-angular';
         NgxBarcodeModule,
         NgxMatSelectSearchModule,
         NgMultiSelectDropDownModule.forRoot(),
-        AppUtilityModule
+        AppUtilityModule,
+        ServiceModuleModule,
+        SapreModuleModule,
+        ComplanitVisitModuleModule,
+        CustomerModuleModule,
+        WarrantyModuleModule,
+        InstallationModuleModule,
         // FusionChartsModule
+        MatFormFieldModule,
+        MatInputModule,
     ],
     providers: [
         DatabaseService,
@@ -127,6 +151,17 @@ import { ZingchartAngularModule } from 'zingchart-angular';
 
     entryComponents: [
         UploadFileModalComponent,
+        EngineerAssignModelComponent,
+        WarrantyUpdateModelComponent,
+        AddComplaintRemarkComponent,
+        AddInstallationRemarkComponent,
+        ProductDetailModelComponent,
+        InstallationUpdateModelComponent,
+        ComplaintUpdateModelComponent,
+        GatepassAddComponent,
+        AddSpareComponent,
+        AssignQtyComponent,
+        ProductUploadComponent,
     ],
 
     exports: [RouterModule],

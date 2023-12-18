@@ -2,9 +2,8 @@
   
   <div class="tools-container">
     <h2>Task</h2>
-    
     <div class="left-auto left-auto df ac flex-gap-10">
-      <button mat-icon-button  matTooltip="Refresh" (click)="refresh() ">
+      <button mat-icon-button  matTooltip="Refresh" (click)="refresh()">
         <i class="material-icons">refresh</i>
       </button>
       
@@ -24,11 +23,6 @@
             <i class="material-icons">navigate_next</i>
           </button>
         </div>
-      </div>
-      
-      <div class="mat-tabbar" *ngIf="userId != '1' ">
-        <button mat-button [ngClass]="active_tab == 'my_task' ? 'active' : ''" (click)="active_tab = 'my_task'; getTaskList()"><i class="material-icons">pending_actions</i>My Task</button>
-        <button mat-button [ngClass]="active_tab == 'assign_task' ? 'active' : ''" (click)="active_tab = 'assign_task'; getTaskList()"><i class="material-icons">check_circle</i>Assign Task</button>
       </div>
     </div>
   </div>

@@ -42,6 +42,8 @@ const routes: Routes = [
   { path: "attendance", loadChildren:'./attendence/attendence-module/attendence.module#AttendenceModule'},
   {path:'billing',loadChildren:'./billing/billing-module/billing.module#BillingModule'},
   {path:'invoice',loadChildren:'./invoice/invoice-module/invoice.module#InvoiceModule'},
+  {path: 'stock-list', loadChildren: './stock/stockmodule/stockmodule.module#StockmoduleModule'},
+  {path: 'generate-master-box', loadChildren: './master-box/master-module/master-module.module#MasterModuleModule'},
   {path:'credit-notes',loadChildren:'./credit-notes/credit-notes-module/credit-notes.module#CreditNotesModule'},
   {path:'order-list',loadChildren:'./order/primary-order-module/primary-order.module#PrimaryOrderModule'},
   { path: "secondary-order-list",loadChildren:'./order/secondary-order-module/secondary-order.module#SecondaryOrderModule'},
@@ -60,6 +62,18 @@ const routes: Routes = [
   { path: "point-list", loadChildren:'./master/point-category-module/point-category.module#PointCategoryModule'},
   { path: "leave-master-list", loadChildren:'./master/leave-master/leave-master-module/leave-master/leave-master.module#LeaveMasterModule'},
   { path: "report-list", loadChildren:'./reports/reports-module/reports/reports.module#ReportsModule'},
+  { path: "complaint-list", loadChildren: './service/service-module/service-module.module#ServiceModuleModule'},
+  { path: "customer-list", loadChildren: './customer/customer-module/customer-module.module#CustomerModuleModule'},
+  { path: "warranty-list", loadChildren: './warranty/warranty-module/warranty-module.module#WarrantyModuleModule'},
+  { path: "installation-list", loadChildren: './installation/installation-module/installation-module.module#InstallationModuleModule'},
+  { path: "claimDispatch-list", loadChildren: './claim-dispatch/dispatch-module/dispatch-module.module#DispatchModuleModule'},
+  { path: "spare-list", loadChildren: './spare/sapre-module/sapre-module.module#SapreModuleModule'},
+  { path: "Complaint-visit-list", loadChildren: './complaint-visit/complanit-visit-module/complanit-visit-module.module#ComplanitVisitModuleModule'},
+  { path: "service-invoice-list", loadChildren: './service-invoice/service-invoice-module/service-invoice-module.module#ServiceInvoiceModuleModule'},
+
+
+
+
   { path: "point-master", loadChildren:'./point-master/point-master/point-master.module#PointMasterModule'},
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthComponentGuard], data:{ expectedRole: ['1']}},
 ];

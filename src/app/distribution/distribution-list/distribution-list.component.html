@@ -72,7 +72,7 @@
                   </a>
                 </div>
               </th>
-              <th class="w100">Created By
+              <th class="w150 ">Created By
                 <div class="sorting">
                   <a class=""
                     (click)="column = 'created_by_name';sorting_type='ASC';distributorList('', 'created_by_name', 'ASC')">
@@ -138,8 +138,8 @@
                   </a>
                 </div>
               </th>
-              <th *ngIf="type_id=='3'" class="w150">Assign Distributor
-              </th>
+              <th class="w120">District</th>
+              <!-- <th *ngIf="type_id=='3'" class="w150">Assign Distributor</th> -->
               <th class="w150">Assigned To
 
               </th>
@@ -194,7 +194,7 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th class="w100">
+              <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input select-input">
                     <input matInput placeholder="Search..." name="created_by_name"
@@ -251,14 +251,22 @@
                   </mat-form-field>
                 </div>
               </th>
-              <th *ngIf="type_id=='3'" class="w150">
+              <th class="w120">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Search..." name="district" (keyup.enter)="distributorList('', '', '')"
+                      [(ngModel)]="filter.district">
+                  </mat-form-field>
+                </div>
+              </th>
+              <!-- <th *ngIf="type_id=='3'" class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field class="example-full-width cs-input select-input">
                     <input matInput placeholder="Search..." name="assign_distributors_company_name"
                       (keyup.enter)="distributorList('', '', '')" [(ngModel)]="filter.assign_distributors_company_name">
                   </mat-form-field>
                 </div>
-              </th>
+              </th> -->
               <th class="w150">
                 <div class="th-search-acmt">
                   <mat-form-field>
@@ -307,7 +315,7 @@
                 [ngClass]="{'Current': serve.currentUserID == row.id}">
                 <td class="w60">{{i + 1 + sr_no}}</td>
                 <td class="w110">{{row.date_created | date}}</td>
-                <td class="w100">{{row.created_by_name}}</td>
+                <td class="w150">{{row.created_by_name}}</td>
                 <td class="w180">
                   <a class="link-btn" mat-button (click)="serve.setData(filter)"
                     [routerLink]="[ 'distribution-detail/', row.id,'Profile' ]"
@@ -319,8 +327,9 @@
                 <td class="w120">{{row.mobile}}</td>
                 <td class="w120" *ngIf="type != 'Retailer'">{{row.dr_code}}</td>
                 <td class="w120" *ngIf="type_id!=1 && type_id !=3 && type_id==7">{{row.direct_dealer_type}}</td>
-                <td class="w120">{{row.state}}</td>
-                <td *ngIf="type_id=='3'" class="w150">{{row.assign_distributors_company_name}}</td>
+                <td class="w120">{{row.state | titlecase}}</td>
+                <td class="w120">{{row.district | titlecase}}</td>
+                <!-- <td *ngIf="type_id=='3'" class="w150">{{row.assign_distributors_company_name}}</td> -->
                 <td class="w150">
                   <ng-container *ngFor="let item of row.assign_user; let j = index;">
                     <span>{{item.name}} <ng-container *ngIf="item.length > 1">, </ng-container></span>
@@ -376,6 +385,9 @@
                   <div>&nbsp;</div>
                 </td>
                 <td class="w120" *ngIf="type != 'Retailer' ">
+                  <div>&nbsp;</div>
+                </td>
+                <td class="w120">
                   <div>&nbsp;</div>
                 </td>
                 <td class="w120">
@@ -441,11 +453,11 @@
         <mat-icon>cloud_upload</mat-icon>
         <span>Upload New Data</span>
       </button>
-      <button mat-menu-item (click)="upload_excel('update');"
+      <!-- <button mat-menu-item (click)="upload_excel('update');"
         *ngIf="dr_list_temp.length > 0 && ( assign_login_data2.import_customer_network=='1' || (type_id==1 && assign_login_data2.import_channel_partner=='1') || (type_id==3 && assign_login_data2.import_dealer=='1') || (type_id==7 && assign_login_data2.import_direct_dealers=='1'))">
         <mat-icon>update</mat-icon>
         <span>Update Existing Data</span>
-      </button>
+      </button> -->
       <button mat-menu-item (click)="upload_excel('credit_limit');"
         *ngIf="dr_list_temp.length > 0 && type_id != 3 && ( assign_login_data2.import_customer_network=='1' || (type_id==1 && assign_login_data2.import_channel_partner=='1')  || (type_id==7 && assign_login_data2.import_direct_dealers=='1'))">
         <mat-icon>currency_rupee</mat-icon>

@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
 import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
-import { parse } from 'querystring';
 import { DialogComponent } from 'src/app/dialog.component';
 import { DatabaseService } from 'src/_services/DatabaseService';
 

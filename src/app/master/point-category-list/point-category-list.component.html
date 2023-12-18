@@ -48,7 +48,8 @@
                   Carpenter Point
                 </ng-container>
               </th>
-              <!-- <th class="w120 text-center" *ngIf="active_tab == 'Item Box'">Dealer Point</th> -->
+              <th class="w120 text-center" *ngIf="active_tab == 'Item Box'">Sales Boy Point</th>
+              <th class="w120 text-center" *ngIf="active_tab == 'Item Box'">Dealer Point</th>
               <th class="w60   text-center"
                 *ngIf="logined_user_data.edit_point_master=='1' || logined_user_data.delete_point_master=='1'">Action
               </th>
@@ -79,7 +80,8 @@
                 </div>
               </th>
               <th class="w120">&nbsp;</th>
-              <!-- <th class="w120" *ngIf="active_tab == 'Item Box'">&nbsp;</th> -->
+              <th class="w120" *ngIf="active_tab == 'Item Box'">&nbsp;</th>
+              <th class="w120" *ngIf="active_tab == 'Item Box'">&nbsp;</th>
               <th class="w60"
                 *ngIf="logined_user_data.edit_point_master=='1' || logined_user_data.delete_point_master=='1'">&nbsp;
               </th>
@@ -102,9 +104,12 @@
                     <strong>{{row.influencer_point}}</strong>
                   </ng-container>
                 </td>
-                <!-- <td class="w120 text-center" *ngIf="active_tab == 'Item Box'">
-                  <strong>{{row.influencer_transfer_point}}</strong>
-                </td> -->
+                <td class="w120 text-center" *ngIf="active_tab == 'Item Box'">
+                  <strong>{{row.saleboy_point}}</strong>
+                </td>
+                <td class="w120 text-center" *ngIf="active_tab == 'Item Box'">
+                  <strong>{{row.dealer_point}}</strong>
+                </td>
                 <td class="w60 text-center"
                   *ngIf="logined_user_data.edit_point_master=='1' || logined_user_data.delete_point_master=='1'">
                   <div class="action-button">
@@ -137,9 +142,9 @@
                 <td class="w120">
                   <div>&nbsp;</div>
                 </td>
-                <!-- <td class="w120" *ngIf="active_tab == 'Item Box'">
+                <td class="w120" *ngIf="active_tab == 'Item Box'">
                   <div>&nbsp;</div>
-                </td> -->
+                </td>
                 <td class="w60"
                   *ngIf="logined_user_data.edit_point_master=='1' || logined_user_data.delete_point_master=='1'">
                   <div>&nbsp;</div>

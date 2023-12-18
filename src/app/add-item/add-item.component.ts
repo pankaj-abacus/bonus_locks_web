@@ -96,6 +96,7 @@ export class AddItemComponent implements OnInit {
     this.orderData.contact_person = params.contact_person
     this.assign_login_data = this.session.getSession();
     this.logined_user_data = this.assign_login_data.value.data;
+    
   }
 
   tabActive(tab: any) {
@@ -105,6 +106,7 @@ export class AddItemComponent implements OnInit {
 
   ngOnInit() {
     this.orderDetail();
+    // this.getProductList('lastGst','');
     // this.getSegment()
   }
 
@@ -119,7 +121,8 @@ export class AddItemComponent implements OnInit {
   }
 
 
-  getProductList(lastGst) {
+  getProductList(lastGst,searcValue) {
+    this.filter.search=searcValue
     this.filter.brand = this.order_detail.brand;
     this.filter.gst = lastGst;
     this.filter.fixed_brand = this.fixedBrand;
@@ -225,7 +228,8 @@ export class AddItemComponent implements OnInit {
         this.fixedBrand = [this.order_item[0]['brand']];
 
         setTimeout(() => {
-          this.getProductList(this.lastGstPercent)
+          this.getProductList(this.lastGstPercent,'')
+          console.log("dhfkjshfdksjf")
         }, 100);
       } else {
         this.toast.errorToastr(result['statusMsg'])
@@ -234,18 +238,18 @@ export class AddItemComponent implements OnInit {
   }
 
 
-  searchItems(event) {
-    let item = event.target.value.toLowerCase();
-    console.log(item);
-    this.tempSearch = '';
-    this.productlist = [];
-    for (let x = 0; x < this.productlist2.length; x++) {
-      this.tempSearch = this.productlist2[x].product_name.toLowerCase();
-      if (this.tempSearch.includes(item)) {
-        this.productlist.push(this.productlist2[x]);
-      }
-    }
-  }
+  // searchItems(event) {
+  //   let item = event.target.value.toLowerCase();
+  //   console.log(item);
+  //   this.tempSearch = '';
+  //   this.productlist = [];
+  //   for (let x = 0; x < this.productlist2.length; x++) {
+  //     this.tempSearch = this.productlist2[x].product_name.toLowerCase();
+  //     if (this.tempSearch.includes(item)) {
+  //       this.productlist.push(this.productlist2[x]);
+  //     }
+  //   }
+  // }
 
   addToList() {
     console.log(this.product_list);
@@ -256,12 +260,13 @@ export class AddItemComponent implements OnInit {
         console.log(existIndex);
         if (existIndex == -1) {
           this.product_list[i]['product_name'] = this.orderData.product_name;
-          // this.product_list[i]['segment_id'] = this.orderData.segment.id;
+          this.product_list[i]['segment_id'] = this.product_detail.category_id;
+          this.product_list[i]['segment_name'] = this.product_detail.category;
           this.product_list[i]['product_code'] = this.orderData.product_code;
           this.product_list[i]['discount_amount'] = this.product_list[i]['discounted_price'];
           this.product_list[i]['discount_percent'] = this.product_list[i]['dr_disc'];
           this.product_list[i]['qty'] = this.orderData.qty;
-          this.product_list[i]['amount'] = parseFloat(this.product_list[i]['qty']) * (this.product_list[i]['net_price']).toFixed();
+          this.product_list[i]['amount'] = parseFloat(this.product_list[i]['qty']) * (this.product_list[i]['net_price']).toFixed(2);
           this.product_list[i]['gst_amount'] = ((parseFloat(this.product_list[i]['amount']) * parseFloat(this.product_detail.gst)) / 100).toFixed();
           this.product_list[i].gst_percent = (this.product_detail.gst);
           this.product_list[i]['brand'] = this.orderData.brand;
@@ -271,8 +276,8 @@ export class AddItemComponent implements OnInit {
         }
         else {
           this.product_list[i]['product_name'] = this.orderData.product_name;
-          // this.product_list[i]['segment_id'] = this.orderData.segment.id;
-          // this.product_list[i]['segment_name'] = this.orderData.segmentName;
+          this.product_list[i]['segment_id'] = this.product_detail.category_id;
+          this.product_list[i]['segment_name'] = this.product_detail.category;
           this.product_list[i]['color'] = this.orderData.color;
           this.product_list[i]['brand'] = this.orderData.brand;
           this.product_list[i]['product_code'] = this.orderData.product_code;

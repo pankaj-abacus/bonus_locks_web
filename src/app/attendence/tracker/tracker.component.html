@@ -1,0 +1,231 @@
+<div class="main-container {{padding0}}">
+  <div class="tools-container">
+    <div class="mat-tabbar">
+      <button mat-button [ngClass]="tabType == 'Live' ? 'active' : ''"
+        (click)="tabType = 'Live'; getDetails(); stop(); btnValue = true; mapVisible = true; refresh();waypoints = []">
+        <i class="material-icons">podcasts</i>
+        Live
+      </button>
+      <button mat-button [ngClass]="tabType == 'Tracker' ? 'active' : ''"
+        (click)="tabType = 'Tracker'; btnValue = true; mapVisible= true; refresh()">
+        <i class="material-icons">not_started</i>
+        Tracker
+      </button>
+      <button mat-button [ngClass]="tabType == 'Play Back' ? 'active' : ''"
+        (click)="tabType = 'Play Back'; btnValue = true;waypoints = [];getSlidertracker()">
+        <i class="material-icons">not_started</i>
+        Play Back
+      </button>
+
+      <button mat-button [ngClass]="tabType == 'Battery' ? 'active' : ''"
+        (click)="tabType = 'Battery'; getBatteryInfo(); btnValue = true; mapVisible= false; stop(); refresh();waypoints = []">
+        <i class="material-icons">battery_charging_full</i>
+        Battery Statistics
+      </button>
+      
+    </div>
+  </div>
+
+  <div class="container pt10 pl10 pr10 pb50">
+    <div class="row" *ngIf="skLoading">
+      <div class="col s12">
+        <div class="card">
+          <div class="sk-head">
+            <h2>&nbsp;</h2>
+          </div>
+          <div class="card-body">
+            <div class="grid-box four">
+              <div class="sk-box" *ngFor="let row of [].constructor(4)">
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <ng-container *ngIf="!skLoading">
+      <div class="row">
+        <div class="col s12">
+          <div class="card">
+            <div class="card-head">
+              <h2>Basic Details</h2>
+            </div>
+            <div class="card-body">
+              <div class="grid-box five wp100 ">
+                <div class="block-feilds">
+                  <span>Employee Name</span>
+                  <p>{{empData.name ? (empData.name | titlecase) : '---'}} </p>
+                </div>
+                <div class="block-feilds">
+                  <span>Employee Id</span>
+                  <p>{{empData.employee_id ? empData.employee_id :'---'}}</p>
+                </div>
+                <div class="block-feilds">
+                  <span>Reporting Manager 1</span>
+                  <p>{{empData.reporting_manager_name ? (empData.reporting_manager_name | titlecase) : '---'}}</p>
+                </div>
+                <div class="block-feilds">
+                  <span>Reporting Manager 2</span>
+                  <p>{{ empData.rsm2_name ? (empData.rsm2_name | titlecase) : '---'}}</p>
+                </div>
+                <div class="block-feilds">
+                  <span>H.O.D.</span>
+                  <p>{{empData.hod_name ? (empData.hod_name | titlecase) : '---'}}</p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <div class="col s12 m3 l3">
+        <div class="card" *ngIf="skLoading && tabType == 'Live'">
+          <div class="sk-head">
+            <h2>&nbsp;</h2>
+          </div>
+          <div class="card-body">
+            <div class="grid-box single">
+              <div class="sk-box" *ngFor="let row of [].constructor(5)">
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" *ngIf="!skLoading">
+          <div class="card-head">
+            <h2>Location Summary</h2>
+            <div class="left-auto">
+              <a class="sm-mat-icon-button" mat-icon-button matTooltip="Refresh" (click)="refreshData();">
+                <i class="material-icons">refresh</i>
+              </a>
+            </div>
+
+          </div>
+          <div class="sm-card-container">
+            <div class="sm-card filter-date">
+              <p>{{selectedDate | date}}</p>
+              <a class="sm-mat-icon-button" mat-icon-button (click)="picker.open()">
+                <i class="material-icons">event</i>
+              </a>
+              <mat-form-field style="width: 0;">
+                <input matInput [matDatepicker]="picker" #date="ngModel" [max]="today_date" name="date"
+                  [(ngModel)]="selectedDate" (ngModelChange)="dateFormat()" hidden>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <!-- <mat-form-field style="width: 0;">
+                <input matInput [matDatepicker]="picker" #date="ngModel" [max]="today_date" name="date"
+                  [(ngModel)]="filter.date" (ngModelChange)="dateFormat()" hidden>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field> -->
+            </div>
+            <div class="sm-card">
+              <p>Check-in</p>
+              <span>{{latestLocation.total_checkin ? latestLocation.total_checkin : '---'}}</span>
+            </div>
+            <div class="sm-card">
+              <p>Distance</p>
+              <span>{{latestLocation.total_distance ? (latestLocation.total_distance +' Km') : '---'}}</span>
+            </div>
+
+
+          </div>
+          <div class="card-body scroll350">
+            <div class="routes" *ngFor="let row of pathCoords;">
+              <div class="travel-flag"
+                [ngClass]="{'attendence': row.type == 'Attendence Start' ||  row.type == 'Attendence Stop', 'background-loc': row.type == 'Background'}">
+                <i class="material-icons">
+
+                  {{row.type == 'Checkin' ? 'where_to_vote' : row.type == 'Background' ? 'person_pin_circle' :
+                  'pin_drop'}}
+                </i>
+              </div>
+              <div class="travel-content">
+                <div class="type">
+                  <p class="heading">
+                    {{row.type ? (row.type == 'Background' ? 'Background Location' : row.type | titlecase) : '---'}}
+                    {{row.distance_from_last ? (' ' + '('+row.distance_from_last + ' KM') + ')' :''}}
+                  </p>
+                  <p class="stamp">{{row.date_created | date:'h:mm a'}}</p>
+                </div>
+                <div class="desc">
+                  <p>{{row.address ? row.address : ''}} {{row.lat ? ( 'Latitude - ' + row.lat) : ''}}
+                    {{row.lng ? (' , Longitude - ' + row.lng) : ''}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="no-centent-text" *ngIf="pathCoords.length == 0">
+              <p>No Data available</p>
+            </div>
+          </div>
+          <div class="sm-card-container" *ngIf="latestLocation.gps">
+            <div class="sm-card bottom-card">
+              <span>Last Location <strong class="Success">{{latestLocation.time ? (latestLocation.time | date:'h:mm a')
+                  : ''}}</strong></span>
+              <p>
+                {{latestLocation.gps ? latestLocation.gps : ''}} <br>
+                {{latestLocation.lat ? ( 'Latitude - ' + latestLocation.lat) : ''}}
+                {{latestLocation.lng ? (' , Longitude - ' + latestLocation.lng) : ''}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m9 l9">
+        <!-- Live Location Map  Start -->
+        <ng-container *ngIf="tabType != 'Battery' ">
+          <div class="direction-map mt0" *ngIf="tabType != 'Play Back'">
+            <div *ngIf="mapVisible" id="map" style="width: 100%; height: 500px;"></div>
+          </div>
+          <div class="mt16" *ngIf="tabType == 'Play Back'">
+            <!-- <a class="sm-mat-icon-button" mat-icon-button (click)="autoRefresh(map); btnValue = false "
+              *ngIf="btnValue == true">
+              <i class="material-icons font30">play_arrow</i>
+            </a>
+            <a class="sm-mat-icon-button" mat-icon-button (click)="stop(); btnValue = true" *ngIf="btnValue == false">
+              <i class="material-icons font30">pause</i>
+            </a> -->
+            <div class="direction-map ">
+              <div #mapElement style="width: 100%; height: 500px;"></div>
+            </div>
+            <div class="df">
+          
+              <div class="slidecontainer">
+          
+                <input class="slider" type="range" min="0" [(ngModel)]="sliderValue" [max]="pathCoords.length - 1"
+                  (input)="onSliderChange($event)" style="width: -webkit-fill-available;" />
+              </div>
+              <p style="font-size: 14px;font-weight: 800;">{{location_timeanddate | date:'d MMM y,h:mm a'}} {{Totaldistance?'|'+Totaldistance+'KM':''}}  {{Trackerlat?'| Lat:'+Trackerlat:''}},{{Trackerlng?'Lng:'+Trackerlng:''}}</p>
+          
+            </div>
+            <!-- <mat-slider [(ngModel)]="sliderValue" [max]="pathCoords.length - 1"
+            (input)="sliderChanged($event)"></mat-slider> -->
+          </div>
+        </ng-container>
+        <!-- Live Location Map  End -->
+
+
+        <!-- Tracker  Map End -->
+
+        <!-- Battery Statistics  Start -->
+        <ng-container *ngIf="tabType == 'Battery'">
+          <div>
+            <zingchart-angular [config]="batteryChart" class="invoiceCollectionChart"
+              [height]="300"></zingchart-angular>
+          </div>
+        </ng-container>
+        <!-- Battery Statistics  End -->
+      </div>
+
+
+
+    </div>
+
+  </div>
+</div>

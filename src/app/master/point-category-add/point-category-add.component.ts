@@ -56,6 +56,8 @@ export class PointCategoryAddComponent implements OnInit {
       if(this.data.point_type == 'Master Box'){
         this.data.influencer_point = '';
         this.data.scanning_point = '';
+        this.data.saleboy_point = '';
+
       }
       else{
         this.data.master_point = '';

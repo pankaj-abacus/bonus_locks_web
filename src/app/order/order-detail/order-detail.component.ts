@@ -45,8 +45,10 @@ export class OrderDetailComponent implements OnInit {
         }
 
         this.route.params.subscribe(params => {
+            // this.order_id = this.serve.crypto(params['id'], false);
             this.order_id = params.id;
             this.serve.currentUserID = params.id
+            // this.serve.currentUserID = this.serve.crypto(params['id'], false)
             this.status = this.route.queryParams['_value']['status'];
 
         });
@@ -144,13 +146,14 @@ export class OrderDetailComponent implements OnInit {
     }
     openDialog(): void {
         const dialogRef = this.dialog.open(StatusModalComponent, {
-            width: '400px',
-            panelClass: 'cs-model',
+            width: this.order_detail.order_status  == 'dispatchPlanning' ||  this.order_detail.order_status  == 'partialDispatched'  ?  '' : '400px' ,
+            panelClass: this.order_detail.order_status  == 'dispatchPlanning' || this.order_detail.order_status  == 'partialDispatched' ?  'min400' : 'cs-model',
             data: {
-                order_status: this.order_detail.order_status,
-                order_id: this.order_id,
-                organisation_name:this.order_detail.organisation_name,
-                from: 'primary_order',
+                'order_status': this.order_detail.order_status,
+                'order_id': this.order_id,
+                'organisation_name':this.order_detail.organisation_name,
+                'from': 'primary_order',
+                'order_item':this.order_item,
                 reason: ''
             }
         });

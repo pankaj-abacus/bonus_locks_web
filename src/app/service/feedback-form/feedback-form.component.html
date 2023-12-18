@@ -1,0 +1,97 @@
+<div class="container">
+
+  <div class="feedback-form">
+    <div class="container pt10 pl10 pr10 pb50">
+      <form #f="ngForm" (ngSubmit)="f.valid && Submit()">
+        <div class="row">
+          <div class="col s12">
+            <div class="card pb0">
+              <div class="card-head">
+                <h2>Feedback Form</h2>
+              </div>
+              <div class="card-body cs-form">
+                <div class="row">
+                  <div class="col s12 m3 l3">
+                    <mat-form-field appearance="outline" [ngClass]="{'has-error' : customer_mobile.invalid } ">
+                      <mat-label>Mobile Number</mat-label>
+                      <input type="text" name="customer_mobile" minlength="10" maxlength="10" matInput placeholder=""
+                        #customer_mobile="ngModel" [(ngModel)]="data.customer_mobile"
+                        onkeypress="return event.charCode>=48 && event.charCode<=57" required>
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="customer_mobile.touched || f.submitted">
+                      <p *ngIf="customer_mobile.errors?.required">This field is required</p>
+                    </div>
+                  </div>
+
+
+                  <div class="col s12 m3 l3">
+                    <mat-form-field appearance="outline" [ngClass]="{'has-error' : customer_name?.invalid } ">
+                      <mat-label>Customer Name</mat-label>
+                      <input matInput placeholder="Type Here ..." name="customer_name" #customer_name="ngModel"
+                        [(ngModel)]="data.customer_name"
+                        onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode === 32"
+                        required>
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="f.submitted && customer_name?.invalid">
+                      This field is required
+                    </div>
+                  </div>
+
+                  <div class="col s12 m3 l3">
+                    <mat-form-field appearance="outline" [ngClass]="{'has-error' : behavior.invalid } ">
+                      <mat-label>Technician Behavior</mat-label>
+                      <mat-select name="behavior" [(ngModel)]="data.behavior" #behavior="ngModel" required>
+                        <mat-option value="good">Good</mat-option>
+                        <mat-option value="bad">Bad</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="f.submitted && behavior?.invalid ">
+                      This field is required
+                    </div>
+                  </div>
+
+                  <div class="col s12 m3 l3">
+                    <mat-form-field appearance="outline" [ngClass]="{'has-error' : recommend.invalid } ">
+                      <mat-label>Would You Recommend Us?</mat-label>
+                      <mat-select name="recommend" [(ngModel)]="data.recommend" #recommend="ngModel" required>
+                        <mat-option value="yes">Yes</mat-option>
+                        <mat-option value="no">No</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="f.submitted && recommend?.invalid ">
+                      This field is required
+                    </div>
+                  </div>
+
+                  <div class="col s12 m3 l3">
+                    <mat-form-field appearance="outline" [ngClass]="{'has-error' : rating.invalid } ">
+                      <mat-label>Rating</mat-label>
+                      <mat-select name="rating" [(ngModel)]="data.rating" #rating="ngModel" required>
+                        <mat-option value="good">Good</mat-option>
+                        <mat-option value="bad">Bad</mat-option>
+                        <mat-option value="excellent">Excellent</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="f.submitted && rating?.invalid ">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <div class="text-right">
+              <button mat-raised-button color="accent" type="submit">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

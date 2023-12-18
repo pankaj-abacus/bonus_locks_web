@@ -6,7 +6,6 @@ import * as moment from 'moment';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { DialogComponent } from 'src/app/dialog.component';
 import {  sessionStorage} from 'src/app/localstorage.service';
-import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-distributor-model',
@@ -31,6 +30,8 @@ export class DistributorModelComponent implements OnInit {
   dbID:any;
   productlist:any;
   noProduct:boolean=false;
+  loading:boolean=false;
+
   dr_lead_name:any;
   size_List:any;
   productName:any;
@@ -377,6 +378,27 @@ add_requirement()
       else{
         this.alert.error("Something went Wrong")
       }
+    })
+  }
+  adjustPoint()
+  {
+    this.loading = true;
+
+    let data={'influencer_id':this.dr_id,'created_by':this.userId,'created_by_name':this.userName,'point_type': this.data.point_type,'point_value': this.data.point_value,'transaction_remark': this.data.remark,'influencer_name':this.data.dr_name,'dr_type':this.data.dr_type}
+    console.log(data);
+    
+    this.serve.post_rqst({'data':data},"GiftGallery/manualPointTransfer").subscribe((result) => {
+      if(result['statusCode'] == 200)
+      {
+    this.loading = false;
+    this.alert.success("Success","Data Saved successfully...")
+
+        this.dialog2.closeAll();
+      }
+      else{
+    this.loading = false;
+
+        this.Toastr.errorToastr(result['statusMsg'])      }
     })
   }
   }
