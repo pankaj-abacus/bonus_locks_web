@@ -108,13 +108,14 @@
                           <tr>
                             <th class="w50">S.no.</th>
                             <th class="w150">Item Details</th>
+                            <th class="w100">Product Code</th>
                             <th class="w80 text-right">Rate</th>
                             <th class="w100 text-right">Discount (%)</th>
                             <th class="w80 text-right">Price</th>
                             <th class="w80 text-center">QTY.</th>
-                            <th class="w80 text-right">Sub Total</th>
-                            <th class="w80 text-right">GST</th>
-                            <th class="w80 text-right">Net Amount</th>
+                            <th class="w80 text-right">Total</th>
+                            <!-- <th class="w80 text-right">GST</th> -->
+                            <!-- <th class="w80 text-right">Net Amount</th> -->
                             <th class="w80 text-right">Action</th>
                           </tr>
                         </table>
@@ -127,10 +128,12 @@
                         <table>
                           <tr *ngFor="let row of order_item; let i =index">
                             <td class="w50">{{i+1}}</td>
-                            <td class="w150">{{row.product_name | titlecase}} <strong
-                                *ngIf="row.product_code != ''">({{row.product_code}})</strong> <strong
+                            <td class="w150">{{row.product_name | titlecase}} 
+                              <!-- <strong *ngIf="row.product_code != ''">({{row.product_code}})</strong>  -->
+                              <strong
                                 *ngIf="row.brand != ''">({{row.brand}})</strong> <strong
                                 *ngIf="row.color != ''">({{row.color}})</strong></td>
+                            <td class="w100">{{row.product_code}}</td>
                             <td class="w80 text-right">&#x20B9; {{row.product_price ? row.product_price : row.price}}
                             </td>
                             <td class="w100 text-right"> &#x20B9; {{row.discount_amount | number:'1.2-2'}}
@@ -140,9 +143,9 @@
                               {{row.qty}}
                             </td>
                             <td class="w80 text-right">&#x20B9; {{row.amount | number:'1.2-2'}}</td>
-                            <td class="w80 text-right">&#x20B9; {{row.gst_amount | number:'1.2-2'}}
-                              ({{row.gst_percent}}%)</td>
-                            <td class="w80 text-right"><strong>&#x20B9; {{row.total_amount | number:'1.2-2'}}</strong>
+                            <!-- <td class="w80 text-right">&#x20B9; {{row.gst_amount | number:'1.2-2'}}
+                              ({{row.gst_percent}}%)</td> -->
+                            <!-- <td class="w80 text-right"><strong>&#x20B9; {{row.total_amount | number:'1.2-2'}}</strong> -->
                             <td class="w80 text-right">
                               <div class="action-btns">
                                 <a mat-raised-button type="button" class="delete" (click)="deleteItem(i)"><i

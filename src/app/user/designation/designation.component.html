@@ -139,7 +139,7 @@
           </div>
           <div class="col s12 l6 m6" *ngIf="showChannelPartner">
             <mat-form-field appearance="outline">
-              <mat-label>Select Channel Partner</mat-label>
+              <mat-label>Select Distributor</mat-label>
               <mat-select name="channel_partner_id" #channel_partner_id="ngModel" [(ngModel)]="data.channel_partner_id"
                 multiple required>
                 <mat-option>
@@ -152,7 +152,7 @@
                     name="allChannelPartners" value="true">Select All</mat-checkbox>
                 </div>
                 <div class="padding12" *ngIf="allAssignChannelPartner.length<1">
-                  <mat-checkbox disabled>No Channel Partner</mat-checkbox>
+                  <mat-checkbox disabled>No Distributor</mat-checkbox>
                 </div>
 
                 <mat-option *ngFor="let row of allAssignChannelPartner"

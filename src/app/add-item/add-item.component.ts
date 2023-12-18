@@ -266,7 +266,7 @@ export class AddItemComponent implements OnInit {
           this.product_list[i]['discount_amount'] = this.product_list[i]['discounted_price'];
           this.product_list[i]['discount_percent'] = this.product_list[i]['dr_disc'];
           this.product_list[i]['qty'] = this.orderData.qty;
-          this.product_list[i]['amount'] = parseFloat(this.product_list[i]['qty']) * (this.product_list[i]['net_price']).toFixed();
+          this.product_list[i]['amount'] = parseFloat(this.product_list[i]['qty']) * (this.product_list[i]['net_price']).toFixed(2);
           this.product_list[i]['gst_amount'] = ((parseFloat(this.product_list[i]['amount']) * parseFloat(this.product_detail.gst)) / 100).toFixed();
           this.product_list[i].gst_percent = (this.product_detail.gst);
           this.product_list[i]['brand'] = this.orderData.brand;
